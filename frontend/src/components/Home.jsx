@@ -1,5 +1,6 @@
 import React from 'react'
 import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
+import bgImg2 from '../img/Asset.png'
 import {
     FaPhone,
     FaQuestion,
@@ -9,6 +10,7 @@ import {
 } from 'react-icons/fa'
 import Slidertimeline from './Slidertimeline'
 import VerticalSccroll from './VerticalSccroll'
+import Cards from './Cards'
 
 
 const Home = () => {
@@ -175,12 +177,14 @@ const Home = () => {
                     <div>
                         <img
                             className='w-[30rem] object-cover m-auto '
-                            src={bgImg}
+                            src={bgImg2}
                             alt="/"
                         />
                     </div>
                 </div>
             </div>
+            <Cards/>
+            
         </section>
     )
 }
