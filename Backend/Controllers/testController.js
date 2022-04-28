@@ -1,4 +1,4 @@
-import asyncHandler from 'express-async-handler'
+const asyncHandler = require('express-async-handler')
 
 //@desc  Get goals
 //@route  Get /api/test
