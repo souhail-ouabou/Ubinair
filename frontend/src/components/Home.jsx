@@ -7,6 +7,8 @@ import {
     FaPollH,
     FaRegLifeRing,
 } from 'react-icons/fa'
+import Slidertimeline from './Slidertimeline'
+import VerticalSccroll from './VerticalSccroll'
 
 
 const Home = () => {
@@ -153,7 +155,7 @@ const Home = () => {
                     </div>
                 </div>
 
-                {/* <VerticalSccroll /> */}
+                <VerticalSccroll />
                 <div className="flex gap-12 items-center justify-center">
                     <div className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl">
                         <div className="-p-12">
@@ -168,7 +170,7 @@ const Home = () => {
                                 </p>
                             </div>
                         </div>
-                                {/* <Sliderks /> */}
+                                 <Slidertimeline /> 
                     </div>
                     <div>
                         <img
