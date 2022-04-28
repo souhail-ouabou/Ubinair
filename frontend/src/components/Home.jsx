@@ -90,7 +90,95 @@ const Home = () => {
                     La Méthode Ubinair
                 </p>
             </div>
+            <div className="flex flex-col gap-5 justify-center items-center z-10 relative px-4 pt-4 md:pt-5 text-black">
+                <div className="glass rounded-xl shadow-2xl">
+                    <div className="-p-12">
+                        <h3 className="text-white font-bold text-4xl my-6">
+                            Co-création
+                        </h3>
+                        <div className="md:flex items-center justify-center gap-x-6">
+                            <FaHandsHelping className="w-[9rem] h-full text-white px-6 py-2" />
+                            <dive className="md:max-w-[49rem]">
+                                <p className="text-whit text-xl text-white ">
+                                    Ton site internet est la concrétisation de
+                                    ta vision, créons le ensemble. Tu pourras
+                                    être fier d’avoir apporté ta pierre à
+                                    l’édifice en participant de façon proactive
+                                    à sa création. Met la casquette de directeur
+                                    artistique et partage avec nous tes
+                                    préférences visuelles
+                                </p>
+                            </dive>
+                        </div>
+                    </div>
+                </div>
+                <div className="glass rounded-xl shadow-2xl">
+                    <div className="-p-12">
+                        <h3 className="text-white font-bold text-4xl my-6">
+                            Max de Visibilité
+                        </h3>
+                        <div className="md:flex items-center justify-center gap-x-6">
+                            <FaPollH className="w-[9rem] h-full text-white  px-6 py-2" />
+                            <dive className="md:max-w-[49rem]">
+                                <p className="text-whit text-xl text-white ">
+                                    Maintenant que tu sais à quoi ressemblera
+                                    ton site internet, place à l’intégration. Ne
+                                    t’en fais pas, on s’occupe de toute la
+                                    partie technique, que tu pourras suivre en
+                                    temps réel sur ton espace client. Aucune
+                                    mauvaise surprise, tu sais déjà tout !
+                                </p>
+                            </dive>
+                        </div>
+                    </div>
+                </div>
+                <div className="glass rounded-xl shadow-2xl">
+                    <div className="-p-12">
+                        <h3 className="text-white font-bold text-4xl my-6">
+                            Autonomie
+                        </h3>
+                        <div className="md:flex items-center justify-center gap-x-6">
+                            <FaRegLifeRing className="w-[9rem] h-full text-white  px-6 py-2" />
+                            <dive className="md:max-w-[49rem]">
+                                <p className="text-whit text-xl text-white ">
+                                    Changer une photo ou un texte sur ton site
+                                    internet ce n’est pas compliqué ! Oui, tu as
+                                    bien lu ! Grâce à des outils no-code et une
+                                    bibliothèque de tutoriels personnalisés, tu
+                                    pourras prendre en main ton site internet
+                                    dès sa mise en ligne.
+                                </p>
+                            </dive>
+                        </div>
+                    </div>
+                </div>
 
+                {/* <VerticalSccroll /> */}
+                <div className="flex gap-12 items-center justify-center">
+                    <div className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl">
+                        <div className="-p-12">
+                            <h3 className="text-white font-semibold text-sm my-6">
+                                MISSIONS RÉUSSIES
+                            </h3>
+                            <div className="md:flex- items-center justify-center gap-x-6">
+                                <p className="text-3xl text-white font-semibold tracking-wide mb-7 ">
+                                    Fais comme eux et réserve ta place pour
+                                    propulser ton site internet avec la méthode
+                                    Ubinair !
+                                </p>
+                            </div>
+                        </div>
+                                {/* <Sliderks /> */}
+                    </div>
+                    <div>
+                        <img
+                            className='w-[30rem] object-cover m-auto '
+                            src={bgImg}
+                            alt="/"
+                        />
+                    </div>
+                </div>
+            </div>
         </section>
     )
 }
