@@ -40,6 +40,9 @@ body {
     backdrop-filter: blur(10px);
     background-image: linear-gradient(rgba(60, 54, 66, 0.05), rgb(20, 12, 29));
 }
+.active{
+    color: aqua;
+}
 @keyframes move {
     100% {
         transform: translate3d(0, 0, 1px) rotate(360deg);

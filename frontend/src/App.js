@@ -6,6 +6,7 @@ import 'slick-carousel/slick/slick-theme.css'
 import { useEffect, useState } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import Footer from './components/Footer'
 function App() {
   const  [loading,setLoading] = useState(false)
   useEffect(() => {
@@ -16,6 +17,7 @@ function App() {
 
   }, [])
     return (
+      <div>
         <section className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed	p-12 ">
             <Nav />
 
@@ -23,8 +25,12 @@ function App() {
                 <Routes>
                     <Route path="/*" element={<Home />} />
                 </Routes>
+          
             </main>
+          
         </section>
+        <Footer/>
+      </div>
     )
 }
 

@@ -7,23 +7,14 @@ import {
     FaHandsHelping,
     FaPollH,
     FaRegLifeRing,
+    FaCalculator,
 } from 'react-icons/fa'
-import SliderMissions from './Slidertimeline'
+import SliderMissions from './SliderMissions'
 import SliderTime from './SliderTime'
 import OffersCards from './OffersCards'
 import Callendly from './Callendly'
-
+import { Link } from 'react-router-dom'
 const Home = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        autoplay: true,
-        speed: 2000,
-        autoplaySpeed: 2000,
-        cssEase: 'linear',
-    }
     return (
         <section
             name="home"
@@ -86,7 +77,12 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center mt-7 z-10 " id='methode'>
+            <div
+                className="flex flex-col items-center justify-center mt-7 z-10 "
+                id="methode"
+                data-aos="fade-up"
+                data-aos-duration="1000"
+            >
                 <p className="text-base  text-[#EEEEEF] font-semibold uppercase ">
                     COMMENT ÇA MARCHE ?
                 </p>
@@ -120,8 +116,11 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="glass rounded-xl shadow-2xl"  data-aos="fade-up"
-                    data-aos-duration="4500">
+                <div
+                    className="glass rounded-xl shadow-2xl"
+                    data-aos="fade-up"
+                    data-aos-duration="4500"
+                >
                     <div className="-p-12">
                         <h3 className="text-white font-bold text-4xl my-6">
                             Max de Visibilité
@@ -141,16 +140,16 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="glass rounded-xl shadow-2xl"  data-aos="fade-up"
-                    data-aos-duration="4500">
+                <div
+                    className="glass rounded-xl shadow-2xl"
+                    data-aos="fade-up"
+                    data-aos-duration="4500"
+                >
                     <div className="-p-12">
                         <h3 className="text-white font-bold text-4xl my-6">
                             Autonomie
                         </h3>
-                        <div
-                            className="md:flex items-center justify-center gap-x-6"
-                            
-                        >
+                        <div className="md:flex items-center justify-center gap-x-6">
                             <FaRegLifeRing className="w-[9rem] h-full text-white  px-6 py-2" />
                             <dive className="md:max-w-[49rem]">
                                 <p className="text-whit text-xl text-white ">
@@ -167,14 +166,17 @@ const Home = () => {
                 </div>
 
                 <SliderTime />
-                <div className="flex gap-12 items-center justify-center" id='missions'>
+                <div
+                    className="flex gap-12 items-center justify-center"
+                    id="missions"
+                >
                     <div
                         className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl"
-                        data-aos="flip-down" data-aos-duration="2000" ata-aos-easing="ease-out-cubic"
-                       
-                        
+                        data-aos="flip-down"
+                        data-aos-duration="2000"
+                        ata-aos-easing="ease-out-cubic"
                     >
-                        <div className="-p-12" >
+                        <div className="-p-12">
                             <h3 className="text-white font-semibold text-sm my-6">
                                 MISSIONS RÉUSSIES
                             </h3>
@@ -198,7 +200,31 @@ const Home = () => {
                 </div>
             </div>
             <OffersCards />
-            <Callendly/>
+
+            <Callendly />
+
+            <div
+                className="flex flex-col items-center justify-center mt-7 z-10 "
+                id="methode"
+                data-aos="fade-left"
+                data-aos-duration="1000"
+            >
+                <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold uppercase  ">
+                    Calculer votre Devis !
+                </p>
+                <Link to={'/'} className="items-center justify-center m-auto">
+                    <button
+                        className="py-3 px-6  text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                        md:w-auto    
+                         hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                    >
+                        Calculer <FaCalculator className="ml-3" />
+                    </button>
+                </Link>
+            
+            </div>
+   
         </section>
     )
 }
