@@ -9,11 +9,11 @@ import {
     FaRegWindowMaximize,
     FaWordpressSimple,
 } from 'react-icons/fa'
-const Cards = () => {
+const OffersCards = () => {
     return (
-        <div className="w-full py-[4rem] px-4 z-50">
+        <div className="w-full py-[2rem] px-4 z-10" id='offres' >
             <div
-                className="flex flex-col items-center justify-center mt-7 z-10"
+                className="flex flex-col items-center justify-center mt-7 " 
                 data-aos="fade-up"
                 data-aos-duration="2000"
             >
@@ -24,7 +24,7 @@ const Cards = () => {
                     Choisi l’offre qui te convient !
                 </p>
             </div>
-            <div className="max-w-[1070px]  py-[4rem] mx-auto grid md:grid-cols-2 gap-32 items-center">
+            <div className="max-w-[1070px]  py-[2rem] mx-auto grid md:grid-cols-2 gap-32 items-center">
                 <div data-aos-duration="2000" data-aos="fade-up">
                     <div className="w-full shadow-xl bg-[#ffffffff]/20 flex flex-col p-6 md:my-0 my-8 rounded-lg hover:scale-105 duration-300">
                         <img
@@ -106,4 +106,4 @@ const Cards = () => {
     )
 }
 
-export default Cards
+export default OffersCards

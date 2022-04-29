@@ -8,7 +8,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import '../timeline.css'
 
-const VerticalSccroll = () => {
+const SliderTime = () => {
     AOS.init({
         debounceDelay: 50, // the delay on debounce used while resizing window (advanced)
         once: false, // whether animation should happen only once - while scrolling down
@@ -131,4 +131,4 @@ const VerticalSccroll = () => {
     )
 }
 
-export default VerticalSccroll
+export default SliderTime

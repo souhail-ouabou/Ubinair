@@ -4,7 +4,7 @@ import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
 import imgSlid1 from '../img/Logo-les-verts-moutons.png'
 import imgSlid2 from '../img/GC-research-LOGO.png'
 import imgSlid3 from '../img/Logo-Little-Home-marrakech.png'
-const Slidertimeline = () => {
+const SliderMissions = () => {
     const settings = {
         infinite: true,
         slidesToShow: 3,
@@ -70,4 +70,4 @@ const Slidertimeline = () => {
     )
 }
 
-export default Slidertimeline
+export default SliderMissions
