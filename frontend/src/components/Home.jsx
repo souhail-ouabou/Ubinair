@@ -11,6 +11,7 @@ import {
 import Slidertimeline from './Slidertimeline'
 import VerticalSccroll from './VerticalSccroll'
 import Cards from './Cards'
+import Callendly from './Callendly'
 
 const Home = () => {
     const settings = {
@@ -197,6 +198,7 @@ const Home = () => {
                 </div>
             </div>
             <Cards />
+            <Callendly/>
         </section>
     )
 }
