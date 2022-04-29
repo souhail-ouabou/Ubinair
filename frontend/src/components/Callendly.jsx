@@ -2,9 +2,9 @@ import React from 'react'
 import { InlineWidget } from 'react-calendly'
 const Callendly = () => {
     return (
-        <div className="z-50">
+        <div className="z-10" id='callendly'>
             <div
-                className="flex flex-col items-center justify-center mt-7 z-10"
+                className="flex flex-col items-center justify-center mt-1 "
                 data-aos="fade-up"
                 data-aos-duration="2000"
             >

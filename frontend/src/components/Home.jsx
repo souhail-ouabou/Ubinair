@@ -8,9 +8,9 @@ import {
     FaPollH,
     FaRegLifeRing,
 } from 'react-icons/fa'
-import Slidertimeline from './Slidertimeline'
-import VerticalSccroll from './VerticalSccroll'
-import Cards from './Cards'
+import SliderMissions from './Slidertimeline'
+import SliderTime from './SliderTime'
+import OffersCards from './OffersCards'
 import Callendly from './Callendly'
 
 const Home = () => {
@@ -86,7 +86,7 @@ const Home = () => {
                     />
                 </div>
             </div>
-            <div className="flex flex-col items-center justify-center mt-7 z-10">
+            <div className="flex flex-col items-center justify-center mt-7 z-10 " id='methode'>
                 <p className="text-base  text-[#EEEEEF] font-semibold uppercase ">
                     COMMENT ÇA MARCHE ?
                 </p>
@@ -166,15 +166,15 @@ const Home = () => {
                     </div>
                 </div>
 
-                <VerticalSccroll />
-                <div className="flex gap-12 items-center justify-center">
+                <SliderTime />
+                <div className="flex gap-12 items-center justify-center" id='missions'>
                     <div
                         className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl"
                         data-aos="flip-down" data-aos-duration="2000" ata-aos-easing="ease-out-cubic"
                        
                         
                     >
-                        <div className="-p-12">
+                        <div className="-p-12" >
                             <h3 className="text-white font-semibold text-sm my-6">
                                 MISSIONS RÉUSSIES
                             </h3>
@@ -186,7 +186,7 @@ const Home = () => {
                                 </p>
                             </div>
                         </div>
-                        <Slidertimeline />
+                        <SliderMissions />
                     </div>
                     <div>
                         <img
@@ -197,7 +197,7 @@ const Home = () => {
                     </div>
                 </div>
             </div>
-            <Cards />
+            <OffersCards />
             <Callendly/>
         </section>
     )
