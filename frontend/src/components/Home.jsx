@@ -12,7 +12,6 @@ import Slidertimeline from './Slidertimeline'
 import VerticalSccroll from './VerticalSccroll'
 import Cards from './Cards'
 
-
 const Home = () => {
     const settings = {
         dots: true,
@@ -95,7 +94,11 @@ const Home = () => {
                 </p>
             </div>
             <div className="flex flex-col gap-5 justify-center items-center z-10 relative px-4 pt-4 md:pt-5 text-black">
-                <div className="glass rounded-xl shadow-2xl">
+                <div
+                    className="glass rounded-xl shadow-2xl "
+                    data-aos="fade-up"
+                    data-aos-duration="4500"
+                >
                     <div className="-p-12">
                         <h3 className="text-white font-bold text-4xl my-6">
                             Co-création
@@ -116,7 +119,8 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="glass rounded-xl shadow-2xl">
+                <div className="glass rounded-xl shadow-2xl"  data-aos="fade-up"
+                    data-aos-duration="4500">
                     <div className="-p-12">
                         <h3 className="text-white font-bold text-4xl my-6">
                             Max de Visibilité
@@ -136,12 +140,16 @@ const Home = () => {
                         </div>
                     </div>
                 </div>
-                <div className="glass rounded-xl shadow-2xl">
+                <div className="glass rounded-xl shadow-2xl"  data-aos="fade-up"
+                    data-aos-duration="4500">
                     <div className="-p-12">
                         <h3 className="text-white font-bold text-4xl my-6">
                             Autonomie
                         </h3>
-                        <div className="md:flex items-center justify-center gap-x-6">
+                        <div
+                            className="md:flex items-center justify-center gap-x-6"
+                            
+                        >
                             <FaRegLifeRing className="w-[9rem] h-full text-white  px-6 py-2" />
                             <dive className="md:max-w-[49rem]">
                                 <p className="text-whit text-xl text-white ">
@@ -159,7 +167,12 @@ const Home = () => {
 
                 <VerticalSccroll />
                 <div className="flex gap-12 items-center justify-center">
-                    <div className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl">
+                    <div
+                        className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl"
+                        data-aos="flip-down" data-aos-duration="2000" ata-aos-easing="ease-out-cubic"
+                       
+                        
+                    >
                         <div className="-p-12">
                             <h3 className="text-white font-semibold text-sm my-6">
                                 MISSIONS RÉUSSIES
@@ -172,19 +185,18 @@ const Home = () => {
                                 </p>
                             </div>
                         </div>
-                                 <Slidertimeline /> 
+                        <Slidertimeline />
                     </div>
                     <div>
                         <img
-                            className='w-[30rem] object-cover m-auto '
+                            className="w-[30rem] object-cover m-auto "
                             src={bgImg2}
                             alt="/"
                         />
                     </div>
                 </div>
             </div>
-            <Cards/>
-            
+            <Cards />
         </section>
     )
 }
