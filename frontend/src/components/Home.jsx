@@ -222,9 +222,7 @@ const Home = () => {
                         Calculer <FaCalculator className="ml-3" />
                     </button>
                 </Link>
-            
             </div>
-   
         </section>
     )
 }

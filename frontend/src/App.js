@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom'
-import { Nav } from './components'
+
 import Home from './components/Home'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Footer from './components/Footer'
+import Nav from './components/Navbar/Nav'
 function App() {
   const  [loading,setLoading] = useState(false)
   useEffect(() => {
