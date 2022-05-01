@@ -9,7 +9,7 @@ import './Navbar.css'
 import { FaAngleDown, FaPhone } from 'react-icons/fa'
 
 const Nav = () => {
-    const [showDrop, setShowDrop] = useState(true)
+    const [showDrop, setShowDrop] = useState(false)
     const showDropInMobile = () => {
         setShowDrop(!showDrop)
     }
@@ -31,8 +31,8 @@ const Nav = () => {
                         </i>
                     </Link>
                     
-                        <ul className= {showDrop ? "dropdown mt-2  top-12  left-1" : "dropdown mt-2  top-12  left-1 hidden"}>
-                            <li className="mt-2 mb-2 cursor-pointer">
+                    <ul className={`dropdown  ${showDrop ? "md:hidden dropdown mt-2 top-12 left-1" : "dropdown mt-2 top-12 left-1 hidden"}`}>
+                  <li className="mt-2 mb-2 cursor-pointer">
                                 <Link to="/profile">Profile</Link>
                             </li>
                             <li className="mb-2 cursor-pointer">

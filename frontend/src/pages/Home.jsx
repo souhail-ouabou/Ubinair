@@ -9,10 +9,10 @@ import {
     FaRegLifeRing,
     FaCalculator,
 } from 'react-icons/fa'
-import SliderMissions from './SliderMissions'
-import SliderTime from './SliderTime'
-import OffersCards from './OffersCards'
-import Callendly from './Callendly'
+import SliderMissions from '../components/SliderMissions'
+import SliderTime from '../components/SliderTime'
+import OffersCards from '../components/OffersCards'
+import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
 const Home = () => {
     return (
@@ -44,13 +44,13 @@ const Home = () => {
             </div>
             <div className="grid md:grid-cols-2 w-full max-w-[1240px] z-10 md:ml-28  ">
                 <div className="flex flex-col justify-center md:items-start w-full px-2 py-12">
-                    <h1 className="py-3 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 m-9">
+                    <h1 className="py-3 px-8 md:px-0 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 m-9">
                         Tu veux créer un site internet pour ta boîte ?
                     </h1>
-                    <p className="text-2xl text-[#EEEEEF] ">
+                    <p className="text-2xl text-[#EEEEEF] px-16 md:px-0 ">
                         Et si on le créait ensemble avec la méthode Ubinair !
                     </p>
-                    <div className="flex gap-4">
+                    <div className="md:flex md:flex-row md:w-full md:ml-0 md:justify-start md:gap-4 flex-col w-60 ml-16 justify-center items-center ">
                         <button
                             className="py-3 px-6 sm:w-[60%] my-4 text-[#663993] flex items-center justify-between uppercase rounded-full bg-[#EEEEEF]    dark:shadow-purple-800/80   text-sm  text-center mr-2
                         md:w-auto  w-full  font-bold
