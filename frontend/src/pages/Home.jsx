@@ -14,6 +14,7 @@ import SliderTime from '../components/SliderTime'
 import OffersCards from '../components/OffersCards'
 import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
+import { Link as LinkReactS } from 'react-scroll'
 const Home = () => {
     return (
         <section
@@ -59,6 +60,7 @@ const Home = () => {
                         >
                             C'est quoi <FaQuestion className="ml-3 " />
                         </button>
+                        <LinkReactS to="callendly" spy={true} offset={-100} duration={500}  >
                         <button
                             className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto  w-full 
@@ -67,6 +69,7 @@ const Home = () => {
                         >
                             Je Reserver un call <FaPhone className="ml-3" />
                         </button>
+                        </LinkReactS>
                     </div>
                 </div>
                 <div className="md:py-9 flex-1 flex items-center">

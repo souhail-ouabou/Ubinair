@@ -1,19 +1,24 @@
 const express = require('express')
+const path = require('path')
 const connectDB = require('./config/db')
 const dotenv = require('dotenv').config()
 const port = process.env.PORT || 5000
 const colors = require('colors')
-const app = express()
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const { errorHandler } = require('./middleware/errorMiddleware')
-
-
+const app = express()
 
 connectDB()
-//Routes (frontend to back)
-app.use(express.json())
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+
+
 app.use(express.urlencoded({extended: false}))
 //app.use("/api/test", require("./routes/testRoutes"));
 
+//Routes (frontend to back)
 app.use("/user", require("./routes/userRouter"));
 
 app.use(errorHandler)
