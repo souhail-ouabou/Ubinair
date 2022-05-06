@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
 import Logo from '../../img/Logo.png'
 import Avatar from '../../img/avatar.png'
@@ -14,7 +14,7 @@ const Nav = () => {
     const { user, isLogged, loading } = auth
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
-
+    let navigate = useNavigate();
     const showDropInMobile = () => {
         setShowDrop(!showDrop)
     }
@@ -44,7 +44,7 @@ const Nav = () => {
                                 <img
                                     className="img-ava"
                                     src={user.avatar}
-                                    alt=""
+                                    alt="avatar"
                                 />{' '}
                                 {user.name}
                                 <i>
@@ -72,6 +72,11 @@ const Nav = () => {
             </li>
         )
     }
+    useEffect(() => {
+        if (user) {
+            navigate('/')
+        }
+    }, [navigate, user])
     useEffect(() => {
         setInHome(JSON.parse(window.localStorage.getItem('inHome')))
     }, [])
@@ -147,7 +152,7 @@ const Nav = () => {
                     </>
                 )}
 
-                {isLogged ? (
+                {user ? (
                     userLink()
                 ) : (
                     <Link

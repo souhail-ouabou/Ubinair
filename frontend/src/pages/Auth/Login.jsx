@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
 import { useNavigate } from 'react-router-dom'
 import { dispatchLogin } from '../../redux/actions/authAction'
-import { useDispatch } from 'react-redux'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux'
 const initialState = {
     email: '',
     password: '',
@@ -18,6 +17,10 @@ const Login = () => {
     const dispatch = useDispatch()
     let navigate = useNavigate()
     const { email, password, err, success } = creds
+
+    const auth = useSelector((state) => state.auth)
+
+    const { error, user } = auth
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         setCreds({
@@ -42,21 +45,9 @@ const Login = () => {
                 err: 'Invalid email',
                 success: '',
             })
-        try {
-            const res = await axios.post('/user/login', { email, password })
-            setCreds({ ...creds, err: '', success: res.data.msg }) // true
-            dispatch(dispatchLogin())
-            localStorage.setItem('firstLogin', true)
 
-            navigate('/')
-        } catch (err) {
-            err.response.data.msg &&
-                setCreds({
-                    ...creds,
-                    err: err.response.data.msg,
-                    success: '',
-                })
-        }
+        dispatch(dispatchLogin(creds))
+        //    localStorage.setItem('firstLogin', true)
     }
 
     return (
@@ -99,7 +90,9 @@ const Login = () => {
                     <h2 className="dark:text-white text-4xl font-bold text-center">
                         Sign in
                     </h2>
-                    <h1 className="text-red-600 text-center mt-4">{err}</h1>
+                    <h1 className="text-red-600 text-center mt-4">
+                        {err ? err : error}
+                    </h1>
                     {success}
                     <div className="flex flex-col text-gray-400 py-2">
                         <label>Email</label>

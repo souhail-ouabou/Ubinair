@@ -1,27 +1,18 @@
 import ACTIONS from '../actions/'
 
-const initialState = {
-    user: [],
-    isLogged: false,
-    isAdmin: false,
-    loading: false
-}
-
-const authReducer = (state = initialState, action) => {
-    switch(action.type){
-        case ACTIONS.LOGIN:
+export const authReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ACTIONS.USER_LOGIN_REQUEST:
+            return { loading: true }
+        case ACTIONS.USER_LOGIN_SUCCESS:
             return {
-                ...state,
-                isLogged: true,
-                loading: true,
-            }
-        case ACTIONS.GET_USER:
-            return {
-                ...state,
                 loading: false,
                 user: action.payload.user,
-                isAdmin: action.payload.isAdmin
+                isAdmin: action.payload.isAdmin,
             }
+        case ACTIONS.USER_LOGIN_FAIL:
+            return { loading: false, error: action.payload }
+
         default:
             return state
     }
