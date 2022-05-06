@@ -47,11 +47,10 @@ export const dispatchRegister = (creds) => async (dispatch) => {
         const { data } = await axios.post('user/register', creds, config)
         dispatch({
             type: ACTIONS.USER_REGISTER_SUCCESS,
-            payload: data
-            
+            payload: data,
         })
 
-     //   localStorage.setItem('userInfo', JSON.stringify(data))
+        //   localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
             type: ACTIONS.USER_REGISTER_FAIL,
@@ -61,4 +60,8 @@ export const dispatchRegister = (creds) => async (dispatch) => {
                     : error.msg,
         })
     }
+}
+export const logout = () => (dispatch) => {
+    localStorage.removeItem('userInfo')
+    dispatch({ type: ACTIONS.USER_LOGOUT })
 }

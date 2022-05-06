@@ -4,17 +4,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
 import Logo from '../../img/Logo.png'
 import Avatar from '../../img/avatar.png'
-
+import { logout } from '../../redux/actions/authAction'
 import './Navbar.css'
 import { FaAngleDown, FaPhone, FaArrowRight } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-
 const Nav = () => {
+    let navigate = useNavigate()
+    const dispatch = useDispatch()
     const auth = useSelector((state) => state.auth)
     const { user, isLogged, loading } = auth
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
-    let navigate = useNavigate();
+
     const showDropInMobile = () => {
         setShowDrop(!showDrop)
     }
@@ -65,7 +66,9 @@ const Nav = () => {
                             <Link to="/profile">Profile</Link>
                         </li>
                         <li className="mb-2 cursor-pointer">
-                            <Link to="/">Logout</Link>
+                            <Link to="/" onClick={logoutHandler}>
+                                Logout
+                            </Link>
                         </li>
                     </ul>
                 </div>
@@ -84,6 +87,9 @@ const Nav = () => {
         window.localStorage.setItem('inHome', inHome)
     }, [inHome])
 
+    const logoutHandler = () => {
+        dispatch(logout())
+    }
     return (
         // <header className='flex  absolute -top-10 right-5 left-5 px-5 py-12 justify-between items-center  bg-stone-50/20 shadow-lg shadow-black-500/5 rounded-2xl backdrop-blur-md border-2 border-white/25 '>
         <header className="header mt-[2.6rem] z-20 fixed   py-[14px] px-[50px]">
