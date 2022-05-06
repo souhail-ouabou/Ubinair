@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
-import { useNavigate } from 'react-router-dom'
+import { Link,useNavigate } from 'react-router-dom'
 import { dispatchLogin } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -125,6 +125,17 @@ const Login = () => {
                     >
                         Sign in
                     </button>
+                    <div className="flex justify-center items-center   text-gray-400 py-2">
+                        <p> New Here !</p>
+                        <Link to="/register">
+                            <button
+                                type="button"
+                                className="text-white font-semibold   uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80  text-sm px-5 py-2.5 text-center ml-2"
+                            >
+                                Register
+                            </button>
+                        </Link>
+                    </div>
                 </form>
             </div>
         </div>

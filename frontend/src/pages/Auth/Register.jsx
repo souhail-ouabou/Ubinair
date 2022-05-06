@@ -54,7 +54,7 @@ const Login = () => {
     }
 
     return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 w-full pt-24">
             <div className="background  bg-transparent ">
                 <span></span>
                 <span></span>
