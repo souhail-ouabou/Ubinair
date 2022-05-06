@@ -30,7 +30,7 @@ const Login = () => {
             success: '',
         })
     }
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         if (isEmpty(email) | isEmpty(password))
             return setCreds({
@@ -47,7 +47,6 @@ const Login = () => {
             })
 
         dispatch(dispatchLogin(creds))
-        //    localStorage.setItem('firstLogin', true)
     }
 
     return (

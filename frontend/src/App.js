@@ -1,16 +1,10 @@
 import { Route, Routes } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-    dispatchLogin,
-    dispatchGetUser,
-    fetchUser,
-} from './redux/actions/authAction'
-import axios from 'axios'
+
 import Home from './pages/Home'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { useEffect, useState } from 'react'
-import AOS from 'aos'
 import 'aos/dist/aos.css'
 import Footer from './components/Footer'
 import Nav from './components/Navbar/Nav'

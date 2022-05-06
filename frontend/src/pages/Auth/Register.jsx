@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
 import { useNavigate } from 'react-router-dom'
-import { dispatchLogin } from '../../redux/actions/authAction'
-import { useDispatch } from 'react-redux'
+import { dispatchRegister } from '../../redux/actions/authAction'
+import { useDispatch, useSelector } from 'react-redux'
 import {
     isEmpty,
     isEmail,
@@ -13,6 +13,7 @@ import {
 import axios from 'axios'
 const initialState = {
     name: '',
+    phone:'',
     email: '',
     password: '',
     cf_password: '',
@@ -24,7 +25,10 @@ const Login = () => {
     const [creds, setCreds] = useState(initialState)
     const dispatch = useDispatch()
     let navigate = useNavigate()
-    const { name, email, password, cf_password, err, success } = creds
+    const { name, email,phone, password, cf_password, err, success } = creds
+    const userRegister = useSelector((state) => state.userRegister)
+
+    const { error, msg } = userRegister
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         const { name, value } = e.target
@@ -37,26 +41,6 @@ const Login = () => {
     }
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (isEmpty(email) | isEmpty(password))
-            return setCreds({
-                ...creds,
-                err: 'Please fill in all fields',
-                success: '',
-            })
-
-        if (!isEmail(email))
-            return setCreds({
-                ...creds,
-                err: 'Invalid email',
-                success: '',
-            })
-
-        if (isLength(password))
-            return setCreds({
-                ...creds,
-                err: 'Password must be at least 6 characters.',
-                success: '',
-            })
 
         if (!isMatch(password, cf_password))
             return setCreds({
@@ -64,21 +48,8 @@ const Login = () => {
                 err: 'Password did not match.',
                 success: '',
             })
-
-        try {
-            const res = await axios.post('/user/register', {
-                name,
-                email,
-                password,
-            })
-            setCreds({ ...creds, err: '', success: res.data.msg }) // true
-        } catch (err) {
-            err.response.data.msg &&
-                setCreds({
-                    ...creds,
-                    err: err.response.data.msg,
-                    success: '',
-                })
+        else {
+            dispatch(dispatchRegister(creds))
         }
     }
 
@@ -122,8 +93,13 @@ const Login = () => {
                     <h2 className="dark:text-white text-4xl font-bold text-center">
                         Register
                     </h2>
-                    <h1 className="text-red-600 text-center mt-4">{err}</h1>
-                    {success}
+                    <h1 className="text-red-600 text-center mt-4">
+                        {err ? err : error}
+                    </h1>
+                    <h1 className="text-green-600 text-center mt-4">
+                        {msg}
+                    </h1>
+                    
                     <div className="flex flex-col text-gray-400 py-2">
                         <label>Nom Complet</label>
                         <input
@@ -133,6 +109,17 @@ const Login = () => {
                             name="name"
                             value={name}
                             placeholder="Enter votre nom"
+                        />
+                    </div>
+                    <div className="flex flex-col text-gray-400 py-2">
+                        <label>Phone</label>
+                        <input
+                            className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+                            type="text"
+                            onChange={handleChange}
+                            name="phone"
+                            value={phone}
+                            placeholder="Phone"
                         />
                     </div>
                     <div className="flex flex-col text-gray-400 py-2">
@@ -152,6 +139,7 @@ const Login = () => {
                             className=" rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
                             type="password"
                             name="password"
+                            placeholder="password"
                             value={password}
                             onChange={handleChange}
                         />

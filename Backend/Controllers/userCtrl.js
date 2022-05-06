@@ -30,7 +30,7 @@ const userCtrl = {
             const { name, email, password, isClient, phone, description } =
                 req.body
             //console.log(isTeacher)
-            if (!name || !email || !password)
+            if (!name || !email || !password || !phone)
                 return res
                     .status(400)
                     .json({ msg: 'Please fill in all fields.' })
