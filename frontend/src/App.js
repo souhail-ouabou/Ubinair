@@ -11,6 +11,8 @@ import Nav from './components/Navbar/Nav'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
 import ActivationEmail from './pages/Auth/ActivationEmail'
+import ForgotPassword from './pages/Auth/ForgotPassword'
+import ResetPassword from './pages/Auth/ResetPassword'
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -30,7 +32,18 @@ function App() {
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
-                        <Route path="/user/activate/:activation_token" element={<ActivationEmail/>}
+                        <Route
+                            path="/user/activate/:activation_token"
+                            element={<ActivationEmail />}
+                        />
+                        <Route
+                            path="/forgot_password"
+                            element={<ForgotPassword />}
+                        />
+                        <Route
+                            path="/user/reset/:token"
+                            element={<ResetPassword/>}
+                            
                         />
                     </Routes>
                 </main>

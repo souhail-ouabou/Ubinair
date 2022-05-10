@@ -108,6 +108,47 @@ const userCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    forgotPassword: async (req, res) => {
+        try {
+            /* forgotPassword: if click to forgotPwd btn  - we  send a email  and a req with the token_code(user)
+             */
+            console.log('forgot pass')
+            const { email } = req.body
+            const existingUser = await Users.findOne({ email })
+            if (!existingUser)
+                return res
+                    .status(400)
+                    .json({ msg: "That Email doesn't exist." })
+
+            const access_token = createAccessToken({ id: existingUser._id })
+            const url = `${CLIENT_URL}/user/reset/${access_token}`
+
+            sendMail(email, url, existingUser.name, 'Reset your password')
+            res.json({
+                msg: 'Re-send the password, please check your email inbox or spam.',
+            }) //seccess
+        } catch (err) {
+            return res.status(500).json({ msg: err.message }) //err
+        }
+    },
+    resetPassword: async (req, res) => {
+        //after pass through middleware and verfey that the token in header value
+        //we modify the pwd
+        try {
+            const { password } = req.body
+            const passwordHash = await bcrypt.hash(password, 12)
+            //{ id: '609b416cbed92c4798c17f49', iat: 1620867631, exp: 1620868531 }
+            await Users.findOneAndUpdate(
+                { _id: req.user.id },
+                {
+                    password: passwordHash,
+                }
+            )
+            res.json({ msg: 'Password successfully changed!' })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
     login: async (req, res) => {
         try {
             //http://localhost:5000/user/login
@@ -193,11 +234,9 @@ const userCtrl = {
     // },
 }
 
-const createRefreshToken = (payload) => {
-    // The jwt.sign method are used
-    // to create token
-    return jwt.sign(payload, `${process.env.REFRESH_TOKEN_SECRET}`, {
-        expiresIn: '5m',
+const createAccessToken = (payload) => {
+    return jwt.sign(payload, `${process.env.ACCESS_TOKEN_SECRET}`, {
+        expiresIn: '15m',
     })
 }
 const generateToken = (id) => {
