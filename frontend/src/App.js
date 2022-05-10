@@ -10,6 +10,7 @@ import Footer from './components/Footer'
 import Nav from './components/Navbar/Nav'
 import Login from './pages/Auth/Login'
 import Register from './pages/Auth/Register'
+import ActivationEmail from './pages/Auth/ActivationEmail'
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -29,6 +30,8 @@ function App() {
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
+                        <Route path="/user/activate/:activation_token" element={<ActivationEmail/>}
+                        />
                     </Routes>
                 </main>
             </section>

@@ -2,10 +2,12 @@ const asyncHandler = require('express-async-handler')
 const Users = require('../models/userModel')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
-
+const sendMail = require('./sendMail')
 //@desc  Get goals
 //@route  Get /api/test
 //@acces  Get Private
+
+const { CLIENT_URL } = process.env
 
 function validateEmail(email) {
     const re =
@@ -20,7 +22,7 @@ function isEmpty(value) {
 const userCtrl = {
     register: async (req, res) => {
         let newUser
-        console.log(req.body)
+        // console.log(req.body)
         //get email and the password from the frontend
         //whenever have a post request u get all the data through the req.body
         //create the user but first hash the pwd
@@ -51,18 +53,57 @@ const userCtrl = {
 
             const passwordHash = await bcrypt.hash(password, 12)
 
-            const newUser = new Users({
+            const newUser = {
                 name,
                 email,
                 phone,
-                description,
+
                 password: passwordHash,
-            })
-            await newUser.save()
+            }
+
+            const activation_token = createActivationToken(newUser)
+
+            const url = `${CLIENT_URL}/user/activate/${activation_token}`
+            sendMail(email, url, name, 'Verify your email address')
 
             res.json({
                 msg: 'Register Success! Please activate your email to start.',
             })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    activateEmail: async (req, res) => {
+        try {
+            //http://localhost:5000/user/activation
+            /*register : after the user set the fields we send a request to check 
+                if evryething fine and the email not already in DB and set the token with user 
+                */
+            /* activateEmail: if click to the lien of email that we send it  -  send a req with the token_code(user)
+             */
+            const { activation_token } = req.body
+            const user = jwt.verify(
+                activation_token,
+                process.env.ACTIVATION_TOKEN_SECRET
+            )
+            /*console.log(user);
+                //that user contain all fields {
+                name: 'User 01',
+                 email: 'adam7hisoka@gmail.com',
+                 password: '$2b$12$6fOX2Q6gm4Fc9yX.HxmX6e0//dlsO2LbYG6m6rmzecOvfv4BAr3a.',
+                 iat: 1620786747,
+                 exp: 1620787347
+                }*/
+            const { name, email, password, phone } = user
+            //check if the user already registred
+            const check = await Users.findOne({ email })
+            if (check)
+                return res.status(400).json({ msg: 'This email already exist' })
+            //if not create one and save it to DB
+
+            const newUser = new Users({ name, email, phone, password })
+            await newUser.save()
+            res.json({ msg: 'Votre compte a été activé avec succès!' })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -85,10 +126,10 @@ const userCtrl = {
                     .status(400)
                     .json({ msg: "That Email doesn't exist." })
 
-                    const isPasswordCorrect = await bcrypt.compare(
-                        password,
-                        user.password
-                    )
+            const isPasswordCorrect = await bcrypt.compare(
+                password,
+                user.password
+            )
             if (!isPasswordCorrect)
                 return res.status(400).json({ msg: 'Invalid credentials' })
 
@@ -151,11 +192,7 @@ const userCtrl = {
     //   }
     // },
 }
-const createAccessToken = (payload) => {
-    return jwt.sign(payload, `${process.env.ACCESS_TOKEN_SECRET}`, {
-        expiresIn: '15m',
-    })
-}
+
 const createRefreshToken = (payload) => {
     // The jwt.sign method are used
     // to create token
@@ -168,5 +205,9 @@ const generateToken = (id) => {
         expiresIn: '30d',
     })
 }
-
+const createActivationToken = (payload) => {
+    return jwt.sign(payload, `${process.env.ACTIVATION_TOKEN_SECRET}`, {
+        expiresIn: '5m',
+    })
+}
 module.exports = userCtrl

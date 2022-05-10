@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
-import { Link,useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { dispatchLogin } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
@@ -101,7 +101,7 @@ const Login = () => {
                             onChange={handleChange}
                             name="email"
                             value={email}
-                            placeholder="Email"
+                            placeholder="Your Email"
                         />
                     </div>
                     <div className="flex flex-col text-gray-400 py-2">
@@ -112,6 +112,7 @@ const Login = () => {
                             name="password"
                             value={password}
                             onChange={handleChange}
+                            placeholder="Your assword"
                         />
                     </div>
                     <div className="flex justify-end   text-gray-400 py-2">

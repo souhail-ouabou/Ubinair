@@ -6,6 +6,7 @@ const auth = require('../middleware/auth')
 
 router.post('/register', userCtrl.register)
 router.post('/login', userCtrl.login)
+router.post('/activation', userCtrl.activateEmail)
 // router.post('/refresh_token', userCtrl.getAccessToken)
 // login as normal user  -> refresh_token -> grtUserInfo
 // router.get('/infor', auth, userCtrl.getUserInfor)
