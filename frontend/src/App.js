@@ -13,6 +13,7 @@ import Register from './pages/Auth/Register'
 import ActivationEmail from './pages/Auth/ActivationEmail'
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import ResetPassword from './pages/Auth/ResetPassword'
+import Dashboard from './pages/Dashboard'
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -24,7 +25,7 @@ function App() {
 
     return (
         <div>
-            <section className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed	p-12 ">
+            <section className="flex  justify-center items-center  min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed p-12 ">
                 <Nav />
 
                 <main>
@@ -42,9 +43,9 @@ function App() {
                         />
                         <Route
                             path="/user/reset/:token"
-                            element={<ResetPassword/>}
-                            
+                            element={<ResetPassword />}
                         />
+                        <Route path="/profile" element={<Dashboard />} />
                     </Routes>
                 </main>
             </section>

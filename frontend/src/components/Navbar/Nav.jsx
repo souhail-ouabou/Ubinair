@@ -75,14 +75,12 @@ const Nav = () => {
             </li>
         )
     }
-    useEffect(() => {
-        if (user) {
-            navigate('/')
-        }
-    }, [navigate, user])
+
+
     useEffect(() => {
         setInHome(JSON.parse(window.localStorage.getItem('inHome')))
     }, [])
+
     useEffect(() => {
         window.localStorage.setItem('inHome', inHome)
     }, [inHome])

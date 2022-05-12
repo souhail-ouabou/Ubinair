@@ -77,7 +77,7 @@ const Login = () => {
                 <span></span>
                 <span></span>
             </div>
-            <div className="hidden sm:block mr-24 mt-28 z-10 ">
+            <div className="hidden sm:block  ml-24 mr-24 mt-28 z-10 ">
                 <img src={login} alt="" className="w-[520px]  mt-16 " />
             </div>
             <div className="flex flex-col justify-center items-center ">
