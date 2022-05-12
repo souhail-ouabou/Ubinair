@@ -1,6 +1,7 @@
 import React from 'react'
 import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
 import bgImg2 from '../img/Asset.png'
+
 import {
     FaPhone,
     FaQuestion,

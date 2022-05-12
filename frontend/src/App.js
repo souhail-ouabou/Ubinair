@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { Nav } from './components'
 import Home from './components/Home'
+import Calculator from './components/calculator/Calculator'
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
 import { useEffect, useState } from 'react'
@@ -17,11 +18,12 @@ function App() {
   }, [])
     return (
         <section className="flex justify-center items-center min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed	p-12 ">
-            <Nav />
+            {/* <Nav /> */}
 
             <main>
                 <Routes>
                     <Route path="/*" element={<Home />} />
+                    <Route path="/calculator" element={<Calculator />} />
                 </Routes>
             </main>
         </section>

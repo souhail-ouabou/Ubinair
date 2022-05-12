@@ -60,7 +60,22 @@ module.exports = {
         cartItem: "#2e3033",
         cartTotal: "#343739",
       },
+      scale: {
+        '110': '1.1',
+      },
+      borderColor:theme=>({
+      DEFAULT:theme('colors.gray.300','currentColor'),
+      'neon':'#ccff00',
+      }),
+      backgroundColor:theme=>({
+        'neon':'#ccff00',
+      }),
     },
   },
+    variants:{
+      extend:{
+        backgroundColor:['checked'],
+      },
+    },
   plugins: [],
 }

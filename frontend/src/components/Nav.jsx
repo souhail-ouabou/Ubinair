@@ -15,7 +15,7 @@ const Nav = () => {
                     alt="Logo"
                 />
                 <p className="text-[#EEEEEF] text-xl font-semibold m-auto">
-                    Ubinaire
+                    Ubinair
                 </p>
             </Link>
 
