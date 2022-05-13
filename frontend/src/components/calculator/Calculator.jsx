@@ -162,7 +162,7 @@ class Calculator extends React.Component {
     
     <section>
 
-        <SimpleNav onClick={this.previousTab} />
+        {/* <SimpleNav onClick={this.previousTab} /> */}
             
 
             <BeginPage index={this.state.index} onNext={(i)=>this.toggleTab(i)}/>

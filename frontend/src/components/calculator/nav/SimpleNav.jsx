@@ -16,7 +16,7 @@ const SimpleNav = (props) => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 200 }}
                 transition={{duration:1.0}}
-                className="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-100 top-[-400px] "
+                className="md:flex md:items-center z-[-1] md:z-auto md:static absolute w-full ml-10 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-100  "
             >
                 
                 <Link  spy={true} offset={-100} duration={500}>
@@ -34,7 +34,7 @@ const SimpleNav = (props) => {
             initial={{ opacity: 0, x: -200 }}
             animate={{ opacity: 1, x: 0 }}
            transition={{duration:1.0}}
-             className="flex items-center gap-2 md:m-0 ml-24 ">
+             className="flex items-center gap-2  mr-10 ">
                 <img
                     className="w-16 object-cover m-auto "
                     src={Logo}

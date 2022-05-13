@@ -15,21 +15,7 @@ body {
  
 }
 
-.header {
-    position: absolute;
-    top: -40px;
-    right: 20px;
-    left: 20px;
-    padding: 14px 50px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-    border-radius: 16px;
-    backdrop-filter: blur(10px);
-    background-image: linear-gradient(rgba(60, 54, 66, 0.05), rgb(20, 12, 29));
-}
+
 .glass {
     padding: 14px 50px;
     justify-content: space-between;
@@ -40,6 +26,8 @@ body {
     backdrop-filter: blur(10px);
     background-image: linear-gradient(rgba(60, 54, 66, 0.05), rgb(20, 12, 29));
 }
+
+
 @keyframes move {
     100% {
         transform: translate3d(0, 0, 1px) rotate(360deg);
