@@ -1,39 +1,7 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import Logo from '../img/Logo.png'
-import OverviewIcon from '../icons/overview.svg'
-import ShoppingBagIcon from '../icons/shopping-bag.svg'
-import GraphIcon from '../icons/graph.svg'
-import CalendarIcon from '../icons/calendar.svg'
-import WalletIcon from '../icons/wallet.svg'
-import FileIcon from '../icons/file.svg'
-import ChatIcon from '../icons/chat.svg'
-import GroupChatIcon from '../icons/group-chat.svg'
-import SettingsIcon from '../icons/settings.svg'
-import LogoutIcon from '../icons/logout.svg'
-import PlusIcon from '../icons/plus.svg'
-import LayersIcon from '../icons/layers.svg'
-import DraftIcon from '../icons/draft.svg'
-import InvisibleIcon from '../icons/invisible.svg'
-import RejectedIcon from '../icons/rejected.svg'
-import MailIcon from '../icons/mail.svg'
-import FilterIcon from '../icons/filter.svg'
-import FigmaIcon from '../icons/figma.svg'
-import SketchIcon from '../icons/sketch.svg'
-import AIIcon from '../icons/ai.svg'
-import PencilIcon from '../icons/pencil.svg'
-import TrashIcon from '../icons/trash.svg'
-import ChevronLeftIcon from '../icons/chevron-left.svg'
-import ChevronRightIcon from '../icons/chevron-right.svg'
-import { FaThLarge, FaPhone, FaArrowRight } from 'react-icons/fa'
-import {
-    Gantt,
-    Task,
-    EventOption,
-    StylingOption,
-    ViewMode,
-    DisplayOption,
-} from 'gantt-task-react'
+import React, { useState } from 'react'
+import Logo from '../../img/Logo.png'
+import { FaThLarge } from 'react-icons/fa'
+import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
 // Import react-circular-progressbar module and styles
 import {
@@ -42,39 +10,68 @@ import {
     buildStyles,
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-import RadialSeparators from './RadialSeparators'
-import ProgressBar from '../components/ProgressBar/ProgressBar'
+import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import { getStartEndDateForProject, initTasks } from './helper'
+import { ViewSwitcher } from './view-switcher'
+
 
 const Dashboard = () => {
     const percentage = 66
-    let tasks = [
-        {
-            start: new Date(2020, 1, 1),
-            end: new Date(2020, 1, 2),
-            name: 'Idea',
-            id: 'Task 0',
-            type: 'task',
-            progress: 45,
-            isDisabled: true,
-            styles: {
-                progressColor: '#ffbb54',
-                progressSelectedColor: '#ff9e0d',
-            },
-        },
-        {
-            start: new Date(2020, 1, 4),
-            end: new Date(2020, 1, 21),
-            name: 'Idea',
-            id: 'Task 0',
-            type: 'task',
-            progress: 89,
-            isDisabled: true,
-            styles: {
-                progressColor: '#ffbb54',
-                progressSelectedColor: '#ff9e0d',
-            },
-        },
-    ]
+    const [view, setView] = React.useState(ViewMode.Day)
+    const [tasks, setTasks] = React.useState(initTasks())
+    const [isChecked, setIsChecked] = React.useState(true)
+    let columnWidth = 60
+    if (view === ViewMode.Month) {
+        columnWidth = 300
+    } else if (view === ViewMode.Week) {
+        columnWidth = 250
+    }
+
+    const handleTaskChange = (task) => {
+        console.log('On date change Id:' + task.id)
+        let newTasks = tasks.map((t) => (t.id === task.id ? task : t))
+        if (task.project) {
+            const [start, end] = getStartEndDateForProject(
+                newTasks,
+                task.project
+            )
+            const project =
+                newTasks[newTasks.findIndex((t) => t.id === task.project)]
+            if (
+                project.start.getTime() !== start.getTime() ||
+                project.end.getTime() !== end.getTime()
+            ) {
+                const changedProject = { ...project, start, end }
+                newTasks = newTasks.map((t) =>
+                    t.id === task.project ? changedProject : t
+                )
+            }
+        }
+        setTasks(newTasks)
+    }
+    const handleTaskDelete = (task) => {
+        const conf = window.confirm('Are you sure about ' + task.name + ' ?')
+        if (conf) {
+            setTasks(tasks.filter((t) => t.id !== task.id))
+        }
+        return conf
+    }
+    const handleProgressChange = async (task) => {
+        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
+        console.log('On progress change Id:' + task.id)
+    }
+    const handleDblClick = (task) => {
+        alert('On Double Click event Id:' + task.id)
+    }
+    const handleSelect = (task, isSelected) => {
+        console.log(
+            task.name + ' has ' + (isSelected ? 'selected' : 'unselected')
+        )
+    }
+    const handleExpanderClick = (task) => {
+        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
+        console.log('On expander click Id:' + task.id)
+    }
     return (
         <div className="w-full min-h-screen flex ">
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
@@ -255,12 +252,27 @@ const Dashboard = () => {
                         <ProgressBar done="30" />
                     </div>
                 </circles>
-                <div className='mt-20' style={{ width: 900, height: 200 }}>
+                <div style={{ width: 730, height: 500 }}>
+                    <ViewSwitcher
+                        onViewModeChange={(viewMode) => setView(viewMode)}
+                        onViewListChange={setIsChecked}
+                        isChecked={isChecked}
+                    />
                     <Gantt
                         tasks={tasks}
+                        viewMode={view}
+                        onDateChange={handleTaskChange}
+                        onDelete={handleTaskDelete}
+                        onProgressChange={handleProgressChange}
+                        onDoubleClick={handleDblClick}
+                        onSelect={handleSelect}
+                        onExpanderClick={handleExpanderClick}
+                        listCellWidth={isChecked ? '155px' : ''}
+                        columnWidth={columnWidth}
+                        TooltipContent="false"
                         TaskListTable="false"
                         TaskListHeader="false"
-                        TooltipContent="false"
+                        
                     />
                 </div>
             </main>

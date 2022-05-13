@@ -66,6 +66,11 @@ const Nav = () => {
                             <Link to="/profile">Profile</Link>
                         </li>
                         <li className="mb-2 cursor-pointer">
+                            <Link to="/dashboard">
+                            Dashboard
+                            </Link>
+                        </li>
+                        <li className="mb-2 cursor-pointer">
                             <Link to="/" onClick={logoutHandler}>
                                 Logout
                             </Link>
@@ -77,13 +82,16 @@ const Nav = () => {
     }
 
 
-    useEffect(() => {
-        setInHome(JSON.parse(window.localStorage.getItem('inHome')))
-    }, [])
 
-    useEffect(() => {
-        window.localStorage.setItem('inHome', inHome)
-    }, [inHome])
+
+
+            // useEffect(() => {
+            //     setInHome(JSON.parse(window.localStorage.getItem('inHome')))
+            // }, [])
+
+            // useEffect(() => {
+            //     window.localStorage.setItem('inHome', inHome)
+            // }, [inHome])
 
     const logoutHandler = () => {
         dispatch(logout())

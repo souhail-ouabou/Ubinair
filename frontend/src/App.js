@@ -16,7 +16,7 @@ import Register from './pages/Auth/Register'
 import ActivationEmail from './pages/Auth/ActivationEmail'
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import ResetPassword from './pages/Auth/ResetPassword'
-import Dashboard from './pages/Dashboard'
+import Dashboard from './pages/Dashboard/Dashboard'
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -50,6 +50,7 @@ function App() {
                             element={<ResetPassword />}
                         />
                         <Route path="/profile" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
                     </Routes>
                 </main>
             </section>
