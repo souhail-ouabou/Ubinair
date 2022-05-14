@@ -11,9 +11,9 @@ import {
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
-import { getStartEndDateForProject, initTasks } from './helper'
-import { ViewSwitcher } from './view-switcher'
-
+import { getStartEndDateForProject, initTasks } from './Gantt/helper'
+import { ViewSwitcher } from './Gantt/view-switcher'
+import TodoList from './TodoList/TodoList'
 
 const Dashboard = () => {
     const percentage = 66
@@ -134,8 +134,9 @@ const Dashboard = () => {
                 </ul>
             </aside>
             <main class="flex-1 pb-8 glass mt-14  ">
-                <circles className="flex items-center justify-center gap-12">
-                    <div class=" flex flex-col gap-4 justify-center items-center ">
+                <top className="flex items-center justify-center gap-12">
+                    <div class=" flex flex-col gap-4 justify-center items-center "> 
+                    
                         <div>
                             <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
                                 Design
@@ -243,16 +244,18 @@ const Dashboard = () => {
                             </CircularProgressbarWithChildren>
                         </div>
                     </div>
-                    <div class=" flex flex-col gap-4 justify-center items-center">
+                    <div class=" flex flex-col gap-4 justify-center items-center bg-white shadow-md w-2/5 p-6 rounded-xl">
                         <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
+                            <h1 class="text-2xl font-semibold leading-relaxed ">
                                 Total
                             </h1>
                         </div>
                         <ProgressBar done="30" />
                     </div>
-                </circles>
-                <div style={{ width: 730, height: 500 }}>
+                </top>
+                <bottom className="flex items-center justify-center gap-12">
+
+                <div style={{ width: 700, height: 500 }}>
                     <ViewSwitcher
                         onViewModeChange={(viewMode) => setView(viewMode)}
                         onViewListChange={setIsChecked}
@@ -272,9 +275,13 @@ const Dashboard = () => {
                         TooltipContent="false"
                         TaskListTable="false"
                         TaskListHeader="false"
-                        
                     />
                 </div>
+           
+                            <TodoList  />
+                  
+                       
+                </bottom>
             </main>
         </div>
     )
