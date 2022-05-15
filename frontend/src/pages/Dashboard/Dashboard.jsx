@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
+// import Todolist from './TodoList'
+
 import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
 // Import react-circular-progressbar module and styles
@@ -15,7 +17,42 @@ import { getStartEndDateForProject, initTasks } from './helper'
 import { ViewSwitcher } from './view-switcher'
 
 
+// const Dashboard = () =>
+// const tasks=[];
+// class Dashboard extends React.Component
 const Dashboard = () => {
+    // constructor(props){
+    //     super(props);
+    //     this.state={
+    //         tasks:[],
+    //     }
+    // }
+
+    // createTask=(task)=>{
+    // if(task.trim()==='')
+    // {
+    //     alert('task cant be empty')
+    //     return;
+    // }
+    // tasks.push({task,isChecked:false})
+    // this.setState({tasks:tasks})
+
+    // }
+    //   toggleTask=(taskId)=>{
+    //       const taskItem=tasks[taskId];
+    //       taskItem.isChecked=!taskItem.isChecked;
+    //       this.setState({tasks:tasks})
+    //   }
+    // deleteTask=(taskId)=>{
+    //     tasks.splice(taskId,1)
+    //     this.setState({tasks:tasks})
+    // }
+
+    // editTask=(taskId,task)=>{
+    //  const taskItem=tasks[taskId]
+    //  taskItem.task=task;
+    //  this.setState({tasks:tasks})
+    // }
     const percentage = 66
     const [view, setView] = React.useState(ViewMode.Day)
     const [tasks, setTasks] = React.useState(initTasks())
@@ -72,6 +109,7 @@ const Dashboard = () => {
         setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
         console.log('On expander click Id:' + task.id)
     }
+    // render(){
     return (
         <div className="w-full min-h-screen flex ">
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
@@ -133,7 +171,19 @@ const Dashboard = () => {
                     </li>
                 </ul>
             </aside>
-            <main class="flex-1 pb-8 glass mt-14  ">
+            <main class="flex-1 pb-8 glass mt-14 w-[1200px] ">
+             {/* <div className="float-right mt-40 text-lg text-white">
+              <h1 >Todo List</h1>
+              <div>
+                  <Todolist tasks={this.state.tasks} 
+                           createTask={this.createTask}
+                            deleteTask={this.deleteTask}
+                             editTask={this.editTask}
+                             toggleTask={this.toggleTask}/>
+              </div>
+              </div> */}
+
+
                 <circles className="flex items-center justify-center gap-12">
                     <div class=" flex flex-col gap-4 justify-center items-center ">
                         <div>
@@ -243,9 +293,9 @@ const Dashboard = () => {
                             </CircularProgressbarWithChildren>
                         </div>
                     </div>
-                    <div class=" flex flex-col gap-4 justify-center items-center">
+                    <div class="flex flex-col gap-4 justify-center items-center bg-white shadow-md w-2/5 p-6 rounded-xl">
                         <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
+                            <h1 class="text-2xl font-semibold leading-relaxed ">
                                 Total
                             </h1>
                         </div>

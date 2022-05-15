@@ -17,6 +17,8 @@ import ActivationEmail from './pages/Auth/ActivationEmail'
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import ResetPassword from './pages/Auth/ResetPassword'
 import Dashboard from './pages/Dashboard/Dashboard'
+import Tracker from './pages/Dashboard/Tracker'
+
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -49,7 +51,8 @@ function App() {
                             path="/user/reset/:token"
                             element={<ResetPassword />}
                         />
-                        <Route path="/profile" element={<Dashboard />} />
+                        <Route path="/profile" element={<Dashboard />}/>
+                        <Route path="/tracker" element={<Tracker />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                     </Routes>
                 </main>

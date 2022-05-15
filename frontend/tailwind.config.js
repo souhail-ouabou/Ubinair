@@ -3,6 +3,9 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      boxShadow: {
+        'box-sh':'0px 0px 8px rgb(255,255,255)',
+      },
       fontFamily: {
         sans: ['"Montserrat"', 'sans-serif']
       },
