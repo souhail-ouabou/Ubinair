@@ -1,6 +1,4 @@
 import { Route, Routes } from 'react-router-dom'
-// import { Nav } from './components'
-// import Home from './components/Home'
 import Calculator from './components/calculator/Calculator'
 import { useDispatch, useSelector } from 'react-redux'
 
