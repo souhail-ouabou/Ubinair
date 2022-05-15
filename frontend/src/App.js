@@ -1,4 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
+// import { Nav } from './components'
+// import Home from './components/Home'
+import Calculator from './components/calculator/Calculator'
 import { useDispatch, useSelector } from 'react-redux'
 
 import Home from './pages/Home'
@@ -14,6 +17,8 @@ import ActivationEmail from './pages/Auth/ActivationEmail'
 import ForgotPassword from './pages/Auth/ForgotPassword'
 import ResetPassword from './pages/Auth/ResetPassword'
 import Dashboard from './pages/Dashboard/Dashboard'
+import Tracker from './pages/Dashboard/Tracker'
+
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
@@ -31,6 +36,7 @@ function App() {
                 <main>
                     <Routes>
                         <Route path="/*" element={<Home />} />
+                        <Route path="/calculator" element={<Calculator />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route
@@ -45,7 +51,8 @@ function App() {
                             path="/user/reset/:token"
                             element={<ResetPassword />}
                         />
-                        <Route path="/profile" element={<Dashboard />} />
+                        <Route path="/profile" element={<Dashboard />}/>
+                        <Route path="/tracker" element={<Tracker />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                     </Routes>
                 </main>

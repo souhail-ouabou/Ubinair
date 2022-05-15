@@ -1,6 +1,7 @@
 import React from 'react'
 import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
 import bgImg2 from '../img/Asset.png'
+
 import {
     FaPhone,
     FaQuestion,
@@ -179,7 +180,7 @@ const Home = () => {
                         data-aos-duration="2000"
                         ata-aos-easing="ease-out-cubic"
                     >
-                        <div className="-p-12">
+                        <div className="-p-12" >
                             <h3 className="text-white font-semibold text-sm my-6">
                                 MISSIONS RÉUSSIES
                             </h3>
@@ -215,7 +216,7 @@ const Home = () => {
                 <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold uppercase  ">
                     Calculer votre Devis !
                 </p>
-                <Link to={'/'} className="items-center justify-center m-auto">
+                <Link to={'/calculator'} className="items-center justify-center m-auto">
                     <button
                         className="py-3 px-6  text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto    

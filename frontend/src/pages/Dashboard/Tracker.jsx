@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
-// import Todolist from './TodoList'
-
 import { ViewMode, Gantt } from 'gantt-task-react'
+import {motion}  from 'framer-motion'
 import 'gantt-task-react/dist/index.css'
 // Import react-circular-progressbar module and styles
 import {
@@ -15,48 +14,48 @@ import 'react-circular-progressbar/dist/styles.css'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { getStartEndDateForProject, initTasks } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
-import TodoList from './TodoList/TodoList'
 
-// const Dashboard = () =>
-// const tasks=[];
-// class Dashboard extends React.Component
+
 const Dashboard = () => {
-    // constructor(props){
-    //     super(props);
-    //     this.state={
-    //         tasks:[],
-    //     }
-    // }
-
-    // createTask=(task)=>{
-    // if(task.trim()==='')
-    // {
-    //     alert('task cant be empty')
-    //     return;
-    // }
-    // tasks.push({task,isChecked:false})
-    // this.setState({tasks:tasks})
-
-    // }
-    //   toggleTask=(taskId)=>{
-    //       const taskItem=tasks[taskId];
-    //       taskItem.isChecked=!taskItem.isChecked;
-    //       this.setState({tasks:tasks})
-    //   }
-    // deleteTask=(taskId)=>{
-    //     tasks.splice(taskId,1)
-    //     this.setState({tasks:tasks})
-    // }
-
-    // editTask=(taskId,task)=>{
-    //  const taskItem=tasks[taskId]
-    //  taskItem.task=task;
-    //  this.setState({tasks:tasks})
-    // }
-    const percentage = 66
+    const percentage=60;
+    const [title,setTitle]=React.useState('')
+    const today= new Date();
     const [view, setView] = React.useState(ViewMode.Day)
-    const [tasks, setTasks] = React.useState(initTasks())
-    const [isChecked, setIsChecked] = React.useState(true)
+    const [design, setDesign] = React.useState(false)
+    const [content, setTContent] = React.useState(false)
+    const [inte, setInte] = React.useState(false)
+
+
+   const handleClickShow=(index)=>{
+        setTContent(false)
+        setInte(false)
+        setDesign(false)
+
+        if(index==1){
+            setDesign(true)
+            setTitle('Design')
+       }else if(index==2){
+            setTContent(true)
+            setTitle('Content')
+       }else{
+            setInte(true)
+            setTitle('Integration')
+           
+            
+       }
+
+    }
+    const handleClickContent=()=>{
+        setTContent(true)
+        setInte(false)
+        setDesign(false)
+    }
+    const handleClickInte=()=>{
+        setTContent(false)
+        setInte(true)
+        setDesign(false)
+    }
+
     let columnWidth = 60
     if (view === ViewMode.Month) {
         columnWidth = 300
@@ -64,52 +63,8 @@ const Dashboard = () => {
         columnWidth = 250
     }
 
-    const handleTaskChange = (task) => {
-        console.log('On date change Id:' + task.id)
-        let newTasks = tasks.map((t) => (t.id === task.id ? task : t))
-        if (task.project) {
-            const [start, end] = getStartEndDateForProject(
-                newTasks,
-                task.project
-            )
-            const project =
-                newTasks[newTasks.findIndex((t) => t.id === task.project)]
-            if (
-                project.start.getTime() !== start.getTime() ||
-                project.end.getTime() !== end.getTime()
-            ) {
-                const changedProject = { ...project, start, end }
-                newTasks = newTasks.map((t) =>
-                    t.id === task.project ? changedProject : t
-                )
-            }
-        }
-        setTasks(newTasks)
-    }
-    const handleTaskDelete = (task) => {
-        const conf = window.confirm('Are you sure about ' + task.name + ' ?')
-        if (conf) {
-            setTasks(tasks.filter((t) => t.id !== task.id))
-        }
-        return conf
-    }
-    const handleProgressChange = async (task) => {
-        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
-        console.log('On progress change Id:' + task.id)
-    }
-    const handleDblClick = (task) => {
-        alert('On Double Click event Id:' + task.id)
-    }
-    const handleSelect = (task, isSelected) => {
-        console.log(
-            task.name + ' has ' + (isSelected ? 'selected' : 'unselected')
-        )
-    }
-    const handleExpanderClick = (task) => {
-        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
-        console.log('On expander click Id:' + task.id)
-    }
-    // render(){
+   
+    
     return (
         <div className="w-full min-h-screen flex ">
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
@@ -172,15 +127,163 @@ const Dashboard = () => {
                 </ul>
             </aside>
             <main class="flex-1 pb-8 glass mt-14  ">
-                <top className="flex items-center justify-center gap-12">
-                    <div class=" flex flex-col gap-4 justify-center items-center "> 
-                    
+                <top className="flex gap-4 w-[1000px]">
+                <div class="flex flex-row justify-between w-3/4 text-white pt-20 pr-10"> 
+                 <div class="text-3xl font-semibold leading-relaxed text-slate-100">
+                     {
+                     title
+                     }
+                 </div>
+                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2">
+                    {design||content||inte?
+                    new Intl.DateTimeFormat("en-GB", {
+                        year: "numeric",
+                        month: "long",
+                        day: "2-digit"
+                    }).format(today):''}
+                 </div>
+                </div>
+                    <div class=" flex flex-col gap-4 justify-center items-center shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
+                      
+                    <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
+                    <li>
+                        <motion.div className="flex gap-x-4 items-center py-3 text-white hover:text-indigo-600 group rounded-lg   pl-4 pr-4"
+                             whileHover={{
+                                boxShadow:"0px 0px 8px rgb(255,255,255)"
+                            }}
+                               transition={{duration:0.2}}
+                               onClick={()=>handleClickShow(1)}
+                               >
+                              
                         <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
+                       
+                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
                                 Design
                             </h1>
+                           
                         </div>
-                        <div style={{ width: 200, height: 200 }}>
+                        <div class="ml-10" style={{ width: 50, height: 50 }}>
+                            <CircularProgressbarWithChildren
+                                value={50}
+                                styles={buildStyles({
+                                    pathColor: '#f00',
+                                    trailColor: '#eee',
+                                    strokeLinecap: 'butt',
+
+                                    textSize: '16px',
+
+                                    // How long animation takes to go from one percentage to another, in seconds
+                                    pathTransitionDuration: 0.5,
+                                })}
+                            >
+                                {/* Foreground path */}
+                                <CircularProgressbar
+                                    value={50}
+                                    styles={buildStyles({
+                                        trailColor: 'transparent',
+                                        strokeLinecap: 'butt',
+                                        pathColor: `rgba(99, 99, 199, ${
+                                            percentage / 10
+                                        })`,
+                                        backgroundColor: '#3e98c7',
+                                    })}
+                                />
+                                  </CircularProgressbarWithChildren>
+                            </div>
+                        </motion.div>
+                        
+                    </li>
+                    <li>
+                        <motion.div className="flex  gap-x-4 items-center py-3 text-white hover:text-indigo-600 group rounded-lg pl-4 pr-4"
+                         whileHover={{
+                            boxShadow:"0px 0px 8px rgb(255,255,255)"
+                        }}
+                           transition={{duration:0.2}}
+                           onClick={()=>handleClickShow(2)}>
+                        <div>
+                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
+                                Content
+                            </h1>
+                        </div>
+                 
+                        <div class="ml-7" style={{ width: 50, height: 50 }}>
+                            <CircularProgressbarWithChildren
+                                value={80}
+                                styles={buildStyles({
+                                    pathColor: '#f00',
+                                    trailColor: '#eee',
+                                    strokeLinecap: 'butt',
+
+                                    textSize: '16px',
+
+                                    // How long animation takes to go from one percentage to another, in seconds
+                                    pathTransitionDuration: 0.5,
+                                })}
+                            >
+                                {/* Foreground path */}
+                                <CircularProgressbar
+                                    value={70}
+                                    styles={buildStyles({
+                                        trailColor: 'transparent',
+                                        strokeLinecap: 'butt',
+
+                                        pathColor: `rgba(99, 99, 199, ${
+                                            percentage / 10
+                                        })`,
+                                        backgroundColor: '#3e98c7',
+                                    })}
+                                />
+                            </CircularProgressbarWithChildren>
+                        </div>
+                        </motion.div>
+                    </li>
+
+                    <li>
+                        <motion.div className="flex gap-x-4 items-center py-3 text-white hover:text-indigo-600 group rounded-lg pl-4 pr-4"
+                         whileHover={{
+                            boxShadow:"0px 0px 8px rgb(255,255,255)"
+                        }}
+                           transition={{duration:0.2}}
+                           onClick={()=>handleClickShow(3)}>
+                        <div>
+                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
+                                Integration
+                            </h1>
+                        </div>
+                        <div style={{ width: 50, height: 50 }}>
+                            <CircularProgressbarWithChildren
+                                value={80}
+                               
+                                styles={buildStyles({
+                                    pathColor: '#f00',
+                                    trailColor: '#eee',
+
+                                    textSize: '16px',
+
+                                    // How long animation takes to go from one percentage to another, in seconds
+                                    pathTransitionDuration: 0.5,
+                                })}
+                            >
+                                {/* Foreground path */}
+                                <CircularProgressbar
+                                    value={70}
+                                    styles={buildStyles({
+                                        trailColor: 'transparent',
+                                        strokeLinecap: 'round',
+                                        pathColor: `rgba(99, 99, 199, ${
+                                            percentage / 10
+                                        })`,
+                                        backgroundColor: '#3e98c7',
+                                    })}
+                                />
+                            </CircularProgressbarWithChildren>
+                        </div>
+                        </motion.div>
+                    </li>
+                    {design?<>
+                    <hr/>
+                    <li class="m-auto">
+                    <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
                                 value={50}
                                 text={`50%`}
@@ -209,14 +312,14 @@ const Dashboard = () => {
                                 />
                             </CircularProgressbarWithChildren>
                         </div>
-                    </div>
-                    <div class=" flex flex-col gap-4 justify-center items-center">
-                        <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
-                                Content
-                            </h1>
-                        </div>
-                        <div style={{ width: 200, height: 200 }}>
+                    </li>
+                    </>:<></>
+                    }
+
+                 {content?<>
+                    <hr/>
+                    <li class="m-auto">
+                    <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
                                 value={80}
                                 text={`70%`}
@@ -246,14 +349,15 @@ const Dashboard = () => {
                                 />
                             </CircularProgressbarWithChildren>
                         </div>
-                    </div>
-                    <div class=" flex flex-col gap-4 justify-center items-center">
-                        <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
-                                Integration
-                            </h1>
-                        </div>
-                        <div style={{ width: 200, height: 200 }}>
+                   
+                    </li>
+                    </>:<></>
+                    }
+
+                 {inte?<>
+                    <hr/>
+                    <li class="m-auto">
+                    <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
                                 value={80}
                                 text={`${percentage}%`}
@@ -281,42 +385,18 @@ const Dashboard = () => {
                                 />
                             </CircularProgressbarWithChildren>
                         </div>
-                    </div>
-                    <div class=" flex flex-col gap-4 justify-center items-center bg-white shadow-md w-2/5 p-6 rounded-xl">
-                        <div>
-                            <h1 class="text-2xl font-semibold leading-relaxed ">
-                                Total
-                            </h1>
-                        </div>
-                        <ProgressBar done="30" />
+                    </li>
+                    </>:<></>
+                    }
+                   </ul>
+
                     </div>
                 </top>
+                
                 <bottom className="flex items-center justify-center gap-12">
 
-                <div style={{ width: 700, height: 500 }}>
-                    <ViewSwitcher
-                        onViewModeChange={(viewMode) => setView(viewMode)}
-                        onViewListChange={setIsChecked}
-                        isChecked={isChecked}
-                    />
-                    <Gantt
-                        tasks={tasks}
-                        viewMode={view}
-                        onDateChange={handleTaskChange}
-                        onDelete={handleTaskDelete}
-                        onProgressChange={handleProgressChange}
-                        onDoubleClick={handleDblClick}
-                        onSelect={handleSelect}
-                        onExpanderClick={handleExpanderClick}
-                        listCellWidth={isChecked ? '155px' : ''}
-                        columnWidth={columnWidth}
-                        TooltipContent="false"
-                        TaskListTable="false"
-                        TaskListHeader="false"
-                    />
-                </div>
            
-                            <TodoList  />
+                            
                   
                        
                 </bottom>
