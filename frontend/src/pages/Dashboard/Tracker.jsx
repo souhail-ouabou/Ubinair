@@ -12,8 +12,8 @@ import {
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
-import { getStartEndDateForProject, initTasks } from './helper'
-import { ViewSwitcher } from './view-switcher'
+import { getStartEndDateForProject, initTasks } from './Gantt/helper'
+import { ViewSwitcher } from './Gantt/view-switcher'
 
 
 const Dashboard = () => {
