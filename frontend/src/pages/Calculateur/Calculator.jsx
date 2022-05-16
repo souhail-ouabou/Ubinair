@@ -15,6 +15,7 @@ const Calculator = () => {
         index: 0,
         devis: 0,
         type: null,
+        subtype: null,
         requirements: null,
         stateOfAdvance: null,
         priceDebut: 0,
@@ -105,19 +106,44 @@ const Calculator = () => {
         doc.save('facture.pdf')
     }
     const previousTab = () => {
-
         setCaluclator({
             ...calculator,
-            index: calculator.index -1,
+            index: calculator.index - 1,
         })
-
-
     }
     const toggleTab = (index, type = null) => {
-        if (index == 2) {
+        if (index == 1) {
+            switch (type) {
+                case 'Site Web':
+                    console.log('hahwa type', type)
+                    setCaluclator({
+                        ...calculator,
+                        type: type,
+                    })
+
+                    break
+                case 'Application mobile':
+                    console.log('hahwa type', type)
+                    setCaluclator({
+                        ...calculator,
+                        type: type,
+                    })
+                    break
+                case 'Application mobile + Site web':
+                    console.log('hahwa type', type)
+                    setCaluclator({
+                        ...calculator,
+                        type: type,
+                    })
+                    break
+                default:
+                    return
+            }
+        } else if (index == 2) {
             switch (type) {
                 case 'e-commerce':
                     setCaluclator({
+                        ...calculator,
                         ArrayOftoggles: [
                             {
                                 id: 1,
@@ -169,13 +195,14 @@ const Calculator = () => {
                             },
                         ],
                         devis: 900,
-                        type: 'Site e-commerce',
+                        subtype: 'Site e-commerce',
                         priceDebut: 900,
                     })
                     break
 
                 case 'vitrine':
                     setCaluclator({
+                        ...calculator,
                         ArrayOftoggles: [
                             {
                                 id: 1,
@@ -210,7 +237,7 @@ const Calculator = () => {
                             },
                         ],
                         devis: 200,
-                        type: 'Site vitrine',
+                        subtype: 'Site vitrine',
                         priceDebut: 200,
                     })
                     break
@@ -264,13 +291,16 @@ const Calculator = () => {
         <div className="w-[1000px]">
             <div>
                 {' '}
-             {  calculator.index == 0 ? '' : <Goback previousTab={previousTab} />}
-                {' '}
+                {calculator.index == 0 ? (
+                    ''
+                ) : (
+                    <Goback previousTab={previousTab} />
+                )}{' '}
             </div>
             <section>
                 <BeginPage
                     index={calculator.index} //0
-                    onNext={(i) => toggleTab(i)} //1
+                    onNext={(i, type) => toggleTab(i, type)} //1
                 />
                 <SiteTypePage
                     index={calculator.index} //1
