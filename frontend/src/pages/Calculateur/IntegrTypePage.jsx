@@ -4,7 +4,7 @@ import inteCon from '../../img/inteConc.png'
 import inte from '../../img/integ.png'
 import Devise from './Devise'
 
-export default function TypeIntegrPage(props) {
+export default function IntegrTypePage(props) {
   return (
     <div className={props.index===3?"text-white":"hidden"}>
 

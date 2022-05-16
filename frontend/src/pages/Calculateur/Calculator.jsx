@@ -1,43 +1,30 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import Goback from './Goback'
 import BeginPage from './BeginPage'
-import TypeSitePage from './TypeSitePage'
+import SiteTypePage from './SiteTypePage'
 import TogglesPage from './TogglesPage'
-import TypeIntegrPage from './TypeIntegrPage'
-import StadePage from './StadePage'
+import IntegrTypePage from './IntegrTypePage'
+import AdvanceStatePage from './AdvanceStatePage'
 import DownloadPage from './DownloadPage'
 import ubinairLogo from '../../img/ubinairLogo.png'
+
 import jsPDF from 'jspdf'
-import Goback from './Goback'
-
-class Calculator extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            index: 0,
-            devis: 0,
-            type: null,
-            required: null,
-            stateOfAdvance: null,
-            priceDebut: 0,
-            priceRequired: 0,
-            ArrayOftoggles: [],
-        }
+import autoTable from 'jspdf-autotable'
+const Calculator = () => {
+    const initialState = {
+        index: 0,
+        devis: 0,
+        type: null,
+        requirements: null,
+        stateOfAdvance: null,
+        priceDebut: 0,
+        priceRequired: 0,
+        ArrayOftoggles: [],
     }
-
-    handleCheckbox = (event) => {
-        let state = this.state
-        let index = event.target.value - 1
-        state.ArrayOftoggles[index].case = event.target.checked
-        event.target.checked
-            ? (state.devis += state.ArrayOftoggles[index].price)
-            : (state.devis -= state.ArrayOftoggles[index].price)
-        this.setState(state)
-        console.log(this.state.devis + this.state.type)
-    }
-
-    download = () => {
+    const [calculator, setCaluclator] = useState(initialState)
+    const download = () => {
         let doc = new jsPDF('p', 'pt', 'letter')
-        let taille = this.state.ArrayOftoggles.filter(
+        let taille = calculator.ArrayOftoggles.filter(
             (Arrayoftoggle) => Arrayoftoggle.case !== false
         ).length
         let today = new Date()
@@ -94,7 +81,7 @@ class Calculator extends React.Component {
         doc.setFontSize(15)
 
         doc.text(190, 360 + taille * 26, 'Notre estimation de votre PROJET')
-        doc.text(275, 380 + taille * 26, this.state.devis.toFixed(2) + ' £')
+        doc.text(275, 380 + taille * 26, calculator.devis.toFixed(2) + ' £')
 
         doc.setFontSize(10)
         doc.text(
@@ -117,16 +104,20 @@ class Calculator extends React.Component {
         doc.text(250, 760, 'Copyright ©2022 - Ubinair')
         doc.save('facture.pdf')
     }
-    previousTab = () => {
-        let x = this.state.index
-        this.setState({ index: x - 1 })
-    }
+    const previousTab = () => {
 
-    toggleTab = (index, type = null) => {
+        setCaluclator({
+            ...calculator,
+            index: calculator.index -1,
+        })
+
+
+    }
+    const toggleTab = (index, type = null) => {
         if (index == 2) {
             switch (type) {
                 case 'e-commerce':
-                    this.setState({
+                    setCaluclator({
                         ArrayOftoggles: [
                             {
                                 id: 1,
@@ -184,7 +175,7 @@ class Calculator extends React.Component {
                     break
 
                 case 'vitrine':
-                    this.setState({
+                    setCaluclator({
                         ArrayOftoggles: [
                             {
                                 id: 1,
@@ -238,107 +229,125 @@ class Calculator extends React.Component {
                 default:
                     return
             }
-            this.setState({
-                required: type,
+
+            setCaluclator({
+                ...calculator,
+                requirements: type,
                 priceRequired: price,
-                devis: this.state.devis + price,
+                devis: calculator.devis + price,
             })
         } else if (index == 5) {
             let t = type
-            this.setState({ stateOfAdvance: t })
+            calculator.stateOfAdvance = t
         }
-        this.setState({ index: index })
+        setCaluclator((prev) => {
+            return { ...prev, index }
+        })
+        console.log('RESUUUUUME', calculator)
     }
+    //TogglesPage handleCheckbox
+    const handleCheckbox = (event) => {
+        let index = event.target.value - 1 //default value of id in the array ArrayOftoggles - 1
+        console.log('indeeeeeex', index)
+        calculator.ArrayOftoggles[index].case = event.target.checked
+        event.target.checked
+            ? (calculator.devis += calculator.ArrayOftoggles[index].price)
+            : (calculator.devis -= calculator.ArrayOftoggles[index].price)
 
-    render() {
-        return (
-            <div className='w-[1000px]'>
-                <div>
-                    <Goback previousTab={this.previousTab} />
-                </div>
-                <section>
-                    <BeginPage
-                        index={this.state.index}
-                        onNext={(i) => this.toggleTab(i)}
-                    />
-                    {/*0        1 */}
-                    <TypeSitePage
-                        index={this.state.index}
-                        onNext={(i, type) => this.toggleTab(i, type)}
-                    />
-                    <TogglesPage
-                        allState={this.state}
-                        onHandleCheck={this.handleCheckbox}
-                        onNext={(i) => this.toggleTab(i)}
-                    />
-                    <TypeIntegrPage
-                        index={this.state.index}
-                        devis={this.state.devis}
-                        onNext={(i, type) => this.toggleTab(i, type)}
-                    />
-                    <StadePage
-                        index={this.state.index}
-                        devis={this.state.devis}
-                        onNext={(i, type) => this.toggleTab(i, type)}
-                    />
-                    <DownloadPage
-                        index={this.state.index}
-                        devis={this.state.devis}
-                        onDownload={() => this.download()}
-                    />
+        setCaluclator((prev) => {
+            return { ...prev }
+        })
 
-                    <table id="firstTable" hidden>
-                        <caption>first table</caption>
-                        <tr>
-                            <th>Type</th>
-                            <th>Prix</th>
-                        </tr>
-                        <tr>
-                            <td>{this.state.type}</td>
-                            <td>{this.state.priceDebut} £</td>
-                        </tr>
-                    </table>
-
-                    <table id="secondTable" hidden>
-                        <caption>first table</caption>
-                        <tr>
-                            <th>Description</th>
-                            <th>Prix</th>
-                        </tr>
-                        <tr>
-                            <td>{this.state.required}</td>
-                            <td>{this.state.priceRequired} £</td>
-                        </tr>
-                    </table>
-
-                    <table id="thirdTable" hidden>
-                        <caption>second table</caption>
-                        <tr>
-                            <th>Fonctionalités</th>
-                            <th>Prix</th>
-                        </tr>
-
-                        {this.state.ArrayOftoggles.filter(
-                            (Arrayoftoggle) => Arrayoftoggle.case !== false
-                        ).map((togglerow) => (
-                            <tr>
-                                <td>{togglerow.title}</td>
-                                <td>{togglerow.price} £</td>
-                            </tr>
-                        ))}
-                        <tr>
-                            <th>Sous Total</th>
-                            <th>
-                                {this.state.devis -
-                                    (this.state.priceDebut +
-                                        this.state.priceRequired)}{' '}
-                                £
-                            </th>
-                        </tr>
-                    </table>
-                </section>
+        console.log(calculator.devis + '   ' + calculator.type)
+    }
+    return (
+        <div className="w-[1000px]">
+            <div>
+                {' '}
+             {  calculator.index == 0 ? '' : <Goback previousTab={previousTab} />}
+                {' '}
             </div>
-        )
-    }
+            <section>
+                <BeginPage
+                    index={calculator.index} //0
+                    onNext={(i) => toggleTab(i)} //1
+                />
+                <SiteTypePage
+                    index={calculator.index} //1
+                    onNext={(i, type) => toggleTab(i, type)} //2
+                />
+                <TogglesPage
+                    allState={calculator} //2
+                    onHandleCheck={handleCheckbox}
+                    onNext={(i) => toggleTab(i)} //3
+                />
+                <IntegrTypePage
+                    index={calculator.index} //3
+                    devis={calculator.devis}
+                    onNext={(i, type) => toggleTab(i, type)} //4
+                />
+                <AdvanceStatePage
+                    index={calculator.index}
+                    devis={calculator.devis}
+                    onNext={(i, type) => toggleTab(i, type)} //5
+                />
+                <DownloadPage
+                    index={calculator.index} //5
+                    devis={calculator.devis}
+                    onDownload={() => download()}
+                />
+            </section>
+            <table id="firstTable" hidden>
+                <caption>first table</caption>
+                <tr>
+                    <th>Type</th>
+                    <th>Prix</th>
+                </tr>
+                <tr>
+                    <td>{calculator.type}</td>
+                    <td>{calculator.priceDebut} £</td>
+                </tr>
+            </table>
+
+            <table id="secondTable" hidden>
+                <caption>first table</caption>
+                <tr>
+                    <th>Description</th>
+                    <th>Prix</th>
+                </tr>
+                <tr>
+                    <td>{calculator.required}</td>
+                    <td>{calculator.priceRequired} £</td>
+                </tr>
+            </table>
+
+            <table id="thirdTable" hidden>
+                <caption>second table</caption>
+                <tr>
+                    <th>Fonctionalités</th>
+                    <th>Prix</th>
+                </tr>
+
+                {calculator.ArrayOftoggles.filter(
+                    (Arrayoftoggle) => Arrayoftoggle.case !== false
+                ).map((togglerow) => (
+                    <tr>
+                        <td>{togglerow.title}</td>
+                        <td>{togglerow.price} £</td>
+                    </tr>
+                ))}
+                <tr>
+                    <th>Sous Total</th>
+                    <th>
+                        {calculator.devis -
+                            (calculator.priceDebut +
+                                calculator.priceRequired)}{' '}
+                        £
+                    </th>
+                </tr>
+            </table>
+        </div>
+    )
 }
+
 export default Calculator

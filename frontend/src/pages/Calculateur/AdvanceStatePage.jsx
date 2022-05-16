@@ -6,7 +6,8 @@ import note from '../../img/note.png'
 import verified from '../../img/verified.png'
 import Devise from './Devise'
 
- function StadePage(props) {
+
+ function AdvanceStatePage(props) {
   return (
      
     <div className={props.index===4?"text-white":"hidden"}>
@@ -122,4 +123,4 @@ import Devise from './Devise'
 
 </div>
   )
-}export default StadePage;
+}export default AdvanceStatePage;

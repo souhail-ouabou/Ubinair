@@ -4,7 +4,7 @@ import eco from '../../img/eco.png'
 import vitrine from '../../img/vitrine.png'
 
 
-function TypeSitePage(props) {
+function SiteTypePage(props) {
     return (
         <div className={props.index === 1 ? 'text-white' : 'hidden'}>
 
@@ -81,4 +81,4 @@ function TypeSitePage(props) {
         </div>
     )
 }
-export default TypeSitePage
+export default SiteTypePage
