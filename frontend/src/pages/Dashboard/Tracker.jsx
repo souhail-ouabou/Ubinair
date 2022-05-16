@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
 import { ViewMode, Gantt } from 'gantt-task-react'
@@ -18,6 +18,104 @@ import { ViewSwitcher } from './Gantt/view-switcher'
 
 const Dashboard = () => {
     const percentage=60;
+
+    const tasksDesign=[{title:"Start Design",state:-1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())},{title:"Add nav bar",state:0,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())},
+    {title:"Add footer",state:1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())}]
+
+    
+    const tasksContent=[{title:"Start Content",state:0,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())},
+    {title:"Add Articles",state:-1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())},
+    {title:"Add topics",state:1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())}]
+
+    const tasksInte=[{title:"Start integration",state:1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())},
+    {title:"Test alfa and beta",state:1,date: new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date()),type:'Design'},
+    {title:"Version final",state:-1,date:new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date()),type:'Design'}]
+
+    const [tasks, setTasks] = useState([]);
+   console.log('hh'+new Date());
+   
+    const test=()=>{
+    // const newtasks=tasks.concat({title:"NewJuice",state:0,date:"newDate"})
+    // setTasks(newtasks)
+    }
+
+    let changeState=(index=0) => {
+        console.log('index'+index)
+         console.log(JSON.stringify(tasks));
+            let newState
+            let newArr = tasks.map((item, i) => {
+                console.log('index2'+i)
+             if(index==i){
+                 if(item.state==-1){
+                    newState=0
+                 }else if(item.state==0){
+                    newState=1
+                 }else if(item.state==1){
+                    newState=-1;
+                 }
+                 console.log('newState'+newState+'i'+i)
+                return { ...item,state:newState };
+            
+             }else{
+                 return item;
+             }
+             
+            });
+            console.log('newarr',JSON.stringify(newArr))
+            setTasks(newArr);
+            console.log(JSON.stringify(tasks));
+          };
+
+        // let newArr = [...tasks]; // copying the old datas array
+        // console.log(newArr[0][state]+"lowlhhjjjjjjjjjjjjjjjjjjjjjj");
+        // newArr[index][1] = -1;
+        // console.log(newArr[index][1]+"hhjjjjjjjjjjjjjjjjjjjjjj");
+        // setTasks(newArr);   
+    
+
+    // useEffect(()=>{
+       
+    // },[])
+    //  setTasks({...tasks,...newtask})   
+
+  
+    // console.log(JSON.stringify(task));
     const [title,setTitle]=React.useState('')
     const today= new Date();
     const [view, setView] = React.useState(ViewMode.Day)
@@ -34,12 +132,15 @@ const Dashboard = () => {
         if(index==1){
             setDesign(true)
             setTitle('Design')
+            setTasks(tasksDesign)
        }else if(index==2){
             setTContent(true)
             setTitle('Content')
+            setTasks(tasksContent)
        }else{
             setInte(true)
             setTitle('Integration')
+            setTasks(tasksInte)
            
             
        }
@@ -66,7 +167,12 @@ const Dashboard = () => {
    
     
     return (
+
+       
+     
+  
         <div className="w-full min-h-screen flex ">
+          
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
                 <img
                     className="w-16 object-cover m-auto "
@@ -126,9 +232,9 @@ const Dashboard = () => {
                     </li>
                 </ul>
             </aside>
-            <main class="flex-1 pb-8 glass mt-14  ">
+            <main class="flex-1 pb-8 glass mt-14">
                 <top className="flex gap-4 w-[1000px]">
-                <div class="flex flex-row justify-between w-3/4 text-white pt-20 pr-10"> 
+                <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20 pr-10"> 
                  <div class="text-3xl font-semibold leading-relaxed text-slate-100">
                      {
                      title
@@ -142,7 +248,86 @@ const Dashboard = () => {
                         day: "2-digit"
                     }).format(today):''}
                  </div>
-                </div>
+                
+                 <div class="flex  mb-36">
+                
+                 
+                        <div class="">
+                        {design||content||inte?
+                            <table class="w-[700px]  shadow-box-sh"
+                            onClick={test}>
+                                <thead class="text-xl bg-gray-200 ">
+                       <tr>
+                            <th class="px-6 py-2 text-gray-500 text-left w-[250px]">
+                                Task List
+                            </th>
+                            <th class="px-6 py-2 text-gray-500  w-[200px] ">
+                                Status
+                            </th>
+                            <th class="px-6 py-2 pr-4 text-gray-500">
+                               Date
+                            </th>
+                           
+                        </tr>
+                    </thead>
+                    <tbody class="text-xl bg-white text-center">
+                    {tasks.map((taskObj,index)=>(
+               
+                        <tr  key={index} class="whitespace-nowrap">
+                            <td class="px-6 py-4 text-gray-500 text-left">
+                                {taskObj.title}
+                            </td>
+
+                            <td class="px-6 py-4 ">
+                            
+                                <div class=" text-gray-900">
+                                {taskObj.state==1 &&
+                                    <button type="button" class="inline-block px-4 py-2 bg-green-500
+                                    text-white font-medium text-sm leading-tight  rounded-full
+                                    shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 
+                                    focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700
+                                    active:shadow-lg transition duration-150 ease-in-out"
+                                    onClick={()=>changeState(index)}>Done</button>
+                               }
+
+                              {taskObj.state==-1 &&
+                                   <button type="button" class="inline-block px-4 py-2 bg-yellow-500 
+                                   text-white font-medium text-sm leading-tight  rounded-full 
+                                   shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600
+                                    focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700
+                                     active:shadow-lg transition duration-150 ease-in-out"
+                                     onClick={()=>changeState(index)}>In progress</button>
+                              }
+
+                              {taskObj.state==0 &&
+                                   <button type="button" class="inline-block px-4 py-2 bg-red-600
+                                    text-white font-medium text-sm leading-tight  rounded-full
+                                     shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 
+                                     focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800
+                                      active:shadow-lg transition duration-150 ease-in-out"
+                                      onClick={()=>changeState(index)}>Not yet</button>
+                             }
+                           
+                                </div>
+                           </td>
+                     
+                            <td class="px-6 py-4 text-gray-900 text-center">
+                            {taskObj.date}
+                                {/* <a href="#" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Edit</a> */}
+                            </td>
+                     
+                        </tr>
+
+                        ))}
+                          </tbody>
+                        </table>
+                        :''}
+                     </div>
+                        </div>
+                     </div>
+                       
+                        
+                
                     <div class=" flex flex-col gap-4 justify-center items-center shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
                       
                     <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
@@ -402,7 +587,9 @@ const Dashboard = () => {
                 </bottom>
             </main>
         </div>
+      
     )
+    
 }
 
 export default Dashboard
