@@ -1,18 +1,25 @@
 import React from 'react'
 import {motion}  from 'framer-motion'
-import eco from '../../img/eco.png'
-import vitrine from '../../img/vitrine.png'
+import inteCon from '../../img/inteConc.png'
+import inte from '../../img/integ.png'
+import Devise from './Devise'
 
- function TypeSitePage(props) {
+export default function IntegrTypePage(props) {
   return (
+    <div className={props.index===3?"text-white":"hidden"}>
+
+    <div>
     
-    <div className={props.index===1?"text-white":"hidden"}>
-    
-            
-    <div  className="text-4xl sm:text-5xl pt-16 md:text-6xl text-center pb-6 ">
-        <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>Vous souhaitez un :</motion.h1>
+    <Devise result={props.devis} />   
+
+    <div  className="text-4xl sm:text-5xl pt-5 md:text-6xl text-center pb-6 ">
+        <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>…et concernant le design  ?</motion.h1>
     </div>
-    <div className="grid  gap-x-6  grid-cols-1 sm:grid-cols-2 ">
+
+    </div>
+
+    
+    <div className="grid  gap-x-6 pt-2 grid-cols-1 sm:grid-cols-2 ">
         
         <motion.div  
        initial={{ opacity: 0 }}
@@ -24,15 +31,15 @@ import vitrine from '../../img/vitrine.png'
        }}
        transition={{duration:0.2}}
         className="border rounded-md border-gray-200 pt-6 cursor-pointer  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-        onClick={()=>props.onNext(2,'e-commerce')}
+        onClick={()=>props.onNext(4,'Conception et intégration')}
         >
             <div className="">
                 <div className="text-center">
                     <div className="">
-                        <img  src={eco} alt="e-commerce" className="object-contain mx-auto h-40 w-88"/>
+                        <img  src={inteCon} alt="e-commerce" className="object-contain mx-auto h-40 w-88"/>
                     </div>
                             <div className="">
-                                <h5  className="text-center  p-6">Site e-commerce </h5>
+                                <h5  className="text-center  p-6">Conception et Intégration </h5>
                             </div>
                 </div>
             </div>
@@ -49,14 +56,14 @@ import vitrine from '../../img/vitrine.png'
         }}
            transition={{duration:0.2}}
            className="border rounded-md border-gray-200 pt-6 cursor-pointer   mt-5  sm:mt-0 md:mt-0  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 "
-           onClick={()=>props.onNext(2,'vitrine')}>
+           onClick={()=>props.onNext(4,'Intégration')}>
             <div className="">
                 <div className="">
                     <div className="">
-                        <img  src={vitrine} className="object-contain mx-auto h-40 w-88"/>
+                        <img  src={inte} className="object-contain mx-auto h-40 w-88"/>
                     </div>
                             <div className="">
-                                <h5  className="text-center p-6">Site vitrine</h5>
+                                <h5  className="text-center p-6">Intégration</h5>
                             </div>
                 </div>
             </div>
@@ -67,4 +74,4 @@ import vitrine from '../../img/vitrine.png'
 
 </div>
   )
-}export default TypeSitePage;
+}

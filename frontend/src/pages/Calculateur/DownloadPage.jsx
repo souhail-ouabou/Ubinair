@@ -4,7 +4,7 @@ import {motion}  from 'framer-motion'
 export default function DownloadPage(props) {
   return (
     <div className={props.index===5?"text-white":"hidden"}>
-    <div  className="text-xs sm:text-sm pt-5 md:text-2xl text-center pb-6 ">
+    <div  className="text-xs sm:text-sm pt-5 md:text-2xl text-center pb-6  ">
         <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>Très bien! Nous avons terminé.</motion.h1>
     </div>
 
