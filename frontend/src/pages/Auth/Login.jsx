@@ -21,7 +21,7 @@ const Login = () => {
 
     const auth = useSelector((state) => state.auth)
 
-    const { error, user } = auth
+    const { error, user,loading } = auth
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         setCreds({

@@ -11,6 +11,18 @@ const featuresSchema = mongoose.Schema(
         timestamps: true,
     }
 )
+const specificationSchema = mongoose.Schema(
+    {
+        title: { type: String, required: true },
+        progresState: {
+            type: Number,
+            required: true,
+            default: 0,
+            minimum: 0,
+            maximum: 100,
+        },
+    }
+)
 
 const projetSchema = mongoose.Schema(
     {
@@ -21,8 +33,8 @@ const projetSchema = mongoose.Schema(
         },
         name: {
             type: String,
-          //  required: true,
-          // default: 'untitled',
+            //  required: true,
+            // default: 'untitled',
         },
         image: {
             type: String,
@@ -53,7 +65,7 @@ const projetSchema = mongoose.Schema(
             required: true,
             maxLength: 20,
         },
-        plan : {
+        plan: {
             type: String,
             required: true,
         },
@@ -65,7 +77,7 @@ const projetSchema = mongoose.Schema(
             type: String,
         },
         features: [featuresSchema],
-
+        specification:[specificationSchema]
     },
     {
         timestamps: true,

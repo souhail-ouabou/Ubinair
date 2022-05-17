@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
-// import Todolist from './TodoList'
 
 import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
@@ -17,42 +16,7 @@ import { getStartEndDateForProject, initTasks } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
 import TodoList from './TodoList/TodoList'
 
-// const Dashboard = () =>
-// const tasks=[];
-// class Dashboard extends React.Component
 const Dashboard = () => {
-    // constructor(props){
-    //     super(props);
-    //     this.state={
-    //         tasks:[],
-    //     }
-    // }
-
-    // createTask=(task)=>{
-    // if(task.trim()==='')
-    // {
-    //     alert('task cant be empty')
-    //     return;
-    // }
-    // tasks.push({task,isChecked:false})
-    // this.setState({tasks:tasks})
-
-    // }
-    //   toggleTask=(taskId)=>{
-    //       const taskItem=tasks[taskId];
-    //       taskItem.isChecked=!taskItem.isChecked;
-    //       this.setState({tasks:tasks})
-    //   }
-    // deleteTask=(taskId)=>{
-    //     tasks.splice(taskId,1)
-    //     this.setState({tasks:tasks})
-    // }
-
-    // editTask=(taskId,task)=>{
-    //  const taskItem=tasks[taskId]
-    //  taskItem.task=task;
-    //  this.setState({tasks:tasks})
-    // }
     const percentage = 66
     const [view, setView] = React.useState(ViewMode.Day)
     const [tasks, setTasks] = React.useState(initTasks())
@@ -109,7 +73,7 @@ const Dashboard = () => {
         setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
         console.log('On expander click Id:' + task.id)
     }
-    // render(){
+
     return (
         <div className="w-full min-h-screen flex ">
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
@@ -173,8 +137,7 @@ const Dashboard = () => {
             </aside>
             <main class="flex-1 pb-8 glass mt-14  ">
                 <top className="flex items-center justify-center gap-12">
-                    <div class=" flex flex-col gap-4 justify-center items-center "> 
-                    
+                    <div class=" flex flex-col gap-4 justify-center items-center ">
                         <div>
                             <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
                                 Design
@@ -292,33 +255,30 @@ const Dashboard = () => {
                     </div>
                 </top>
                 <bottom className="flex items-start justify-start gap-12">
+                    <div style={{ width: 700, height: 500 }}>
+                        <ViewSwitcher
+                            onViewModeChange={(viewMode) => setView(viewMode)}
+                            onViewListChange={setIsChecked}
+                            isChecked={isChecked}
+                        />
+                        <Gantt
+                            tasks={tasks}
+                            viewMode={view}
+                            onDateChange={handleTaskChange}
+                            onDelete={handleTaskDelete}
+                            onProgressChange={handleProgressChange}
+                            onDoubleClick={handleDblClick}
+                            onSelect={handleSelect}
+                            onExpanderClick={handleExpanderClick}
+                            listCellWidth={isChecked ? '155px' : ''}
+                            columnWidth={columnWidth}
+                            TooltipContent="false"
+                            TaskListTable="false"
+                            TaskListHeader="false"
+                        />
+                    </div>
 
-                <div style={{ width: 700, height: 500 }}>
-                    <ViewSwitcher
-                        onViewModeChange={(viewMode) => setView(viewMode)}
-                        onViewListChange={setIsChecked}
-                        isChecked={isChecked}
-                    />
-                    <Gantt
-                        tasks={tasks}
-                        viewMode={view}
-                        onDateChange={handleTaskChange}
-                        onDelete={handleTaskDelete}
-                        onProgressChange={handleProgressChange}
-                        onDoubleClick={handleDblClick}
-                        onSelect={handleSelect}
-                        onExpanderClick={handleExpanderClick}
-                        listCellWidth={isChecked ? '155px' : ''}
-                        columnWidth={columnWidth}
-                        TooltipContent="false"
-                        TaskListTable="false"
-                        TaskListHeader="false"
-                    />
-                </div>
-           
-                            <TodoList  />
-                  
-                       
+                    <TodoList />
                 </bottom>
             </main>
         </div>

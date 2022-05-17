@@ -2,6 +2,7 @@ const Projets = require('../models/projetModel')
 const User = require('../models/userModel')
 
 const projetsCtrl = {
+    
     addProjet: async (req, res) => {
         try {
             const {
@@ -14,6 +15,7 @@ const projetsCtrl = {
                 description,
                 subtype,
                 type,
+                //specification,
                 features
             } = req.body
 
@@ -24,6 +26,11 @@ const projetsCtrl = {
                 devis: devis,
                 plan: plan,
                 features:features,
+                specification : [
+                    {"title": "Design", "progresState": 0},
+                     {"title": "Integration", "progresState": 0},
+                     {"title": "Content", "progresState": 0}
+                    ],
                 priceDebut: priceDebut,
                 priceRequired: priceRequired,
                 stateOfAdvance: stateOfAdvance,
@@ -40,5 +47,16 @@ const projetsCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    getMyprojects: async (req, res) => {
+        try {
+          const projects = await Projets.find({ user: req.user.id });
+          res.json(projects);
+        } catch (err) {
+          console.log("-----------myprojets error-------------");
+    
+          console.log(err);
+          return res.status(500).json({ msg: err.message });
+        }
+      },
 }
 module.exports = projetsCtrl

@@ -49,12 +49,10 @@ function App() {
 
     useEffect(() => {
         if (token) {
-            const getUser = () => {
-                //  dispatch(dispatchLogin()); //WE GOT first-login:false
-                //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
-                dispatch(dispatchGetUser(token))
-            }
-            getUser()
+            //   dispatch(dispatchLogin()); //WE GOT first-login:false
+            //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
+
+            dispatch(dispatchGetUser(token))
         }
     }, [token, dispatch])
 
@@ -85,7 +83,7 @@ function App() {
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route
                             path="/calculator"
-                            element={isLogged ? <Calculator /> : <Login />}
+                            element={user ? <Calculator /> : <Login />}
                         />
                     </Routes>
                 </main>
