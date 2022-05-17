@@ -291,7 +291,7 @@ const Dashboard = () => {
                         <ProgressBar done="30" />
                     </div>
                 </top>
-                <bottom className="flex items-center justify-center gap-12">
+                <bottom className="flex items-start justify-start gap-12">
 
                 <div style={{ width: 700, height: 500 }}>
                     <ViewSwitcher

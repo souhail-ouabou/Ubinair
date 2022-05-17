@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { dispatchLogin } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 const initialState = {
     email: '',
     password: '',
@@ -51,8 +52,14 @@ const Login = () => {
     useEffect(() => {
         if (user) {
             navigate('/')
+        //     const getToken = async () => {
+        //         // make post request : hey db get me some data and return it to me
+        //         const res = await axios.post("/user/refresh_token", null);
+        //         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+        //       };
+        //       getToken();
         }
-    }, [navigate, user])
+    }, [navigate, user,dispatch])
 
     return (
         <div>
@@ -79,8 +86,8 @@ const Login = () => {
                     <span></span>
                     <span></span>
                 </div>
-                <div className="hidden sm:block ml-24 mr-24 mt-28 z-10 ">
-                    <img src={login} alt="" className="w-[520px]  mt-16 " />
+                <div className="hidden  sm:flex sm:flex-col justify-center items-center ml-24 mr-24  z-10 ">
+                    <img src={login} alt="" className=" " />
                 </div>
                 <div className="flex flex-col justify-center items-center ">
                     <form
@@ -89,7 +96,7 @@ const Login = () => {
                     >
                         <img
                             src={Avatar}
-                            alt=""
+                            alt="avatar"
                             className="m-auto block max-w-[30%] justify-center "
                         />
                         <h2 className="dark:text-white text-4xl font-bold text-center">

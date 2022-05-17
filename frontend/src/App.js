@@ -16,15 +16,25 @@ import ResetPassword from './pages/Auth/ResetPassword'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Tracker from './pages/Dashboard/Tracker'
 import Calculator from './pages/Calculateur/Calculator'
+import { dispatchToken } from './redux/actions/tokenAction'
 
 function App() {
     const [loading, setLoading] = useState(false)
+    const auth = useSelector((state) => state.auth);
+    const dispatch = useDispatch()
     useEffect(() => {
         setLoading(true)
         setTimeout(() => {
             setLoading(false)
         }, 3000)
     }, [])
+
+    useEffect(() => {
+        const firstLogin = localStorage.getItem('firstLogin')
+        if (firstLogin) {
+            dispatch(dispatchToken())
+        }
+    }, [auth.isLogged,dispatch])
 
     return (
         <div>

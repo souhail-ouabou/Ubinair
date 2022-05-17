@@ -11,7 +11,7 @@ function BeginPage(props) {
             <div
                 className="flex flex-col items-center justify-center mb-12 "
                 data-aos="fade-up"
-                data-aos-duration="2000"
+                data-aos-duration="4000"
             >
                 <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold   ">
                     Votre projet consiste en un :
@@ -30,9 +30,7 @@ function BeginPage(props) {
                     transition={{ duration: 0.2 }}
                     className="glass border-0 rounded-md  pt-6 cursor-pointer 
                              bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-                 
-                    onClick={() => props.onNext(1,'Site Web')}
-
+                    onClick={() => props.onNext(1, 'Site Web')}
                 >
                     <div className="">
                         <div className="text-center">
@@ -61,8 +59,7 @@ function BeginPage(props) {
                     transition={{ duration: 0.2 }}
                     className="glass border-0 rounded-md  pt-6 cursor-pointer 
                     bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-                    onClick={() => props.onNext(1,'Application mobile')}
-
+                    onClick={() => props.onNext(1, 'Application mobile')}
                 >
                     <div className="">
                         <div className="">
@@ -93,8 +90,9 @@ function BeginPage(props) {
                     transition={{ duration: 0.2 }}
                     className="border rounded-md  border-gray-200 pt-6 cursor-pointer  mt-5
                             md:mt-0 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-                            onClick={() => props.onNext(1, 'Application mobile + Site web')}
-
+                    onClick={() =>
+                        props.onNext(1, 'Application mobile + Site web')
+                    }
                 >
                     <div className="">
                         <div className="text-center">

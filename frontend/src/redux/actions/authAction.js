@@ -22,7 +22,8 @@ export const dispatchLogin = (creds) => async (dispatch) => {
                 isAdmin: data.role === 1 ? true : false,
             },
         })
-        localStorage.setItem('userInfo', JSON.stringify(data))
+        //   localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('firstLogin', true)
     } catch (error) {
         dispatch({
             type: ACTIONS.USER_LOGIN_FAIL,
@@ -61,7 +62,21 @@ export const dispatchRegister = (creds) => async (dispatch) => {
         })
     }
 }
-export const logout = () => (dispatch) => {
-    localStorage.removeItem('userInfo')
-    dispatch({ type: ACTIONS.USER_LOGOUT })
+export const logout = () => async (dispatch) => {
+    try {
+        await axios.get('/user/logout')
+        localStorage.removeItem('firstLogin')
+        window.location.href = "/";
+        dispatch({ type: ACTIONS.USER_LOGOUT })
+
+        //   localStorage.setItem('userInfo', JSON.stringify(data))
+    } catch (error) {
+        dispatch({
+            type: 'USER_LOGOUT_FAIL',
+            payload:
+                error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
+        })
+    }
 }
