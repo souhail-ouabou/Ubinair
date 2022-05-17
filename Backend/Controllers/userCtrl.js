@@ -154,8 +154,8 @@ const userCtrl = {
             //http://localhost:5000/user/login
             const { email, password } = req.body
             const user = await Users.findOne({
-                email: { $regex: email, $options: 'i' },
-            })
+                email: { $regex: email, $options: "i" },
+            });
             if (!email || !password)
                 return res
                     .status(400)
@@ -231,16 +231,22 @@ const userCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
-    // getUserInfor: async (req, res) => {
-    //   try {
-    //     const user = await Users.findById(req.user.id).select("-password");
-    //     console.log("finded user",user);
-    //     res.json(user);
-    //   } catch (err) {
-    //     return res.status(500).json({ msg: err.message });
-    //   }
-    // },
+    getUserInfor: async (req, res) => {
+      try {
+        const user = await Users.findById(req.user.id).select("-password");
+        console.log("finded user",user);
+        res.json(user);
+      } catch (err) {
+        return res.status(500).json({ msg: err.message });
+      }
+    },
 }
+
+
+
+
+
+
 
 const createActivationToken = (payload) => {
     return jwt.sign(payload, `${process.env.ACTIVATION_TOKEN_SECRET}`, {

@@ -9,7 +9,7 @@ const initialState = {
 export const authReducer = (state = initialState, action) => {
     switch (action.type) {
         case ACTIONS.USER_LOGIN_REQUEST:
-            return { ...state,loading: true }
+            return { ...state, loading: true }
         case ACTIONS.USER_LOGIN_SUCCESS:
             return {
                 loading: false,
@@ -23,7 +23,13 @@ export const authReducer = (state = initialState, action) => {
             return {
                 isLogged: false,
             }
-
+        case ACTIONS.GET_USER:
+            return {
+                ...state,
+                loading: false,
+                user: action.payload.user,
+                isAdmin: action.payload.isAdmin,
+            }
         default:
             return state
     }

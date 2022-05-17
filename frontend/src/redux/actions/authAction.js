@@ -22,7 +22,7 @@ export const dispatchLogin = (creds) => async (dispatch) => {
                 isAdmin: data.role === 1 ? true : false,
             },
         })
-        //   localStorage.setItem('userInfo', JSON.stringify(data))
+        // localStorage.setItem('userInfo', JSON.stringify(data))
         localStorage.setItem('firstLogin', true)
     } catch (error) {
         dispatch({
@@ -66,13 +66,38 @@ export const logout = () => async (dispatch) => {
     try {
         await axios.get('/user/logout')
         localStorage.removeItem('firstLogin')
-        window.location.href = "/";
+        window.location.href = '/'
         dispatch({ type: ACTIONS.USER_LOGOUT })
 
         //   localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
             type: 'USER_LOGOUT_FAIL',
+            payload:
+                error.response && error.response.data.msg
+                    ? error.response.data.msg
+                    : error.msg,
+        })
+    }
+}
+
+export const dispatchGetUser = (token) => async (dispatch) => {
+    try {
+        const { data } = await axios.get('/user/infor', {
+            headers: { Authorization: token },
+        })
+        dispatch({
+            type: ACTIONS.GET_USER,
+            payload: {
+                user: data,
+                isAdmin: data.role === 1 ? true : false,
+            },
+        })
+
+        //   localStorage.setItem('userInfo', JSON.stringify(data))
+    } catch (error) {
+        dispatch({
+            type: 'GET_USER_FAIL',
             payload:
                 error.response && error.response.data.msg
                     ? error.response.data.msg

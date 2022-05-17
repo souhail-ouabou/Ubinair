@@ -21,7 +21,8 @@ const projetSchema = mongoose.Schema(
         },
         name: {
             type: String,
-           // required: true,
+          //  required: true,
+          // default: 'untitled',
         },
         image: {
             type: String,
