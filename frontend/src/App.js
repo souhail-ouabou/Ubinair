@@ -24,11 +24,15 @@ import {
 } from './redux/actions/authAction'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile/Profile'
-
+import AOS from 'aos';
+import 'aos/dist/aos.css'
 function App() {
+  //  AOS.init();
     const [loading, setLoading] = useState(false)
-    const auth = useSelector((state) => state.auth)
-    const { isLogged, user, isAdmin } = auth
+     const auth = useSelector((state) => state.auth)
+     const { isLogged } = auth
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const {  user, isAdmin } = getUserReducer
     const token = useSelector((state) => state.token)
 
     const dispatch = useDispatch()
@@ -37,6 +41,7 @@ function App() {
         setTimeout(() => {
             setLoading(false)
         }, 3000)
+        
     }, [])
 
     useEffect(() => {
@@ -79,7 +84,10 @@ function App() {
                             path="/user/reset/:token"
                             element={<ResetPassword />}
                         />
-                        <Route path="/profile" element={<Profile />} />
+                        <Route
+                            path="/profile"
+                            element={user ? <Profile /> : <Login />}
+                        />
                         <Route path="/tracker" element={<Tracker />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route

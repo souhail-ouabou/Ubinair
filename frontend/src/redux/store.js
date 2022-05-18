@@ -5,13 +5,14 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
-import { authReducer, userRegisterReducer } from './reducers/userReducer'
+import { authReducer, userRegisterReducer,getUserReducer } from './reducers/userReducer'
 import token  from './reducers/tokenReducer'
 
 const reducer = combineReducers({
     auth: authReducer,
     userRegister: userRegisterReducer,
-    token
+    token,
+    getUserReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

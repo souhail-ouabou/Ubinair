@@ -11,8 +11,10 @@ import { useSelector, useDispatch } from 'react-redux'
 const Nav = () => {
     let navigate = useNavigate()
     const dispatch = useDispatch()
-    const auth = useSelector((state) => state.auth)
-    const { user, isLogged, loading } = auth
+    // const auth = useSelector((state) => state.auth)
+    // const { user, isLogged, loading } = auth
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
 

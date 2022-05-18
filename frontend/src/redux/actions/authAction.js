@@ -83,11 +83,14 @@ export const logout = () => async (dispatch) => {
 
 export const dispatchGetUser = (token) => async (dispatch) => {
     try {
+        dispatch({
+            type: ACTIONS.GET_USER_REQUEST,
+        })
         const { data } = await axios.get('/user/infor', {
             headers: { Authorization: token },
         })
         dispatch({
-            type: ACTIONS.GET_USER,
+            type: ACTIONS.GET_USER_SUCCESS,
             payload: {
                 user: data,
                 isAdmin: data.role === 1 ? true : false,
@@ -97,7 +100,7 @@ export const dispatchGetUser = (token) => async (dispatch) => {
         //   localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
-            type: 'GET_USER_FAIL',
+            type: ACTIONS.GET_USER_FAIL,
             payload:
                 error.response && error.response.data.msg
                     ? error.response.data.msg

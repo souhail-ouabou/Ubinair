@@ -16,7 +16,9 @@ import OffersCards from '../components/OffersCards'
 import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
+
 const Home = () => {
+   
     return (
         <section
             name="home"
