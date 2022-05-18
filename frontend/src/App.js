@@ -23,6 +23,7 @@ import {
     fetchUser,
 } from './redux/actions/authAction'
 import NotFound from './pages/NotFound'
+import Profile from './pages/Profile/Profile'
 
 function App() {
     const [loading, setLoading] = useState(false)
@@ -61,7 +62,7 @@ function App() {
             <section className="flex  justify-center items-center  min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed p-12 ">
                 <Nav />
 
-                <main>
+                <>
                     <Routes>
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
@@ -78,7 +79,7 @@ function App() {
                             path="/user/reset/:token"
                             element={<ResetPassword />}
                         />
-                        <Route path="/profile" element={<Dashboard />} />
+                        <Route path="/profile" element={<Profile />} />
                         <Route path="/tracker" element={<Tracker />} />
                         <Route path="/dashboard" element={<Dashboard />} />
                         <Route
@@ -86,7 +87,7 @@ function App() {
                             element={user ? <Calculator /> : <Login />}
                         />
                     </Routes>
-                </main>
+                </>
             </section>
             <Footer />
         </div>
