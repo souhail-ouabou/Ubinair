@@ -288,16 +288,10 @@ const Calculator = () => {
         console.log(calculator.devis + '   ' + calculator.type)
     }
     return (
-        <div className="w-[1000px]">
-            <div>
-                {' '}
-                {calculator.index == 0 ? (
-                    ''
-                ) : (
-                    <Goback previousTab={previousTab} />
-                )}{' '}
-            </div>
-            <section>
+           
+         
+            <div className="">
+         
                 <BeginPage
                     index={calculator.index} //0
                     onNext={(i, type) => toggleTab(i, type)} //1
@@ -326,7 +320,7 @@ const Calculator = () => {
                     devis={calculator.devis}
                     onDownload={() => download()}
                 />
-            </section>
+           
             <table id="firstTable" hidden>
                 <caption>first table</caption>
                 <tr>
@@ -376,7 +370,18 @@ const Calculator = () => {
                     </th>
                 </tr>
             </table>
-        </div>
+
+            {/* <div className="">
+                {' '}
+                {calculator.index == 0 ? (
+                    ''
+                ) : (
+                    <Goback previousTab={previousTab} />
+                )}{' '}
+            </div> */}
+            </div>
+       
+        
     )
 }
 

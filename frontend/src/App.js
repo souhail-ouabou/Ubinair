@@ -16,7 +16,7 @@ import ResetPassword from './pages/Auth/ResetPassword'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Tracker from './pages/Dashboard/Tracker'
 import Calculator from './pages/Calculateur/Calculator'
-
+//  import Calculator from './components/Navbar/calculator/Calculator'
 function App() {
     const [loading, setLoading] = useState(false)
     useEffect(() => {
