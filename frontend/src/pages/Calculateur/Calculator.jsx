@@ -13,7 +13,7 @@ import {
 
     CreateProjet,
 
-  } from "../../redux/actions/projetActions";
+  } from "../../redux/actions/projectActions";
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'

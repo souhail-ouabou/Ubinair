@@ -22,7 +22,7 @@ const projetsCtrl = {
             console.log('--------------req booody-------------', req)
             const projet = new Projets({
                 user: req.user.id,
-                name: name,
+                name: 'Sample name',
                 devis: devis,
                 plan: plan,
                 features:features,

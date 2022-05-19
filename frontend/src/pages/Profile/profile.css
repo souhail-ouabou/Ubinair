@@ -85,7 +85,7 @@ button {
 .col-right {
     padding: 0 10px;
     flex: 1;
-    min-width: 300px;
+    min-width: 600px;
 }
 .col-right h2 {
     font-size: 1.7rem;
