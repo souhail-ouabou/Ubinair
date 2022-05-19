@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
 import { Link, useNavigate } from 'react-router-dom'
-import { dispatchLogin } from '../../redux/actions/authAction'
+import { dispatchLogin, dispatchGetUser } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -14,14 +14,15 @@ const initialState = {
 }
 
 const Login = () => {
-    const [creds, setCreds] = useState(initialState)
     const dispatch = useDispatch()
     let navigate = useNavigate()
+
+    const [creds, setCreds] = useState(initialState)
     const { email, password, err, success } = creds
 
     const auth = useSelector((state) => state.auth)
+    const { error, userInfo, isLogged } = auth
 
-    const { error, user,loading } = auth
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         setCreds({
@@ -49,17 +50,14 @@ const Login = () => {
 
         dispatch(dispatchLogin(creds))
     }
+
+
     useEffect(() => {
-        if (user) {
+        if (userInfo) {
             navigate('/')
-        //     const getToken = async () => {
-        //         // make post request : hey db get me some data and return it to me
-        //         const res = await axios.post("/user/refresh_token", null);
-        //         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
-        //       };
-        //       getToken();
+  
         }
-    }, [navigate, user,dispatch])
+    }, [navigate, userInfo, dispatch])
 
     return (
         <div>

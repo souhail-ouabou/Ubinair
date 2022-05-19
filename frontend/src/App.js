@@ -27,12 +27,11 @@ import Profile from './pages/Profile/Profile'
 import AOS from 'aos';
 import 'aos/dist/aos.css'
 function App() {
-  //  AOS.init();
+    AOS.init();
     const [loading, setLoading] = useState(false)
-     const auth = useSelector((state) => state.auth)
-     const { isLogged } = auth
+ 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-    const {  user, isAdmin } = getUserReducer
+    const {  user, isAdmin,isLogged } = getUserReducer
     const token = useSelector((state) => state.token)
 
     const dispatch = useDispatch()
@@ -48,14 +47,15 @@ function App() {
         const firstLogin = localStorage.getItem('firstLogin')
         if (firstLogin) {
             dispatch(dispatchToken())
+           
         }
-    }, [auth.isLogged, dispatch])
+    }, [getUserReducer.isLogged, dispatch])
 
     // when refresh the token exsit but the logged change to false so we logged out so that's we do that
 
     useEffect(() => {
         if (token) {
-            //   dispatch(dispatchLogin()); //WE GOT first-login:false
+           //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
             //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
 
             dispatch(dispatchGetUser(token))

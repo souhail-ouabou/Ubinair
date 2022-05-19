@@ -27,12 +27,15 @@ const Profile = () => {
     } = data
     // const auth = useSelector((state) => state.auth)
     // const { user, isLogged, loading } = auth
-    const getUserReducer = useSelector((state) => state.getUserReducer)
-    const { loading, user, isAdmin } = getUserReducer
+        const userDetailsReducer = useSelector((state) => state.userDetailsReducer)
+    const { loading, user, isAdmin } = userDetailsReducer
     
     const Handletoggle =(index) =>{
         setToggletab(index)
     }
+
+
+    
     return (
         <>
             <Helmet>

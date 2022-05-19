@@ -18,11 +18,11 @@ export const dispatchLogin = (creds) => async (dispatch) => {
         dispatch({
             type: ACTIONS.USER_LOGIN_SUCCESS,
             payload: {
-                user: data,
+                userInfo: data,
                 isAdmin: data.role === 1 ? true : false,
             },
         })
-        // localStorage.setItem('userInfo', JSON.stringify(data))
+       localStorage.setItem('userInfo', JSON.stringify(data))
         localStorage.setItem('firstLogin', true)
     } catch (error) {
         dispatch({
@@ -66,6 +66,7 @@ export const logout = () => async (dispatch) => {
     try {
         await axios.get('/user/logout')
         localStorage.removeItem('firstLogin')
+        localStorage.removeItem('userInfo')
         window.location.href = '/'
         dispatch({ type: ACTIONS.USER_LOGOUT })
 

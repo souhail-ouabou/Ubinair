@@ -19,7 +19,7 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null
 const initialState = {
-    auth: { user: userInfoFromStorage }
+    auth: { userInfo: userInfoFromStorage }
 }
 const middelware = [thunk]
 

@@ -13,7 +13,7 @@ export const authReducer = (state = initialState, action) => {
         case ACTIONS.USER_LOGIN_SUCCESS:
             return {
                 loading: false,
-                user: action.payload.user,
+                userInfo: action.payload.userInfo,
                 isAdmin: action.payload.isAdmin,
                 isLogged: true,
             }
