@@ -37,7 +37,7 @@ const TodoList = ({isAdmin}) => {
         setTodos(updatedTodos);
       };
     return (
-        <div className="bg-white shadow-md w-2/5 p-8 rounded-xl">
+        <div className="bg-white shadow-md w-2/6 ml-auto p-8 rounded-xl ">
             <h1 className="text-2xl font-bold">Todo List</h1>
             <hr className="mt-2" />
             {isAdmin &&   <TodoForm onSubmit={addTodo} />}

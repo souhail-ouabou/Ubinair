@@ -38,6 +38,7 @@ const ProjetBlock = ({ project, toggletab }) => {
                             </h1>
                             <h1 className="text-lg font-medium leading-relaxed ">
                                 {project.type}
+                                
                             </h1>
                             <div className="flex flex-col">
                                 <p className="text-lg font-medium leading-relaxed ">

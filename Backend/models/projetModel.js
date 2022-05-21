@@ -99,9 +99,14 @@ const projetSchema = mongoose.Schema(
             minimum:0,
 
         },
+        finishedAt: {
+            type: Date,
+            default:  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+        }
+
     },
     {
-        timestamps: true,
+        timestamps: { createdAt: 'startedAt' } ,
     }
 )
 

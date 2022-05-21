@@ -26,15 +26,18 @@ const Dashboard = ({ match }) => {
     const GetProjectDetailsReducer = useSelector(
         (state) => state.GetProjectDetailsReducer
     )
-    const { project: projectDetails, loading: loadingProjectDetails,error } =
-        GetProjectDetailsReducer
+    const {
+        project: projectDetails,
+        loading: loadingProjectDetails,
+        error,
+    } = GetProjectDetailsReducer
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
 
     const percentage = 66
     const [view, setView] = useState(ViewMode.Day)
-    const [tasks, setTasks] = useState(initTasks())
+    // const [tasks, setTasks] = useState(initTasks())
     const [isChecked, setIsChecked] = useState(true)
     let columnWidth = 60
     if (view === ViewMode.Month) {
@@ -45,7 +48,7 @@ const Dashboard = ({ match }) => {
 
     const handleTaskChange = (task) => {
         console.log('On date change Id:' + task.id)
-        let newTasks = tasks.map((t) => (t.id === task.id ? task : t))
+        let newTasks = taskss.map((t) => (t.id === task.id ? task : t))
         if (task.project) {
             const [start, end] = getStartEndDateForProject(
                 newTasks,
@@ -63,17 +66,17 @@ const Dashboard = ({ match }) => {
                 )
             }
         }
-        setTasks(newTasks)
+        setTaskss(newTasks)
     }
     const handleTaskDelete = (task) => {
         const conf = window.confirm('Are you sure about ' + task.name + ' ?')
         if (conf) {
-            setTasks(tasks.filter((t) => t.id !== task.id))
+            setTaskss(taskss.filter((t) => t.id !== task.id))
         }
         return conf
     }
     const handleProgressChange = async (task) => {
-        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
+        setTaskss(taskss.map((t) => (t.id === task.id ? task : t)))
         console.log('On progress change Id:' + task.id)
     }
     const handleDblClick = (task) => {
@@ -85,49 +88,52 @@ const Dashboard = ({ match }) => {
         )
     }
     const handleExpanderClick = (task) => {
-        setTasks(tasks.map((t) => (t.id === task.id ? task : t)))
+        setTaskss(taskss.map((t) => (t.id === task.id ? task : t)))
         console.log('On expander click Id:' + task.id)
     }
 
-    const [arr, setArr] = useState()
+    const initialtaskState = {
+        start: new Date('2022-07-20T18:42:02.483+00:00'),
+        end: new Date('2022-07-30T18:42:02.483+00:00'),
+        name: 'projectDetails.name',
+        id: 'projectDetails._id',
+        progress: 0,
+        type: 'project',
+    }
 
-    const [name, setName] = useState()
-
-    const [taskss, setTaskss] = useState([
-        {
-            start: new Date('2022-07-20T18:42:02.483+00:00'),
-            end: new Date('2022-07-30T18:42:02.483+00:00'),
-            name: projectDetails.name ,
-            id: projectDetails._id,
-            progress: projectDetails.totalProgresState,
-            type: 'project',
-        },
-    ])
-
-
-    // const obj = arr.reduce(function (acc, cur, i) {
-    //     acc[i] = cur
-    //     return acc
-    // }, {})
-
-    // taskss.push(...arr)
-    //   console.log('arr', arr[0].start)
+    const [taskss, setTaskss] = useState([initialtaskState])
 
     useEffect(() => {
         if (user.client) {
-           
-                dispatch(Getprojectdetails(id))
-              
-            
+            dispatch(Getprojectdetails(id))
         }
-    }, [ user.client, ])
+    }, [user.client])
     useEffect(() => {
-        setName(projectDetails.name)
-        taskss[0].name=name
-    
-   
-    }, [ projectDetails.name,  name])
-    
+        if (projectDetails.devis) {
+            const testarr = projectDetails.specification.map((p) => ({
+                start: new Date(projectDetails.startedAt),
+                end: new Date(projectDetails.finishedAt),
+                name: p.title,
+                id: p._id,
+                progress: p.progresState,
+                type: 'task',
+                project: projectDetails._id,
+            }))
+            // console.log('testarr', testarr)
+            setTaskss([
+                {
+                    start: new Date(projectDetails.startedAt),
+                    end: new Date(projectDetails.finishedAt),
+                    name: projectDetails.name,
+                    progress: projectDetails.totalProgresState,
+                    id: projectDetails._id,
+                    type: 'project',
+                },
+                ...testarr,
+            ])
+        }
+    }, [projectDetails.name])
+
     return (
         <div className="w-full min-h-screen flex ">
             <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
@@ -211,7 +217,7 @@ const Dashboard = ({ match }) => {
                                     <div style={{ width: 200, height: 200 }}>
                                         <CircularProgressbarWithChildren
                                             value={p.estimatedState}
-                                            text={`${p.estimatedState}%`}
+                                            text={`${p.progresState}%`}
                                             styles={buildStyles({
                                                 pathColor: '#f00',
                                                 trailColor: '#eee', //trans
@@ -239,13 +245,13 @@ const Dashboard = ({ match }) => {
                                 </div>
                             ))}
 
-                            <div class=" flex flex-col gap-4 justify-center items-center bg-white shadow-md w-2/5 p-6 rounded-xl">
+                            <div class="flex flex-col gap-4 justify-center items-center bg-white shadow-md  p-2 rounded-xl w-2/6 ml-auto">
                                 <div>
                                     <h1 class="text-2xl font-semibold leading-relaxed ">
                                         Total
                                     </h1>
                                 </div>
-                                
+
                                 <ProgressBar
                                     done={projectDetails.totalProgresState}
                                 />
@@ -263,39 +269,43 @@ const Dashboard = ({ match }) => {
                             />
 
                             <>
-
-                            
-                        {loadingProjectDetails ? (
-                          
-                          <div className="col-right text-white"> Loaaading ...</div>
-                      ) : error ? (
-                          <div>errorMyProjects</div>
-                      ) : (
-                          <>
-                                   <Gantt
-                                        tasks={taskss}
-                                        viewMode={view}
-                                        onDateChange={handleTaskChange}
-                                        onDelete={handleTaskDelete}
-                                        onProgressChange={handleProgressChange}
-                                        onDoubleClick={handleDblClick}
-                                        onSelect={handleSelect}
-                                        onExpanderClick={handleExpanderClick}
-                                        listCellWidth={isChecked ? '155px' : ''}
-                                        columnWidth={columnWidth}
-                                        TooltipContent="false"
-                                        TaskListTable="false"
-                                        TaskListHeader="false"
-                                    />
-                                ) 
-                          </>
-                      )}
-                           
-                             
+                                {loadingProjectDetails ? (
+                                    <div className="col-right text-white">
+                                        {' '}
+                                        Loaaading ...
+                                    </div>
+                                ) : error ? (
+                                    <div>errorMyProjects</div>
+                                ) : (
+                                    <>
+                                        <Gantt
+                                            tasks={taskss}
+                                            viewMode={view}
+                                            onDateChange={handleTaskChange}
+                                            onDelete={handleTaskDelete}
+                                            onProgressChange={
+                                                handleProgressChange
+                                            }
+                                            onDoubleClick={handleDblClick}
+                                            onSelect={handleSelect}
+                                            onExpanderClick={
+                                                handleExpanderClick
+                                            }
+                                            listCellWidth={
+                                                isChecked ? '155px' : ''
+                                            }
+                                            columnWidth={columnWidth}
+                                            TooltipContent="false"
+                                            TaskListTable="false"
+                                            TaskListHeader="false"
+                                        />
+                                    </>
+                                )}
                             </>
                         </div>
 
-                        <TodoList isAdmin={isAdmin} />
+                        <TodoList isAdmin={isAdmin} /> 
+
                     </bottom>
                 </main>
             )}
