@@ -178,13 +178,14 @@ const Profile = () => {
                                 </ul>
                             </div>
                         ) : (
-                            <h1 className="text-center text-white text-xl">
-                                MY PROJECTS
+                            <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
+                                My projects
                             </h1>
                         )}
 
                         {loadingMyProjects ? (
-                            'Loaaading ...'
+                          
+                            <div className="col-right text-white"> Loaaading ...</div>
                         ) : errorMyProjects ? (
                             <div>errorMyProjects</div>
                         ) : projects.length === 0 ? (

@@ -11,18 +11,31 @@ const featuresSchema = mongoose.Schema(
         timestamps: true,
     }
 )
-const specificationSchema = mongoose.Schema(
-    {
-        title: { type: String, required: true },
-        progresState: {
-            type: Number,
-            required: true,
-            default: 0,
-            minimum: 0,
-            maximum: 100,
-        },
+const specificationSchema = mongoose.Schema({
+    title: { type: String, required: true },
+    progresState: {
+        type: Number,
+        required: true,
+        default: 0,
+        minimum: 0,
+        maximum: 100,
+    },
+    estimatedState: {
+        type: Number,
+        required: true,
+        default: 0,
+        minimum: 0,
+        maximum: 100,
+    },
+    startDate: {
+        type: Date,
+        default: Date.now
+    },
+    endDate: {
+        type: Date,
     }
-)
+
+})
 
 const projetSchema = mongoose.Schema(
     {
@@ -77,7 +90,15 @@ const projetSchema = mongoose.Schema(
             type: String,
         },
         features: [featuresSchema],
-        specification:[specificationSchema]
+        specification: [specificationSchema],
+        totalProgresState: {
+            type: Number,
+            required: true,
+            default: 0,
+            maximum:0,
+            minimum:0,
+
+        },
     },
     {
         timestamps: true,

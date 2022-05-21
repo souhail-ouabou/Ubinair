@@ -2,7 +2,6 @@ const Projets = require('../models/projetModel')
 const User = require('../models/userModel')
 
 const projetsCtrl = {
-    
     addProjet: async (req, res) => {
         try {
             const {
@@ -16,7 +15,7 @@ const projetsCtrl = {
                 subtype,
                 type,
                 //specification,
-                features
+                features,
             } = req.body
 
             console.log('--------------req booody-------------', req)
@@ -25,12 +24,16 @@ const projetsCtrl = {
                 name: 'Sample name',
                 devis: devis,
                 plan: plan,
-                features:features,
-                specification : [
-                    {"title": "Design", "progresState": 0},
-                     {"title": "Integration", "progresState": 0},
-                     {"title": "Content", "progresState": 0}
-                    ],
+                features: features,
+                specification: [
+                    { title: 'Design', progresState: 0, estimatedState: 0 },
+                    {
+                        title: 'Integration',
+                        progresState: 0,
+                        estimatedState: 0,
+                    },
+                    { title: 'Content', progresState: 0, estimatedState: 0 },
+                ],
                 priceDebut: priceDebut,
                 priceRequired: priceRequired,
                 stateOfAdvance: stateOfAdvance,
@@ -49,14 +52,42 @@ const projetsCtrl = {
     },
     getMyprojects: async (req, res) => {
         try {
-          const projects = await Projets.find({ user: req.user.id });
-          res.json(projects);
+            const projects = await Projets.find({ user: req.user.id })
+            res.json(projects)
         } catch (err) {
-          console.log("-----------myprojets error-------------");
-    
-          console.log(err);
-          return res.status(500).json({ msg: err.message });
+            console.log('-----------myprojets error-------------')
+
+            console.log(err)
+            return res.status(500).json({ msg: err.message })
         }
-      },
+    },
+    getProjectdetails: async (req, res) => {
+        try {
+            let sum = 0
+            let projects = await Projets.findById(req.params.id).populate(
+                'user',
+                '-_id name  avatar'
+            )
+            //  const projecta = await Projets.find({},{"specification.estimatedState" :0})
+
+            const sub = projects.specification.map(
+                (project) => project.estimatedState
+            )
+            for (let i = 0; i < sub.length; i++) {
+                sum += sub[i]
+            }
+            let total =  Math.round(sum / sub.length)
+
+            if (projects) {
+                projects.totalProgresState = total 
+            }
+            const updatedProjet = await projects.save();
+            res.json( updatedProjet )
+        } catch (error) {
+            console.log('------------project details error----------')
+            console.log(error)
+            return res.status(500).json({ msg: error.message })
+        }
+    },
 }
 module.exports = projetsCtrl

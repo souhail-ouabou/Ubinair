@@ -6,7 +6,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
 import { authReducer, userRegisterReducer,getUserReducer } from './reducers/userReducer'
-import { ProjetcCreateReducer, ListMyProjectsReducer } from './reducers/projectReducer'
+import { ProjetcCreateReducer, ListMyProjectsReducer,GetProjectDetailsReducer } from './reducers/projectReducer'
 import token  from './reducers/tokenReducer'
 
 const reducer = combineReducers({
@@ -15,7 +15,8 @@ const reducer = combineReducers({
     token,
     getUserReducer,
     ProjetcCreateReducer,
-    ListMyProjectsReducer
+    ListMyProjectsReducer,
+    GetProjectDetailsReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

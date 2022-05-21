@@ -24,14 +24,14 @@ import {
 } from './redux/actions/authAction'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile/Profile'
-import AOS from 'aos';
+import AOS from 'aos'
 import 'aos/dist/aos.css'
 function App() {
-    AOS.init();
+    AOS.init()
     const [loading, setLoading] = useState(false)
- 
-    const getUserReducer = useSelector((state) => state.getUserReducer)
-    const {  user, isAdmin,isLogged } = getUserReducer
+
+    const auth = useSelector((state) => state.auth)
+    const { userInfo, isAdmin, isLogged } = auth
     const token = useSelector((state) => state.token)
 
     const dispatch = useDispatch()
@@ -40,22 +40,20 @@ function App() {
         setTimeout(() => {
             setLoading(false)
         }, 3000)
-        
     }, [])
 
     useEffect(() => {
         const firstLogin = localStorage.getItem('firstLogin')
         if (firstLogin) {
             dispatch(dispatchToken())
-           
         }
-    }, [getUserReducer.isLogged, dispatch])
+    }, [auth.isLogged, dispatch])
 
     // when refresh the token exsit but the logged change to false so we logged out so that's we do that
 
     useEffect(() => {
         if (token) {
-           //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
+            //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
             //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
 
             dispatch(dispatchGetUser(token))
@@ -86,13 +84,16 @@ function App() {
                         />
                         <Route
                             path="/profile"
-                            element={user ? <Profile /> : <Login />}
+                            element={userInfo ? <Profile /> : <Login />}
                         />
                         <Route path="/tracker" element={<Tracker />} />
-                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route
+                            path="/dashboard/:id"
+                            element={ <Dashboard /> }
+                        />
                         <Route
                             path="/calculator"
-                            element={user ? <Calculator /> : <Login />}
+                            element={userInfo ? <Calculator /> : <Login />}
                         />
                     </Routes>
                 </>

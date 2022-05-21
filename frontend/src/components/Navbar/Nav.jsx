@@ -68,11 +68,7 @@ const Nav = () => {
                                 Profile
                             </Link>
                         </li>
-                        <li className="mb-2 cursor-pointer">
-                            <Link to="/dashboard" onClick={hideItems}>
-                                Dashboard
-                            </Link>
-                        </li>
+              
                         <li className="mb-2 cursor-pointer">
                             <Link to="/" onClick={logoutHandler}>
                                 Logout
