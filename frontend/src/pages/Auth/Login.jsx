@@ -2,16 +2,10 @@ import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
 import { Link, useNavigate } from 'react-router-dom'
-<<<<<<< HEAD
 import { dispatchLogin, dispatchGetUser } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-=======
-import { dispatchLogin } from '../../redux/actions/authAction'
-import { isEmpty, isEmail } from '../../utils/validation/Validation'
-import { useDispatch, useSelector } from 'react-redux'
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
 const initialState = {
     email: '',
     password: '',
@@ -20,7 +14,6 @@ const initialState = {
 }
 
 const Login = () => {
-<<<<<<< HEAD
     const dispatch = useDispatch()
     let navigate = useNavigate()
 
@@ -30,16 +23,6 @@ const Login = () => {
     const auth = useSelector((state) => state.auth)
     const { error, userInfo, isLogged } = auth
 
-=======
-    const [creds, setCreds] = useState(initialState)
-    const dispatch = useDispatch()
-    let navigate = useNavigate()
-    const { email, password, err, success } = creds
-
-    const auth = useSelector((state) => state.auth)
-
-    const { error, user } = auth
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         setCreds({
@@ -67,7 +50,6 @@ const Login = () => {
 
         dispatch(dispatchLogin(creds))
     }
-<<<<<<< HEAD
 
 
     useEffect(() => {
@@ -76,13 +58,6 @@ const Login = () => {
   
         }
     }, [navigate, userInfo, dispatch])
-=======
-    useEffect(() => {
-        if (user) {
-            navigate('/')
-        }
-    }, [navigate, user])
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
 
     return (
         <div>
@@ -109,13 +84,8 @@ const Login = () => {
                     <span></span>
                     <span></span>
                 </div>
-<<<<<<< HEAD
                 <div className="hidden  sm:flex sm:flex-col justify-center items-center ml-24 mr-24  z-10 ">
                     <img src={login} alt="" className=" " />
-=======
-                <div className="hidden sm:block ml-24 mr-24 mt-28 z-10 ">
-                    <img src={login} alt="" className="w-[520px]  mt-16 " />
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
                 </div>
                 <div className="flex flex-col justify-center items-center ">
                     <form
@@ -124,11 +94,7 @@ const Login = () => {
                     >
                         <img
                             src={Avatar}
-<<<<<<< HEAD
                             alt="avatar"
-=======
-                            alt=""
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
                             className="m-auto block max-w-[30%] justify-center "
                         />
                         <h2 className="dark:text-white text-4xl font-bold text-center">

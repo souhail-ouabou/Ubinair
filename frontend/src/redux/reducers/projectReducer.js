@@ -7,7 +7,12 @@ import {
     MY_PROJECTS_SUCCESS,
     MY_PROJECTS_FAIL,
     MY_PROJECTS_RESET,
-    PROJECT_DETAILS_REQUEST,PROJECT_DETAILS_SUCCESS,PROJECT_DETAILS_FAIL,PROJECT_DETAILS_RESET
+    PROJECT_DETAILS_REQUEST,PROJECT_DETAILS_SUCCESS,PROJECT_DETAILS_FAIL,PROJECT_DETAILS_RESET,
+    PROJET_UPDATE_REQUEST,
+    PROJET_UPDATE_SUCCESS,
+    PROJET_UPDATE_FAIL,
+    PROJET_UPDATE_RESET
+    
 } from '../actions/constants/projetconstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -75,6 +80,24 @@ export const ProjetcCreateReducer = (state = {}, action) => {
         };
       case PROJECT_DETAILS_RESET:
         return { project: {} };
+      default:
+        return state;
+    }
+  };
+  export const projectUpdateReducer = (state = { project: {} }, action) => {
+    switch (action.type) {
+      case PROJET_UPDATE_REQUEST:
+        return { loading: true };
+      case PROJET_UPDATE_SUCCESS:
+        return {
+          loading: false,
+          success: true,
+          project: action.payload,
+        };
+      case PROJET_UPDATE_FAIL:
+        return { loading: false, err: action.payload };
+      case PROJET_UPDATE_RESET:
+        return { project: {}, success: false };
       default:
         return state;
     }

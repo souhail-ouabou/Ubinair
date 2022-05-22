@@ -8,6 +8,9 @@ import {
     PROJECT_DETAILS_REQUEST,
     PROJECT_DETAILS_SUCCESS,
     PROJECT_DETAILS_FAIL,
+    PROJET_UPDATE_REQUEST,
+    PROJET_UPDATE_SUCCESS,
+    PROJET_UPDATE_FAIL
 } from './constants/projetconstants'
 import axios from 'axios'
 export const CreateProjet = (calculator) => async (dispatch, getState) => {
@@ -110,3 +113,23 @@ export const Getprojectdetails = (id) => async (dispatch, getState) => {
         })
     }
 }
+export const UpdateProject = (project) => async (dispatch) => {
+    try {
+      dispatch({ type: PROJET_UPDATE_REQUEST });
+  
+      const { data } = await axios.put(
+        `/projets/updateproject/${project[0]._id}`,
+        project
+      );
+  
+      dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data });
+    } catch (error) {
+      dispatch({
+        type: PROJET_UPDATE_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };

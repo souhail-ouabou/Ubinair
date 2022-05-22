@@ -9,5 +9,5 @@ router.post('/addprojet', auth, /*isClient*/ projetCtrl.addProjet)
 router.get('/myprojects', auth, isClient, projetCtrl.getMyprojects)
 //login as a client -> refresh_token -> getProjectdetails
 router.get('/details/:id', auth, isClient, projetCtrl.getProjectdetails)
-
+router.put('/updateproject/:id', projetCtrl.updateProject)
 module.exports = router

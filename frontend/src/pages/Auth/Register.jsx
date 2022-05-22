@@ -13,11 +13,7 @@ import {
 import axios from 'axios'
 const initialState = {
     name: '',
-<<<<<<< HEAD
     phone: '',
-=======
-    phone:'',
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
     email: '',
     password: '',
     cf_password: '',
@@ -29,11 +25,7 @@ const Login = () => {
     const [creds, setCreds] = useState(initialState)
     const dispatch = useDispatch()
     let navigate = useNavigate()
-<<<<<<< HEAD
     const { name, email, phone, password, cf_password, err, success } = creds
-=======
-    const { name, email,phone, password, cf_password, err, success } = creds
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
     const userRegister = useSelector((state) => state.userRegister)
 
     const { error, msg } = userRegister
@@ -104,15 +96,8 @@ const Login = () => {
                     <h1 className="text-red-600 text-center mt-4">
                         {err ? err : error}
                     </h1>
-<<<<<<< HEAD
                     <h1 className="text-green-600 text-center mt-4">{msg}</h1>
 
-=======
-                    <h1 className="text-green-600 text-center mt-4">
-                        {msg}
-                    </h1>
-                    
->>>>>>> ea322b72ced07a2f80eea84e5b9e0e0a14fb84e0
                     <div className="flex flex-col text-gray-400 py-2">
                         <label>Nom Complet</label>
                         <input

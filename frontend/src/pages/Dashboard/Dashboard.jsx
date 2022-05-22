@@ -16,7 +16,10 @@ import { getStartEndDateForProject, initTasks } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
 import TodoList from './TodoList/TodoList'
 import { useSelector, useDispatch } from 'react-redux'
-import { Getprojectdetails } from '../../redux/actions/projectActions'
+import {
+    Getprojectdetails,
+    UpdateProject,
+} from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 
 const Dashboard = ({ match }) => {
@@ -66,7 +69,18 @@ const Dashboard = ({ match }) => {
                 )
             }
         }
+
         setTaskss(newTasks)
+        console.log(newTasks)
+        const testarr = newTasks.map((p) => ({
+            _id: p.id,
+            title: p.name,
+            startDate: p.start,
+            endDate: p.end,
+            progresState: p.progres,
+        }))
+      
+        dispatch(UpdateProject(testarr))
     }
     const handleTaskDelete = (task) => {
         const conf = window.confirm('Are you sure about ' + task.name + ' ?')
@@ -111,7 +125,7 @@ const Dashboard = ({ match }) => {
     useEffect(() => {
         if (projectDetails.devis) {
             const testarr = projectDetails.specification.map((p) => ({
-                start: new Date(projectDetails.startedAt),
+                start: new Date(projectDetails.createdAt),
                 end: new Date(projectDetails.finishedAt),
                 name: p.title,
                 id: p._id,
@@ -122,7 +136,7 @@ const Dashboard = ({ match }) => {
             // console.log('testarr', testarr)
             setTaskss([
                 {
-                    start: new Date(projectDetails.startedAt),
+                    start: new Date(projectDetails.createdAt),
                     end: new Date(projectDetails.finishedAt),
                     name: projectDetails.name,
                     progress: projectDetails.totalProgresState,
@@ -281,7 +295,9 @@ const Dashboard = ({ match }) => {
                                         <Gantt
                                             tasks={taskss}
                                             viewMode={view}
-                                            onDateChange={handleTaskChange}
+                                            {...(isAdmin && {
+                                                onDateChange: handleTaskChange,
+                                            })}
                                             onDelete={handleTaskDelete}
                                             onProgressChange={
                                                 handleProgressChange
@@ -304,8 +320,7 @@ const Dashboard = ({ match }) => {
                             </>
                         </div>
 
-                        <TodoList isAdmin={isAdmin} /> 
-
+                        <TodoList isAdmin={isAdmin} />
                     </bottom>
                 </main>
             )}
