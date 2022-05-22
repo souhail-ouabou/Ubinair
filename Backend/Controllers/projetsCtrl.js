@@ -71,7 +71,7 @@ const projetsCtrl = {
             //  const projecta = await Projets.find({},{"specification.estimatedState" :0})
 
             const sub = projects.specification.map(
-                (project) => project.estimatedState
+                (s) => s.progresState
             )
             for (let i = 0; i < sub.length; i++) {
                 sum += sub[i]
@@ -91,6 +91,7 @@ const projetsCtrl = {
     },
     updateProject: async (req, res) => {
         try {
+            let sum = 0
             //     const testarr = req.body.map((p) => ({
             //         start: new Date(projectDetails.startedAt),
             //         end: new Date(projectDetails.finishedAt),
@@ -103,13 +104,30 @@ const projetsCtrl = {
             //     // conso
             const { startDate, endDate } = req.body[0]
 
-            console.log('--------------req booody-------------', req.body)
-
-            const projet = await Projets.findOneAndUpdate({ _id : "628a32825eb9715a11158e2b" }, { createdAt:startDate } , { timestamps: false });
             
+            
+            console.log('--------------req booody 1-------------', req.body)
+            
+            // const [first, ...rest] = req.body;
+            
+            //remove first elemnet
+            let specification = req.body.filter((v, k) => k !== 0)
+            console.log('---------specification ------', specification)
+            
+            const projet = await Projets.findById(req.params.id)
+            const sub = projet.specification.map(
+                (s) => s.progresState
+            )
+            for (let i = 0; i < sub.length; i++) {
+                sum += sub[i]
+            }
+            let total = Math.round(sum / sub.length)
+
             if (projet) {
-                projet.createdAt = startDate
-                projet.finishedAt = endDate
+                projet.createdAt = startDate || projet.createdAt
+                projet.finishedAt = endDate || projet.finishedAt
+                projet.specification = specification || projet.specification
+                projet.totalProgresState = total
 
                 //     //     // course.user.name
                 //     //     // course.user.headline

@@ -33,6 +33,7 @@ const specificationSchema = mongoose.Schema({
     },
     endDate: {
         type: Date,
+        default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
 })
 
@@ -101,7 +102,7 @@ const projetSchema = mongoose.Schema({
         default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
     createdAt: { type: Date, default: Date.now },
-    updatedAt: { type: Date, default: Date.now }
+    updatedAt: { type: Date, default: Date.now },
 })
 
 module.exports = mongoose.model('Projet', projetSchema)
