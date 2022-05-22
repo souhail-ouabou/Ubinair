@@ -18,7 +18,6 @@ import {
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 const Calculator = () => {
-
     const initialState = {
         index: 0,
         devis: 0,
@@ -302,7 +301,6 @@ const Calculator = () => {
 
         console.log(calculator.devis + '   ' + calculator.type)
     }
-
     return (
         <div className="w-[1000px]">
             <div>
