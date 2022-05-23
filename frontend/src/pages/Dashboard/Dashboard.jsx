@@ -80,21 +80,36 @@ const Dashboard = ({ match }) => {
             title: p.name,
             startDate: p.start,
             endDate: p.end,
-            progresState: p.progres,
+            progresState: p.progress,
+            estimatedState: p.estimatedState
         }))
       
         dispatch(UpdateProject(testarr))
+        dispatch(Getprojectdetails(id))
     }
-    const handleTaskDelete = (task) => {
-        const conf = window.confirm('Are you sure about ' + task.name + ' ?')
-        if (conf) {
-            setTaskss(taskss.filter((t) => t.id !== task.id))
-        }
-        return conf
-    }
+    // const handleTaskDelete = (task) => {
+    //     const conf = window.confirm('Are you sure about ' + task.name + ' ?')
+    //     if (conf) {
+    //         setTaskss(taskss.filter((t) => t.id !== task.id))
+    //     }
+    //     return conf
+    // }
     const handleProgressChange = async (task) => {
-        setTaskss(taskss.map((t) => (t.id === task.id ? task : t)))
+        const newTasks = taskss.map((t) => (t.id === task.id ? task : t))
+        setTaskss(newTasks)
         console.log('On progress change Id:' + task.id)
+        const testarr = newTasks.map((p) => ({
+            _id: p.id,
+            title: p.name,
+            startDate: p.start,
+            endDate: p.end,
+            progresState: p.progress,
+            estimatedState: p.estimatedState
+        }))
+      
+        dispatch(UpdateProject(testarr))
+        dispatch(Getprojectdetails(id))
+
     }
     const handleDblClick = (task) => {
         alert('On Double Click event Id:' + task.id)
@@ -128,15 +143,16 @@ const Dashboard = ({ match }) => {
     useEffect(() => {
         if (projectDetails.devis) {
             const testarr = projectDetails.specification.map((p) => ({
-                start: new Date(projectDetails.createdAt),
-                end: new Date(projectDetails.finishedAt),
+                start: new Date(p.startDate),
+                end: new Date(p.endDate),
                 name: p.title,
                 id: p._id,
                 progress: p.progresState,
+                estimatedState :p.estimatedState,
                 type: 'task',
                 project: projectDetails._id,
             }))
-            // console.log('testarr', testarr)
+            console.log('testarr', testarr)
             setTaskss([
                 {
                     start: new Date(projectDetails.createdAt),
@@ -301,7 +317,7 @@ const Dashboard = ({ match }) => {
                                             {...(isAdmin && {
                                                 onDateChange: handleTaskChange,
                                             })}
-                                            onDelete={handleTaskDelete}
+                                            // onDelete={handleTaskDelete}
                                             onProgressChange={
                                                 handleProgressChange
                                             }
@@ -323,7 +339,7 @@ const Dashboard = ({ match }) => {
                             </>
                         </div>
 
-                        <TodoList isAdmin={isAdmin} />
+                        <TodoList isAdmin={isAdmin} id={id} taskss={projectDetails.clientTaskss}/>
                     </bottom>
                 </main>
             )}

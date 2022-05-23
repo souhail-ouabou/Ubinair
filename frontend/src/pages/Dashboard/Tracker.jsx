@@ -12,7 +12,12 @@ import {BrowserRouter} from 'react-router-dom'
 import {HashLink as Link} from 'react-router-hash-link'
 import {Tooltip,Button} from "@mui/material"
 
-
+import { useSelector, useDispatch } from 'react-redux'
+import {
+    Getprojectdetails,
+    UpdateProject,
+} from '../../redux/actions/projectActions'
+import { useParams } from 'react-router-dom'
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
@@ -25,6 +30,27 @@ import 'react-circular-progressbar/dist/styles.css'
 
 
 const Tracker = () => {
+
+      const dispatch = useDispatch()
+    const { id } = useParams()
+    
+    const GetProjectDetailsReducer = useSelector(
+        (state) => state.GetProjectDetailsReducer
+    )
+    const {
+        project: projectDetails,
+        loading: loadingProjectDetails,
+        error,
+    } = GetProjectDetailsReducer
+
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
+
+    useEffect(() => {
+        if (user.client) {
+            dispatch(Getprojectdetails(id))
+        }
+    }, [user.client])
 
     const percentage=60;
     const [cirValue,setCirValue]=useState(0)
@@ -93,7 +119,7 @@ const Tracker = () => {
 
    
 
-   const [isAdmin,setIsadmin]=useState(true)
+//    const [isAdmin,setIsadmin]=useState(true)
 
   
 
@@ -369,7 +395,7 @@ const Tracker = () => {
                 </ul>
             </aside>
             <main class="flex-1 pb-8 glass mt-14">
-                <top className="flex gap-4 w-[1000px]">
+                <top className="flex gap-4 w-full ">
                 <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20 pr-10"> 
                  <div class="text-3xl font-semibold leading-relaxed text-slate-100">
                      {
@@ -391,7 +417,7 @@ const Tracker = () => {
                        
                         {design||content||inte?
                          <div class="">
-                            <table class="w-[700px]  shadow-box-sh "
+                            <table class="w-[800px]  shadow-box-sh "
                            >
                                 <thead class="text-xl bg-gray-200 ">
                        <tr>
@@ -610,29 +636,36 @@ const Tracker = () => {
                      </div>
                        
                         
-                
-                    <div class=" flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
+        {loadingProjectDetails ? (
+                <div className="col-right text-white w-[130px]">
+                    Loaaading ...
+                </div>
+                    ) : (
+                    <div class="flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
                       
                     <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
-                    <li>
-                        <motion.div className="flex gap-x-4 items-center py-3 text-white  hover:text-indigo-600 group rounded-lg   pl-4 pr-4"
+                    {projectDetails.specification.map((p,i) => (
+                        
+
+                    <li key={i}>
+                        <motion.div className="flex  justify-between gap-x-4  py-3 text-white  hover:text-indigo-600 group rounded-lg   pl-4 pr-4"
                              whileHover={{
                                 boxShadow:"0px 0px 8px rgb(255,255,255)"
                             }}
                                transition={{duration:0.2}}
-                               onClick={()=>handleClickShow(1)}
+                               onClick={()=>handleClickShow(i)}
                                >
                               
                         <div>
                        
-                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
-                                Design
+                            <h1 class="text-xl pt-2 font-semibold leading-relaxed text-slate-100">
+                               {p.title}
                             </h1>
                            
                         </div>
-                        <div class="ml-10" style={{ width: 50, height: 50 }}>
+                        <div class="ml-5" style={{ width: 50, height: 50 }}>
                             <CircularProgressbarWithChildren
-                                value={designValue}
+                                value={p.estimatedState}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -646,7 +679,7 @@ const Tracker = () => {
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={designValue}
+                                    value={p.progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'butt',
@@ -661,93 +694,9 @@ const Tracker = () => {
                         </motion.div>
                         
                     </li>
-                    <li>
-                        <motion.div className="flex  gap-x-4 items-center py-3 text-white hover:text-indigo-600 group rounded-lg pl-4 pr-4"
-                         whileHover={{
-                            boxShadow:"0px 0px 8px rgb(255,255,255)"
-                        }}
-                           transition={{duration:0.2}}
-                           onClick={()=>handleClickShow(2)}>
-                        <div>
-                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
-                                Content
-                            </h1>
-                        </div>
-                 
-                        <div class="ml-7" style={{ width: 50, height: 50 }}>
-                            <CircularProgressbarWithChildren
-                                value={ContentValue}
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-                                    strokeLinecap: 'butt',
-
-                                    textSize: '16px',
-
-                                    // How long animation takes to go from one percentage to another, in seconds
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                {/* Foreground path */}
-                                <CircularProgressbar
-                                    value={ContentValue}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'butt',
-
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                            </CircularProgressbarWithChildren>
-                        </div>
-                        </motion.div>
-                    </li>
-
-                    <li>
-                        <motion.div className="flex gap-x-4 items-center py-3 text-white hover:text-indigo-600 group rounded-lg pl-4 pr-4"
-                         whileHover={{
-                            boxShadow:"0px 0px 8px rgb(255,255,255)"
-                        }}
-                           transition={{duration:0.2}}
-                           onClick={()=>handleClickShow(3)}>
-                        <div>
-                            <h1 class="text-xl font-semibold leading-relaxed text-slate-100">
-                                Integration
-                            </h1>
-                        </div>
-                        <div style={{ width: 50, height: 50 }}>
-                            <CircularProgressbarWithChildren
-                                value={inteValue}
-                               
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-
-                                    textSize: '16px',
-
-                                    // How long animation takes to go from one percentage to another, in seconds
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                {/* Foreground path */}
-                                <CircularProgressbar
-                                    value={inteValue}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'round',
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                            </CircularProgressbarWithChildren>
-                        </div>
-                        </motion.div>
-                    </li>
+                    ))}
+                   
+                    
                     {design?<>
                     <hr/>
                     <li class="m-auto">
@@ -859,6 +808,7 @@ const Tracker = () => {
                    </ul>
 
                     </div>
+                    )}
                 </top>
                 
                 <bottom className="flex items-center justify-center gap-12">

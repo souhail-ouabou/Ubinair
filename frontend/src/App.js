@@ -89,7 +89,7 @@ function App() {
                             path="/profile"
                             element={userInfo ? <Profile /> : <Login />}
                         />
-                        <Route path="/tracker" element={<Tracker />} />
+                        <Route path="/tracker/:id" element={<Tracker />} />
                         <Route
                             path="/dashboard/:id"
                             element={ <Dashboard /> }

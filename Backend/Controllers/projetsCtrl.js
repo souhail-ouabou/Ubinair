@@ -70,9 +70,7 @@ const projetsCtrl = {
             )
             //  const projecta = await Projets.find({},{"specification.estimatedState" :0})
 
-            const sub = projects.specification.map(
-                (project) => project.estimatedState
-            )
+            const sub = projects.specification.map((s) => s.progresState)
             for (let i = 0; i < sub.length; i++) {
                 sum += sub[i]
             }
@@ -91,29 +89,45 @@ const projetsCtrl = {
     },
     updateProject: async (req, res) => {
         try {
-            //     const testarr = req.body.map((p) => ({
-            //         start: new Date(projectDetails.startedAt),
-            //         end: new Date(projectDetails.finishedAt),
-            //         name: p.title,
-            //         id: p._id,
-            //         progress: p.progresState,
-            //         type: 'task',
-            //         project: projectDetails._id,
-            //     }))
-            //     // conso
+            let sum = 0
             const { startDate, endDate } = req.body[0]
 
-            console.log('--------------req booody-------------', req.body)
+            console.log('--------------req booody 1-------------', req.body)
 
-            const projet = await Projets.findOneAndUpdate({ _id : "628a32825eb9715a11158e2b" }, { createdAt:startDate } , { timestamps: false });
-            
+            let specification = req.body.filter((v, k) => k !== 0)
+            console.log('---------specification ------', specification)
+
+            const projet = await Projets.findById(req.params.id)
+            const sub = projet.specification.map((s) => s.progresState)
+            for (let i = 0; i < sub.length; i++) {
+                sum += sub[i]
+            }
+            let total = Math.round(sum / sub.length)
+
             if (projet) {
-                projet.createdAt = startDate
-                projet.finishedAt = endDate
+                projet.createdAt = startDate || projet.createdAt
+                projet.finishedAt = endDate || projet.finishedAt
+                projet.specification = specification || projet.specification
+                projet.totalProgresState = total
+                const updatedProject = await projet.save()
+                console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    updateTasksClient: async (req, res) => {
+        try {
+            console.log('--------------req booody -------------', req.body)
 
-                //     //     // course.user.name
-                //     //     // course.user.headline
-                //     //     // course.user.description
+            const taskss = req.body.taskss
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.clientTaskss = taskss || projet.clientTaskss
                 const updatedProject = await projet.save()
                 console.log('updatedProject', updatedProject)
                 res.json({ msg: 'Update prj Success!' })
