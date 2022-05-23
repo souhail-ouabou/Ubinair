@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import login from '../../img/login.svg'
 import Avatar from '../../img/Avatar.svg'
 import { Link, useNavigate } from 'react-router-dom'
-import { dispatchLogin } from '../../redux/actions/authAction'
+import { dispatchLogin, dispatchGetUser } from '../../redux/actions/authAction'
 import { isEmpty, isEmail } from '../../utils/validation/Validation'
 import { useDispatch, useSelector } from 'react-redux'
+import axios from 'axios'
 const initialState = {
     email: '',
     password: '',
@@ -13,14 +14,15 @@ const initialState = {
 }
 
 const Login = () => {
-    const [creds, setCreds] = useState(initialState)
     const dispatch = useDispatch()
     let navigate = useNavigate()
+
+    const [creds, setCreds] = useState(initialState)
     const { email, password, err, success } = creds
 
     const auth = useSelector((state) => state.auth)
+    const { error, userInfo, isLogged } = auth
 
-    const { error, user } = auth
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
         setCreds({
@@ -48,11 +50,14 @@ const Login = () => {
 
         dispatch(dispatchLogin(creds))
     }
+
+
     useEffect(() => {
-        if (user) {
+        if (userInfo) {
             navigate('/')
+  
         }
-    }, [navigate, user])
+    }, [navigate, userInfo, dispatch])
 
     return (
         <div>
@@ -79,8 +84,8 @@ const Login = () => {
                     <span></span>
                     <span></span>
                 </div>
-                <div className="hidden sm:block ml-24 mr-24 mt-28 z-10 ">
-                    <img src={login} alt="" className="w-[520px]  mt-16 " />
+                <div className="hidden  sm:flex sm:flex-col justify-center items-center ml-24 mr-24  z-10 ">
+                    <img src={login} alt="" className=" " />
                 </div>
                 <div className="flex flex-col justify-center items-center ">
                     <form
@@ -89,7 +94,7 @@ const Login = () => {
                     >
                         <img
                             src={Avatar}
-                            alt=""
+                            alt="avatar"
                             className="m-auto block max-w-[30%] justify-center "
                         />
                         <h2 className="dark:text-white text-4xl font-bold text-center">

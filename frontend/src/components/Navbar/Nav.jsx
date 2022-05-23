@@ -12,7 +12,8 @@ const Nav = () => {
     let navigate = useNavigate()
     const dispatch = useDispatch()
     const auth = useSelector((state) => state.auth)
-    const { user, isLogged, loading } = auth
+     const { userInfo, isLogged, loading } = auth
+
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
 
@@ -44,10 +45,10 @@ const Nav = () => {
                             >
                                 <img
                                     className="img-ava"
-                                    src={user.avatar}
+                                    src={userInfo.avatar}
                                     alt="avatar"
                                 />{' '}
-                                {user.name}
+                                {userInfo.name}
                                 <i>
                                     <FaAngleDown />
                                 </i>
@@ -67,11 +68,7 @@ const Nav = () => {
                                 Profile
                             </Link>
                         </li>
-                        <li className="mb-2 cursor-pointer">
-                            <Link to="/dashboard" onClick={hideItems}>
-                                Dashboard
-                            </Link>
-                        </li>
+              
                         <li className="mb-2 cursor-pointer">
                             <Link to="/" onClick={logoutHandler}>
                                 Logout
@@ -162,7 +159,7 @@ const Nav = () => {
                     </>
                 )}
 
-                {user ? (
+                {userInfo ? (
                     userLink()
                 ) : (
                     <Link

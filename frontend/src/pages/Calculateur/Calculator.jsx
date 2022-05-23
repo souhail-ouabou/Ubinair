@@ -7,6 +7,13 @@ import IntegrTypePage from './IntegrTypePage'
 import AdvanceStatePage from './AdvanceStatePage'
 import DownloadPage from './DownloadPage'
 import ubinairLogo from '../../img/ubinairLogo.png'
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+
+    CreateProjet,
+
+  } from "../../redux/actions/projectActions";
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
@@ -16,16 +23,19 @@ const Calculator = () => {
         devis: 0,
         type: null,
         subtype: null,
-        requirements: null,
+        plan: null,
         stateOfAdvance: null,
         priceDebut: 0,
         priceRequired: 0,
-        ArrayOftoggles: [],
+        features: [],
     }
     const [calculator, setCaluclator] = useState(initialState)
+    const dispatch = useDispatch();
+
     const download = () => {
+        dispatch(CreateProjet(calculator));
         let doc = new jsPDF('p', 'pt', 'letter')
-        let taille = calculator.ArrayOftoggles.filter(
+        let taille = calculator.features.filter(
             (Arrayoftoggle) => Arrayoftoggle.case !== false
         ).length
         let today = new Date()
@@ -104,6 +114,10 @@ const Calculator = () => {
         doc.text(200, 740, 'Communiquez avec nous hamza@ubinair.com')
         doc.text(250, 760, 'Copyright ©2022 - Ubinair')
         doc.save('facture.pdf')
+     
+
+
+
     }
     const previousTab = () => {
         setCaluclator({
@@ -144,7 +158,7 @@ const Calculator = () => {
                 case 'e-commerce':
                     setCaluclator({
                         ...calculator,
-                        ArrayOftoggles: [
+                        features: [
                             {
                                 id: 1,
                                 title: 'Login avec Mail + Nom Utilisateur',
@@ -203,7 +217,7 @@ const Calculator = () => {
                 case 'vitrine':
                     setCaluclator({
                         ...calculator,
-                        ArrayOftoggles: [
+                        features: [
                             {
                                 id: 1,
                                 title: "Interface d'administration",
@@ -259,7 +273,7 @@ const Calculator = () => {
 
             setCaluclator({
                 ...calculator,
-                requirements: type,
+                plan: type,
                 priceRequired: price,
                 devis: calculator.devis + price,
             })
@@ -274,12 +288,12 @@ const Calculator = () => {
     }
     //TogglesPage handleCheckbox
     const handleCheckbox = (event) => {
-        let index = event.target.value - 1 //default value of id in the array ArrayOftoggles - 1
+        let index = event.target.value - 1 //default value of id in the array features - 1
         console.log('indeeeeeex', index)
-        calculator.ArrayOftoggles[index].case = event.target.checked
+        calculator.features[index].case = event.target.checked
         event.target.checked
-            ? (calculator.devis += calculator.ArrayOftoggles[index].price)
-            : (calculator.devis -= calculator.ArrayOftoggles[index].price)
+            ? (calculator.devis += calculator.features[index].price)
+            : (calculator.devis -= calculator.features[index].price)
 
         setCaluclator((prev) => {
             return { ...prev }
@@ -352,7 +366,7 @@ const Calculator = () => {
                     <th>Prix</th>
                 </tr>
 
-                {calculator.ArrayOftoggles.filter(
+                {calculator.features.filter(
                     (Arrayoftoggle) => Arrayoftoggle.case !== false
                 ).map((togglerow) => (
                     <tr>

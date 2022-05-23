@@ -15,7 +15,7 @@ function TogglesPage(props) {
             </div>
 
             <div className="grid  gap-x-6  grid-cols-1 sm:grid-cols-2 md:ml-32 lg:ml-48">
-                {props.allState.ArrayOftoggles?.map(togglerow => (
+                {props.allState.features?.map(togglerow => (
                     <Toggle
                         key={togglerow.id}
                         chosedValue={togglerow.id}

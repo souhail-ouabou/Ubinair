@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Todo from './Todo'
 import TodoForm from './TodoForm'
 
-const TodoList = () => {
+const TodoList = ({isAdmin}) => {
     const [todos, setTodos] = useState([])
     const addTodo = (todo) => {
         if (!todo.text || /^\s*$/.test(todo.text)) {
@@ -37,10 +37,11 @@ const TodoList = () => {
         setTodos(updatedTodos);
       };
     return (
-        <div className="bg-white shadow-md w-2/5 p-8 rounded-xl">
+        <div className="bg-white shadow-md w-2/6 ml-auto p-8 rounded-xl ">
             <h1 className="text-2xl font-bold">Todo List</h1>
             <hr className="mt-2" />
-            <TodoForm onSubmit={addTodo} />
+            {isAdmin &&   <TodoForm onSubmit={addTodo} />}
+          
             <div className="mt-4">
                 You have {todos.filter((it) => it.isCompleted === false).length}{' '}
                 pending task(s)

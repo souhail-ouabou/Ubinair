@@ -2,23 +2,23 @@ export function initTasks() {
     const currentDate = new Date();
     const tasks = [
       {
-        start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
-        end: new Date(currentDate.getFullYear(), currentDate.getMonth(), 15),
+        start: new Date("2022-06-20T18:42:02.483+00:00"),
+        end: new Date("2022-06-27T18:42:02.483+00:00"),
         name: "Some Project",
         id: "ProjectSample",
-        // progress: 25,
+         progress: 50,
         type: "project",
         
-        hideChildren: false
+      //  hideChildren: false
       },
       {
         start: new Date(currentDate.getFullYear(), currentDate.getMonth(), 1),
         end: new Date(
           currentDate.getFullYear(),
           currentDate.getMonth(),
-          2,
-          12,
-          28
+          2, //nhar
+          12, //sa3a
+          28 //minute
         ),
         name: "Idea",
         id: "Task 0",

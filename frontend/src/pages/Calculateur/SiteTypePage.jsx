@@ -67,6 +67,7 @@ function SiteTypePage(props) {
                                 <img
                                     src={vitrine}
                                     className="object-contain mx-auto h-40 w-88"
+                                    alt="vitrine"
                                 />
                             </div>
                             <div className="">

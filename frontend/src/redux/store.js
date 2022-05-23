@@ -5,18 +5,25 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
-import { authReducer, userRegisterReducer } from './reducers/userReducer'
+import { authReducer, userRegisterReducer,getUserReducer } from './reducers/userReducer'
+import { ProjetcCreateReducer, ListMyProjectsReducer,GetProjectDetailsReducer } from './reducers/projectReducer'
+import token  from './reducers/tokenReducer'
 
 const reducer = combineReducers({
     auth: authReducer,
     userRegister: userRegisterReducer,
+    token,
+    getUserReducer,
+    ProjetcCreateReducer,
+    ListMyProjectsReducer,
+    GetProjectDetailsReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null
 const initialState = {
-    auth: { user: userInfoFromStorage }
+    auth: { userInfo: userInfoFromStorage }
 }
 const middelware = [thunk]
 

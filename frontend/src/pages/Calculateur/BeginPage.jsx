@@ -8,30 +8,29 @@ import { Link } from 'react-router-dom'
 function BeginPage(props) {
     return (
         <div className={props.index === 0 ? 'text-white' : 'hidden'}>
-           <div  className="text-4xl sm:text-5xl pt-16 md:text-6xl text-center pb-6">
-
-           <motion.h1 
-           initial={{y:350}} 
-           animate={{y:0}} 
-           transition={{delay:1.0,duration:1.0}}>Votre projet consiste en un :</motion.h1>
-           </div>
+            <div
+                className="flex flex-col items-center justify-center mb-12 "
+                data-aos="fade-up"
+                data-aos-duration="4000"
+            >
+                <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold   ">
+                    Votre projet consiste en un :
+                </p>
+            </div>
 
             <div className="grid gap-x-6  grid-cols-1 sm:grid-cols-2  md:grid-cols-3">
-             
-            <motion.div  
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }}
-                            whileHover={{
-                                            scale:1.05,
-                                            boxShadow:"0px 0px 8px rgb(255,255,255)"
-                                        }}
-                            transition={{duration:0.2}}
-
-                            className="border rounded-md border-gray-200 pt-6 cursor-pointer 
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                        scale: 1.05,
+                        boxShadow: '0px 0px 8px rgb(255,255,255)',
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className="glass border-0 rounded-md  pt-6 cursor-pointer 
                              bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-                            
-                             onClick={() => props.onNext(1, 'Application mobile + Site web')}
+                    onClick={() => props.onNext(1, 'Site Web')}
                 >
                     
                     <div className="">
@@ -46,20 +45,19 @@ function BeginPage(props) {
                     </div>
                  </motion.div>
 
-
-                 <motion.div
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            viewport={{ once: true }} 
-                            whileHover={{
-                                scale:1.05,
-                                boxShadow:"0px 0px 8px rgb(255,255,255)"
-                            }}
-                            transition={{duration:0.2}}
-                            className="border rounded-md border-gray-200 pt-6 cursor-pointer 
-                            mt-5  sm:mt-0 md:mt-0  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 "
-                            onClick={() => props.onNext(1, 'Application mobile')}>
-
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    viewport={{ once: true }}
+                    whileHover={{
+                        scale: 1.05,
+                        boxShadow: '0px 0px 8px rgb(255,255,255)',
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className="glass border-0 rounded-md  pt-6 cursor-pointer 
+                    bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
+                    onClick={() => props.onNext(1, 'Application mobile')}
+                >
                     <div className="">
                         <div className="">
                             <div className="">
@@ -83,8 +81,9 @@ function BeginPage(props) {
                     transition={{ duration: 0.2 }}
                     className="border rounded-md  border-gray-200 pt-6 cursor-pointer  mt-5
                             md:mt-0 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
-                            onClick={() => props.onNext(1, 'Application mobile + Site web')}
-
+                    onClick={() =>
+                        props.onNext(1, 'Application mobile + Site web')
+                    }
                 >
                     <div className="">
                         <div className="text-center">

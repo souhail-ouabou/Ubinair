@@ -154,8 +154,8 @@ const userCtrl = {
             //http://localhost:5000/user/login
             const { email, password } = req.body
             const user = await Users.findOne({
-                email: { $regex: email, $options: 'i' },
-            })
+                email: { $regex: email, $options: "i" },
+            });
             if (!email || !password)
                 return res
                     .status(400)
@@ -175,13 +175,14 @@ const userCtrl = {
                 return res.status(400).json({ msg: 'Invalid credentials' })
 
             //     console.log(existingUser);
-            //   // http://localhost:5000/user/refresh_token
-            // const refresh_token = createRefreshToken({ id: existingUser._id });
-            //     res.cookie("refreshtoken", refresh_token, {
-            //         httpOnly: true,
-            //         path: "/user/refresh_token",
-            //         maxAge: 365 * 24 * 60 * 60 * 1000, // 7 days
-            //     });
+            // http://localhost:5000/user/refresh_token
+
+            const refresh_token = createRefreshToken({ id: user._id })
+            res.cookie('refreshtoken', refresh_token, {
+                httpOnly: true,
+                path: '/user/refresh_token',
+                maxAge: 365 * 24 * 60 * 60 * 1000, // 7 days
+            })
             res.status(200).json({
                 _id: user._id,
                 name: user.name,
@@ -189,49 +190,68 @@ const userCtrl = {
                 role: user.role,
                 avatar: user.avatar,
                 client: user.client,
-                token: generateToken(user._id),
+                token: refresh_token,
             })
         } catch (err) {
             return res.status(400).json({ msg: err.message })
         }
     },
-    // getAccessToken: async (req, res) => {
-    //     try {
-    //         //http://localhost:5000/user/refresh_token
-    //         //get theCookie value
-    //         const rf_token = req.cookies.refreshtoken
-    //         console.log('the token', rf_token)
-    //         if (!rf_token)
-    //             return res.status(500).json({ msg: 'Please login now!' })
+    getAccessToken: async (req, res) => {
+        try {
+            //http://localhost:5000/user/refresh_token
+            //get theCookie value
+            const rf_token = req.cookies.refreshtoken
+            //console.log(rf_token)
+            if (!rf_token)
+                return res.status(500).json({ msg: 'Please login now!' })
 
-    //         jwt.verify(
-    //             rf_token,
-    //             process.env.REFRESH_TOKEN_SECRET,
-    //             (err, user) => {
-    //                 // The validation method returns a decode object that we stored the token in.
-    //                 if (err)
-    //                     return res
-    //                         .status(500)
-    //                         .json({ msg: 'Please login now!' })
-    //                 console.log(user)
-    //                 // if user login in create a token to stay loged in
-    //                 const access_token = createAccessToken({ id: user.id })
-    //                 res.json({ access_token })
-    //             }
-    //         )
-    //     } catch (err) {
-    //         return res.status(500).json({ msg: err.message })
-    //     }
-    // },
-    // getUserInfor: async (req, res) => {
-    //   try {
-    //     const user = await Users.findById(req.user.id).select("-password");
-    //     console.log("finded user",user);
-    //     res.json(user);
-    //   } catch (err) {
-    //     return res.status(500).json({ msg: err.message });
-    //   }
-    // },
+            jwt.verify(
+                rf_token,
+                process.env.REFRESH_TOKEN_SECRET,
+                (err, user) => {
+                    if (err)
+                        return res
+                            .status(500)
+                            .json({ msg: 'Please login now!' })
+                    console.log(user)
+                    // if user login in create a token to stay loged in
+                    const access_token = createAccessToken({ id: user.id })
+                    res.json({ access_token })
+                }
+            )
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    logout: async (req, res) => {
+        try {
+            res.clearCookie('refreshtoken', { path: '/user/refresh_token' })
+            return res.json({ msg: 'Logged out.' })
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    getUserInfor: async (req, res) => {
+      try {
+        const user = await Users.findById(req.user.id).select("-password");
+        console.log("finded user",user);
+        res.json(user);
+      } catch (err) {
+        return res.status(500).json({ msg: err.message });
+      }
+    },
+}
+
+
+
+
+
+
+
+const createActivationToken = (payload) => {
+    return jwt.sign(payload, `${process.env.ACTIVATION_TOKEN_SECRET}`, {
+        expiresIn: '5m',
+    })
 }
 
 const createAccessToken = (payload) => {
@@ -239,14 +259,10 @@ const createAccessToken = (payload) => {
         expiresIn: '15m',
     })
 }
-const generateToken = (id) => {
-    return jwt.sign({ id }, process.env.REFRESH_TOKEN_SECRET, {
-        expiresIn: '30d',
-    })
-}
-const createActivationToken = (payload) => {
-    return jwt.sign(payload, `${process.env.ACTIVATION_TOKEN_SECRET}`, {
-        expiresIn: '5m',
+
+const createRefreshToken = (payload) => {
+    return jwt.sign(payload, `${process.env.REFRESH_TOKEN_SECRET}`, {
+        expiresIn: '365d',
     })
 }
 module.exports = userCtrl
