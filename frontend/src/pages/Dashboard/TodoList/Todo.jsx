@@ -23,7 +23,7 @@ const Todo = ({ todos, removeTodo, completeTodo, updateTodo }) => {
         return <TodoForm edit={edit} onSubmit={submitUpdate} />
     }
 
-    return todos.map((todo, index) => (
+    return todos?.map((todo, index) => (
         <div
             className="bg-blue-50 px-4 py-2 rounded-full shadow mb-4 relative focus:outline-none flex items-center justify-start"
             key={index}

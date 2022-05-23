@@ -81,9 +81,9 @@ const Dashboard = ({ match }) => {
             startDate: p.start,
             endDate: p.end,
             progresState: p.progress,
-            estimatedState: p.estimatedState
+            estimatedState: p.estimatedState,
         }))
-      
+
         dispatch(UpdateProject(testarr))
         dispatch(Getprojectdetails(id))
     }
@@ -104,12 +104,11 @@ const Dashboard = ({ match }) => {
             startDate: p.start,
             endDate: p.end,
             progresState: p.progress,
-            estimatedState: p.estimatedState
+            estimatedState: p.estimatedState,
         }))
-      
+
         dispatch(UpdateProject(testarr))
         dispatch(Getprojectdetails(id))
-
     }
     const handleDblClick = (task) => {
         alert('On Double Click event Id:' + task.id)
@@ -134,6 +133,13 @@ const Dashboard = ({ match }) => {
     }
 
     const [taskss, setTaskss] = useState([initialtaskState])
+    const [clientTaskss, setclientTaskss] = useState([
+        {
+            id: '',
+            text: 'teeeeest',
+            isCompleted: false,
+        },
+    ])
 
     useEffect(() => {
         if (user.client) {
@@ -148,7 +154,7 @@ const Dashboard = ({ match }) => {
                 name: p.title,
                 id: p._id,
                 progress: p.progresState,
-                estimatedState :p.estimatedState,
+                estimatedState: p.estimatedState,
                 type: 'task',
                 project: projectDetails._id,
             }))
@@ -164,8 +170,9 @@ const Dashboard = ({ match }) => {
                 },
                 ...testarr,
             ])
+            setclientTaskss(projectDetails.clientTaskss)
         }
-    }, [projectDetails.name])
+    }, [projectDetails.name, clientTaskss, projectDetails.devis, projectDetails.specification, projectDetails.createdAt, projectDetails.finishedAt, projectDetails.totalProgresState, projectDetails._id, projectDetails.clientTaskss])
 
     return (
         <div className="w-full min-h-screen flex ">
@@ -291,25 +298,26 @@ const Dashboard = ({ match }) => {
                             </div>
                         </>
                     </top>
-                    <bottom className="flex items-start justify-start gap-12">
-                        <div style={{ width: 700, height: 500 }}>
-                            <ViewSwitcher
-                                onViewModeChange={(viewMode) =>
-                                    setView(viewMode)
-                                }
-                                onViewListChange={setIsChecked}
-                                isChecked={isChecked}
-                            />
 
-                            <>
-                                {loadingProjectDetails ? (
-                                    <div className="col-right text-white">
-                                        {' '}
-                                        Loaaading ...
-                                    </div>
-                                ) : error ? (
-                                    <div>errorMyProjects</div>
-                                ) : (
+                    {loadingProjectDetails ? (
+                        <div className="col-right text-white">
+                            {' '}
+                            Loaaading ...
+                        </div>
+                    ) : error ? (
+                        <div>errorMyProjects</div>
+                    ) : (
+                        <bottom className="flex items-start justify-start gap-12">
+                            <div style={{ width: 700, height: 500 }}>
+                                <ViewSwitcher
+                                    onViewModeChange={(viewMode) =>
+                                        setView(viewMode)
+                                    }
+                                    onViewListChange={setIsChecked}
+                                    isChecked={isChecked}
+                                />
+
+                                <>
                                     <>
                                         <Gantt
                                             tasks={taskss}
@@ -335,12 +343,16 @@ const Dashboard = ({ match }) => {
                                             TaskListHeader="false"
                                         />
                                     </>
-                                )}
-                            </>
-                        </div>
+                                </>
+                            </div>
 
-                        <TodoList isAdmin={isAdmin} id={id} taskss={projectDetails.clientTaskss}/>
-                    </bottom>
+                        <TodoList
+                            isAdmin={isAdmin}
+                            id={id}
+                            taskss={projectDetails.clientTaskss}
+                        />
+                         </bottom>
+                    )}
                 </main>
             )}
         </div>
