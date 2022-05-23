@@ -10,7 +10,7 @@ import {
     PROJECT_DETAILS_FAIL,
     PROJET_UPDATE_REQUEST,
     PROJET_UPDATE_SUCCESS,
-    PROJET_UPDATE_FAIL
+    PROJET_UPDATE_FAIL,
 } from './constants/projetconstants'
 import axios from 'axios'
 export const CreateProjet = (calculator) => async (dispatch, getState) => {
@@ -90,15 +90,15 @@ export const Getprojectdetails = (id) => async (dispatch, getState) => {
         //     console.log("before token");
 
         const { token } = getState()
-             console.log("after token");
+        console.log('after token')
 
-             console.log(token);
+        console.log(token)
         const config = {
             headers: {
                 Authorization: token,
             },
         }
-    
+
         const { data } = await axios.get(`/projets/details/${id}`, config)
         console.log(data)
 
@@ -115,21 +115,38 @@ export const Getprojectdetails = (id) => async (dispatch, getState) => {
 }
 export const UpdateProject = (project) => async (dispatch) => {
     try {
-      dispatch({ type: PROJET_UPDATE_REQUEST });
-  
-      const { data } = await axios.put(
-        `/projets/updateproject/${project[0]._id}`,
-        project
-      );
-  
-      dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data });
+        dispatch({ type: PROJET_UPDATE_REQUEST })
+
+        const { data } = await axios.put(
+            `/projets/updateproject/${project[0]._id}`,
+            project
+        )
+
+        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
     } catch (error) {
-      dispatch({
-        type: PROJET_UPDATE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
+        dispatch({
+            type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
     }
-  };
+}
+export const UpdateTaskssClient = (id, taskss) => async (dispatch) => {
+    try {
+        dispatch({ type: PROJET_UPDATE_REQUEST })
+
+        const { data } = await axios.put(`/projets/updatetasks/${id}`, {taskss,id})
+
+        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+    } catch (error) {
+        dispatch({
+            type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}

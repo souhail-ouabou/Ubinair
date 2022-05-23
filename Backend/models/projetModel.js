@@ -11,6 +11,16 @@ const featuresSchema = mongoose.Schema(
         timestamps: true,
     }
 )
+const clientTaskssSchema = mongoose.Schema(
+    {
+        id: { type: String, required: true },
+        text: { type: String, required: true },
+        isCompleted: { type: Boolean, required: true, default: false },
+    },
+    {
+        timestamps: true,
+    }
+)
 const specificationSchema = mongoose.Schema({
     title: { type: String, required: true },
     progresState: {
@@ -97,6 +107,7 @@ const projetSchema = mongoose.Schema({
         maximum: 0,
         minimum: 0,
     },
+    clientTaskss: [clientTaskssSchema],
     finishedAt: {
         type: Date,
         default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

@@ -84,13 +84,13 @@ const Dashboard = ({ match }) => {
         dispatch(UpdateProject(testarr))
         dispatch(Getprojectdetails(id))
     }
-    const handleTaskDelete = (task) => {
-        const conf = window.confirm('Are you sure about ' + task.name + ' ?')
-        if (conf) {
-            setTaskss(taskss.filter((t) => t.id !== task.id))
-        }
-        return conf
-    }
+    // const handleTaskDelete = (task) => {
+    //     const conf = window.confirm('Are you sure about ' + task.name + ' ?')
+    //     if (conf) {
+    //         setTaskss(taskss.filter((t) => t.id !== task.id))
+    //     }
+    //     return conf
+    // }
     const handleProgressChange = async (task) => {
         const newTasks = taskss.map((t) => (t.id === task.id ? task : t))
         setTaskss(newTasks)
@@ -314,7 +314,7 @@ const Dashboard = ({ match }) => {
                                             {...(isAdmin && {
                                                 onDateChange: handleTaskChange,
                                             })}
-                                            onDelete={handleTaskDelete}
+                                            // onDelete={handleTaskDelete}
                                             onProgressChange={
                                                 handleProgressChange
                                             }
@@ -336,7 +336,7 @@ const Dashboard = ({ match }) => {
                             </>
                         </div>
 
-                        <TodoList isAdmin={isAdmin} />
+                        <TodoList isAdmin={isAdmin} id={id} taskss={projectDetails.clientTaskss}/>
                     </bottom>
                 </main>
             )}
