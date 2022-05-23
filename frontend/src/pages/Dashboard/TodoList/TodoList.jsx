@@ -4,9 +4,9 @@ import TodoForm from './TodoForm'
 import { useSelector, useDispatch } from 'react-redux'
 import { UpdateTaskssClient } from '../../../redux/actions/projectActions'
 
-const TodoList = ({ isAdmin, id,taskss }) => {
+const TodoList = ({ isAdmin, id : idProjet, taskss }) => {
     const dispatch = useDispatch()
-    const [todos, setTodos] = useState([])
+    const [todos, setTodos] = useState(taskss)
     const addTodo = (todo) => {
         if (!todo.text || /^\s*$/.test(todo.text)) {
             return
@@ -15,22 +15,25 @@ const TodoList = ({ isAdmin, id,taskss }) => {
         setTodos(newTodos)
 
         console.log(newTodos)
-        dispatch(UpdateTaskssClient(id, newTodos))
+        dispatch(UpdateTaskssClient(idProjet, newTodos))
     }
     const updateTodo = (todoId, newValue) => {
         if (!newValue.text || /^\s*$/.test(newValue.text)) {
             return
         }
-
-        setTodos((prev) =>
-            prev.map((item) => (item.id === todoId ? newValue : item))
+        const newTodos = todos.map((item) =>
+            item.id === todoId ? newValue : item
         )
+        setTodos(newTodos)
+        console.log('new todos Update ---:', newTodos)
+        dispatch(UpdateTaskssClient(idProjet, newTodos))
     }
 
     const removeTodo = (id) => {
         const removedArr = [...todos].filter((todo) => todo.id !== id)
-
         setTodos(removedArr)
+        console.log('new todos after remove ---:', removedArr)
+        dispatch(UpdateTaskssClient(idProjet, removedArr))
     }
     const completeTodo = (id) => {
         let updatedTodos = todos.map((todo) => {
@@ -40,6 +43,7 @@ const TodoList = ({ isAdmin, id,taskss }) => {
             return todo
         })
         setTodos(updatedTodos)
+        dispatch(UpdateTaskssClient(idProjet, updatedTodos))
     }
     return (
         <div className="bg-white shadow-md w-2/6 ml-auto p-8 rounded-xl ">
@@ -47,16 +51,16 @@ const TodoList = ({ isAdmin, id,taskss }) => {
             <hr className="mt-2" />
             {isAdmin && <TodoForm onSubmit={addTodo} />}
 
-            <div className="mt-4">
-                You have {todos.filter((it) => it.isCompleted === false).length}{' '}
+             <div className="mt-4">
+                You have {todos?.filter((it) => it.isCompleted === false).length}{' '}
                 pending task(s)
-            </div>
+            </div> 
             <div className="mt-4">
                 <Todo
                     todos={todos}
-                    removeTodo={removeTodo}
+                     removeTodo={removeTodo}
                     updateTodo={updateTodo}
-                    completeTodo={completeTodo}
+                     completeTodo={completeTodo}
                 />
             </div>
         </div>
