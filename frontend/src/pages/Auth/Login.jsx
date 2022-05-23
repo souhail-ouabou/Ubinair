@@ -49,6 +49,7 @@ const Login = () => {
             })
 
         dispatch(dispatchLogin(creds))
+        dispatch(dispatchLogin(creds))
     }
 
 

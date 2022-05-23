@@ -12,6 +12,8 @@ import {
     PROJET_UPDATE_SUCCESS,
     PROJET_UPDATE_FAIL,
 } from './constants/projetconstants'
+import { toast } from "react-toastify";
+
 import axios from 'axios'
 export const CreateProjet = (calculator) => async (dispatch, getState) => {
     try {
@@ -115,14 +117,22 @@ export const Getprojectdetails = (id) => async (dispatch, getState) => {
 }
 export const UpdateProject = (project) => async (dispatch) => {
     try {
-        dispatch({ type: PROJET_UPDATE_REQUEST })
 
+        dispatch({ type: PROJET_UPDATE_REQUEST })
         const { data } = await axios.put(
             `/projets/updateproject/${project[0]._id}`,
             project
-        )
+            )
+             toast.dismiss();
+            toast.loading("Please wait...", {
+                position: toast.POSITION.TOP_CENTER
+              });
 
         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+         toast.dismiss();
+        toast.success("Succès Update !", {
+            position: toast.POSITION.TOP_CENTER
+          });
     } catch (error) {
         dispatch({
             type: PROJET_UPDATE_FAIL,

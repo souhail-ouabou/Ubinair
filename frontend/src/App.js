@@ -26,6 +26,8 @@ import NotFound from './pages/NotFound'
 import Profile from './pages/Profile/Profile'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { ToastContainer } from 'react-toastify'
+
 function App() {
     AOS.init()
     const [loading, setLoading] = useState(false)
@@ -64,7 +66,7 @@ function App() {
         <div>
             <section className="flex  justify-center items-center  min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed p-12 ">
                 <Nav />
-
+                <ToastContainer />
                 <>
                     <Routes>
                         <Route path="/*" element={<Home />} />
@@ -89,7 +91,7 @@ function App() {
                         <Route path="/tracker" element={<Tracker />} />
                         <Route
                             path="/dashboard/:id"
-                            element={ <Dashboard /> }
+                            element={userInfo ? <Dashboard /> : <Login />}
                         />
                         <Route
                             path="/calculator"
@@ -97,6 +99,7 @@ function App() {
                         />
                     </Routes>
                 </>
+          
             </section>
             <Footer />
         </div>

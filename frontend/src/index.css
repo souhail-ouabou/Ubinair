@@ -26,7 +26,16 @@ body {
     backdrop-filter: blur(10px);
     background-image: linear-gradient(rgba(60, 54, 66, 0.05), rgb(20, 12, 29));
 }
-
+.glass-inv{
+    padding: 14px;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    
+}
 
 @keyframes move {
     100% {

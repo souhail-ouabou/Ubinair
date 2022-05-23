@@ -68,6 +68,7 @@ export const GetProjectDetailsReducer = (
             return {
                 ...state,
                 loading: true,
+                
             }
         case PROJECT_DETAILS_SUCCESS:
             return {
