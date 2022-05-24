@@ -61,11 +61,11 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-10 flex-col w-60 ml-16 justify-center items-cente ">
+                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center items-cente ">
                     <div className="glass text-white md:w-[500px] ">
-                        {/* <h2>{isAdmin ? "Admin Profile": "User Profile"}</h2> */}
+                       
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
-                            Admin Profile
+                        {isAdmin ? "Admin Profile": "User Profile"}
                         </h2>
 
                         <div className="avatar">
@@ -153,7 +153,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(1)}
                                     >
-                                        xxxxx
+                                        All Projects
                                     </li>
                                     <li
                                         className={
@@ -163,7 +163,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(2)}
                                     >
-                                        yyyyy
+                                        Users
                                     </li>
                                     <li
                                         className={

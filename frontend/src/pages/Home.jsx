@@ -22,28 +22,7 @@ const Home = () => {
             name="home"
             className=" w-full bg-transparent flex flex-col justify-between"
         >
-            <div className="background  bg-transparent ">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+
             <div className="grid md:grid-cols-2 w-full max-w-[1240px] z-10 md:ml-28  ">
                 <div className="flex flex-col justify-center md:items-start w-full px-2 py-12">
                     <h1 className="py-3 px-8 md:px-0 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 m-9">

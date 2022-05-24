@@ -24,9 +24,10 @@ import {
 } from './redux/actions/authAction'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile/Profile'
+
+import { ToastContainer } from 'react-toastify'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { ToastContainer } from 'react-toastify'
 
 function App() {
     AOS.init()
@@ -67,6 +68,28 @@ function App() {
             <section className="flex  justify-center items-center  min-h-screen bg-gradient-to-b from-[#110A19] to-[#321d48] bg-cover bg-center bg-fixed p-12 ">
                 <Nav />
                 <ToastContainer />
+                <div className="background  bg-transparent ">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
                 <>
                     <Routes>
                         <Route path="/*" element={<Home />} />

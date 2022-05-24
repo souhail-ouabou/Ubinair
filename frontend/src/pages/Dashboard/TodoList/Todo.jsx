@@ -47,7 +47,7 @@ const Todo = ({ todos, removeTodo, completeTodo, updateTodo }) => {
             </span>
             <FaRegEdit
                 onClick={() => setEdit({ id: todo.id, value: todo.text })}
-                className="absolute top-3 right-9 text-gray-700 "
+                className="absolute top-3 right-9 text-white "
             />
         </div>
     ))

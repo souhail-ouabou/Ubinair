@@ -209,7 +209,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="w-full min-h-screen flex ">
+            <div className="w-full min-h-screen flex z-10 ">
                 <aside className="py-6 px-10 w-64 mr-10 mt-14 glass  ">
                     <img
                         className="w-16 object-cover m-auto "
@@ -277,13 +277,12 @@ const Dashboard = () => {
                 ) : (
                     <main class="flex-1  pb-8  mt-14  ">
                         <top className="flex  items-center justify-center gap-12">
-                            <div className='glass flex flex-row gap-4'>
+                            <div className="glass flex flex-row gap-4">
                                 {projectDetails.specification?.map((p) => (
                                     <div
                                         key={p._id}
                                         className="flex flex-col gap-4 justify-center items-center "
                                     >
-                                        
                                         <>
                                             <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
                                                 {p.title}
@@ -323,21 +322,19 @@ const Dashboard = () => {
                                             </CircularProgressbarWithChildren>
                                         </div>
                                     </div>
-                                    
                                 ))}
-
                             </div>
-                                <div className="flex flex-col gap-4 justify-center items-center glass shadow-md  p-2 rounded-xl w-2/6 ml-auto">
-                                    <div>
-                                        <h1 class="text-2xl text-slate-100 font-semibold leading-relaxed ">
-                                            Total
-                                        </h1>
-                                    </div>
-
-                                    <ProgressBar
-                                        done={projectDetails.totalProgresState}
-                                    />
+                            <div className="flex flex-col gap-4 justify-center items-center glass shadow-md  p-2 rounded-xl w-2/6 ml-auto">
+                                <div>
+                                    <h1 class="text-2xl text-slate-100 font-semibold leading-relaxed ">
+                                        Total
+                                    </h1>
                                 </div>
+
+                                <ProgressBar
+                                    done={projectDetails.totalProgresState}
+                                />
+                            </div>
                         </top>
 
                         {loadingProjectDetails ? (
@@ -349,7 +346,7 @@ const Dashboard = () => {
                             <div>errorMyProjects</div>
                         ) : (
                             <bottom className="flex items-start justify-start gap-12">
-                                <div style={{ width: 700, height: 500 }}>
+                                <div style={{ width: 720, height: 500 }}>
                                     <ViewSwitcher
                                         onViewModeChange={(viewMode) =>
                                             setView(viewMode)
@@ -360,10 +357,10 @@ const Dashboard = () => {
 
                                     <div className=" bg-white shadow-md  p-2 rounded-xl ">
                                         <Gantt
-                                        // barBackgroundColor="text-red-200"
-                                        // todayColor="#8A40CB"
-                                         barProgressColor="#6363C7"
-                                        barCornerRadius="12"
+                                            // barBackgroundColor="text-red-200"
+                                            todayColor="yellow"
+                                            barProgressColor="#6363C7"
+                                            barCornerRadius="12"
                                             tasks={taskss}
                                             viewMode={view}
                                             {...(isAdmin && {
