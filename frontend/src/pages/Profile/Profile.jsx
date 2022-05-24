@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from './ProjetBlock'
 import { listMyProjects } from '../../redux/actions/projectActions'
+import { GetAllUsers } from '../../redux/actions/usersAction'
+import UserBlock from './UserBlock'
 const Profile = () => {
     const dispatch = useDispatch()
 
@@ -18,6 +20,7 @@ const Profile = () => {
         cf_password: '',
     }
     const [data, setData] = useState(initialState)
+    const token = useSelector((state) => state.token)
 
     const {
         name,
@@ -29,8 +32,13 @@ const Profile = () => {
         description,
         headline,
     } = data
-    // const auth = useSelector((state) => state.auth)
-    // const { user, isLogged, loading } = auth
+    const getAllUsersReducer = useSelector((state) => state.getAllUsersReducer)
+    const {
+        users,
+        loading: loadingGetAllUsers,
+        error: errgetAllUsers,
+    } = useSelector((state) => state.getAllUsersReducer)
+
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
 
@@ -46,6 +54,18 @@ const Profile = () => {
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
         setToggletab(index)
+        switch (index) {
+            case 1:
+                dispatch(listMyProjects())
+                break
+            case 2:
+                dispatch(GetAllUsers(token))
+                break
+            case 3:
+                break
+            default:
+                break
+        }
     }
 
     useEffect(() => {
@@ -53,6 +73,7 @@ const Profile = () => {
             dispatch(listMyProjects())
         }
     }, [dispatch, user.client])
+
     return (
         <>
             <Helmet>
@@ -61,11 +82,10 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center items-cente ">
+                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center  ">
                     <div className="glass text-white md:w-[500px] ">
-                       
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
-                        {isAdmin ? "Admin Profile": "User Profile"}
+                            {isAdmin ? 'Admin Profile' : 'User Profile'}
                         </h2>
 
                         <div className="avatar">
@@ -141,7 +161,7 @@ const Profile = () => {
                             Update
                         </button>
                     </div>
-                    <div>
+                    <div className="col-right">
                         {isAdmin ? (
                             <div class="tabs_wrap">
                                 <ul>
@@ -173,7 +193,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(3)}
                                     >
-                                        zzzzzzzz
+                                        Clients
                                     </li>
                                 </ul>
                             </div>
@@ -183,13 +203,31 @@ const Profile = () => {
                             </h1>
                         )}
 
+                        {loadingGetAllUsers ? (
+                            <div className=" text-white"> Loaaading ...</div>
+                        ) : errgetAllUsers && errgetAllUsers ? (
+                            <div>errgetAllUsers</div>
+                        ) : users && users.length === 0 ? (
+                            <div className=" text-white">Emppt</div>
+                        ) : (
+                            <>
+                                {users &&
+                                    users.map((user) => (
+                                        <UserBlock
+                                            key={user._id}
+                                            user={user}
+                                            toggletab={toggletab}
+                                        />
+                                    ))}
+                            </>
+                        )}
+
                         {loadingMyProjects ? (
-                          
-                            <div className="col-right text-white"> Loaaading ...</div>
+                            <div className=" text-white"> Loaaading ...</div>
                         ) : errorMyProjects ? (
                             <div>errorMyProjects</div>
                         ) : projects.length === 0 ? (
-                            <div className="col-right text-white">Emppt</div>
+                            <div className="text-white">Emppt</div>
                         ) : (
                             <>
                                 {projects.map((project) => (

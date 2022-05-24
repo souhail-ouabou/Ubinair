@@ -24,10 +24,10 @@ import {
 } from './redux/actions/authAction'
 import NotFound from './pages/NotFound'
 import Profile from './pages/Profile/Profile'
-
 import { ToastContainer } from 'react-toastify'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+
 
 function App() {
     AOS.init()

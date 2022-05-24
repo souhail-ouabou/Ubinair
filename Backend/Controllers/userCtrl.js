@@ -242,8 +242,8 @@ const userCtrl = {
     },
     getUsersAllInfor: async (req, res) => {
         try {
-          const user = await Users.find().select("-password");
-          res.json(user);
+          const users = await Users.find().select("-password");
+          res.json(users);
         } catch (err) {
           return res.status(500).json({ msg: err.message });
         }
