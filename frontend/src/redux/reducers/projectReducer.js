@@ -56,7 +56,7 @@ export const GetProjectDetailsReducer = (
     state = {
         project: {
             specification: [],
-
+           projectTasks:[],
             features: [],
             user: {},
         },
@@ -86,6 +86,8 @@ export const GetProjectDetailsReducer = (
             return state
     }
 }
+
+
 export const projectUpdateReducer = (state = { project: {} }, action) => {
     switch (action.type) {
         case PROJET_UPDATE_REQUEST:

@@ -11,7 +11,8 @@ import { RiDeleteBin6Fill } from 'react-icons/ri'
 import {BrowserRouter} from 'react-router-dom'
 import {HashLink as Link} from 'react-router-hash-link'
 import {Tooltip,Button} from "@mui/material"
-
+import { UpdateTasksProject,UpdateSpecProject } from '../../redux/actions/projectActions'
+import { ObjectID } from 'bson';
 import { useSelector, useDispatch } from 'react-redux'
 import {
     Getprojectdetails,
@@ -44,7 +45,7 @@ const Tracker = () => {
     } = GetProjectDetailsReducer
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-    const { loading, user, isAdmin } = getUserReducer
+const { loading, user ,isAdmin} = getUserReducer
 
     useEffect(() => {
         if (user.client) {
@@ -66,73 +67,69 @@ const Tracker = () => {
     const [EditedTaskDate,setEditedTaskDate]=useState('')
     const [EditedTaskid,setEditedTaskid]=useState('')
 
-    const [tasks,setTasks]=useState([{id:Math.floor(Math.random() * 1000),title:"Start Design",state:1,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Design',description:'Start navbar and side bar design'},
+    const [tasksProject,setTasks]=useState([])
     
-    {id:Math.floor(Math.random() * 1000),title:"Start index page",state:0,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Design',description:'add sections and topics design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Start index page",state:0,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Design',description:'add sections and topics design'},
 
-    {id:Math.floor(Math.random() * 1000),title:"Add auth design",state:1,date:new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Design',description:'add Form and register design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Add auth design",state:1,date:new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Design',description:'add Form and register design'},
 
-    {id:Math.floor(Math.random() * 1000),title:"Start Content",state:0,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Content',description:'add Form and register design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Start Content",state:0,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
 
-    {id:Math.floor(Math.random() * 1000),title:"Add Articles",state:-1,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Content',description:'add Form and register design'},
-    {id:Math.floor(Math.random() * 1000),title:"Add topics",state:1,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Content',description:'add Form and register design'},
-    {id:Math.floor(Math.random() * 1000),title:"Start integration",state:1,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Integration'},
-    {id:Math.floor(Math.random() * 1000),title:"Test alfa and beta",state:1,date: new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Integration',description:'add Form and register design'},
-    {id:Math.floor(Math.random() * 1000),title:"Version final",state:-1,date:new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date()),type:'Integration',description:'add Form and register design'}])
+    // {id:Math.floor(Math.random() * 1000),title:"Add Articles",state:-1,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Add topics",state:1,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Start integration",state:1,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Integration'},
+    // {id:Math.floor(Math.random() * 1000),title:"Test alfa and beta",state:1,date: new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Integration',description:'add Form and register design'},
+    // {id:Math.floor(Math.random() * 1000),title:"Version final",state:-1,date:new Intl.DateTimeFormat("en-GB", {
+    //     year: "numeric",
+    //     month: "long",
+    //     day: "2-digit"
+    // }).format(new Date()),genre:'Integration',description:'add Form and register design'}])
 
 
    
 
-//    const [isAdmin,setIsadmin]=useState(true)
-
+   const [Admin,setIsadmin]=useState(true)
+   const [specification, setSpec] = useState([])
   
 
 
     let changeState=(id) => {
         
-       if(!isAdmin)return;
+       if(!Admin)return;
       
-         console.log(JSON.stringify(tasks));
+         console.log(JSON.stringify(tasksProject));
             let newState
-            let newArr = tasks.map((item) => {
+            let newArr = tasksProject.map((item) => {
               
-             if(item.id==id && item.type==title){
+             if(item.id==id && item.genre==title){
                  if(item.state==-1){
                     newState=0
                  }else if(item.state==0){
@@ -150,7 +147,13 @@ const Tracker = () => {
             });
             console.log('newarr',JSON.stringify(newArr))
             setTasks(newArr);
-            console.log(JSON.stringify(tasks));
+           
+            setTimeout(() => {
+                console.log('This will run after 1 second!')
+                 setEdit(true)
+              }, 1000);
+
+            console.log(JSON.stringify(tasksProject));
            
           };
 
@@ -170,15 +173,17 @@ const Tracker = () => {
     // console.log(JSON.stringify(task));
     const [title,setTitle]=React.useState('')
     const [showForm, setShowForm] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [editCirBar, setEditCirBar] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
     const today= new Date();
     const [view, setView] = React.useState(ViewMode.Day)
     const [design, setDesign] = React.useState(false)
     const [content, setTContent] = React.useState(false)
     const [inte, setInte] = React.useState(false)
-    const [designValue, setDesignValue] = React.useState(50)
-    const [ContentValue, setContentValue] = React.useState(50)
-    const [inteValue, setInteValue] = React.useState(50)
+    const [designValue, setDesignValue] = React.useState(0)
+    const [ContentValue, setContentValue] = React.useState(0)
+    const [inteValue, setInteValue] = React.useState(0)
 
 
    const handleClickShow=(index)=>{
@@ -187,10 +192,11 @@ const Tracker = () => {
         setDesign(false)
         setShowForm(false)
         setShowFormUpdate(false)
-
+    
         if(index==1){
-            setDesign(true)
-            setTitle('Design')
+            
+            setInte(true)
+            setTitle('Integration')
 
           
             
@@ -200,23 +206,84 @@ const Tracker = () => {
             setTitle('Content')
             // setTasks(tasksContent)
        }else{
-            setInte(true)
-            setTitle('Integration')
+            setDesign(true)
+           
+            setTitle('Design')
             // setTasks(tasksInte)
        }
 
+      
+
        calculCircle();
+        console.log('here is it ',title);
+       
       
     }
 
     useEffect(()=>{
-        calculCircle();
-      })
 
+      
+                calculCircle();
+            
+           
+       
+      },[tasksProject])
+   
+    //   useEffect(()=>{
+    //     if (!loadingProjectDetails && edit) {
+    //     dispatch(UpdateTasksProject(id, tasksProject))
+    //     setEdit(false)
+    //     }
+    //   },[tasksProject,edit])
+     
 
+    //   useEffect(() => {
+    //     if (!loadingProjectDetails) {
+    //         console.log('test',JSON.stringify(projectDetails.projectTasks));
+    //         setTasks(projectDetails.projectTasks)
+    //         setSpec(projectDetails.specification)
+           
+    //     }
+    // }, [loadingProjectDetails])
+
+    useEffect(()=>{
+   
+            if(!loadingProjectDetails && edit){
+                console.log('test',JSON.stringify('comming from state ',JSON.stringify(tasksProject)));
+                dispatch(UpdateTasksProject(id, tasksProject))
+                setEdit(false)
+              
+            }
+        
+
+    },[loadingProjectDetails,tasksProject,edit])
+
+    useEffect(()=>{
+        if (!loadingProjectDetails){
+           
+            // console.log('test',JSON.stringify(JSON.stringify(projectDetails)));
+            setTasks(projectDetails.projectTasks)
+            setSpec(projectDetails.specification)
+            // console.log('test',JSON.stringify(JSON.stringify(specifications)))
+            
+    }
+    },[loadingProjectDetails])
+
+    useEffect(() => {
+        if (!loadingProjectDetails && editCirBar) {
+            console.log('test spec',JSON.stringify(specification));
+            dispatch(UpdateSpecProject(id, specification))
+           console.log('disapatched');
+            setEditCirBar(false)
+           
+        }
+    }, [specification])
+
+    
     let calculCircle=()=>{
+        if(title=='') return;
         let sum=0
-        tasks.filter(t=>t.type==title).map((item)=>{
+        tasksProject.filter(t=>t.genre==title).map((item)=>{
              if(item.state==-1){
               console.log('-1   '+sum);
                   sum+=0;
@@ -230,14 +297,32 @@ const Tracker = () => {
   
              }
           }
-          )
+          ) 
+          
+          let newProgValue;
           if(title=='Design'){
-            setDesignValue(sum/tasks.filter(t=>t.type==title).length)
+            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
+           
           }else if(title=='Content'){
-            setContentValue(sum/tasks.filter(t=>t.type==title).length)
+            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
+           
           }else{
-            setInteValue(sum/tasks.filter(t=>t.type==title).length)
+            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
+            
           }
+
+          setSpec(
+            specification.map((s)=>{
+                if(s.title==title){
+                   return{...s,progresState:newProgValue}
+                }
+               
+                return s;
+    
+            }
+          )
+        )
+        setEditCirBar(true)
         //   setCirValue(sum/tasks.filter(t=>t.type==title).length)
         
     }
@@ -282,18 +367,22 @@ const Tracker = () => {
         day: "2-digit"
        }).format(new Date(addedTaskDate))
 
-       const newtasks=tasks.concat({id:Math.floor(Math.random() * 1000),
-        title:addedTaskTitle,state:addedTaskState,date:dateFormed,type:title,description:addedTaskDescription})
+       const newtasks=tasksProject.concat({id:new ObjectID(),
+        title:addedTaskTitle,state:addedTaskState,date:dateFormed,genre:title,description:addedTaskDescription})
        setTasks(newtasks)
+       setEdit(true)
+    //    dispatch(UpdateTasksProject(id, newtasks))
        console.log('objects',JSON.stringify(newtasks));
        
        
        
    }
 
-   const deleteHandle=(id)=>{
-    const newtasks=tasks.filter(t=>t.id!==id)
+   const deleteHandle=(i)=>{
+    const newtasks=tasksProject.filter(t=>t.id!==i)
     setTasks(newtasks)
+    setEdit(true)
+    // dispatch(UpdateTasksProject(id, newtasks))
    }
 
    const editeHandle=(taskObjet)=>{
@@ -314,7 +403,7 @@ const Tracker = () => {
        }).format(new Date(EditedTaskDate))
    
        setTasks(
-        tasks.filter(t=>t.type==title).map((task)=>{
+        tasksProject.map((task)=>{
             if(task.id==EditedTaskId){
                return{...task,id:EditedTaskId,title:EditedTaskTitle
                 ,state:EditedTaskState,date:dateFormed,description:EditedTaskDescription}
@@ -325,8 +414,12 @@ const Tracker = () => {
         }
       )
     )
+    setEdit(true)
+     console.log('edited',JSON.stringify(tasksProject));
+    
+    // dispatch(UpdateTasksProject(id, tasksProject))
    }
-   
+     
     
     return (
 
@@ -437,7 +530,7 @@ const Tracker = () => {
                         </tr>
                     </thead>
                     <tbody class="text-xl bg-white text-center" id="Form" >
-                    {tasks.filter(t=>t.type==title).map((taskObj,index)=>(
+                    {tasksProject.filter(t=>t.genre==title).map((taskObj,index)=>(
                
                         <tr  key={index} class="whitespace-nowrap cursor-pointer"
 
@@ -492,7 +585,7 @@ const Tracker = () => {
                             </td>
 
                             <td class="px-6 py-4 text-gray-900 text-center">
-                            {isAdmin?<>
+                            {Admin?<>
                            <Link to="#Form">
                             <button
                                 className="top-3 right-3"
@@ -540,7 +633,7 @@ const Tracker = () => {
                         ))}
                           </tbody>
                         </table>
-                        {isAdmin?
+                        {Admin?
                         <Link to="#Form">
                         <button type="submit"  onClick={addbtnHandler} class="text-white
                         rounded-full text-2xl mt-2  px-5 py-2.5 text-center bg-gradient-to-r
@@ -644,7 +737,9 @@ const Tracker = () => {
                     <div class="flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
                       
                     <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
-                    {projectDetails.specification.map((p,i) => (
+                    
+                   
+                    {specification.map((p,i) => (
                         
 
                     <li key={i}>
@@ -702,8 +797,8 @@ const Tracker = () => {
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
-                                value={designValue}
-                                text={designValue.toFixed(0)+"%"}
+                                value={specification[0].estimatedState}
+                                text={specification[0].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -717,7 +812,7 @@ const Tracker = () => {
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={designValue}
+                                    value={specification[0].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'butt',
@@ -738,8 +833,8 @@ const Tracker = () => {
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
-                                value={ContentValue}
-                                text={ContentValue.toFixed(0)+"%"}
+                                value={specification[1].estimatedState}
+                                text={specification[1].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -753,7 +848,7 @@ const Tracker = () => {
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={ContentValue}
+                                    value={specification[1].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'butt',
@@ -776,8 +871,8 @@ const Tracker = () => {
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
-                                value={inteValue}
-                                text={inteValue.toFixed(0)+"%"}
+                                value={specification[2].estimatedState}
+                                text={specification[2].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -790,7 +885,7 @@ const Tracker = () => {
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={inteValue}
+                                    value={specification[2].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'round',
