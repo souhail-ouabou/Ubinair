@@ -63,7 +63,7 @@ const UserBlock = ({ user, toggletab }) => {
                                         </div>
                                     ) : (
                                         <div className="text-red-600 text-center">
-                                            Pas Client
+                                            User
                                         </div>
                                     )}
                                 </h1>

@@ -185,7 +185,7 @@ const Profile = () => {
                                     >
                                         Users
                                     </li>
-                                    <li
+                                    {/* <li
                                         className={
                                             toggletab === 3
                                                 ? 'active text-white'
@@ -194,7 +194,7 @@ const Profile = () => {
                                         onClick={() => Handletoggle(3)}
                                     >
                                         Clients
-                                    </li>
+                                    </li> */}
                                 </ul>
                             </div>
                         ) : (
@@ -208,7 +208,7 @@ const Profile = () => {
                         ) : errgetAllUsers && errgetAllUsers ? (
                             <div>errgetAllUsers</div>
                         ) : users && users.length === 0 ? (
-                            <div className=" text-white">Emppt</div>
+                            <div className=" text-white">Empptyyyyyyyyy</div>
                         ) : (
                             <>
                                 {users &&

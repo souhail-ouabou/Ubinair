@@ -27,7 +27,7 @@ import Profile from './pages/Profile/Profile'
 import { ToastContainer } from 'react-toastify'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-
+import EditUser from './pages/EditUser/EditUser'
 
 function App() {
     AOS.init()
@@ -69,27 +69,27 @@ function App() {
                 <Nav />
                 <ToastContainer />
                 <div className="background  bg-transparent ">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
                 <>
                     <Routes>
                         <Route path="/*" element={<Home />} />
@@ -120,9 +120,12 @@ function App() {
                             path="/calculator"
                             element={userInfo ? <Calculator /> : <Login />}
                         />
+                        <Route
+                            path="/user/:id"
+                            element={userInfo ? <EditUser /> : <Login />}
+                        />
                     </Routes>
                 </>
-          
             </section>
             <Footer />
         </div>

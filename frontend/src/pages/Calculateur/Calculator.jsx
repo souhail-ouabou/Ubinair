@@ -302,7 +302,7 @@ const Calculator = () => {
         console.log(calculator.devis + '   ' + calculator.type)
     }
     return (
-        <div className="w-[1000px]">
+        <div className="w-[1000px] z-10">
             <div>
                 {' '}
                 {calculator.index == 0 ? (

@@ -57,8 +57,8 @@ const userCtrl = {
                 name,
                 email,
                 phone,
-
                 password: passwordHash,
+                projets: [],
             }
 
             const activation_token = createActivationToken(newUser)
@@ -154,8 +154,8 @@ const userCtrl = {
             //http://localhost:5000/user/login
             const { email, password } = req.body
             const user = await Users.findOne({
-                email: { $regex: email, $options: "i" },
-            });
+                email: { $regex: email, $options: 'i' },
+            })
             if (!email || !password)
                 return res
                     .status(400)
@@ -232,30 +232,38 @@ const userCtrl = {
         }
     },
     getUserInfor: async (req, res) => {
-      try {
-        const user = await Users.findById(req.user.id).select("-password");
-        console.log("finded user",user);
-        res.json(user);
-      } catch (err) {
-        return res.status(500).json({ msg: err.message });
-      }
+        try {
+            const user = await Users.findById(req.user.id).select('-password')
+            console.log('finded user', user)
+            res.json(user)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
     },
     getUsersAllInfor: async (req, res) => {
         try {
-          const users = await Users.find().select("-password");
-          res.json(users);
+            const users = await Users.find().select('-password')
+            res.json(users)
         } catch (err) {
-          return res.status(500).json({ msg: err.message });
+            return res.status(500).json({ msg: err.message })
         }
-      },
-    
+    },
+    getUserDetails: async (req, res) => {
+        try {
+            let user = await Users.findById(req.params.id)
+                .populate('projets')
+                .select('-password')
+
+            if (user) {
+                res.json(user)
+            }
+        } catch (error) {
+            console.log('------------user details error----------')
+            console.log(error)
+            return res.status(500).json({ msg: error.message })
+        }
+    },
 }
-
-
-
-
-
-
 
 const createActivationToken = (payload) => {
     return jwt.sign(payload, `${process.env.ACTIVATION_TOKEN_SECRET}`, {

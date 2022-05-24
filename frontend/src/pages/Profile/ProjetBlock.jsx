@@ -23,7 +23,7 @@ const ProjetBlock = ({ project, toggletab }) => {
                     data-aos="fade-up"
                     data-aos-duration="3000"
                     
-                    className={toggletab === 1 ? 'block' : 'hidden'}
+                     className={toggletab === 1 ? 'block' : 'hidden'}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}

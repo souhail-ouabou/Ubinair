@@ -14,5 +14,7 @@ router.get('/logout', userCtrl.logout)
 router.get('/infor', auth, userCtrl.getUserInfor)
 // login as admin -> refresh_token -> grtAllUsersInfo
 router.get('/all_infor', auth, authAdmin, userCtrl.getUsersAllInfor)
+// login as admin -> refresh_token -> gerUserVyid
+router.get('/:id', auth, authAdmin, userCtrl.getUserDetails)
 
 module.exports = router

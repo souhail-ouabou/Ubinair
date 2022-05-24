@@ -295,8 +295,8 @@ const Dashboard = () => {
                                                 value={p.estimatedState}
                                                 text={`${p.progresState}%`}
                                                 styles={buildStyles({
-                                                    pathColor: '#f00', //estimated
-                                                    trailColor: '#eee', //trans
+                                                    pathColor: '#B8C2CC', //estimated
+                                                    trailColor: '#FFFFFF', //trans
                                                     strokeLinecap: 'rounded',
 
                                                     textSize: '16px',
@@ -314,9 +314,7 @@ const Dashboard = () => {
                                                             'transparent',
                                                         strokeLinecap:
                                                             'rounded',
-                                                        pathColor: `rgba(99, 99, 199, ${
-                                                            percentage / 10
-                                                        })`,
+                                                        pathColor: '#6363C7',
                                                     })}
                                                 />
                                             </CircularProgressbarWithChildren>
