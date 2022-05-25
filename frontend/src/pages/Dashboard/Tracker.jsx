@@ -14,6 +14,7 @@ import {Tooltip,Button} from "@mui/material"
 import { UpdateTasksProject,UpdateSpecProject } from '../../redux/actions/projectActions'
 import { ObjectID } from 'bson';
 import { useSelector, useDispatch } from 'react-redux'
+import moment from 'moment'
 import {
     Getprojectdetails,
     UpdateProject,
@@ -176,7 +177,12 @@ const { loading, user ,isAdmin} = getUserReducer
     const [edit, setEdit] = useState(false);
     const [editCirBar, setEditCirBar] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
-    const today= new Date();
+     const today=
+      new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())
     const [view, setView] = React.useState(ViewMode.Day)
     const [design, setDesign] = React.useState(false)
     const [content, setTContent] = React.useState(false)
@@ -282,39 +288,59 @@ const { loading, user ,isAdmin} = getUserReducer
     
     let calculCircle=()=>{
         if(title=='') return;
-        let sum=0
+        let sumProgV=0
+        let sumEstiV=0
+  
         tasksProject.filter(t=>t.genre==title).map((item)=>{
+           
+            // console.log('--------------------------test'+( moment(item.date)<Date.now()));
              if(item.state==-1){
-              console.log('-1   '+sum);
-                  sum+=0;
+                
+              sumProgV+=0;
+              
+              console.log('-1   prog'+sumProgV+' sus value'+sumEstiV);
+              if(moment(item.date)<Date.now()){ sumEstiV+=100}
              }else if(item.state==0){
-                  sum+=50
-                  console.log('0   '+sum);
+                sumProgV+=50
+               
+                console.log('0   prog'+sumProgV+' sus value'+sumEstiV);
+                  if(moment(item.date)<Date.now()) {sumEstiV+=100;console.log('sus after con'+sumEstiV)}
              }else if(item.state==1){
               
-                 sum+=100
-                 console.log('1 ' +sum);
+                sumProgV+=100
+               
+                console.log('1   prog'+sumProgV+' sus value'+sumEstiV);
+                
+                 if(moment(item.date)<Date.now()){ sumEstiV+=100;console.log('sus after con'+sumEstiV)}
   
              }
           }
           ) 
-          
+
           let newProgValue;
+          let newEstimValue;
+          let length=tasksProject.filter(t=>t.genre==title).length
           if(title=='Design'){
-            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
-           
+            console.log('befor devi prog val '+sumProgV+ ' esti v ' +sumEstiV);
+            newProgValue=sumProgV/length
+            newEstimValue=sumEstiV/length
+
+            console.log('after devi prog val '+newProgValue+ ' esti v ' +newEstimValue);
+            
           }else if(title=='Content'){
-            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
+            newProgValue=sumProgV/length
+            newEstimValue=sumEstiV/length
            
           }else{
-            newProgValue=sum/tasksProject.filter(t=>t.genre==title).length
+            newProgValue=sumProgV/length
+            newEstimValue=sumEstiV/length
             
           }
 
           setSpec(
             specification.map((s)=>{
                 if(s.title==title){
-                   return{...s,progresState:newProgValue}
+                   return{...s,progresState:newProgValue,estimatedState:newEstimValue}
                 }
                
                 return s;
@@ -406,7 +432,7 @@ const { loading, user ,isAdmin} = getUserReducer
         tasksProject.map((task)=>{
             if(task.id==EditedTaskId){
                return{...task,id:EditedTaskId,title:EditedTaskTitle
-                ,state:EditedTaskState,date:dateFormed,description:EditedTaskDescription}
+                ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
             }
            
             return task;
@@ -496,12 +522,7 @@ const { loading, user ,isAdmin} = getUserReducer
                      }
                  </div>
                  <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2">
-                    {design||content||inte?
-                    new Intl.DateTimeFormat("en-GB", {
-                        year: "numeric",
-                        month: "long",
-                        day: "2-digit"
-                    }).format(today):''}
+                    {design||content||inte? today:''}
                  </div>
                 
                  <div class="flex justify-start mb-36">
@@ -580,7 +601,18 @@ const { loading, user ,isAdmin} = getUserReducer
                            </td>
                      
                             <td class="px-6 py-4 text-gray-900 text-center">
-                            {taskObj.date}
+                            {
+                            //  taskObj.date
+
+                            moment(taskObj.date).format("DD MMM YYYY")
+                            
+                            // console.log('date',new Date().toLocaleDateString('en-GB', {
+                            //         day: 'numeric',
+                            //         month: 'short',
+                            //         year: 'numeric',
+                            //     }))
+                            }
+                        
                                 {/* <a href="#" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Edit</a> */}
                             </td>
 

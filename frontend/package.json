@@ -19,6 +19,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
     "material-icons": "^1.10.11",
+    "moment": "^2.29.3",
     "react": "^18.1.0",
     "react-circular-progressbar": "^2.0.4",
     "react-dom": "^18.1.0",
