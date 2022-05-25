@@ -19,7 +19,7 @@ const TodoForm = (props) => {
     )
 
     return (
-        <form onSubmit={handleSubmit} className="relative">
+        <form onSubmit={handleSubmit} className="relative text-black">
             {props.edit ? (
                 <>
                     <input
@@ -49,7 +49,7 @@ const TodoForm = (props) => {
                         type="text"
                         placeholder="Add new task"
                         value={todoInput}
-                        className="bg-blue-50 p-3 rounded-full mt-2 w-full"
+                        className="p-3 rounded-full mt-2 w-full"
                         onChange={handleChange}
                     />
                 </>

@@ -22,7 +22,7 @@ export const dispatchLogin = (creds) => async (dispatch) => {
                 isAdmin: data.role === 1 ? true : false,
             },
         })
-       localStorage.setItem('userInfo', JSON.stringify(data))
+        localStorage.setItem('userInfo', JSON.stringify(data))
         localStorage.setItem('firstLogin', true)
     } catch (error) {
         dispatch({
@@ -97,7 +97,6 @@ export const dispatchGetUser = (token) => async (dispatch) => {
                 isAdmin: data.role === 1 ? true : false,
             },
         })
-
         //   localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
@@ -109,3 +108,4 @@ export const dispatchGetUser = (token) => async (dispatch) => {
         })
     }
 }
+

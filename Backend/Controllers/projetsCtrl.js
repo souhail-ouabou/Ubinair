@@ -41,6 +41,12 @@ const projetsCtrl = {
                 subtype: subtype,
                 type: type,
             })
+            const user = await User.findById(req.user.id);
+            if(user){
+                user.projets.push(projet);
+               
+            }
+            await user.save();
             const addProjet = await projet.save()
             //res.status(400).json(addProjet,{ msg: "Projet has been add!" });
             console.log('addProjet', addProjet)

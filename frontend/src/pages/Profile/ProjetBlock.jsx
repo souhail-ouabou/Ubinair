@@ -4,22 +4,26 @@ import { NavLink } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
+import Aos from 'aos'
 
 const ProjetBlock = ({ project, toggletab }) => {
+
+    
 
     return (
         <>
             <Link
                 to={`/dashboard/${project._id}`}
-                className="col-right mb-3 cursor-pointer"
+                className="cursor-pointer"
             >
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}
 
                 <div
-                    className={toggletab === 1 ? 'block' : 'hidden'}
                     aos-animate="fade-up"
                     data-aos="fade-up"
                     data-aos-duration="3000"
+                    
+                     className={toggletab === 1 ? 'block' : 'hidden'}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -30,7 +34,7 @@ const ProjetBlock = ({ project, toggletab }) => {
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}
-                        className="flex flex-row gap-8 bg-gray-100 shadow-md  p-[1.5rem] rounded-xl"
+                        className="flex flex-row gap-8 bg-gray-100 shadow-md  p-[1.5rem] rounded-xl mb-3"
                     >
                         <div className="flex flex-col ml-7 w-[330px]  ">
                             <h1 className="text-2xl font-semibold leading-relaxed ">

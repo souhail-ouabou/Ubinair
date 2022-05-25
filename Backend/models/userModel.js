@@ -39,7 +39,14 @@ const userSchema = new mongoose.Schema(
         },
         description: {
             type: String,
-        }
+        },
+        projets: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: 'Projet', //relation betwen the projet and the user
+            },
+        ],
     },
     {
         timestamps: true,

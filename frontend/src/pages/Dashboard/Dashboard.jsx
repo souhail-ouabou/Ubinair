@@ -4,6 +4,10 @@ import { FaThLarge } from 'react-icons/fa'
 
 import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
+import { Link, useNavigate } from 'react-router-dom'
+import { ToastContainer, toast } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
@@ -23,8 +27,17 @@ import {
     UpdateProject,
 } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
+import {
+    PROJECT_DETAILS_RESET,
+    PROJET_UPDATE_RESET,
+} from '../../redux/actions/constants/projetconstants'
 
-const Dashboard = ({ match }) => {
+const Dashboard = () => {
+    const notify = () =>
+        toast.success('Success Notification !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    let navigate = useNavigate()
     /*Get project details */
     const dispatch = useDispatch()
     const { id } = useParams()
@@ -32,14 +45,22 @@ const Dashboard = ({ match }) => {
     const GetProjectDetailsReducer = useSelector(
         (state) => state.GetProjectDetailsReducer
     )
+    const auth = useSelector((state) => state.auth)
     const {
         project: projectDetails,
         loading: loadingProjectDetails,
         error,
     } = GetProjectDetailsReducer
+    const { userInfo } = auth
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
+
+    const projectUpdateReducer = useSelector(
+        (state) => state.projectUpdateReducer
+    )
+    const { success: successUpdate, loading: loadingProjectUpdate } =
+        projectUpdateReducer
 
     const percentage = 66
     const [view, setView] = useState(ViewMode.Day)
@@ -85,7 +106,6 @@ const Dashboard = ({ match }) => {
         }))
 
         dispatch(UpdateProject(testarr))
-        dispatch(Getprojectdetails(id))
     }
     // const handleTaskDelete = (task) => {
     //     const conf = window.confirm('Are you sure about ' + task.name + ' ?')
@@ -108,7 +128,6 @@ const Dashboard = ({ match }) => {
         }))
 
         dispatch(UpdateProject(testarr))
-        dispatch(Getprojectdetails(id))
     }
     const handleDblClick = (task) => {
         alert('On Double Click event Id:' + task.id)
@@ -126,8 +145,8 @@ const Dashboard = ({ match }) => {
     const initialtaskState = {
         start: new Date('2022-07-20T18:42:02.483+00:00'),
         end: new Date('2022-07-30T18:42:02.483+00:00'),
-        name: 'projectDetails.name',
-        id: 'projectDetails._id',
+        name: '',
+        id: '',
         progress: 0,
         type: 'project',
     }
@@ -142,10 +161,17 @@ const Dashboard = ({ match }) => {
     ])
 
     useEffect(() => {
-        if (user.client) {
-            dispatch(Getprojectdetails(id))
+        if (successUpdate) {
+            dispatch({ type: PROJET_UPDATE_RESET })
+            // dispatch({ type: PROJECT_DETAILS_RESET })
+
+            console.log('successUpdate')
+        } else {
+            if (user.client) {
+                dispatch(Getprojectdetails(id))
+            }
         }
-    }, [user.client])
+    }, [dispatch, id, user.client])
     useEffect(() => {
         if (projectDetails.devis) {
             const testarr = projectDetails.specification.map((p) => ({
@@ -172,122 +198,136 @@ const Dashboard = ({ match }) => {
             ])
             setclientTaskss(projectDetails.clientTaskss)
         }
-    }, [projectDetails.name, clientTaskss, projectDetails.devis, projectDetails.specification, projectDetails.createdAt, projectDetails.finishedAt, projectDetails.totalProgresState, projectDetails._id, projectDetails.clientTaskss])
+    }, [
+        projectDetails.name,
+        clientTaskss,
+        projectDetails.devis,
+        projectDetails.specification,
+        projectDetails.createdAt,
+        projectDetails.finishedAt,
+        projectDetails.totalProgresState,
+        projectDetails._id,
+        projectDetails.clientTaskss,
+    ])
 
     return (
-        <div className="w-full min-h-screen flex ">
-            <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
-                <img
-                    className="w-16 object-cover m-auto "
-                    src={Logo}
-                    alt="Logo"
-                />{' '}
-                <ul className="flex flex-col gap-y-6 pt-7">
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+        <>
+            <div className="w-full min-h-screen flex z-10 ">
+                <aside className="py-6 px-10 w-64 mr-10 mt-14 glass  ">
+                    <img
+                        className="w-16 object-cover m-auto "
+                        src={Logo}
+                        alt="Logo"
+                    />{' '}
+                    <ul className="flex flex-col gap-y-6 pt-7">
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
 
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                </ul>
-            </aside>
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
+                                <FaThLarge />
+                                <span>Project</span>
+                            </div>
+                        </li>
+                    </ul>
+                </aside>
 
-            {loadingProjectDetails ? (
-                <div className="col-right text-white w-[130px]">
-                    Loaaading ...
-                </div>
-            ) : (
-                <main class="flex-1 pb-8 glass mt-14  ">
-                    <top className="flex  items-center justify-center gap-12">
-                        <>
-                            {projectDetails.specification.map((p) => (
-                                <div
-                                    key={p._id}
-                                    class="flex flex-col gap-4 justify-center items-center "
-                                >
-                                    <div>
-                                        <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
-                                            {p.title}
-                                        </h1>
-                                    </div>
-                                    <div style={{ width: 200, height: 200 }}>
-                                        <CircularProgressbarWithChildren
-                                            value={p.estimatedState}
-                                            text={`${p.progresState}%`}
-                                            styles={buildStyles({
-                                                pathColor: '#f00',
-                                                trailColor: '#eee', //trans
-                                                strokeLinecap: 'rounded',
-
-                                                textSize: '16px',
-
-                                                // How long animation takes to go from one percentage to another, in seconds
-                                                pathTransitionDuration: 0.5,
-                                            })}
+                {loadingProjectDetails || loading ? (
+                    <div className=" text-white m-auto">Loaaading ...</div>
+                ) : projectDetails.specification?.length === 0 ? (
+                    <div className="text-white m-auto"></div>
+                ) : (
+                    <main class="flex-1  pb-8  mt-14  ">
+                        <top className="flex  items-center justify-center gap-12">
+                            <div className="glass flex flex-row gap-4">
+                                {projectDetails.specification?.map((p) => (
+                                    <div
+                                        key={p._id}
+                                        className="flex flex-col gap-4 justify-center items-center "
+                                    >
+                                        <>
+                                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
+                                                {p.title}
+                                            </h1>
+                                        </>
+                                        <div
+                                            style={{ width: 200, height: 200 }}
                                         >
-                                            {/* Foreground path */}
-                                            <CircularProgressbar
-                                                value={p.progresState}
+                                            <CircularProgressbarWithChildren
+                                                value={p.estimatedState}
+                                                text={`${p.progresState}%`}
                                                 styles={buildStyles({
-                                                    trailColor: 'transparent',
+                                                    pathColor: '#B8C2CC', //estimated
+                                                    trailColor: '#FFFFFF', //trans
                                                     strokeLinecap: 'rounded',
-                                                    pathColor: `rgba(99, 99, 199, ${
-                                                        percentage / 10
-                                                    })`,
-                                                })}
-                                            />
-                                        </CircularProgressbarWithChildren>
-                                    </div>
-                                </div>
-                            ))}
 
-                            <div class="flex flex-col gap-4 justify-center items-center bg-white shadow-md  p-2 rounded-xl w-2/6 ml-auto">
+                                                    textSize: '16px',
+                                                    textColor: '#eee',
+
+                                                    // How long animation takes to go from one percentage to another, in seconds
+                                                    pathTransitionDuration: 0.5,
+                                                })}
+                                            >
+                                                {/* Foreground path */}
+                                                <CircularProgressbar
+                                                    value={p.progresState}
+                                                    styles={buildStyles({
+                                                        trailColor:
+                                                            'transparent',
+                                                        strokeLinecap:
+                                                            'rounded',
+                                                        pathColor: '#6363C7',
+                                                    })}
+                                                />
+                                            </CircularProgressbarWithChildren>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="flex flex-col gap-4 justify-center items-center glass shadow-md  p-2 rounded-xl w-2/6 ml-auto">
                                 <div>
-                                    <h1 class="text-2xl font-semibold leading-relaxed ">
+                                    <h1 class="text-2xl text-slate-100 font-semibold leading-relaxed ">
                                         Total
                                     </h1>
                                 </div>
@@ -296,30 +336,32 @@ const Dashboard = ({ match }) => {
                                     done={projectDetails.totalProgresState}
                                 />
                             </div>
-                        </>
-                    </top>
+                        </top>
 
-                    {loadingProjectDetails ? (
-                        <div className="col-right text-white">
-                            {' '}
-                            Loaaading ...
-                        </div>
-                    ) : error ? (
-                        <div>errorMyProjects</div>
-                    ) : (
-                        <bottom className="flex items-start justify-start gap-12">
-                            <div style={{ width: 700, height: 500 }}>
-                                <ViewSwitcher
-                                    onViewModeChange={(viewMode) =>
-                                        setView(viewMode)
-                                    }
-                                    onViewListChange={setIsChecked}
-                                    isChecked={isChecked}
-                                />
+                        {loadingProjectDetails ? (
+                            <div className="col-right text-white">
+                                {' '}
+                                Loaaading ...
+                            </div>
+                        ) : error ? (
+                            <div>errorMyProjects</div>
+                        ) : (
+                            <bottom className="flex items-start justify-start gap-12">
+                                <div style={{ width: 720, height: 500 }}>
+                                    <ViewSwitcher
+                                        onViewModeChange={(viewMode) =>
+                                            setView(viewMode)
+                                        }
+                                        onViewListChange={setIsChecked}
+                                        isChecked={isChecked}
+                                    />
 
-                                <>
-                                    <>
+                                    <div className=" bg-white shadow-md  p-2 rounded-xl ">
                                         <Gantt
+                                            // barBackgroundColor="text-red-200"
+                                            todayColor="yellow"
+                                            barProgressColor="#6363C7"
+                                            barCornerRadius="12"
                                             tasks={taskss}
                                             viewMode={view}
                                             {...(isAdmin && {
@@ -342,20 +384,20 @@ const Dashboard = ({ match }) => {
                                             TaskListTable="false"
                                             TaskListHeader="false"
                                         />
-                                    </>
-                                </>
-                            </div>
+                                    </div>
+                                </div>
 
-                        <TodoList
-                            isAdmin={isAdmin}
-                            id={id}
-                            taskss={projectDetails.clientTaskss}
-                        />
-                         </bottom>
-                    )}
-                </main>
-            )}
-        </div>
+                                <TodoList
+                                    isAdmin={isAdmin}
+                                    id={id}
+                                    taskss={projectDetails.clientTaskss}
+                                />
+                            </bottom>
+                        )}
+                    </main>
+                )}
+            </div>
+        </>
     )
 }
 

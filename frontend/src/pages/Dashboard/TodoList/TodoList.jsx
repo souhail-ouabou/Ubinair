@@ -46,12 +46,12 @@ const TodoList = ({ isAdmin, id : idProjet, taskss }) => {
         dispatch(UpdateTaskssClient(idProjet, updatedTodos))
     }
     return (
-        <div className="bg-white shadow-md w-2/6 ml-auto p-8 rounded-xl ">
+        <div className="glass shadow-md w-2/6 ml-auto p-8 rounded-xl text-slate-100">
             <h1 className="text-2xl font-bold">Todo List</h1>
             <hr className="mt-2" />
             {isAdmin && <TodoForm onSubmit={addTodo} />}
 
-             <div className="mt-4">
+             <div className="mt-4 ">
                 You have {todos?.filter((it) => it.isCompleted === false).length}{' '}
                 pending task(s)
             </div> 

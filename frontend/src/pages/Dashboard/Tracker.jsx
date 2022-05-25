@@ -865,8 +865,8 @@ const { loading, user ,isAdmin} = getUserReducer
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
-                                value={specification[1].estimatedState}
-                                text={specification[1].progresState.toFixed(0)+"%"}
+                                value={specification[2].estimatedState}
+                                text={specification[2].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -880,7 +880,7 @@ const { loading, user ,isAdmin} = getUserReducer
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={specification[1].progresState}
+                                    value={specification[2].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'butt',
@@ -903,8 +903,8 @@ const { loading, user ,isAdmin} = getUserReducer
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
                             <CircularProgressbarWithChildren
-                                value={specification[2].estimatedState}
-                                text={specification[2].progresState.toFixed(0)+"%"}
+                                value={specification[1].estimatedState}
+                                text={specification[1].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -917,7 +917,7 @@ const { loading, user ,isAdmin} = getUserReducer
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={specification[2].progresState}
+                                    value={specification[1].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'round',
