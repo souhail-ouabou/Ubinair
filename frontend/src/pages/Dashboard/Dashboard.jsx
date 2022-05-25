@@ -28,7 +28,7 @@ import { useParams } from 'react-router-dom'
 import {
     PROJECT_DETAILS_RESET,
     PROJET_UPDATE_RESET,
-} from '../../redux/actions/constants/projetconstants'
+} from '../../redux/actions/constants/projetConstants'
 
 const Dashboard = () => {
     const notify = () =>
@@ -295,7 +295,7 @@ const Dashboard = () => {
                                                 value={p.estimatedState}
                                                 text={`${p.progresState}%`}
                                                 styles={buildStyles({
-                                                    pathColor: '#B8C2CC', //estimated
+                                                    pathColor: '#E1341E', //estimated #B8C2CC
                                                     trailColor: '#FFFFFF', //trans
                                                     strokeLinecap: 'rounded',
 

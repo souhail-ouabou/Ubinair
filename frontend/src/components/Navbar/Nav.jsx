@@ -12,7 +12,7 @@ const Nav = () => {
     let navigate = useNavigate()
     const dispatch = useDispatch()
     const auth = useSelector((state) => state.auth)
-     const { userInfo, isLogged, loading } = auth
+    const { userInfo, isLogged, loading } = auth
 
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
@@ -68,7 +68,7 @@ const Nav = () => {
                                 Profile
                             </Link>
                         </li>
-              
+
                         <li className="mb-2 cursor-pointer">
                             <Link to="/" onClick={logoutHandler}>
                                 Logout

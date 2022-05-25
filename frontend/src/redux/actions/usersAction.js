@@ -1,23 +1,36 @@
-import ACTIONS from './index'
+import {
+    GET_ALL_USERS_REQUEST,
+    GET_ALL_USERS_SUCCESS,
+    GET_ALL_USERS_FAIL,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_FAIL,
+    UPDATE_USERSTATUS_REQUEST,
+    UPDATE_USERSTATUS_SUCCESS,
+    UPDATE_USERSTATUS_FAIL,
+    USER_DELETE_REQUEST,
+    USER_DELETE_SUCCESS,
+    USER_DELETE_FAIL,
+} from './constants/userConstants'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 export const GetAllUsers = (token) => async (dispatch) => {
     try {
         dispatch({
-            type: ACTIONS.GET_ALL_USERS_REQUEST,
+            type: GET_ALL_USERS_REQUEST,
         })
         const { data } = await axios.get('/user/all_infor', {
             headers: { Authorization: token },
         })
         dispatch({
-            type: ACTIONS.GET_ALL_USERS_SUCCESS,
+            type: GET_ALL_USERS_SUCCESS,
             payload: data,
         })
 
         //   localStorage.setItem('userInfo', JSON.stringify(data))
     } catch (error) {
         dispatch({
-            type: ACTIONS.GET_ALL_USERS_FAIL,
+            type: GET_ALL_USERS_FAIL,
             payload:
                 error.response && error.response.data.msg
                     ? error.response.data.msg
@@ -28,7 +41,7 @@ export const GetAllUsers = (token) => async (dispatch) => {
 export const getUserDetails = (id, token) => async (dispatch) => {
     try {
         dispatch({
-            type: ACTIONS.USER_DETAILS_REQUEST,
+            type: USER_DETAILS_REQUEST,
         })
 
         const config = {
@@ -40,7 +53,7 @@ export const getUserDetails = (id, token) => async (dispatch) => {
 
         const { data } = await axios.get(`/user/${id}`, config)
         dispatch({
-            type: ACTIONS.USER_DETAILS_SUCCESS,
+            type: USER_DETAILS_SUCCESS,
             payload: {
                 user: data,
                 isAdmin: data.role === 1 ? true : false,
@@ -48,7 +61,7 @@ export const getUserDetails = (id, token) => async (dispatch) => {
         })
     } catch (error) {
         dispatch({
-            type: ACTIONS.USER_DETAILS_FAIL,
+            type: USER_DETAILS_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message
@@ -60,7 +73,7 @@ export const updateUserStatus =
     (id, checkAdmin, client) => async (dispatch, getState) => {
         try {
             dispatch({
-                type: ACTIONS.UPDATE_USERSTATUS_REQUEST,
+                type: UPDATE_USERSTATUS_REQUEST,
             })
             toast.dismiss()
             toast.loading('Please wait...', {
@@ -84,7 +97,7 @@ export const updateUserStatus =
             )
 
             dispatch({
-                type: ACTIONS.UPDATE_USERSTATUS_SUCCESS,
+                type: UPDATE_USERSTATUS_SUCCESS,
             })
             toast.dismiss()
             toast.success('Succès Update !', {
@@ -92,7 +105,7 @@ export const updateUserStatus =
             })
         } catch (error) {
             dispatch({
-                type: ACTIONS.UPDATE_USERSTATUS_FAIL,
+                type: UPDATE_USERSTATUS_FAIL,
                 payload:
                     error.response && error.response.data.message
                         ? error.response.data.message
@@ -100,3 +113,39 @@ export const updateUserStatus =
             })
         }
     }
+export const DeleteUser = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: USER_DELETE_REQUEST,
+        })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+
+        await axios.delete(`/user/delete/${id}`, config)
+        dispatch({
+            type: USER_DELETE_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: USER_DELETE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}

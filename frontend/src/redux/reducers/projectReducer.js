@@ -15,7 +15,7 @@ import {
     PROJET_UPDATE_SUCCESS,
     PROJET_UPDATE_FAIL,
     PROJET_UPDATE_RESET,
-} from '../actions/constants/projetconstants'
+} from '../actions/constants/projetConstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
         case PROJET_CREATE_REQUEST:

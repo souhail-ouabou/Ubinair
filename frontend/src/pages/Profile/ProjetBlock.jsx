@@ -7,23 +7,16 @@ import { Link, useParams } from 'react-router-dom'
 import Aos from 'aos'
 
 const ProjetBlock = ({ project, toggletab }) => {
-
-    
-
     return (
         <>
-            <Link
-                to={`/dashboard/${project._id}`}
-                className="cursor-pointer"
-            >
+            <Link to={`/dashboard/${project._id}`} className="cursor-pointer">
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}
 
                 <div
                     aos-animate="fade-up"
                     data-aos="fade-up"
                     data-aos-duration="3000"
-                    
-                     className={toggletab === 1 ? 'block' : 'hidden'}
+                    className={toggletab === 1 ? 'block' : 'hidden'}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -42,7 +35,6 @@ const ProjetBlock = ({ project, toggletab }) => {
                             </h1>
                             <h1 className="text-lg font-medium leading-relaxed ">
                                 {project.type}
-                                
                             </h1>
                             <div className="flex flex-col">
                                 <p className="text-lg font-medium leading-relaxed ">
@@ -56,10 +48,9 @@ const ProjetBlock = ({ project, toggletab }) => {
                         </div>
                         <div>
                             <h1 className="text-2xl font-semibold leading-relaxed ">
-                            Total
-                          
+                                Total
                             </h1>
-                            <ProgressBar done= {project.totalProgresState} />
+                            <ProgressBar done={project.totalProgresState} />
                         </div>
                     </motion.div>
                 </div>

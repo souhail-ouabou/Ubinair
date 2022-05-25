@@ -11,7 +11,7 @@ import {
     PROJET_UPDATE_REQUEST,
     PROJET_UPDATE_SUCCESS,
     PROJET_UPDATE_FAIL,
-} from './constants/projetconstants'
+} from './constants/projetConstants'
 import { toast } from 'react-toastify'
 
 import axios from 'axios'

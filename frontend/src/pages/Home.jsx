@@ -184,7 +184,7 @@ const Home = () => {
             </div>
             <OffersCards />
 
-            {/* <Callendly /> */}
+             <Callendly id="callendly"/> 
 
             <div
                 className="flex flex-col items-center justify-center mt-7 z-10 "

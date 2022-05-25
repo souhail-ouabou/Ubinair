@@ -33,8 +33,10 @@ function App() {
     AOS.init()
     const [loading, setLoading] = useState(false)
 
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { user, isAdmin, isLogged : isLoggedgetuserReducer } = getUserReducer
     const auth = useSelector((state) => state.auth)
-    const { userInfo, isAdmin, isLogged } = auth
+    const { userInfo, isLogged } = auth
     const token = useSelector((state) => state.token)
 
     const dispatch = useDispatch()

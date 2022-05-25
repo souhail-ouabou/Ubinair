@@ -2,12 +2,15 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import './profile.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from './ProjetBlock'
 import { listMyProjects } from '../../redux/actions/projectActions'
 import { GetAllUsers } from '../../redux/actions/usersAction'
 import UserBlock from './UserBlock'
+import Callendly from '../../components/Callendly'
+import { InlineWidget } from 'react-calendly'
+import { FaPhone } from 'react-icons/fa'
 const Profile = () => {
     const dispatch = useDispatch()
 
@@ -22,16 +25,7 @@ const Profile = () => {
     const [data, setData] = useState(initialState)
     const token = useSelector((state) => state.token)
 
-    const {
-        name,
-        email,
-        password,
-        cf_password,
-        err,
-        success,
-        description,
-        headline,
-    } = data
+    const { name, email, password, cf_password } = data
     const getAllUsersReducer = useSelector((state) => state.getAllUsersReducer)
     const {
         users,
@@ -41,6 +35,9 @@ const Profile = () => {
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
+
+    const userDeleteReducer = useSelector((state) => state.userDeleteReducer)
+    const { success : successDelete,loading:loadingDelete,error } = userDeleteReducer
 
     const ListMyProjectsReducer = useSelector(
         (state) => state.ListMyProjectsReducer
@@ -68,10 +65,14 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        if (user.client) {
+        if (user.client ) {
             dispatch(listMyProjects())
         }
-    }, [dispatch, user.client])
+        if(successDelete){
+            dispatch(GetAllUsers(token))
+
+        }
+    }, [dispatch, user.client, successDelete, token])
 
     return (
         <>
@@ -196,6 +197,8 @@ const Profile = () => {
                                     </li> */}
                                 </ul>
                             </div>
+                        ) : !user.client ? (
+                            <></>
                         ) : (
                             <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
                                 My projects
@@ -225,8 +228,27 @@ const Profile = () => {
                             <div className=" text-white"> Loaaading ...</div>
                         ) : errorMyProjects ? (
                             <div>errorMyProjects</div>
-                        ) : projects.length === 0 ? (
+                        ) : user.client && projects.length === 0 ? (
                             <div className="text-white">Emppt</div>
+                        ) : !user.client ? (
+                            <div className="flex flex-col items-center justify-center mt-[280px]">
+                                <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
+                                    Here you can see your projects <br />
+                                    Wait for our call....
+                                </div>
+                                <div>
+                                    <Link to="/#callendly">
+                                        <button
+                                            className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                                        >
+                                            Back to home et Reserver un call{' '}
+                                            <FaPhone className="ml-3" />
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
                         ) : (
                             <>
                                 {projects.map((project) => (

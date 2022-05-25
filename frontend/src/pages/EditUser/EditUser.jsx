@@ -11,7 +11,7 @@ import {
     getUserDetails,
     updateUserStatus,
 } from '../../redux/actions/usersAction'
-import ACTIONS from '../../redux/actions'
+import ACTIONS, { UPDATE_USERSTATUS_RESET } from '../../redux/actions/constants/userConstants'
 
 const EditUser = () => {
     const dispatch = useDispatch()
@@ -34,8 +34,8 @@ const EditUser = () => {
     const { name, email } = data
     useEffect(() => {
         if (successUpdate) {
-            // dispatch({ type: ACTIONS.UPDATE_USERSTATUS_RESET })
-            // dispatch(getUserDetails(id, token))
+             dispatch({ type: UPDATE_USERSTATUS_RESET })
+             dispatch(getUserDetails(id, token))
         } else {
             if (token) {
                 //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
