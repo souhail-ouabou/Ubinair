@@ -16,5 +16,7 @@ router.get('/infor', auth, userCtrl.getUserInfor)
 router.get('/all_infor', auth, authAdmin, userCtrl.getUsersAllInfor)
 // login as admin -> refresh_token -> gerUserVyid
 router.get('/:id', auth, authAdmin, userCtrl.getUserDetails)
+// login as admin -> refresh_token -> update
+router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole)
 
 module.exports = router

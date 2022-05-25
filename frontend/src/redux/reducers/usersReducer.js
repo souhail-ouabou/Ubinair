@@ -16,3 +16,16 @@ export const getAllUsersReducer = (state={},action) => {
             return state
     }
 }
+export const updateUserStatusReducer = (state={user : {}},action) => {
+    switch(action.type) {
+        case ACTIONS.UPDATE_USERSTATUS_REQUEST :
+            return {loading : true, }
+        case ACTIONS.UPDATE_USERSTATUS_SUCCESS :
+            return {loading : false ,success: true} 
+        case ACTIONS.UPDATE_USERSTATUS_FAIL :
+            return {loading : false , error : action.payload}
+        case ACTIONS.UPDATE_USERSTATUS_RESET : return {users : []}
+        default :
+        return state  
+        }
+}

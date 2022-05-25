@@ -61,8 +61,7 @@ const Profile = () => {
             case 2:
                 dispatch(GetAllUsers(token))
                 break
-            case 3:
-                break
+
             default:
                 break
         }
@@ -82,8 +81,8 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center  ">
-                    <div className="glass text-white md:w-[500px] ">
+                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center z-10  ">
+                    <div className="glass text-white md:w-[500px]  ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin ? 'Admin Profile' : 'User Profile'}
                         </h2>
@@ -116,7 +115,7 @@ const Profile = () => {
                         <div className="flex flex-col text-gray-400 py-2">
                             <label htmlFor="email">Email</label>
                             <input
-                                className="rounded-lg bg-gray-800 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
+                                className="rounded-lg bg-gray-800 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none cursor-not-allowed"
                                 type="email"
                                 name="email"
                                 id="email"

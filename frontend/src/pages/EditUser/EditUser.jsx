@@ -6,50 +6,64 @@ import { NavLink, useParams } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from '../Profile/ProjetBlock'
 import { listMyProjects } from '../../redux/actions/projectActions'
-import { GetAllUsers, getUserDetails } from '../../redux/actions/usersAction'
+import {
+    GetAllUsers,
+    getUserDetails,
+    updateUserStatus,
+} from '../../redux/actions/usersAction'
+import ACTIONS from '../../redux/actions'
 
 const EditUser = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
     const userDetailsReducer = useSelector((state) => state.userDetailsReducer)
+    const { loading, error, user } = userDetailsReducer
+    const updateUserStatusReducer = useSelector((state) => state.updateUserStatus)
+    const {
+        loading: loadingUpdate,
+        error: errorUpdate,
+        success: successUpdate,
+    } = updateUserStatusReducer
+    const [checkAdmin, setCheckAdmin] = useState(false)
+    const [client, setClient] = useState(false)
 
-    const { loading, error, user,isAdmin } = userDetailsReducer
-    const initialState = {
-        name: '',
-        email: '',
-        description: '',
-        headline: '',
-        password: '',
-        cf_password: '',
-    }
-    const [data, setData] = useState(initialState)
+    const [data, setData] = useState([])
     const [showProjects, setShowProjects] = useState(false)
     const token = useSelector((state) => state.token)
 
-    const {
-        name,
-        email,
-        password,
-        cf_password,
-        err,
-        success,
-        description,
-        headline,
-    } = data
-
-    const [toggletab, setToggletab] = useState(1)
-
+    const { name, email } = data
     useEffect(() => {
-        if (token) {
-            //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
-            //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
-            if (!user.name || user._id !== id) {
-                dispatch(getUserDetails(id, token))
+        if (successUpdate) {
+            // dispatch({ type: ACTIONS.UPDATE_USERSTATUS_RESET })
+            // dispatch(getUserDetails(id, token))
+        } else {
+            if (token) {
+                //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
+                //Get user information cuz after get token useeffecr re compile and get error mn dispatchLogin
+                if (!user.name || user._id !== id) {
+                    dispatch(getUserDetails(id, token))
+                } else {
+                    setData(user)
+                    setCheckAdmin(user.role === 1 ? true : false)
+                    setClient(user.client)
+                }
             }
         }
-    }, [dispatch, id, token, user._id, user.client, user.name])
+    }, [dispatch, id, successUpdate, token, user])
+
+    const handleUpdate = (e) => {
+        e.preventDefault()
+        dispatch(updateUserStatus(id, checkAdmin, client))
+    }
+
     const toggleShowProjects = () => {
         setShowProjects(!showProjects)
+    }
+    const handleCheck = () => {
+        setCheckAdmin(!checkAdmin)
+    }
+    const handleCheckClient = () => {
+        setClient(!client)
     }
 
     return (
@@ -73,7 +87,7 @@ const EditUser = () => {
                                 type="text"
                                 //     onChange={handleChange}
                                 name="name"
-                                defaultValue={user.name}
+                                defaultValue={name}
                                 placeholder="Enter votre nom"
                                 disabled
                             />
@@ -88,30 +102,30 @@ const EditUser = () => {
                                 id="email"
                                 placeholder="Your email address"
                                 disabled
-                                value={user.email}
+                                value={email}
                             />
                         </div>
                         <div className="flex justify-center items-center  gap-20">
-                            <div className='flex  gap-6 justify-center items-center'>
+                            <div className="flex  gap-6 justify-center items-center">
                                 <label htmlFor="toggle-switch">
                                     is Client{' '}
                                 </label>
                                 <input
                                     type="checkbox"
                                     // value={props.chosedValue}
-                                    // onChange={props.onmakeChange}
-                                    checked={user.client}
+                                    onChange={handleCheckClient}
+                                    checked={client}
                                     id="toggle-switch"
                                     className="cursor-pointer h-5 w-10 rounded-full appearance-none bg-white bg-opacity-5  border-2 border-white checked:bg-gray-600 transition duration-200 relative"
                                 />
                             </div>
-                            <div className='flex  gap-6 justify-center items-center'>
+                            <div className="flex  gap-6 justify-center items-center">
                                 <label htmlFor="toggle-switch">is Admin</label>
                                 <input
                                     type="checkbox"
                                     // value={user.isAdmin}
-                                    // onChange={props.onmakeChange}
-                                    checked={isAdmin}
+                                    onChange={handleCheck}
+                                    checked={checkAdmin}
                                     id="toggle-switch"
                                     className="cursor-pointer h-5 w-10 rounded-full appearance-none bg-white bg-opacity-5  border-2 border-white checked:bg-gray-600 transition duration-200 relative"
                                 />
@@ -124,6 +138,7 @@ const EditUser = () => {
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
+                                onClick={handleUpdate}
                             >
                                 Update
                             </button>

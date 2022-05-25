@@ -1,5 +1,6 @@
 import ACTIONS from './index'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 export const GetAllUsers = (token) => async (dispatch) => {
     try {
         dispatch({
@@ -55,3 +56,47 @@ export const getUserDetails = (id, token) => async (dispatch) => {
         })
     }
 }
+export const updateUserStatus =
+    (id, checkAdmin, client) => async (dispatch, getState) => {
+        try {
+            dispatch({
+                type: ACTIONS.UPDATE_USERSTATUS_REQUEST,
+            })
+            toast.dismiss()
+            toast.loading('Please wait...', {
+                position: toast.POSITION.TOP_CENTER,
+            })
+            const { token } = getState()
+
+            const config = {
+                headers: {
+                    Authorization: token,
+                },
+            }
+
+            const { data } = await axios.patch(
+                `/user/update_role/${id}`,
+                {
+                    role: checkAdmin ? 1 : 0,
+                    client,
+                },
+                config
+            )
+
+            dispatch({
+                type: ACTIONS.UPDATE_USERSTATUS_SUCCESS,
+            })
+            toast.dismiss()
+            toast.success('Succès Update !', {
+                position: toast.POSITION.TOP_CENTER,
+            })
+        } catch (error) {
+            dispatch({
+                type: ACTIONS.UPDATE_USERSTATUS_FAIL,
+                payload:
+                    error.response && error.response.data.message
+                        ? error.response.data.message
+                        : error.message,
+            })
+        }
+    }

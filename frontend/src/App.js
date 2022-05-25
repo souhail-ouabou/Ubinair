@@ -94,7 +94,7 @@ function App() {
                     <Routes>
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
+                        <Route path="/register"  element= {userInfo ? <Profile /> : <Register />} />
                         <Route
                             path="/user/activate/:activation_token"
                             element={<ActivationEmail />}
@@ -122,7 +122,7 @@ function App() {
                         />
                         <Route
                             path="/user/:id"
-                            element={userInfo ? <EditUser /> : <Login />}
+                            element={isAdmin ? <EditUser /> : <NotFound />}
                         />
                     </Routes>
                 </>
