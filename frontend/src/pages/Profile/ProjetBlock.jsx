@@ -5,6 +5,7 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
 import Aos from 'aos'
+import { FaEdit, FaTrash } from 'react-icons/fa'
 
 const ProjetBlock = ({ project, toggletab }) => {
     return (
@@ -23,13 +24,13 @@ const ProjetBlock = ({ project, toggletab }) => {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         whileHover={{
-                            scale: 1.07,
+                            scale: 1.02,
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}
                         className="flex flex-row gap-8 bg-gray-100 shadow-md  p-[1.5rem] rounded-xl mb-3"
                     >
-                        <div className="flex flex-col ml-7 w-[330px]  ">
+                        <div className="flex flex-col ml-7 w-[300px] justify-center  ">
                             <h1 className="text-2xl font-semibold leading-relaxed ">
                                 {project.name}
                             </h1>
@@ -41,7 +42,7 @@ const ProjetBlock = ({ project, toggletab }) => {
                                     <strong>Plan : </strong> {project.plan}
                                 </p>
                                 <p className="text-lg font-medium leading-relaxed ">
-                                    <strong>stateOfAdvance : </strong>{' '}
+                                    <strong>Advance State :</strong>{' '}
                                     {project.stateOfAdvance}
                                 </p>
                             </div>
@@ -51,6 +52,20 @@ const ProjetBlock = ({ project, toggletab }) => {
                                 Total
                             </h1>
                             <ProgressBar done={project.totalProgresState} />
+                            <Link
+                                to="/profile"
+                                className="bg-red-600 rounded-tr-md   w-10 h-10  absolute top-0 right-0 flex z-10"
+                                // onClick={() => deletehandler(user._id)}
+                            >
+                                <FaTrash className="m-auto text-white justify-center items-center" />
+                            </Link>
+                            <Link
+                                to="/profile"
+                                className="bg-blue-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-9 flex z-10"
+                                // onClick={() => deletehandler(user._id)}
+                            >
+                                <FaEdit className="m-auto text-white justify-center items-center" />
+                            </Link>
                         </div>
                     </motion.div>
                 </div>

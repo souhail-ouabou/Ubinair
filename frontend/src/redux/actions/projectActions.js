@@ -11,6 +11,9 @@ import {
     PROJET_UPDATE_REQUEST,
     PROJET_UPDATE_SUCCESS,
     PROJET_UPDATE_FAIL,
+    ALL_PROJECTS_REQUEST,
+    ALL_PROJECTS_SUCCESS,
+    ALL_PROJECTS_FAIL,
 } from './constants/projetConstants'
 import { toast } from 'react-toastify'
 
@@ -155,6 +158,38 @@ export const UpdateTaskssClient = (id, taskss) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+export const listAllProjects = () => async (dispatch, getState) => {
+    try {
+        dispatch({
+            type: ALL_PROJECTS_REQUEST,
+        })
+        const { token } = getState()
+        console.log('after token')
+
+        console.log(token)
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+
+        const { data } = await axios.get(`/projets/allprojects`, config)
+        console.log(data)
+        dispatch({
+            type: ALL_PROJECTS_SUCCESS,
+            payload: data,
+        })
+    } catch (error) {
+        console.log(error)
+        dispatch({
+            type: ALL_PROJECTS_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

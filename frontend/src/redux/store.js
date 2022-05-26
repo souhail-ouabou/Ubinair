@@ -7,7 +7,7 @@ import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
 import { authReducer, userRegisterReducer,getUserReducer,userDetailsReducer } from './reducers/userReducer'
 import { getAllUsersReducer,updateUserStatusReducer,userDeleteReducer } from './reducers/usersReducer'
-import { ProjetcCreateReducer, ListMyProjectsReducer,GetProjectDetailsReducer,projectUpdateReducer } from './reducers/projectReducer'
+import { ProjetcCreateReducer, ListMyProjectsReducer,GetProjectDetailsReducer,projectUpdateReducer,ListAllProjectsReducer } from './reducers/projectReducer'
 import token  from './reducers/tokenReducer'
 
 const reducer = combineReducers({
@@ -22,7 +22,8 @@ const reducer = combineReducers({
     getAllUsersReducer,
     userDetailsReducer,
     updateUserStatus :updateUserStatusReducer,
-    userDeleteReducer
+    userDeleteReducer,
+    ListAllProjects :  ListAllProjectsReducer
 
 
     

@@ -164,7 +164,7 @@ const Dashboard = () => {
 
             console.log('successUpdate')
         } else {
-            if (user.client) {
+            if (user.client || isAdmin) {
                 dispatch(Getprojectdetails(id))
             }
         }

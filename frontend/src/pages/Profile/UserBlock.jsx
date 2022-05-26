@@ -23,7 +23,7 @@ const UserBlock = ({ user, toggletab }) => {
                 <div
                     aos-animate="fade-up"
                     data-aos="fade-up"
-                    data-aos-duration="3000"
+                    data-aos-duration="2000"
                     className={toggletab === 2 ? 'block' : 'hidden'}
                 >
                     <motion.div
@@ -31,7 +31,7 @@ const UserBlock = ({ user, toggletab }) => {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         whileHover={{
-                            scale: 1.07,
+                            scale: 1.02,
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}

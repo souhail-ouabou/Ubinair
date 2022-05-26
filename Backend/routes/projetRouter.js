@@ -11,4 +11,6 @@ router.get('/myprojects', auth, isClient, projetCtrl.getMyprojects)
 router.get('/details/:id', auth,  projetCtrl.getProjectdetails)
 router.put('/updateproject/:id', projetCtrl.updateProject)
 router.put('/updatetasks/:id', projetCtrl.updateTasksClient)
+//login as an admin -> refresh_token -> getallprojects
+router.get("/allprojects", auth, authAdmin, projetCtrl.getAllProjects);
 module.exports = router

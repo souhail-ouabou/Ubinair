@@ -143,5 +143,16 @@ const projetsCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    getAllProjects: async (req, res) => {
+        try {
+          const projects = await Projets.find({});
+          res.json(projects);
+        } catch (err) {
+          console.log("-----------All Prj error-------------");
+    
+          console.log(err);
+          return res.status(500).json({ msg: err.message });
+        }
+      },
 }
 module.exports = projetsCtrl

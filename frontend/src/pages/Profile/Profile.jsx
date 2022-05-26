@@ -5,7 +5,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { NavLink, Link } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from './ProjetBlock'
-import { listMyProjects } from '../../redux/actions/projectActions'
+import {
+    listAllProjects,
+    listMyProjects,
+} from '../../redux/actions/projectActions'
 import { GetAllUsers } from '../../redux/actions/usersAction'
 import UserBlock from './UserBlock'
 import Callendly from '../../components/Callendly'
@@ -37,7 +40,11 @@ const Profile = () => {
     const { loading, user, isAdmin } = getUserReducer
 
     const userDeleteReducer = useSelector((state) => state.userDeleteReducer)
-    const { success : successDelete,loading:loadingDelete,error } = userDeleteReducer
+    const {
+        success: successDelete,
+        loading: loadingDelete,
+        error,
+    } = userDeleteReducer
 
     const ListMyProjectsReducer = useSelector(
         (state) => state.ListMyProjectsReducer
@@ -48,12 +55,19 @@ const Profile = () => {
         error: errorMyProjects,
     } = ListMyProjectsReducer
 
+    const ListAllProjects = useSelector((state) => state.ListAllProjects)
+    const {
+        loading: loadingAllProjects,
+        projects: AllProjects,
+        error: errorAllProjects,
+    } = ListAllProjects
+
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
         setToggletab(index)
         switch (index) {
             case 1:
-                dispatch(listMyProjects())
+                dispatch(listAllProjects())
                 break
             case 2:
                 dispatch(GetAllUsers(token))
@@ -65,14 +79,16 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        if (user.client ) {
+        if (user.client) {
             dispatch(listMyProjects())
         }
-        if(successDelete){
-            dispatch(GetAllUsers(token))
-
+        if (isAdmin) {
+            dispatch(listAllProjects())
         }
-    }, [dispatch, user.client, successDelete, token])
+        if (successDelete) {
+            dispatch(GetAllUsers(token))
+        }
+    }, [dispatch, user.client, successDelete, token, isAdmin])
 
     return (
         <>
@@ -82,7 +98,7 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center z-10  ">
+                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center z-10 overflow-hidden  ">
                     <div className="glass text-white md:w-[500px]  ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin ? 'Admin Profile' : 'User Profile'}
@@ -161,7 +177,7 @@ const Profile = () => {
                             Update
                         </button>
                     </div>
-                    <div className="col-right">
+                    <div className="col-right ">
                         {isAdmin ? (
                             <div class="tabs_wrap">
                                 <ul>
@@ -205,6 +221,7 @@ const Profile = () => {
                             </h1>
                         )}
 
+                        {/* dispatched after check admin  */}
                         {loadingGetAllUsers ? (
                             <div className=" text-white"> Loaaading ...</div>
                         ) : errgetAllUsers && errgetAllUsers ? (
@@ -230,12 +247,13 @@ const Profile = () => {
                             <div>errorMyProjects</div>
                         ) : user.client && projects.length === 0 ? (
                             <div className="text-white">Emppt</div>
-                        ) : !user.client ? (
+                        ) : !user.client && !isAdmin ? (
                             <div className="flex flex-col items-center justify-center mt-[280px]">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
                                     Here you can see your projects <br />
                                     Wait for our call....
                                 </div>
+
                                 <div>
                                     <Link to="/#callendly">
                                         <button
@@ -252,6 +270,23 @@ const Profile = () => {
                         ) : (
                             <>
                                 {projects.map((project) => (
+                                    <ProjetBlock
+                                        key={project._id}
+                                        project={project}
+                                        toggletab={toggletab}
+                                    />
+                                ))}
+                            </>
+                        )}
+                        {loadingAllProjects ? (
+                            <div className=" text-white"> Loaaading ...</div>
+                        ) : errorAllProjects ? (
+                            <div>errorMyProjects</div>
+                        ) : AllProjects.length === 0 ? (
+                            <div className="text-white">Emppt</div>
+                        ) : (
+                            <>
+                                {AllProjects.map((project) => (
                                     <ProjetBlock
                                         key={project._id}
                                         project={project}
