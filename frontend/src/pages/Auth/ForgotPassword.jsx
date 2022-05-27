@@ -33,7 +33,7 @@ const ForgotPassword = () => {
         }
     }
     return (
-        <div>
+        <div className='z-10'>
             <h1 className="text-white text-center text-5xl  ">
                 Forgot Your Password ?
             </h1>

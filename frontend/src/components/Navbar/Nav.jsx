@@ -11,8 +11,8 @@ import { useSelector, useDispatch } from 'react-redux'
 const Nav = () => {
     let navigate = useNavigate()
     const dispatch = useDispatch()
-    const auth = useSelector((state) => state.auth)
-    const { userInfo, isLogged, loading } = auth
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
 
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
@@ -45,10 +45,10 @@ const Nav = () => {
                             >
                                 <img
                                     className="img-ava"
-                                    src={userInfo.avatar}
+                                    src={user.avatar}
                                     alt="avatar"
                                 />{' '}
-                                {userInfo.name}
+                                {user.name}
                                 <i>
                                     <FaAngleDown />
                                 </i>
@@ -159,7 +159,7 @@ const Nav = () => {
                     </>
                 )}
 
-                {userInfo ? (
+                {user ? (
                     userLink()
                 ) : (
                     <Link

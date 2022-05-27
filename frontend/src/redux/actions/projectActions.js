@@ -14,6 +14,9 @@ import {
     ALL_PROJECTS_REQUEST,
     ALL_PROJECTS_SUCCESS,
     ALL_PROJECTS_FAIL,
+    PROJECT_DELETE_REQUEST,
+    PROJECT_DELETE_SUCCESS,
+    PROJECT_DELETE_FAIL,
 } from './constants/projetConstants'
 import { toast } from 'react-toastify'
 
@@ -190,6 +193,41 @@ export const listAllProjects = () => async (dispatch, getState) => {
         console.log(error)
         dispatch({
             type: ALL_PROJECTS_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+export const DeleteProject = (id) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: PROJECT_DELETE_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+
+        const { data } = await axios.delete(
+            `/projets/deleteproject/${id}`,
+            config
+        )
+
+        dispatch({ type: PROJECT_DELETE_SUCCESS, payload: data })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: PROJECT_DELETE_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

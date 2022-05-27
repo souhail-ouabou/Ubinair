@@ -6,8 +6,16 @@ import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
 import Aos from 'aos'
 import { FaEdit, FaTrash } from 'react-icons/fa'
+import { DeleteProject } from '../../redux/actions/projectActions'
 
 const ProjetBlock = ({ project, toggletab }) => {
+    let dispatch = useDispatch()
+
+    const deletehandler = (id) => {
+        if (window.confirm('Are You Sure?')) {
+            dispatch(DeleteProject(id))
+        }
+    }
     return (
         <>
             <Link to={`/dashboard/${project._id}`} className="cursor-pointer">
@@ -45,17 +53,23 @@ const ProjetBlock = ({ project, toggletab }) => {
                                     <strong>Advance State :</strong>{' '}
                                     {project.stateOfAdvance}
                                 </p>
+                                <p className="text-lg font-medium leading-relaxed ">
+                                    <strong>Client :</strong>{' '}
+                                    <strong className="text-green-600">
+                                        {project.user.name}
+                                    </strong>
+                                </p>
                             </div>
                         </div>
                         <div>
-                            <h1 className="text-2xl font-semibold leading-relaxed ">
+                            <h1 className="text-2xl font-semibold leading-relaxed mt-4 ">
                                 Total
                             </h1>
                             <ProgressBar done={project.totalProgresState} />
                             <Link
                                 to="/profile"
                                 className="bg-red-600 rounded-tr-md   w-10 h-10  absolute top-0 right-0 flex z-10"
-                                // onClick={() => deletehandler(user._id)}
+                                 onClick={() => deletehandler(project._id)}
                             >
                                 <FaTrash className="m-auto text-white justify-center items-center" />
                             </Link>

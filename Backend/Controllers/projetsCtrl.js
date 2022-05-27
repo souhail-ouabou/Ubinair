@@ -41,12 +41,11 @@ const projetsCtrl = {
                 subtype: subtype,
                 type: type,
             })
-            const user = await User.findById(req.user.id);
-            if(user){
-                user.projets.push(projet);
-               
+            const user = await User.findById(req.user.id)
+            if (user) {
+                user.projets.push(projet)
             }
-            await user.save();
+            await user.save()
             const addProjet = await projet.save()
             //res.status(400).json(addProjet,{ msg: "Projet has been add!" });
             console.log('addProjet', addProjet)
@@ -145,14 +144,29 @@ const projetsCtrl = {
     },
     getAllProjects: async (req, res) => {
         try {
-          const projects = await Projets.find({});
-          res.json(projects);
+            const projects = await Projets.find({}).populate(
+                'user',
+                '-_id name  avatar'
+            )
+            res.json(projects)
         } catch (err) {
-          console.log("-----------All Prj error-------------");
-    
-          console.log(err);
-          return res.status(500).json({ msg: err.message });
+            console.log('-----------All Prj error-------------')
+
+            console.log(err)
+            return res.status(500).json({ msg: err.message })
         }
-      },
+    },
+    deleteProject: async (req, res) => {
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            await project.remove()
+            res.json({ message: 'Project Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
+        }
+    },
+    
 }
 module.exports = projetsCtrl

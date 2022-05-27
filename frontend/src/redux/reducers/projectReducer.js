@@ -18,7 +18,10 @@ import {
     ALL_PROJECTS_REQUEST,
     ALL_PROJECTS_SUCCESS,
     ALL_PROJECTS_FAIL,
-    ALL_PROJECTS_RESET
+    ALL_PROJECTS_RESET,
+    PROJECT_DELETE_REQUEST,
+    PROJECT_DELETE_SUCCESS,
+    PROJECT_DELETE_FAIL,
 } from '../actions/constants/projetConstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -126,6 +129,19 @@ export const ListAllProjectsReducer = (state = { projects: [] }, action) => {
             }
         case ALL_PROJECTS_RESET:
             return { projects: [] }
+        default:
+            return state
+    }
+}
+
+export const projectDeleteReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PROJECT_DELETE_REQUEST:
+            return { loading: true }
+        case PROJECT_DELETE_SUCCESS:
+            return { loading: false, success: true }
+        case PROJECT_DELETE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

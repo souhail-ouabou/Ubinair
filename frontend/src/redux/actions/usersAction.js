@@ -11,9 +11,13 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
     USER_DELETE_FAIL,
+    USER_UPDATE_PROFILE_REQUEST,
+    USER_UPDATE_PROFILE_SUCCESS,
+    USER_UPDATE_PROFILE_FAIL,
 } from './constants/userConstants'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import { checkImage, imageUpload } from '../../utils/ImageUploade'
 export const GetAllUsers = (token) => async (dispatch) => {
     try {
         dispatch({
@@ -146,6 +150,53 @@ export const DeleteUser = (id) => async (dispatch, getState) => {
                 error.response && error.response.data.message
                     ? error.response.data.message
                     : error.message,
+        })
+    }
+}
+export const updateUserProfile = (user) => async (dispatch, getState) => {
+    try {
+        const { token } = getState()
+        let media
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        dispatch({
+            type: USER_UPDATE_PROFILE_REQUEST,
+        })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        console.log('user mn disoatcher', user)
+        if (user.avatar) media = await imageUpload([user.avatar])
+        console.log("media",media)
+
+         user.avatar = media ? media[0].url :  user.avatar
+        console.log('object.....', user.avatar)
+
+        const { data } = await axios.put(`/user/update`, user, config)
+        dispatch({
+            type: USER_UPDATE_PROFILE_SUCCESS,
+            payload: data,
+        })
+        toast.dismiss()
+        toast.success('Succès Update !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: USER_UPDATE_PROFILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+        toast.dismiss()
+        toast.error('error...', {
+            position: toast.POSITION.TOP_CENTER,
         })
     }
 }
