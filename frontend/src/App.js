@@ -31,15 +31,10 @@ import EditUser from './pages/EditUser/EditUser'
 
 function App() {
     AOS.init()
-    const [loadinganth, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-    const {
-        loading,
-        user,
-        isAdmin,
-        isLogged: isLoggedgetuserReducer,
-    } = getUserReducer
+    const { user, isAdmin, isLogged : isLoggedgetuserReducer } = getUserReducer
     const auth = useSelector((state) => state.auth)
     const { userInfo, isLogged } = auth
     const token = useSelector((state) => state.token)
@@ -101,10 +96,7 @@ function App() {
                     <Routes>
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
-                        <Route
-                            path="/register"
-                            element={user ? <Profile /> : <Register />}
-                        />
+                        <Route path="/register"  element= {userInfo ? <Profile /> : <Register />} />
                         <Route
                             path="/user/activate/:activation_token"
                             element={<ActivationEmail />}
@@ -119,22 +111,20 @@ function App() {
                         />
                         <Route
                             path="/profile"
-                            element={user ? <Profile /> : <Login />}
+                            element={userInfo ? <Profile /> : <Login />}
                         />
                         <Route path="/tracker" element={<Tracker />} />
                         <Route
                             path="/dashboard/:id"
-                            element={user ? <Dashboard /> : <Login />}
+                            element={userInfo ? <Dashboard /> : <Login />}
                         />
                         <Route
                             path="/calculator"
-                            element={user ? <Calculator /> : <Login />}
+                            element={userInfo ? <Calculator /> : <Login />}
                         />
                         <Route
                             path="/user/:id"
-                            element={
-                                user && isAdmin ? <EditUser /> : <NotFound />
-                            }
+                            element={isAdmin ? <EditUser /> : <NotFound />}
                         />
                     </Routes>
                 </>

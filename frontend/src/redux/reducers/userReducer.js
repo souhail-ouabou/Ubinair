@@ -1,8 +1,22 @@
-import { GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, USER_DETAILS_FAIL, USER_DETAILS_REQUEST, USER_DETAILS_SUCCESS, USER_LOGIN_FAIL, USER_LOGIN_REQUEST, USER_LOGIN_SUCCESS, USER_LOGOUT, USER_REGISTER_FAIL, USER_REGISTER_REQUEST, USER_REGISTER_SUCCESS,USER_DETAILS_RESET } from "../actions/constants/userConstants"
-
+import {
+    GET_USER_FAIL,
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    USER_DETAILS_FAIL,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_LOGIN_FAIL,
+    USER_LOGIN_REQUEST,
+    USER_LOGIN_SUCCESS,
+    USER_LOGOUT,
+    USER_REGISTER_FAIL,
+    USER_REGISTER_REQUEST,
+    USER_REGISTER_SUCCESS,
+    USER_DETAILS_RESET,
+} from '../actions/constants/userConstants'
 
 const initialState = {
-    user: null,
+    user: [],
     isLogged: false,
     isAdmin: false,
     loading: false,
@@ -38,6 +52,7 @@ export const getUserReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 user: action.payload.user,
+                isLogged: true,
                 isAdmin: action.payload.isAdmin,
             }
         case GET_USER_FAIL:

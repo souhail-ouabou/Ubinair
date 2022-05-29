@@ -86,6 +86,12 @@ const Profile = () => {
         error: errorProjectDelete,
         success: SuccessProjectDelete,
     } = projectDelete
+    // const auth = useSelector((state) => state.auth)
+    // const {
+    //     loading: loadingProjectDelete,
+    //     error: errorProjectDelete,
+    //     success: SuccessProjectDelete,
+    // } = projectDelete
 
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
@@ -140,6 +146,8 @@ const Profile = () => {
             setMsg(null)
         }
     }
+
+
     useEffect(() => {
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
@@ -157,13 +165,12 @@ const Profile = () => {
         }
     }, [
         dispatch,
-        user.client,
         successDelete,
         token,
         isAdmin,
         SuccessProjectDelete,
-        user._id,
         successuserUpdateProfile,
+        user.client,
     ])
 
     return (

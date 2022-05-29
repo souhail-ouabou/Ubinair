@@ -12,7 +12,7 @@ const Nav = () => {
     let navigate = useNavigate()
     const dispatch = useDispatch()
     const getUserReducer = useSelector((state) => state.getUserReducer)
-    const { loading, user, isAdmin } = getUserReducer
+    const { loading, user, isLogged } = getUserReducer
 
     const [showDrop, setShowDrop] = useState(false)
     const [inHome, setInHome] = useState(true)
@@ -161,7 +161,7 @@ const Nav = () => {
                     </>
                 )}
 
-                {user ? (
+                {isLogged ? (
                     userLink()
                 ) : (
                     <Link
