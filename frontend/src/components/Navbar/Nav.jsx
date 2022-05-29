@@ -29,25 +29,25 @@ const Nav = () => {
     }
     const userLink = () => {
         return (
-            <li className="drop-nav md:ml-0 ml-12">
+            <li className="drop-nav  md:ml-0 ">
                 <div
-                    className="text-white  font-semibold flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80  text-sm px-4 py-1.5 text-center ml-2"
+                    className="text-white  font-semibold flex items-center justify-center  rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80  text-sm px-7 md:px-4 text-center md:ml-2 py-1.5 "
                     onClick={showDropInMobile}
                 >
                     {loading ? (
-                        <h2>Loading...</h2>
+                        <span>Loading...</span>
                     ) : (
                         <>
                             <Link
                                 to="#"
-                                className="flex items-center justify-center gap-4"
+                                className="flex items-center justify-center gap-2"
                                 onClick={showDropInMobile}
                             >
                                 <img
                                     className="img-ava"
                                     src={user.avatar}
                                     alt="avatar"
-                                />{' '}
+                                />
                                 {user.name}
                                 <i>
                                     <FaAngleDown />
@@ -94,20 +94,22 @@ const Nav = () => {
     return (
         // <header className='flex  absolute -top-10 right-5 left-5 px-5 py-12 justify-between items-center  bg-stone-50/20 shadow-lg shadow-black-500/5 rounded-2xl backdrop-blur-md border-2 border-white/25 '>
         <header className="header mt-[2.6rem] z-20 fixed   py-[14px] px-[50px]">
-            <Link
-                to={'/'}
-                className="flex items-center gap-2 md:m-0 "
-                onClick={showItems}
-            >
-                <img
-                    className="w-16 object-cover m-auto "
-                    src={Logo}
-                    alt="Logo"
-                />
-                <p className="text-[#EEEEEF] text-xl font-semibold m-auto">
-                    Ubinair
-                </p>
-            </Link>
+            <div>
+                <Link
+                    to={'/'}
+                    className="flex flex-col  md:flex-row items-center gap-2 md:m-0 "
+                    onClick={showItems}
+                >
+                    <img
+                        className="w-16 object-cover m-auto "
+                        src={Logo}
+                        alt="Logo"
+                    />
+                    <p className="text-[#EEEEEF] text-xl font-semibold m-auto">
+                        Ubinair
+                    </p>
+                </Link>
+            </div>
             <motion.ul
                 initial={{ opacity: 0, x: 200 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -171,7 +173,7 @@ const Nav = () => {
                     >
                         <button
                             type="button"
-                            className="text-white font-semibold flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80  text-sm px-5 py-2.5 text-center ml-2"
+                            className="text-white font-semibold flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80   text-sm px-5 py-2.5 text-center ml-2"
                         >
                             Login <FaArrowRight className="ml-3" />
                         </button>

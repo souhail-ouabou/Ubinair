@@ -36,9 +36,9 @@
     object-fit: cover;
 }
 
-.avatar span {
+.span-avatar {
     position: absolute;
-    bottom: -100%;
+
     left: 0;
     width: 100%;
     height: 50%;

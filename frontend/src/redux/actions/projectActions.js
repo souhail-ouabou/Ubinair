@@ -225,6 +225,7 @@ export const DeleteProject = (id) => async (dispatch, getState) => {
         toast.success('Succès Delete !', {
             position: toast.POSITION.TOP_CENTER,
         })
+        
     } catch (error) {
         dispatch({
             type: PROJECT_DELETE_FAIL,

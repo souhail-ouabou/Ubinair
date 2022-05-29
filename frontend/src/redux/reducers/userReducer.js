@@ -2,7 +2,7 @@ import { GET_USER_FAIL, GET_USER_REQUEST, GET_USER_SUCCESS, USER_DETAILS_FAIL, U
 
 
 const initialState = {
-    user: [],
+    user: null,
     isLogged: false,
     isAdmin: false,
     loading: false,

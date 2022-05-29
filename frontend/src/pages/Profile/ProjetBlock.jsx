@@ -53,12 +53,6 @@ const ProjetBlock = ({ project, toggletab }) => {
                                     <strong>Advance State :</strong>{' '}
                                     {project.stateOfAdvance}
                                 </p>
-                                <p className="text-lg font-medium leading-relaxed ">
-                                    <strong>Client :</strong>{' '}
-                                    <strong className="text-green-600">
-                                        {project.user.name}
-                                    </strong>
-                                </p>
                             </div>
                         </div>
                         <div>
@@ -69,17 +63,17 @@ const ProjetBlock = ({ project, toggletab }) => {
                             <Link
                                 to="/profile"
                                 className="bg-red-600 rounded-tr-md   w-10 h-10  absolute top-0 right-0 flex z-10"
-                                 onClick={() => deletehandler(project._id)}
+                                onClick={() => deletehandler(project._id)}
                             >
                                 <FaTrash className="m-auto text-white justify-center items-center" />
                             </Link>
-                            <Link
+                            {/* <Link
                                 to="/profile"
                                 className="bg-blue-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-9 flex z-10"
                                 // onClick={() => deletehandler(user._id)}
                             >
                                 <FaEdit className="m-auto text-white justify-center items-center" />
-                            </Link>
+                            </Link> */}
                         </div>
                     </motion.div>
                 </div>

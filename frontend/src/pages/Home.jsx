@@ -11,7 +11,7 @@ import {
     FaCalculator,
 } from 'react-icons/fa'
 import SliderMissions from '../components/SliderMissions'
-import SliderTime from '../components/SliderTime'
+import SliderTime from '../components/SliderTime/SliderTime'
 import OffersCards from '../components/OffersCards'
 import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
@@ -22,16 +22,15 @@ const Home = () => {
             name="home"
             className=" w-full bg-transparent flex flex-col justify-between"
         >
-
             <div className="grid md:grid-cols-2 w-full max-w-[1240px] z-10 md:ml-28  ">
                 <div className="flex flex-col justify-center md:items-start w-full px-2 py-12">
-                    <h1 className="py-3 px-8 md:px-0 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 m-9">
+                    <h1 className="pt-12  md:px-0 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 ">
                         Tu veux créer un site internet pour ta boîte ?
                     </h1>
-                    <p className="text-2xl text-[#EEEEEF] px-16 md:px-0 ">
+                    <p className="text-2xl text-[#EEEEEF] md:mt-0 mt-3  md:px-0 ">
                         Et si on le créait ensemble avec la méthode Ubinair !
                     </p>
-                    <div className="md:flex md:flex-row md:w-full md:ml-0 md:justify-start md:gap-4 flex-col w-60 ml-16 justify-center items-center ">
+                    <div className="md:flex md:flex-row md:w-full md:ml-0 md:justify-start md:gap-4 flex-col w-60 justify-center items-center ">
                         <button
                             className="py-3 px-6 sm:w-[60%] my-4 text-[#663993] flex items-center justify-between uppercase rounded-full bg-[#EEEEEF]    dark:shadow-purple-800/80   text-sm  text-center mr-2
                         md:w-auto  w-full  font-bold
@@ -40,21 +39,26 @@ const Home = () => {
                         >
                             C'est quoi <FaQuestion className="ml-3 " />
                         </button>
-                        <LinkReactS to="callendly" spy={true} offset={-100} duration={500}  >
-                        <button
-                            className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                        <LinkReactS
+                            to="callendly"
+                            spy={true}
+                            offset={-100}
+                            duration={500}
+                        >
+                            <button
+                                className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                        >
-                            Je Reserver un call <FaPhone className="ml-3" />
-                        </button>
+                            >
+                                Je Reserver un call <FaPhone className="ml-3" />
+                            </button>
                         </LinkReactS>
                     </div>
                 </div>
                 <div className="md:py-9 flex-1 flex items-center">
                     <img
-                        className="ml-12 mt-12 w-full lg:w-auto"
+                        className="md:ml-12 md:mt-12 w-full lg:w-auto"
                         src={bgImg}
                         alt="/"
                     />
@@ -85,7 +89,7 @@ const Home = () => {
                         </h3>
                         <div className="md:flex items-center justify-center gap-x-6">
                             <FaHandsHelping className="w-[9rem] h-full text-white px-6 py-2" />
-                            <dive className="md:max-w-[49rem]">
+                            <div className="md:max-w-[49rem]">
                                 <p className="text-whit text-xl text-white ">
                                     Ton site internet est la concrétisation de
                                     ta vision, créons le ensemble. Tu pourras
@@ -95,7 +99,7 @@ const Home = () => {
                                     artistique et partage avec nous tes
                                     préférences visuelles
                                 </p>
-                            </dive>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -150,16 +154,16 @@ const Home = () => {
 
                 <SliderTime />
                 <div
-                    className="flex gap-12 items-center justify-center"
+                    className="flex md:gap-12 items-center justify-center"
                     id="missions"
                 >
                     <div
-                        className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl"
+                        className="glass py-[8px] px-[46px]  md:w-[46rem] w-[20rem]  rounded-xl shadow-2xl  "
                         data-aos="flip-down"
                         data-aos-duration="2000"
                         ata-aos-easing="ease-out-cubic"
                     >
-                        <div className="-p-12" >
+                        <div className="-p-12 ">
                             <h3 className="text-white font-semibold text-sm my-6">
                                 MISSIONS RÉUSSIES
                             </h3>
@@ -184,7 +188,7 @@ const Home = () => {
             </div>
             <OffersCards />
 
-             <Callendly id="callendly"/> 
+            {/* <Callendly id="callendly" /> */}
 
             <div
                 className="flex flex-col items-center justify-center mt-7 z-10 "
@@ -195,7 +199,10 @@ const Home = () => {
                 <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold uppercase  ">
                     Calculer votre Devis !
                 </p>
-                <Link to={'/calculator'} className="items-center justify-center m-auto">
+                <Link
+                    to={'/calculator'}
+                    className="items-center justify-center m-auto"
+                >
                     <button
                         className="py-3 px-6  text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto    

@@ -55,14 +55,13 @@ const Login = () => {
 
     useEffect(() => {
         if (userInfo) {
-            navigate('/')
-  
+            navigate('/')  
         }
     }, [navigate, userInfo, dispatch])
 
     return (
         <div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full ">
+            <div className="grid grid-cols-1 sm:grid-cols-2 h-screen w-full md:mt-0 mt-7">
                 <div className="background  bg-transparent ">
                     <span></span>
                     <span></span>

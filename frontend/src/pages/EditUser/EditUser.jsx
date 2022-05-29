@@ -28,7 +28,6 @@ const EditUser = () => {
     const [client, setClient] = useState(false)
 
     const [data, setData] = useState([])
-    const [showProjects, setShowProjects] = useState(false)
     const token = useSelector((state) => state.token)
 
     const { name, email } = data
@@ -56,9 +55,7 @@ const EditUser = () => {
         dispatch(updateUserStatus(id, checkAdmin, client))
     }
 
-    const toggleShowProjects = () => {
-        setShowProjects(!showProjects)
-    }
+ 
     const handleCheck = () => {
         setCheckAdmin(!checkAdmin)
     }
@@ -142,22 +139,10 @@ const EditUser = () => {
                             >
                                 Update
                             </button>
-                            <button
-                                className="py-3 px-6 sm:w-[60%]    my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
-                        md:w-auto  w-full 
-                         hover:shadow-lg transition-all ease-in-out duration-100 font-bold 
-                        "
-                                onClick={toggleShowProjects}
-                            >
-                                {showProjects ? (
-                                    <>Hide Projects</>
-                                ) : (
-                                    <>Show Projects</>
-                                )}
-                            </button>
+              
                         </div>
                     </div>
-                    {showProjects && (
+                    {user.projets && (
                         <div className="col-right z-10">
                             <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
                                 projects of : {user.name}

@@ -9,14 +9,19 @@ import {
     listAllProjects,
     listMyProjects,
 } from '../../redux/actions/projectActions'
-import { GetAllUsers, updateUserProfile } from '../../redux/actions/usersAction'
+import {
+    GetAllUsers,
+    getUserDetails,
+    updateUserProfile,
+} from '../../redux/actions/usersAction'
 import UserBlock from './UserBlock'
-import Callendly from '../../components/Callendly'
-import { InlineWidget } from 'react-calendly'
 import { FaPhone } from 'react-icons/fa'
 import { isLength, isMatch } from '../../utils/validation/Validation'
 import { checkImage } from '../../utils/ImageUploade'
 import { toast } from 'react-toastify'
+import { USER_UPDATE_PROFILE_RESET } from '../../redux/actions/constants/userConstants'
+import { MdCameraswitch } from 'react-icons/md'
+import { dispatchGetUser } from '../../redux/actions/authAction'
 const Profile = () => {
     const dispatch = useDispatch()
 
@@ -24,35 +29,16 @@ const Profile = () => {
         id: '',
         name: '',
         email: '',
-        avatar: '',
         password: '',
         cf_password: '',
     }
     const [data, setData] = useState(initialState)
     const [msg, setMsg] = useState(null)
-
-    const handleChange = (e) => {
-        //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
-        const { name, value } = e.target
-        setData({
-            ...data,
-            [name]: value,
-        })
-        console.log('data : ', data)
-    }
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        if (isLength(password)) setMsg('Length should be 6 char or more')
-        if (!isMatch(password, cf_password)) setMsg('Password do not match')
-        else {
-            dispatch(updateUserProfile(data))
-            setMsg(null)
-        }
-    }
-
+    const [avatar, setAvatar] = useState('')
+    const [change, setChange] = useState(true)
     const token = useSelector((state) => state.token)
 
-    const { name, email, avatar, password, cf_password } = data
+    const { name, email, password, cf_password } = data
     const getAllUsersReducer = useSelector((state) => state.getAllUsersReducer)
     const {
         users,
@@ -75,9 +61,17 @@ const Profile = () => {
     )
     const {
         loading: loadingMyProjects,
-        projects,
+        projects: myProjects,
         error: errorMyProjects,
     } = ListMyProjectsReducer
+
+    const userUpdateProfileReducer = useSelector(
+        (state) => state.userUpdateProfileReducer
+    )
+    const {
+        loading: loadinguserUpdateProfile,
+        success: successuserUpdateProfile,
+    } = userUpdateProfileReducer
 
     const ListAllProjects = useSelector((state) => state.ListAllProjects)
     const {
@@ -108,7 +102,18 @@ const Profile = () => {
                 break
         }
     }
-    const handleChangeAvatar = (e) => {
+    const handleChange = (e) => {
+        //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
+        const { name, value } = e.target
+        setData({
+            ...data,
+            [name]: value,
+        })
+        console.log('data : ', data)
+        console.log('avatar : ', avatar)
+    }
+
+    const changeAvatar = (e) => {
         const file = e.target.files[0]
 
         const err = checkImage(file)
@@ -121,20 +126,34 @@ const Profile = () => {
             toast.error(err, {
                 position: toast.POSITION.TOP_CENTER,
             })
-        } else {
-            setData({ ...data, avatar: file })
-            console.log('object', data)
+        }
+
+        setAvatar(file)
+        console.log('avatar : ', avatar)
+    }
+
+    const handleSubmit = (e) => {
+        if (isLength(password)) setMsg('Length should be 6 char or more')
+        if (!isMatch(password, cf_password)) setMsg('Password do not match')
+        else {
+            dispatch(updateUserProfile({ data, avatar, user }))
+            setMsg(null)
         }
     }
     useEffect(() => {
-        if (user.client) {
-            dispatch(listMyProjects())
-        }
-        if (isAdmin || SuccessProjectDelete) {
-            dispatch(listAllProjects())
-        }
-        if (successDelete) {
-            dispatch(GetAllUsers(token))
+        if (successuserUpdateProfile) {
+            dispatch({ type: USER_UPDATE_PROFILE_RESET })
+            dispatch(dispatchGetUser(token))
+        } else {
+            if (user.client) {
+                dispatch(listMyProjects())
+            }
+            if (isAdmin || SuccessProjectDelete) {
+                dispatch(listAllProjects())
+            }
+            if (successDelete) {
+                dispatch(GetAllUsers(token))
+            }
         }
     }, [
         dispatch,
@@ -144,6 +163,7 @@ const Profile = () => {
         isAdmin,
         SuccessProjectDelete,
         user._id,
+        successuserUpdateProfile,
     ])
 
     return (
@@ -154,13 +174,13 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center z-10 overflow-hidden  ">
-                    <div className="glass text-white md:w-[500px]  ">
+                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden  ">
+                    <div className="glass text-white md:w-[500px] ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin ? 'Admin Profile' : 'User Profile'}
                         </h2>
 
-                        <div className={'avatar'}>
+                        <div className="avatar ">
                             <img
                                 src={
                                     avatar
@@ -169,17 +189,25 @@ const Profile = () => {
                                 }
                                 alt=""
                             />
-                            <span>
-                                <i className="fas fa-camera"></i>
-                                <p>Change</p>
-                                <input
-                                    type="file"
-                                    name="file"
-                                    id="file_up"
-                                    accept="image/*"
-                                    onChange={handleChangeAvatar}
-                                />
+                            (
+                            <span
+                                className={`absolute left-0 w-full h-[33%]   -bottom-[15%]  md:h-[40%]  md:-bottom-[100%]  text-center uppercase font-normal text-white  bg-gradient-to-bl from-[#562885de] to-[#936cbe] transition ease-in-out delay-150
+                                   
+                                `}
+                            >
+                                <div className="flex flex-col items-center justify-center m-1 ">
+                                    <MdCameraswitch />
+                                    {/* <p className='hidden md:block'>Change</p> */}
+                                    <input
+                                        type="file"
+                                        name="file"
+                                        id="file_up"
+                                        accept="image/*"
+                                        onChange={changeAvatar}
+                                    />
+                                </div>
                             </span>
+                            )
                         </div>
                         <em style={{ color: 'crimson' }}>
                             *Chose your picture then click update to apply the
@@ -300,7 +328,10 @@ const Profile = () => {
                         ) : errgetAllUsers && errgetAllUsers ? (
                             <div>errgetAllUsers</div>
                         ) : users && users.length === 0 ? (
-                            <div className=" text-white">Empptyyyyyyyyy</div>
+                            <div className=" text-white">
+                                {' '}
+                                Users Empptyyyyyyyyy
+                            </div>
                         ) : (
                             <>
                                 {users &&
@@ -314,12 +345,14 @@ const Profile = () => {
                             </>
                         )}
 
-                        {loadingMyProjects ? (
+                        {loadingMyProjects || loadingAllProjects ? (
                             <div className=" text-white"> Loaaading ...</div>
-                        ) : errorMyProjects ? (
+                        ) : errorMyProjects || errorAllProjects ? (
                             <div>errorMyProjects</div>
-                        ) : user.client && projects.length === 0 ? (
-                            <div className="text-white">Emppt</div>
+                        ) : user.client && myProjects.length === 0 ? (
+                            <>My projects Emppt </>
+                        ) : isAdmin && AllProjects.length === 0 ? (
+                            <div className="text-white">All projects Emppt</div>
                         ) : !user.client && !isAdmin ? (
                             <div className="flex flex-col items-center justify-center mt-[280px]">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
@@ -328,7 +361,7 @@ const Profile = () => {
                                 </div>
 
                                 <div>
-                                    <Link to="/#callendly">
+                                    {/* <Link to="/">
                                         <button
                                             className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
@@ -337,12 +370,12 @@ const Profile = () => {
                                             Back to home et Reserver un call{' '}
                                             <FaPhone className="ml-3" />
                                         </button>
-                                    </Link>
+                                    </Link> */}
                                 </div>
                             </div>
-                        ) : (
+                        ) : (user.client && isAdmin) || isAdmin ? (
                             <>
-                                {projects.map((project) => (
+                                {AllProjects.map((project) => (
                                     <ProjetBlock
                                         key={project._id}
                                         project={project}
@@ -350,16 +383,9 @@ const Profile = () => {
                                     />
                                 ))}
                             </>
-                        )}
-                        {loadingAllProjects ? (
-                            <div className=" text-white"> Loaaading ...</div>
-                        ) : errorAllProjects ? (
-                            <div>errorMyProjects</div>
-                        ) : AllProjects.length === 0 ? (
-                            <div className="text-white">Emppt</div>
                         ) : (
                             <>
-                                {AllProjects.map((project) => (
+                                {myProjects.map((project) => (
                                     <ProjetBlock
                                         key={project._id}
                                         project={project}

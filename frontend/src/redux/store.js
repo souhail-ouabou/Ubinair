@@ -42,7 +42,7 @@ const reducer = combineReducers({
     userDeleteReducer,
     ListAllProjects: ListAllProjectsReducer,
     projectDelete: projectDeleteReducer,
-    userUpdateProfile: userUpdateProfileReducer
+     userUpdateProfileReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

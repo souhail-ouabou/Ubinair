@@ -14,10 +14,12 @@ import {
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
+    USER_UPDATE_PROFILE_RESET,
 } from './constants/userConstants'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { checkImage, imageUpload } from '../../utils/ImageUploade'
+import { listAllProjects } from './projectActions'
 export const GetAllUsers = (token) => async (dispatch) => {
     try {
         dispatch({
@@ -153,7 +155,7 @@ export const DeleteUser = (id) => async (dispatch, getState) => {
         })
     }
 }
-export const updateUserProfile = (user) => async (dispatch, getState) => {
+export const updateUserProfile = ({data,avatar,user}) => async (dispatch, getState) => {
     try {
         const { token } = getState()
         let media
@@ -170,17 +172,16 @@ export const updateUserProfile = (user) => async (dispatch, getState) => {
             position: toast.POSITION.TOP_CENTER,
         })
 
-        console.log('user mn disoatcher', user)
-        if (user.avatar) media = await imageUpload([user.avatar])
-        console.log("media",media)
+        console.log('user mn disoatcher', data)
+        if (avatar) media = await imageUpload([avatar])
+        console.log('media', media)
 
-         user.avatar = media ? media[0].url :  user.avatar
-        console.log('object.....', user.avatar)
+        // data.avatar = media[0].url ? media[0].url : user.avatar
+        console.log('object.....', data.avatar)
 
-        const { data } = await axios.put(`/user/update`, user, config)
+        const  res  = await axios.put(`/user/update`,{ ...data, avatar: avatar ? media[0].url : user.avatar}, config)
         dispatch({
             type: USER_UPDATE_PROFILE_SUCCESS,
-            payload: data,
         })
         toast.dismiss()
         toast.success('Succès Update !', {
