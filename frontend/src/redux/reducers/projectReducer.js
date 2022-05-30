@@ -56,7 +56,7 @@ export const GetProjectDetailsReducer = (
     state = {
         project: {
             specification: [],
-           projectTasks:[],
+        //    projectTasks:[],
             features: [],
             user: {},
         },

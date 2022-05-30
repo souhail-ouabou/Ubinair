@@ -144,36 +144,37 @@ const projetsCtrl = {
         }
     },
 
-    updateTasksProject: async (req, res) => {
-        try {
-            console.log('--------------req booody -------------', req.body)
+    // updateTasksProject: async (req, res) => {
+    //     try {
+    //         console.log('--------------req booody -------------', req.body)
 
-            const tasksProject = req.body.tasksProject
+    //         const tasksProject = req.body.tasksProject
 
-            const projet = await Projets.findById(req.params.id)
-             console.log('prj---------------',JSON.stringify(projet)+'id= '+req.params.id);
-            if (projet) {
-                projet.projectTasks = tasksProject || projet.projectTasks
-                const updatedProject = await projet.save()
-                console.log('updatedtaskProject', updatedProject)
-                res.json({ msg: 'Update task prj Success!' })
-            }
-        } catch (err) {
-            console.log('-----------Update task prj error-------------', err)
-            return res.status(500).json({ msg: err.message })
-        }
-    },
+    //         const projet = await Projets.findById(req.params.id)
+    //          console.log('prj---------------',JSON.stringify(projet)+'id= '+req.params.id);
+    //         if (projet) {
+    //             projet.projectTasks = tasksProject || projet.projectTasks
+    //             const updatedProject = await projet.save()
+    //             console.log('updatedtaskProject', updatedProject)
+    //             res.json({ msg: 'Update task prj Success!' })
+    //         }
+    //     } catch (err) {
+    //         console.log('-----------Update task prj error-------------', err)
+    //         return res.status(500).json({ msg: err.message })
+    //     }
+    // },
 
     updateSpecProject : async (req, res) => {
         try {
             // console.log('--------------req booody -------------', req.body)
 
             const newSpecification = req.body.specification
+            const index=req.body.index
             console.log('sended spec ',JSON.stringify(req.body));
             const projet = await Projets.findById(req.params.id)
              console.log('prj spec---------------',JSON.stringify(projet)+'id= '+req.params.id);
             if (projet) {
-                projet.specification = newSpecification || projet.specification
+                projet.specification[index] = newSpecification[index] || projet.specification[index]
                 console.log('it enter');
                 const updatedProject = await projet.save()
                 console.log('updatedSpecProject----------', updatedProject)

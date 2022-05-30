@@ -12,6 +12,6 @@ router.get('/details/:id', auth,  projetCtrl.getProjectdetails)
 router.put('/updateproject/:id', projetCtrl.updateProject)
 router.put('/updatetasks/:id', projetCtrl.updateTasksClient)
 router.put('/updatespecprj/:id', projetCtrl.updateSpecProject)
-router.put('/updatetasksprj/:id', projetCtrl.updateTasksProject)
+// router.put('/updatetasksprj/:id', projetCtrl.updateTasksProject)
 
 module.exports = router

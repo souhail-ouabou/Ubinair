@@ -1,5 +1,7 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}",],
+  content: ["./src/**/*.{js,jsx,ts,tsx}",
+ 
+ ],
   mode: 'jit',
   theme: {
     extend: {
@@ -80,5 +82,5 @@ module.exports = {
         backgroundColor:['checked'],
       },
     },
-  plugins: [],
+  plugins: [ ],
 }

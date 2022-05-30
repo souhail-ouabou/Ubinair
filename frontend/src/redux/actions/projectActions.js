@@ -163,30 +163,30 @@ export const UpdateTaskssClient = (id, taskss) => async (dispatch) => {
     }
 }
 
-export const UpdateTasksProject = (id, tasksProject) => async (dispatch) => {
+// export const UpdateTasksProject = (id, tasksProject) => async (dispatch) => {
+//     try {
+//         dispatch({ type: PROJET_UPDATE_REQUEST })
+
+//         const { data } = await axios.put(`/projets/updatetasksprj/${id}`, {tasksProject,id})
+
+//         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+//     } catch (error) {
+//         dispatch({
+//             type: PROJET_UPDATE_FAIL,
+//             payload:
+//                 error.response && error.response.data.message
+//                     ? error.response.data.message
+//                     : error.message,
+//         })
+//     }
+// }
+
+
+export const UpdateSpecProject = (id,index,specification) => async (dispatch) => {
     try {
         dispatch({ type: PROJET_UPDATE_REQUEST })
 
-        const { data } = await axios.put(`/projets/updatetasksprj/${id}`, {tasksProject,id})
-
-        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
-    } catch (error) {
-        dispatch({
-            type: PROJET_UPDATE_FAIL,
-            payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
-        })
-    }
-}
-
-
-export const UpdateSpecProject = (id, specification) => async (dispatch) => {
-    try {
-        dispatch({ type: PROJET_UPDATE_REQUEST })
-
-        const { data } = await axios.put(`/projets/updatespecprj/${id}`, {specification,id})
+        const { data } = await axios.put(`/projets/updatespecprj/${id}`, {specification,index,id})
 
         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
     } catch (error) {

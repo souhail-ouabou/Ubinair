@@ -302,10 +302,16 @@ const Calculator = () => {
         console.log(calculator.devis + '   ' + calculator.type)
     }
     return (
-           
-         
-            <div className="">
-         
+        <div className="w-[1000px] z-10">
+            <div>
+                {' '}
+                {calculator.index == 0 ? (
+                    ''
+                ) : (
+                    <Goback previousTab={previousTab} />
+                )}{' '}
+            </div>
+          
                 <BeginPage
                     index={calculator.index} //0
                     onNext={(i, type) => toggleTab(i, type)} //1
@@ -384,7 +390,7 @@ const Calculator = () => {
                     </th>
                 </tr>
             </table>
-
+          
             {/* <div className="">
                 {' '}
                 {calculator.index == 0 ? (

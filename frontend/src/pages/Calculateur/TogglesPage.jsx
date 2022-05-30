@@ -25,7 +25,7 @@ function TogglesPage(props) {
                     />
                 ))}
             </div>
-
+           
             <div className="mt-4">
                 <button
                     type="button"

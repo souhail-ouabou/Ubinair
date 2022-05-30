@@ -1,20 +1,19 @@
 import React, { useState,useEffect } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
+import { FaRegEdit } from 'react-icons/fa'
 import { BsQuestionLg } from 'react-icons/bs'
 import { ViewMode, Gantt } from 'gantt-task-react'
 import {motion}  from 'framer-motion'
 import 'gantt-task-react/dist/index.css'
-import { FiEdit2 } from 'react-icons/fi'
-import { FaRegEdit } from 'react-icons/fa'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import {BrowserRouter} from 'react-router-dom'
 import {HashLink as Link} from 'react-router-hash-link'
-import {Tooltip,Button} from "@mui/material"
-import { UpdateTasksProject,UpdateSpecProject } from '../../redux/actions/projectActions'
+import { UpdateSpecProject } from '../../redux/actions/projectActions'
 import { ObjectID } from 'bson';
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+import './style.css'
+
 import {
     Getprojectdetails,
     UpdateProject,
@@ -54,8 +53,8 @@ const { loading, user ,isAdmin} = getUserReducer
         }
     }, [user.client])
 
-    const percentage=60;
-    const [cirValue,setCirValue]=useState(0)
+
+  
     const [addedTaskTitle,setAddedTaskTitle]=useState('')
     const [addedTaskDescription,setAddedTaskDescription]=useState('')
     const [addedTaskState,setAddedTaskState]=useState('')
@@ -66,59 +65,17 @@ const { loading, user ,isAdmin} = getUserReducer
     const [EditedTaskDescription,setEditedTaskDescription]=useState('')
     const [EditedTaskState,setEditedTaskState]=useState('')
     const [EditedTaskDate,setEditedTaskDate]=useState('')
-    const [EditedTaskid,setEditedTaskid]=useState('')
+   
 
     const [tasksProject,setTasks]=useState([])
     
-    // {id:Math.floor(Math.random() * 1000),title:"Start index page",state:0,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Design',description:'add sections and topics design'},
-
-    // {id:Math.floor(Math.random() * 1000),title:"Add auth design",state:1,date:new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Design',description:'add Form and register design'},
-
-    // {id:Math.floor(Math.random() * 1000),title:"Start Content",state:0,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
-
-    // {id:Math.floor(Math.random() * 1000),title:"Add Articles",state:-1,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
-    // {id:Math.floor(Math.random() * 1000),title:"Add topics",state:1,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Content',description:'add Form and register design'},
-    // {id:Math.floor(Math.random() * 1000),title:"Start integration",state:1,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Integration'},
-    // {id:Math.floor(Math.random() * 1000),title:"Test alfa and beta",state:1,date: new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Integration',description:'add Form and register design'},
-    // {id:Math.floor(Math.random() * 1000),title:"Version final",state:-1,date:new Intl.DateTimeFormat("en-GB", {
-    //     year: "numeric",
-    //     month: "long",
-    //     day: "2-digit"
-    // }).format(new Date()),genre:'Integration',description:'add Form and register design'}])
-
+   const [Admin,setIsadmin]=useState(false)
+   const [specification, setSpec] = useState([])
+    
+  
 
    
 
-   const [Admin,setIsadmin]=useState(true)
-   const [specification, setSpec] = useState([])
   
 
 
@@ -126,17 +83,21 @@ const { loading, user ,isAdmin} = getUserReducer
         
        if(!Admin)return;
       
-         console.log(JSON.stringify(tasksProject));
+         console.log(JSON.stringify(specification[index].projectTasks));
+           
             let newState
-            let newArr = tasksProject.map((item) => {
+            let newtask =specification[index].projectTasks.map((item) => {
               
-             if(item.id==id && item.genre==title){
+             if(item.id==id){
                  if(item.state==-1){
+                     console.log('0');
                     newState=0
                  }else if(item.state==0){
                     newState=1
+                    console.log('1');
                  }else if(item.state==1){
                     newState=-1;
+                    console.log('-1');
                  }
               
                 return { ...item,state:newState };
@@ -146,32 +107,20 @@ const { loading, user ,isAdmin} = getUserReducer
              }
              
             });
-            console.log('newarr',JSON.stringify(newArr))
-            setTasks(newArr);
+            // console.log('newarr',JSON.stringify(newArr))
+            let newArr=specification;
+            newArr[index].projectTasks=newtask
+            console.log('console new task',JSON.stringify(newtask));
+            setSpec(newArr);
            
-            setTimeout(() => {
-                console.log('This will run after 1 second!')
                  setEdit(true)
-              }, 1000);
+          
 
-            console.log(JSON.stringify(tasksProject));
+            // console.log(JSON.stringify(tasksProject));
            
           };
 
-        // let newArr = [...tasks]; // copying the old datas array
-        // console.log(newArr[0][state]+"lowlhhjjjjjjjjjjjjjjjjjjjjjj");
-        // newArr[index][1] = -1;
-        // console.log(newArr[index][1]+"hhjjjjjjjjjjjjjjjjjjjjjj");
-        // setTasks(newArr);   
-    
-
-    // useEffect(()=>{
-       
-    // },[])
-    //  setTasks({...tasks,...newtask})   
-
-  
-    // console.log(JSON.stringify(task));
+     const percentage=60;
     const [title,setTitle]=React.useState('')
     const [showForm, setShowForm] = useState(false);
     const [edit, setEdit] = useState(false);
@@ -190,7 +139,10 @@ const { loading, user ,isAdmin} = getUserReducer
     const [designValue, setDesignValue] = React.useState(0)
     const [ContentValue, setContentValue] = React.useState(0)
     const [inteValue, setInteValue] = React.useState(0)
-
+    const [index,setIndex]=React.useState(0)
+    const [updatedTasks,setupdatedTask]=React.useState([])
+    const[estimatedValue,setEstimated]=React.useState(0)
+    
 
    const handleClickShow=(index)=>{
         setTContent(false)
@@ -198,6 +150,7 @@ const { loading, user ,isAdmin} = getUserReducer
         setDesign(false)
         setShowForm(false)
         setShowFormUpdate(false)
+        setIndex(index)
     
         if(index==1){
             
@@ -226,72 +179,52 @@ const { loading, user ,isAdmin} = getUserReducer
       
     }
 
-    useEffect(()=>{
+         
 
-      
-                calculCircle();
-            
-           
-       
-      },[tasksProject])
-   
-    //   useEffect(()=>{
-    //     if (!loadingProjectDetails && edit) {
-    //     dispatch(UpdateTasksProject(id, tasksProject))
-    //     setEdit(false)
-    //     }
-    //   },[tasksProject,edit])
-     
-
-    //   useEffect(() => {
-    //     if (!loadingProjectDetails) {
-    //         console.log('test',JSON.stringify(projectDetails.projectTasks));
-    //         setTasks(projectDetails.projectTasks)
-    //         setSpec(projectDetails.specification)
-           
-    //     }
-    // }, [loadingProjectDetails])
-
-    useEffect(()=>{
-   
-            if(!loadingProjectDetails && edit){
-                console.log('test',JSON.stringify('comming from state ',JSON.stringify(tasksProject)));
-                dispatch(UpdateTasksProject(id, tasksProject))
-                setEdit(false)
-              
-            }
+            useEffect(()=>{
         
+                    if(!loadingProjectDetails && edit){
+                        console.log('test',JSON.stringify('comming from state ',JSON.stringify(specification)));
+                        // dispatch(UpdateTasksProject(id, tasksProject))
+                        dispatch(UpdateSpecProject(id,index, specification))
+                        calculCircle()
+                        setEdit(false)
+                    
+                    }
+                                                        
 
-    },[loadingProjectDetails,tasksProject,edit])
+                    },[loadingProjectDetails,specification,edit])
 
-    useEffect(()=>{
-        if (!loadingProjectDetails){
-           
-            // console.log('test',JSON.stringify(JSON.stringify(projectDetails)));
-            setTasks(projectDetails.projectTasks)
-            setSpec(projectDetails.specification)
-            // console.log('test',JSON.stringify(JSON.stringify(specifications)))
-            
-    }
-    },[loadingProjectDetails])
+                            useEffect(()=>{
+                                if (!loadingProjectDetails){
+                                
+                                    // console.log('test',JSON.stringify(JSON.stringify(projectDetails)));
+                                    // setTasks(projectDetails.projectTasks)
+                                    setSpec(projectDetails.specification)
+                                    setIsadmin(isAdmin)
+                                    // console.log('test',JSON.stringify(JSON.stringify(specifications)))
+                                    
+                            }
+                            },[loadingProjectDetails])
 
-    useEffect(() => {
-        if (!loadingProjectDetails && editCirBar) {
-            console.log('test spec',JSON.stringify(specification));
-            dispatch(UpdateSpecProject(id, specification))
-           console.log('disapatched');
-            setEditCirBar(false)
-           
-        }
-    }, [specification])
+                            useEffect(() => {
+                                if (!loadingProjectDetails && editCirBar) {
+                                    console.log('test spec',JSON.stringify(specification));
+                                    dispatch(UpdateSpecProject(id,index,specification))
+                                    console.log('disapatched');
+                                    setEditCirBar(false)
+                                
+                                }
+                            }, [specification])
 
     
     let calculCircle=()=>{
+        console.log('hello im calculatur ------------------------');
         if(title=='') return;
         let sumProgV=0
         let sumEstiV=0
   
-        tasksProject.filter(t=>t.genre==title).map((item)=>{
+        specification[index].projectTasks.map((item)=>{
            
             // console.log('--------------------------test'+( moment(item.date)<Date.now()));
              if(item.state==-1){
@@ -319,21 +252,21 @@ const { loading, user ,isAdmin} = getUserReducer
 
           let newProgValue;
           let newEstimValue;
-          let length=tasksProject.filter(t=>t.genre==title).length
+          let length=specification[index].projectTasks.length
           if(title=='Design'){
             console.log('befor devi prog val '+sumProgV+ ' esti v ' +sumEstiV);
-            newProgValue=sumProgV/length
-            newEstimValue=sumEstiV/length
+            length?newProgValue=sumProgV/length:newProgValue=0
+            length?newEstimValue=sumEstiV/length:newEstimValue=0
 
             console.log('after devi prog val '+newProgValue+ ' esti v ' +newEstimValue);
             
           }else if(title=='Content'){
-            newProgValue=sumProgV/length
-            newEstimValue=sumEstiV/length
+            length?newProgValue=sumProgV/length:newProgValue=0
+            length?newEstimValue=sumEstiV/length:newEstimValue=0
            
           }else{
-            newProgValue=sumProgV/length
-            newEstimValue=sumEstiV/length
+            length?newProgValue=sumProgV/length:newProgValue=0
+            length?newEstimValue=sumEstiV/length:newEstimValue=0
             
           }
 
@@ -393,20 +326,33 @@ const { loading, user ,isAdmin} = getUserReducer
         day: "2-digit"
        }).format(new Date(addedTaskDate))
 
-       const newtasks=tasksProject.concat({id:new ObjectID(),
-        title:addedTaskTitle,state:addedTaskState,date:dateFormed,genre:title,description:addedTaskDescription})
-       setTasks(newtasks)
+
+       
+        console.log('avantHH lajout',JSON.stringify(specification));
+
+       const newtasks=specification;
+       console.log('index',index);
+       
+        newtasks[index].projectTasks=newtasks[index].projectTasks.concat({id:new ObjectID(),
+        title:addedTaskTitle,state:addedTaskState,date:dateFormed,description:addedTaskDescription})
+
+        console.log('the res j', JSON.stringify(newtasks[index].projectTasks));
+       setSpec(newtasks)
+
+       console.log('aprés lajout',JSON.stringify(specification));
        setEdit(true)
+       setShowForm(!showForm)
     //    dispatch(UpdateTasksProject(id, newtasks))
-       console.log('objects',JSON.stringify(newtasks));
+    //    console.log('objects',JSON.stringify(newtasks));
        
        
        
    }
 
    const deleteHandle=(i)=>{
-    const newtasks=tasksProject.filter(t=>t.id!==i)
-    setTasks(newtasks)
+    const newtasks=specification;
+    newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
+    setSpec(newtasks)
     setEdit(true)
     // dispatch(UpdateTasksProject(id, newtasks))
    }
@@ -416,7 +362,7 @@ const { loading, user ,isAdmin} = getUserReducer
      setEditedTaskTitle(taskObjet.title)
      setEditedTaskDescription(taskObjet.description)
      setEditedTaskState(taskObjet.state)
-     setEditedTaskDate(taskObjet.date)
+     setEditedTaskDate(moment(taskObjet.date).format("YYYY-MM-DD"))
      editbtnHandler()
    }
 
@@ -427,23 +373,34 @@ const { loading, user ,isAdmin} = getUserReducer
         month: "long",
         day: "2-digit"
        }).format(new Date(EditedTaskDate))
-   
-       setTasks(
-        tasksProject.map((task)=>{
-            if(task.id==EditedTaskId){
-               return{...task,id:EditedTaskId,title:EditedTaskTitle
-                ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
-            }
-           
-            return task;
+     
 
-        }
-      )
-    )
-    setEdit(true)
-     console.log('edited',JSON.stringify(tasksProject));
+       let editedtask={id:EditedTaskId,title:EditedTaskTitle
+        ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
+       
+      //start change
+      
+      let updatedTasks=specification[index].projectTasks.map((t,x)=>{
+          if(t.id==EditedTaskId){
+                console.log('i was there');
+                 return {...t,id:EditedTaskId,title:EditedTaskTitle
+                    ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
+                 
+               }
+              return t
+              
+            })
     
-    // dispatch(UpdateTasksProject(id, tasksProject))
+      console.log('out boucle ');
+
+      let updatedSpec=specification
+      updatedSpec[index].projectTasks=updatedTasks
+
+     console.log('console log updatedSpec',JSON.stringify(updatedTasks));
+    setSpec(updatedSpec)
+
+    setEdit(true)
+    setShowFormUpdate(false)
    }
      
     
@@ -514,8 +471,13 @@ const { loading, user ,isAdmin} = getUserReducer
                 </ul>
             </aside>
             <main class="flex-1 pb-8 glass mt-14">
+  
                 <top className="flex gap-4 w-full ">
+
+                    
                 <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20 pr-10"> 
+
+                
                  <div class="text-3xl font-semibold leading-relaxed text-slate-100">
                      {
                      title
@@ -545,15 +507,15 @@ const { loading, user ,isAdmin} = getUserReducer
                                Date
                             </th>
                             <th class="px-6 py-2 pr-4 text-gray-500">
-                               Action
+                               {Admin?'Action':'Description'}
                             </th>
                            
                         </tr>
                     </thead>
                     <tbody class="text-xl bg-white text-center" id="Form" >
-                    {tasksProject.filter(t=>t.genre==title).map((taskObj,index)=>(
+                    {specification[index].projectTasks.map((taskObj,i)=>(
                
-                        <tr  key={index} class="whitespace-nowrap cursor-pointer"
+                        <tr  key={i} class="whitespace-nowrap cursor-pointer"
 
                          
                           
@@ -639,21 +601,14 @@ const { loading, user ,isAdmin} = getUserReducer
                             
                                 <RiDeleteBin6Fill className="text-red-600" />
                             </button>
-                            </>:<>
-                               {/* <button
-                               className="top-3 ml-2"
-                               type="button"
-                            //    onClick={()=>deleteHandle(taskObj.title)}
-                          
-                                 >
-                           
-                               
-                           </button> */}
-                           
-                           <Tooltip title={<h4 style={{ fontSize: "18px" }}>{taskObj.description}</h4>} arrow>
-                              <Button><BsQuestionLg className="text-blue-900" /></Button>
-                            </Tooltip>
-                            </>
+                            </>: 
+                            <div class="bd">
+
+                            <button class="btn">
+                            <BsQuestionLg className="text-blue-900" />
+                            <span>{taskObj.description}</span>
+                            </button>
+                               </div>
                            }
 
                             
@@ -680,6 +635,11 @@ const { loading, user ,isAdmin} = getUserReducer
                          from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
                           focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 
                           shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8"><i><FiEdit2/></i></button> */}
+
+
+
+
+
 
                         {showForm?(
                                 <div className='bg-white mt-3 px-6 py-6 rounded-lg' >
@@ -775,7 +735,7 @@ const { loading, user ,isAdmin} = getUserReducer
                         
 
                     <li key={i}>
-                        <motion.div className="flex  justify-between gap-x-4  py-3 text-white  hover:text-indigo-600 group rounded-lg   pl-4 pr-4"
+                        <motion.div className="flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4"
                              whileHover={{
                                 boxShadow:"0px 0px 8px rgb(255,255,255)"
                             }}
@@ -828,6 +788,7 @@ const { loading, user ,isAdmin} = getUserReducer
                     <hr/>
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
+                           
                             <CircularProgressbarWithChildren
                                 value={specification[0].estimatedState}
                                 text={specification[0].progresState.toFixed(0)+"%"}
@@ -945,6 +906,7 @@ const { loading, user ,isAdmin} = getUserReducer
                   
                        
                 </bottom>
+
             </main>
         </div>
 
