@@ -11,7 +11,7 @@ import {
 } from 'react-icons/fa'
 const OffersCards = () => {
     return (
-        <div className="w-full py-[2rem] md:px-4 z-10" id='offres' >
+        <div className="w-full py-[2rem] md:px-4  z-10" id='offres' >
             <div
                 className="flex flex-col items-center justify-center mt-7 " 
                 data-aos="fade-up"
@@ -24,7 +24,7 @@ const OffersCards = () => {
                     Choisi l’offre qui te convient !
                 </p>
             </div>
-            <div className="max-w-[1070px]  py-[2rem] mx-auto grid md:grid-cols-2 md:gap-32 items-center">
+            <div className="max-w-[1070px]  py-[2rem] mx-auto grid md:grid-cols-2 md:gap-32 items-center justify-center">
                 <div data-aos-duration="2000" data-aos="fade-up">
                     <div className="w-full shadow-xl bg-[#ffffffff]/20 flex flex-col p-6 md:my-0 my-8 rounded-lg hover:scale-105 duration-300">
                         <img

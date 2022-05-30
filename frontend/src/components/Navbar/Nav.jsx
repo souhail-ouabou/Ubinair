@@ -156,7 +156,7 @@ const Nav = () => {
                             offset={-100}
                             duration={500}
                         >
-                            <li>About</li>
+                            {/* <li>About</li> */}
                         </LinkReactS>
                     </>
                 )}

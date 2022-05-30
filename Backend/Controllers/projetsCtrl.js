@@ -146,7 +146,7 @@ const projetsCtrl = {
         try {
             const projects = await Projets.find({}).populate(
                 'user',
-                '-_id name  avatar'
+                '-_id name  avatar role'
             )
             res.json(projects)
         } catch (err) {

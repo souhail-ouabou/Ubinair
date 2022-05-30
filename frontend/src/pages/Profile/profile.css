@@ -62,7 +62,6 @@
     opacity: 0;
 }
 
-
 label {
     display: block;
     margin-top: 5px;
@@ -89,7 +88,6 @@ input {
 .col-right {
     padding: 0 10px;
     flex: 1;
-    min-width: 760px;
 }
 .col-right h2 {
     font-size: 1.7rem;
@@ -98,17 +96,9 @@ input {
     margin: 10px 0;
 }
 .tabs_wrap {
-    padding: 20px;
+    padding: 20px 8px;
+}
 
-}
-.tabs_wrap ul {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    justify-content: center;
-}
 .tabs_wrap ul li {
     width: 135px;
     text-align: center;

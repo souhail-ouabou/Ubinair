@@ -48,18 +48,6 @@ const UserBlock = ({ user, toggletab }) => {
                                 <p className="text-lg font-medium leading-relaxed ">
                                     <strong>Phone : </strong> {user.phone}
                                 </p>
-                                <p className="text-lg font-medium leading-relaxed ">
-                                    <strong>Role : </strong>
-                                    {user.role === 1 ? (
-                                        <span className="text-green-600 text-center text-lg font-semibold leading-relaxed">
-                                            Admin
-                                        </span>
-                                    ) : (
-                                        <span className="text-red-600 text-center text-lg font-semibold leading-relaxed">
-                                            No admin
-                                        </span>
-                                    )}
-                                </p>
                             </div>
                         </div>
 
@@ -69,7 +57,11 @@ const UserBlock = ({ user, toggletab }) => {
                                     <img src={user.avatar} alt="" />
                                 </div>
                                 <h1 className="text-2xl font-semibold leading-relaxed ">
-                                    {user.client ? (
+                                    { user.role === 1 ? (
+                                        <div className="text-purple-700 text-center">
+                                            Admin
+                                        </div>
+                                    ) : user.client ? (
                                         <div className="text-green-600 text-center">
                                             Client
                                         </div>

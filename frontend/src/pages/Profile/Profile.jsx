@@ -21,6 +21,7 @@ import { checkImage } from '../../utils/ImageUploade'
 import { toast } from 'react-toastify'
 import { USER_UPDATE_PROFILE_RESET } from '../../redux/actions/constants/userConstants'
 import { MdCameraswitch } from 'react-icons/md'
+import { CgAdd } from 'react-icons/cg'
 import { dispatchGetUser } from '../../redux/actions/authAction'
 const Profile = () => {
     const dispatch = useDispatch()
@@ -147,15 +148,14 @@ const Profile = () => {
         }
     }
 
-
     useEffect(() => {
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
             dispatch(dispatchGetUser(token))
         } else {
-            if (user.client) {
-                dispatch(listMyProjects())
-            }
+            // if (user.client) {
+            dispatch(listMyProjects())
+            // }
             if (isAdmin || SuccessProjectDelete) {
                 dispatch(listAllProjects())
             }
@@ -184,7 +184,11 @@ const Profile = () => {
                 <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden  ">
                     <div className="glass text-white md:w-[500px] ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
-                            {isAdmin ? 'Admin Profile' : 'User Profile'}
+                            {isAdmin
+                                ? 'Admin Profile'
+                                : user.client
+                                ? 'Client Profile'
+                                : 'User Profile'}
                         </h2>
 
                         <div className="avatar ">
@@ -197,11 +201,7 @@ const Profile = () => {
                                 alt=""
                             />
                             (
-                            <span
-                                className={`absolute left-0 w-full h-[33%]   -bottom-[15%]  md:h-[40%]  md:-bottom-[100%]  text-center uppercase font-normal text-white  bg-gradient-to-bl from-[#562885de] to-[#936cbe] transition ease-in-out delay-150
-                                   
-                                `}
-                            >
+                            <span className="absolute left-0 w-full h-[33%]   -bottom-[15%]  md:h-[40%]  md:-bottom-[100%]  text-center uppercase font-normal text-white  bg-gradient-to-bl from-[#562885de] to-[#936cbe] transition ease-in-out delay-75">
                                 <div className="flex flex-col items-center justify-center m-1 ">
                                     <MdCameraswitch />
                                     {/* <p className='hidden md:block'>Change</p> */}
@@ -285,10 +285,10 @@ const Profile = () => {
                             Update
                         </button>
                     </div>
-                    <div className="col-right ">
+                    <div className="col-right">
                         {isAdmin ? (
-                            <div class="tabs_wrap">
-                                <ul>
+                            <div className="tabs_wrap">
+                                <ul className="flex  md:items-center md:justify-center ">
                                     <li
                                         className={
                                             toggletab === 1
@@ -297,7 +297,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(1)}
                                     >
-                                        All Projects
+                                        AllProjects
                                     </li>
                                     <li
                                         className={
@@ -320,6 +320,7 @@ const Profile = () => {
                                         Clients
                                     </li> */}
                                 </ul>
+
                             </div>
                         ) : !user.client ? (
                             <></>
@@ -361,24 +362,40 @@ const Profile = () => {
                         ) : isAdmin && AllProjects.length === 0 ? (
                             <div className="text-white">All projects Emppt</div>
                         ) : !user.client && !isAdmin ? (
-                            <div className="flex flex-col items-center justify-center mt-[280px]">
+                            <div className="flex flex-col items-center justify-center mt-8">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
-                                    Here you can see your projects <br />
-                                    Wait for our call....
+                                    Here you can see your estimates <br />
+                                    Wait our call for becomes real projects ....
                                 </div>
-
-                                <div>
-                                    {/* <Link to="/">
-                                        <button
-                                            className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                                <Link to="/">
+                                    <button
+                                        className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                                        >
-                                            Back to home et Reserver un call{' '}
-                                            <FaPhone className="ml-3" />
-                                        </button>
-                                    </Link> */}
-                                </div>
+                                    >
+                                        Back to home et Reserver un call{' '}
+                                        <FaPhone className="ml-3" />
+                                    </button>
+                                </Link>
+                                <>
+                                                                <Link to="/calculator">
+                                    <button
+                                        className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                                    >
+                                      
+                                        <CgAdd />
+                                    </button>
+                                </Link>
+                                    {myProjects.map((project) => (
+                                        <ProjetBlock
+                                            key={project._id}
+                                            project={project}
+                                            toggletab={toggletab}
+                                        />
+                                    ))}
+                                </>
                             </div>
                         ) : (user.client && isAdmin) || isAdmin ? (
                             <>
@@ -387,6 +404,7 @@ const Profile = () => {
                                         key={project._id}
                                         project={project}
                                         toggletab={toggletab}
+                                        isAdmin={isAdmin}
                                     />
                                 ))}
                             </>

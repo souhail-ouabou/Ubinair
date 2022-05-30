@@ -6,7 +6,7 @@ const isClient = require('../middleware/isClient')
 
 router.post('/addprojet', auth, /*isClient*/ projetCtrl.addProjet)
 //login as a client -> refresh_token -> getallmyprojects
-router.get('/myprojects', auth, isClient, projetCtrl.getMyprojects)
+router.get('/myprojects', auth, projetCtrl.getMyprojects)
 //login as a client -> refresh_token -> getProjectdetails
 router.get('/details/:id', auth, projetCtrl.getProjectdetails)
 router.put('/updateproject/:id', projetCtrl.updateProject)
