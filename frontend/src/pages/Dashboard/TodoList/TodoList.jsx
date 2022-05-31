@@ -46,7 +46,7 @@ const TodoList = ({ isAdmin, id : idProjet, taskss }) => {
         dispatch(UpdateTaskssClient(idProjet, updatedTodos))
     }
     return (
-        <div className="glass shadow-md w-2/6 ml-auto p-8 rounded-xl text-slate-100">
+        <div className="glass shadow-md w-2/6 p-8 mt-4 text-slate-100">
             <h1 className="text-2xl font-bold">Todo List</h1>
             <hr className="mt-2" />
             {isAdmin && <TodoForm onSubmit={addTodo} />}

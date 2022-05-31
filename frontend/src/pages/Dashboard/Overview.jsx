@@ -239,7 +239,7 @@ return (
                                     >
                                         <CircularProgressbarWithChildren
                                             value={p.estimatedState}
-                                            text={`${p.progresState}%`}
+                                            text={`${p.progresState.toFixed(0)}%`}
                                             styles={buildStyles({
                                                 pathColor: '#E1341E', //estimated #B8C2CC
                                                 trailColor: '#FFFFFF', //trans

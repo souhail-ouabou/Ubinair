@@ -4,8 +4,6 @@ import { FaThLarge } from 'react-icons/fa'
 
 import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 // Import react-circular-progressbar module and styles
@@ -16,7 +14,7 @@ import {
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
-import { getStartEndDateForProject, initTasks } from './Gantt/helper'
+import { getStartEndDateForProject } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
 import TodoList from './TodoList/TodoList'
 

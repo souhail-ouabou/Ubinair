@@ -22,7 +22,7 @@ export default function DownloadPage(props) {
     <div className="text-center">
  
     <input
-                                className="rounded-lg bg-white mt-2 p-2 w-[400px] text-gray-800 text-center  focus:border-blue-500  focus:outline-none "
+                                className="rounded-lg bg-white mt-2 p-2 w-[400px] text-gray-900 text-center  focus:border-blue-500  focus:outline-none "
                                 type="name"
                                 name="name"
                                 value={props.name}
