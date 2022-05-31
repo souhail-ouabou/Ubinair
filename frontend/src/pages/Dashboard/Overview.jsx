@@ -1,3 +1,4 @@
+//this was a dash
 import React, { useState, useEffect } from 'react'
 import Logo from '../../img/Logo.png'
 import { FaThLarge } from 'react-icons/fa'
