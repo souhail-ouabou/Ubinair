@@ -5,10 +5,27 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { Provider } from 'react-redux'
 import { combineReducers } from 'redux'
-import { authReducer, userRegisterReducer,getUserReducer,userDetailsReducer } from './reducers/userReducer'
-import { getAllUsersReducer } from './reducers/usersReducer'
-import { ProjetcCreateReducer, ListMyProjectsReducer,GetProjectDetailsReducer,projectUpdateReducer } from './reducers/projectReducer'
-import token  from './reducers/tokenReducer'
+import {
+    authReducer,
+    userRegisterReducer,
+    getUserReducer,
+    userDetailsReducer,
+} from './reducers/userReducer'
+import {
+    getAllUsersReducer,
+    updateUserStatusReducer,
+    userDeleteReducer,
+    userUpdateProfileReducer
+} from './reducers/usersReducer'
+import {
+    ProjetcCreateReducer,
+    ListMyProjectsReducer,
+    GetProjectDetailsReducer,
+    projectUpdateReducer,
+    ListAllProjectsReducer,
+    projectDeleteReducer,
+} from './reducers/projectReducer'
+import token from './reducers/tokenReducer'
 
 const reducer = combineReducers({
     auth: authReducer,
@@ -20,14 +37,19 @@ const reducer = combineReducers({
     GetProjectDetailsReducer,
     projectUpdateReducer,
     getAllUsersReducer,
-    userDetailsReducer
+    userDetailsReducer,
+    updateUserStatus: updateUserStatusReducer,
+    userDeleteReducer,
+    ListAllProjects: ListAllProjectsReducer,
+    projectDelete: projectDeleteReducer,
+     userUpdateProfileReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')
     ? JSON.parse(localStorage.getItem('userInfo'))
     : null
 const initialState = {
-    auth: { userInfo: userInfoFromStorage }
+    auth: { userInfo: userInfoFromStorage },
 }
 const middelware = [thunk]
 

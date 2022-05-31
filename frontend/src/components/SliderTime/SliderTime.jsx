@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
-import views from '../img/views.svg'
-import boards from '../img/boards.svg'
-import dashboards from '../img/dashboards.svg'
-import docs from '../img/docs.svg'
+import bgImg from '../../img/undraw_website_builder_re_ii6e (2).svg'
+import views from '../../img/views.svg'
+import boards from '../../img/boards.svg'
+import dashboards from '../../img/dashboards.svg'
+import docs from '../../img/docs.svg'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import '../timeline.css'
+import './timeline.css'
 
 const SliderTime = () => {
     AOS.init({
@@ -16,9 +16,9 @@ const SliderTime = () => {
     })
 
     return (
-        <div class="timeline">
-            <div class="timeline__component">
-                <div class="timeline__date timeline__date--right">
+        <div className="timeline m-0">
+            <div className="timeline__component">
+                <div className="timeline__date timeline__date--right">
                     <div className="md:py-9 flex-1 flex items-center">
                         <img
                             className="ml-auto mt-12 w-full lg:w-auto"
@@ -29,7 +29,7 @@ const SliderTime = () => {
                 </div>
             </div>
             <div className="timeline__middle">
-                <div class="timeline__point"></div>
+                <div className="timeline__point"></div>
             </div>
             <div
                 className="timeline__component timeline__component--bg"

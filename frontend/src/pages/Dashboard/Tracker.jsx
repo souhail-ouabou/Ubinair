@@ -12,6 +12,7 @@ import { UpdateSpecProject } from '../../redux/actions/projectActions'
 import { ObjectID } from 'bson';
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
+
 import './style.css'
 
 import {
@@ -409,73 +410,14 @@ const { loading, user ,isAdmin} = getUserReducer
        
      
     
-        <div className="w-full min-h-screen flex ">
+        <React.Fragment>
           
-            <aside className=" py-6 px-10 w-64 mr-10 mt-14 glass  ">
-                <img
-                    className="w-16 object-cover m-auto "
-                    src={Logo}
-                    alt="Logo"
-                />{' '}
-                <ul className="flex flex-col gap-y-6 pt-7">
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                            <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                            <FaThLarge />
-                            <span>Project</span>
-                        </div>
-                    </li>
-                </ul>
-            </aside>
             <main class="flex-1 pb-8 glass mt-14">
   
                 <top className="flex gap-4 w-full ">
 
                     
-                <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20 pr-10"> 
+                <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20"> 
 
                 
                  <div class="text-3xl font-semibold leading-relaxed text-slate-100">
@@ -483,7 +425,7 @@ const { loading, user ,isAdmin} = getUserReducer
                      title
                      }
                  </div>
-                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2">
+                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 pr-6">
                     {design||content||inte? today:''}
                  </div>
                 
@@ -493,7 +435,7 @@ const { loading, user ,isAdmin} = getUserReducer
                        
                         {design||content||inte?
                          <div class="">
-                            <table class="w-[800px]  shadow-box-sh "
+                            <table class="w-[780px]  shadow-box-sh "
                            >
                                 <thead class="text-xl bg-gray-200 ">
                        <tr>
@@ -722,7 +664,7 @@ const { loading, user ,isAdmin} = getUserReducer
                        
                         
         {loadingProjectDetails ? (
-                <div className="col-right text-white w-[130px]">
+                <div className="text-white m-auto">
                     Loaaading ...
                 </div>
                     ) : (
@@ -908,7 +850,7 @@ const { loading, user ,isAdmin} = getUserReducer
                 </bottom>
 
             </main>
-        </div>
+         </React.Fragment>
 
       
     )

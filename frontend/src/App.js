@@ -35,8 +35,10 @@ function App() {
     AOS.init()
     const [loading, setLoading] = useState(false)
 
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { user, isAdmin, isLogged : isLoggedgetuserReducer } = getUserReducer
     const auth = useSelector((state) => state.auth)
-    const { userInfo, isAdmin, isLogged } = auth
+    const { userInfo, isLogged } = auth
     const token = useSelector((state) => state.token)
 
     const dispatch = useDispatch()
@@ -96,7 +98,7 @@ function App() {
                     <Routes>
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/register" element={<Register />} />
+                        <Route path="/register"  element= {userInfo ? <Profile /> : <Register />} />
                         <Route
                             path="/user/activate/:activation_token"
                             element={<ActivationEmail />}
@@ -124,7 +126,7 @@ function App() {
                         />
                         <Route
                             path="/user/:id"
-                            element={userInfo ? <EditUser /> : <Login />}
+                            element={isAdmin ? <EditUser /> : <NotFound />}
                         />
                     </Routes>
                 </>

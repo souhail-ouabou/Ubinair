@@ -1,21 +1,29 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { motion } from 'framer-motion'
 import { Link, useParams } from 'react-router-dom'
 import Aos from 'aos'
 import { FaTrash } from 'react-icons/fa'
+import { DeleteUser } from '../../redux/actions/usersAction'
 
 const UserBlock = ({ user, toggletab }) => {
+    let dispatch = useDispatch()
+    let navigate = useNavigate()
+
+    const deletehandler = (id) => {
+        if (window.confirm('Are You Sure?')) {
+            dispatch(DeleteUser(id))
+        }
+    }
     return (
         <>
             <Link to={`/user/${user._id}`} className="cursor-pointer">
-
                 <div
                     aos-animate="fade-up"
                     data-aos="fade-up"
-                    data-aos-duration="3000"
+                    data-aos-duration="2000"
                     className={toggletab === 2 ? 'block' : 'hidden'}
                 >
                     <motion.div
@@ -23,7 +31,7 @@ const UserBlock = ({ user, toggletab }) => {
                         whileInView={{ opacity: 1 }}
                         viewport={{ once: true }}
                         whileHover={{
-                            scale: 1.07,
+                            scale: 1.02,
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}
@@ -38,15 +46,19 @@ const UserBlock = ({ user, toggletab }) => {
                             </h1>
                             <div className="flex flex-col">
                                 <p className="text-lg font-medium leading-relaxed ">
-                                    <strong>Phone : </strong>  {user.phone}
+                                    <strong>Phone : </strong> {user.phone}
                                 </p>
                                 <p className="text-lg font-medium leading-relaxed ">
-                                    <strong>Role : </strong>{user.role ===1 ?  <span className="text-green-600 text-center text-lg font-semibold leading-relaxed">
+                                    <strong>Role : </strong>
+                                    {user.role === 1 ? (
+                                        <span className="text-green-600 text-center text-lg font-semibold leading-relaxed">
                                             Admin
-                                        </span> :  <span className="text-red-600 text-center text-lg font-semibold leading-relaxed">
+                                        </span>
+                                    ) : (
+                                        <span className="text-red-600 text-center text-lg font-semibold leading-relaxed">
                                             No admin
-                                        </span>}
-                                  
+                                        </span>
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -68,9 +80,13 @@ const UserBlock = ({ user, toggletab }) => {
                                     )}
                                 </h1>
                             </div>
-                            <div className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-0 flex ">
+                            <Link
+                                to="/profile"
+                                className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-0 flex z-10"
+                                onClick={() => deletehandler(user._id)}
+                            >
                                 <FaTrash className="m-auto text-white justify-center items-center" />
-                            </div>
+                            </Link>
                         </div>
                     </motion.div>
                 </div>

@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: false }))
 //Routes (frontend to back)
 app.use('/user', require('./routes/userRouter'))
 app.use('/projets', require('./routes/projetRouter'))
+app.use("/api", require("./routes/upload"));
 
 app.use(errorHandler)
 app.listen(port, () => console.log(`Server started on port ${port}`))

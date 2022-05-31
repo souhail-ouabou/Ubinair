@@ -56,7 +56,7 @@ const ResetPassword = () => {
             <Helmet>
                 <title>Reset Password</title>
             </Helmet>
-            <div>
+            <div className='z-10'>
                 <div>
                     <h1 className="text-white text-center text-5xl  ">
                         Reset Your Password !
