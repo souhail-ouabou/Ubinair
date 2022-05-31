@@ -33,7 +33,7 @@ const ProjetBlock = ({ project, toggletab }) => {
                     data-aos-duration="3000"
                     className={
                         toggletab === 1
-                            ? 'block md:flex-row md:w-full flex-col w-[250px] '
+                            ? 'block md:flex-row md:w-full flex-col  '
                             : 'hidden'
                     }
                 >
@@ -46,9 +46,9 @@ const ProjetBlock = ({ project, toggletab }) => {
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}
-                        className="flex md:flex-row md:gap-8 bg-gray-100 shadow-md flex-col  p-[1.5rem] rounded-xl mb-3 "
+                        className="flex md:flex-row md:gap-8 bg-gray-100 shadow-md flex-col  p-[1.5rem] rounded-xl mb-3  items-center justify-center"
                     >
-                        <div className="flex flex-col md:ml-20 gap-2 md:gap-0 md:w-[300px] justify-center  ">
+                        <div className="flex flex-col  gap-2 md:gap-0 md:w-[300px] justify-center  ">
                             <h1 className="text-2xl font-semibold leading-relaxed ">
                                 {project.name}
                             </h1>

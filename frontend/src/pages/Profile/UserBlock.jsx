@@ -24,7 +24,7 @@ const UserBlock = ({ user, toggletab }) => {
                     aos-animate="fade-up"
                     data-aos="fade-up"
                     data-aos-duration="2000"
-                    className={toggletab === 2 ? 'block' : 'hidden'}
+                    className={toggletab === 2 ? 'block md:flex-row w-full flex-col items-center justify-center ' : 'hidden'}
                 >
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -35,9 +35,9 @@ const UserBlock = ({ user, toggletab }) => {
                             boxShadow: '0px 0px 8px rgb(255,255,255)',
                         }}
                         transition={{ duration: 0.2 }}
-                        className="flex flex-row gap-64 bg-gray-200 shadow-md  p-1 rounded-xl mb-3 justify-center"
+                        className="flex md:flex-row md:gap-64 bg-gray-200 shadow-md flex-col  md:p-1 rounded-xl mb-3 justify-center p-[1.5rem] items-center"
                     >
-                        <div className="flex flex-col ml-7 w-[300px] justify-center  ">
+                        <div className="flex flex-col md:ml-0  ml-16 w-[300px]  ">
                             <h1 className="text-2xl font-semibold leading-relaxed capitalize ">
                                 {user.name}
                             </h1>

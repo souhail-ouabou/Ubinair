@@ -4,8 +4,6 @@ import { FaThLarge } from 'react-icons/fa'
 
 import { ViewMode, Gantt } from 'gantt-task-react'
 import 'gantt-task-react/dist/index.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 // Import react-circular-progressbar module and styles
@@ -16,7 +14,7 @@ import {
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
-import { getStartEndDateForProject, initTasks } from './Gantt/helper'
+import { getStartEndDateForProject } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
 import TodoList from './TodoList/TodoList'
 import { useSelector, useDispatch } from 'react-redux'
@@ -25,30 +23,20 @@ import {
     UpdateProject,
 } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
-import {
-    PROJECT_DETAILS_RESET,
-    PROJET_UPDATE_RESET,
-} from '../../redux/actions/constants/projetConstants'
+import { PROJET_UPDATE_RESET } from '../../redux/actions/constants/projetConstants'
 
 const Dashboard = () => {
-    const notify = () =>
-        toast.success('Success Notification !', {
-            position: toast.POSITION.TOP_CENTER,
-        })
-    let navigate = useNavigate()
     /*Get project details */
     const dispatch = useDispatch()
     const { id } = useParams()
     const GetProjectDetailsReducer = useSelector(
         (state) => state.GetProjectDetailsReducer
     )
-    const auth = useSelector((state) => state.auth)
     const {
         project: projectDetails,
         loading: loadingProjectDetails,
         error,
     } = GetProjectDetailsReducer
-    const { userInfo } = auth
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
@@ -59,7 +47,6 @@ const Dashboard = () => {
     const { success: successUpdate, loading: loadingProjectUpdate } =
         projectUpdateReducer
 
-    const percentage = 66
     const [view, setView] = useState(ViewMode.Day)
     // const [tasks, setTasks] = useState(initTasks())
     const [isChecked, setIsChecked] = useState(true)
@@ -276,8 +263,8 @@ const Dashboard = () => {
                     <div className="text-white m-auto"></div>
                 ) : (
                     <main class="flex-1  pb-8  mt-14  ">
-                        <top className="flex  items-center justify-center gap-12">
-                            <div className="glass flex flex-row gap-4">
+                        <top className="flex  items-center justify-center gap-7  h-[272px]">
+                            <div className="glass flex flex-row gap-4 h-full">
                                 {projectDetails.specification?.map((p) => (
                                     <div
                                         key={p._id}
@@ -322,7 +309,7 @@ const Dashboard = () => {
                                     </div>
                                 ))}
                             </div>
-                            <div className="flex flex-col gap-4 justify-center items-center glass shadow-md  p-2 rounded-xl w-2/6 ml-auto">
+                            <div className="flex flex-col gap-4 justify-center items-center glass  p-2 w-2/6 h-full ">
                                 <div>
                                     <h1 class="text-2xl text-slate-100 font-semibold leading-relaxed ">
                                         Total
@@ -353,7 +340,7 @@ const Dashboard = () => {
                                         isChecked={isChecked}
                                     />
 
-                                    <div className=" bg-white shadow-md  p-2 rounded-xl ">
+                                    <div className="bg-white shadow-md  p-2 rounded-xl ">
                                         <Gantt
                                             // barBackgroundColor="text-red-200"
                                             todayColor="yellow"

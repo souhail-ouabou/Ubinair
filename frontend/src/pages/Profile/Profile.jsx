@@ -364,7 +364,7 @@ const Profile = () => {
                             <div className="flex flex-col items-center justify-center mt-8">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
                                     Here you can see your estimates <br />
-                                    Wait our call for becomes real projects ....
+                                    Wait our call to becomes real projects ...
                                 </div>
                                 <Link to="/">
                                     <button
