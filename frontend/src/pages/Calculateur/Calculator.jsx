@@ -8,6 +8,7 @@ import AdvanceStatePage from './AdvanceStatePage'
 import DownloadPage from './DownloadPage'
 import ubinairLogo from '../../img/ubinairLogo.png'
 import { useSelector, useDispatch } from "react-redux";
+import { motion } from 'framer-motion'
 
 import {
 
@@ -19,6 +20,7 @@ import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 const Calculator = () => {
     const initialState = {
+        name:'',
         index: 0,
         devis: 0,
         type: null,
@@ -303,14 +305,16 @@ const Calculator = () => {
     }
     return (
         <div className="w-[1000px] z-10">
-            <div>
+            <motion.div
+              animate={{ x: -242,y:506 }}
+            >
                 {' '}
                 {calculator.index == 0 ? (
                     ''
                 ) : (
                     <Goback previousTab={previousTab} />
                 )}{' '}
-            </div>
+            </motion.div>
           
                 <BeginPage
                     index={calculator.index} //0
@@ -338,6 +342,11 @@ const Calculator = () => {
                 <DownloadPage
                     index={calculator.index} //5
                     devis={calculator.devis}
+                    name={calculator.name}
+                    onChangeName={(nameProject)=>setCaluclator({
+                        ...calculator,
+                        name: nameProject,
+                    })}
                     onDownload={() => download()}
                 />
            

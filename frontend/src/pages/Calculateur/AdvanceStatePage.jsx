@@ -33,7 +33,8 @@ import Devise from './Devise'
            boxShadow:"0px 0px 8px rgb(255,255,255)"
        }}
        transition={{duration:0.2}}
-        className="border rounded-md border-gray-200 pt-6 cursor-pointer  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
+        className="glass border-0 rounded-md  pt-6 cursor-pointer 
+        bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
         onClick={()=>props.onNext(5,'juste une idée')}
         >
             <div className="">
@@ -57,13 +58,13 @@ import Devise from './Devise'
                 boxShadow:"0px 0px 8px rgb(255,255,255)"
             }}
             transition={{duration:0.2}}
-              className="border rounded-md border-gray-200 pt-6 cursor-pointer mt-5 sm:mt-0 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
+              className="border-0 glass rounded-md border-gray-200 pt-6 cursor-pointer mt-5 sm:mt-0 bg-clip-padding backdrop-filter backdrop-blur bg-opacity-60"
               onClick={()=>props.onNext(5,'Brouillon déjà prêt')}
         >
             <div className="">
                 <div className="text-center">
                     <div className="">
-                        <img  src={note} alt="e-commerce" className="object-contain mx-auto h-40 w-88"/>
+                        <img  src={note} alt="e-commerce" className="object-contain mx-auto ml-2 h-40 w-88"/>
                     </div>
                             <div className="">
                                 <h5  className="text-center  p-6"> Brouillon déjà prêt</h5>
@@ -80,7 +81,7 @@ import Devise from './Devise'
                   boxShadow:"0px 0px 8px rgb(255,255,255)"
               }}
                transition={{duration:0.2}}
-               className="border rounded-md border-gray-200 pt-6 cursor-pointer mt-5  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 md:mt-0"
+               className="border-0 rounded-md glass  cursor-pointer mt-5  bg-clip-padding backdrop-filter backdrop-blue bg-opacity-60 md:mt-0"
                onClick={()=>props.onNext(5,'Projet en cours de développement')}
         >
             <div className="">
@@ -89,7 +90,7 @@ import Devise from './Devise'
                         <img  src={tools} alt="e-commerce" className="object-contain mx-auto h-40 w-88"/>
                     </div>
                             <div className="">
-                                <h5  className="text-center  p-6">Projet en cours de développement</h5>
+                                <h5  className="text-center pt-7">Projet en cours de développement</h5>
                             </div>
                 </div>
             </div>
@@ -104,12 +105,12 @@ import Devise from './Devise'
                   boxShadow:"0px 0px 8px rgb(255,255,255)"
               }}
                 transition={{duration:0.2}}
-                className="border rounded-md border-gray-200 pt-6 cursor-pointer   mt-5   md:mt-0  bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 "
+                className="border-0 rounded-md pt-6 cursor-pointer   mt-5   md:mt-0  bg-clip-padding backdrop-filter backdrop-blur glass bg-opacity-60 "
                  onClick={()=>props.onNext(5,'Projet déjà développé')}>
             <div className="">
                 <div className="">
                     <div className="">
-                        <img  src={verified} className="object-contain mx-auto h-40 w-88"/>
+                        <img  src={verified} className="object-contain mx-auto  h-40 w-88"/>
                     </div>
                             <div className="">
                                 <h5  className="text-center p-6">Projet déjà développé</h5>

@@ -31,7 +31,7 @@ import 'react-circular-progressbar/dist/styles.css'
 
 
 
-const Tracker = () => {
+const Tracker = (props) => {
 
       const dispatch = useDispatch()
     const { id } = useParams()
@@ -411,8 +411,9 @@ const { loading, user ,isAdmin} = getUserReducer
      
     
         <React.Fragment>
+            
           
-            <main class="flex-1 pb-8 glass mt-14">
+            <main className={`flex-1 pb-8 glass mt-14 ${props.state}`} >
   
                 <top className="flex gap-4 w-full ">
 

@@ -79,8 +79,8 @@ function BeginPage(props) {
                         boxShadow: '0px 0px 8px rgb(255,255,255)',
                     }}
                     transition={{ duration: 0.2 }}
-                    className="border rounded-md  border-gray-200 pt-6 cursor-pointer  mt-5
-                            md:mt-0 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
+                    className="glass border-0 rounded-md  pt-6 cursor-pointer 
+                    bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
                     onClick={() =>
                         props.onNext(1, 'Application mobile + Site web')
                     }

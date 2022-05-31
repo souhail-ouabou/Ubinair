@@ -38,21 +38,22 @@ import Tracker from './Tracker'
 
 const Dashboard = () => {
 const [pageIndex,setPageX]=React.useState(1)
-const [OverviewPage,setOverPage]=React.useState(false)
-const [trackerPage,setTrackPage]=React.useState(true)
+const [OverviewPage,setOverPage]=React.useState('')
+const [trackerPage,setTrackPage]=React.useState('hidden')
+
 const showPage=(i)=>{
 
 
     if(i==1){
         
-        setOverPage(true)
-        setTrackPage(false)
+        setOverPage('')
+        setTrackPage('hidden')
         
         // setTasks(tasksDesign)
    }else if(i==2){
 
-    setOverPage(false)
-    setTrackPage(true)
+    setOverPage('hidden')
+    setTrackPage('')
      
         // setTasks(tasksContent)
    }
@@ -63,8 +64,8 @@ const showPage=(i)=>{
             <div className="w-full min-h-screen flex z-10 ">
            
             <SideBar showPage={(x)=>showPage(x)} />
-            {OverviewPage? <Overview />:null}
-            {trackerPage? < Tracker />:null}
+             <Overview state={OverviewPage}/>
+          < Tracker state={trackerPage} />
 
             </div>
         </>

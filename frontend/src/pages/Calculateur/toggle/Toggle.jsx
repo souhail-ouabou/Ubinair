@@ -1,7 +1,7 @@
 import './Toggle.css'
 function Toggle(props) {
     return (
-        <div className="inline-flex">
+        <div className="inline-flex ">
             <div>
                 <label htmlFor="toggle-switch">
                     <input
@@ -14,7 +14,7 @@ function Toggle(props) {
                     />
                 </label>
             </div>
-            <div>
+            <div className="mt-2">
                 <span className="ml-2">{props.title}</span>
             </div>
         </div>

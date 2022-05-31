@@ -32,7 +32,7 @@ import {
     PROJET_UPDATE_RESET,
 } from '../../redux/actions/constants/projetconstants'
 
-export default function Overview() {
+export default function Overview(props) {
     const notify = () =>
     toast.success('Success Notification !', {
         position: toast.POSITION.TOP_CENTER,
@@ -219,7 +219,9 @@ return (
             ) : projectDetails.specification?.length === 0 ? (
                 <div className="text-white m-auto"></div>
             ) : (
-                <main class="flex-1  pb-8  mt-14  ">
+
+              
+                <main  className={`flex-1  pb-8  mt-14  ${props.state}`}>
                     <top className="flex  items-center justify-center gap-12">
                         <div className="glass flex flex-row gap-4">
                             {projectDetails.specification?.map((p) => (
