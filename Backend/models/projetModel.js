@@ -21,7 +21,23 @@ const clientTaskssSchema = mongoose.Schema(
         timestamps: true,
     }
 )
+
+const projectTasksSchema = mongoose.Schema(
+    {
+        id: { type: String, required: true },
+        title: { type: String, required: true},
+        state: { type: Number, required: true},
+        // genre: { type: String, required: true},
+        date: { type: Date, required: true},
+        description: { type: String, required: true},
+    },
+    {
+        timestamps: true,
+    }
+)
+
 const specificationSchema = mongoose.Schema({
+  
     title: { type: String, required: true },
     progresState: {
         type: Number,
@@ -45,6 +61,8 @@ const specificationSchema = mongoose.Schema({
         type: Date,
         default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
+    projectTasks:[projectTasksSchema],
+    
 })
 
 const projetSchema = mongoose.Schema({
@@ -108,6 +126,7 @@ const projetSchema = mongoose.Schema({
         minimum: 0,
     },
     clientTaskss: [clientTaskssSchema],
+    // projectTasks:[projectTasksSchema],
     finishedAt: {
         type: Date,
         default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

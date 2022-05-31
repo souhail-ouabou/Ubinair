@@ -22,7 +22,7 @@ import {
     PROJECT_DELETE_REQUEST,
     PROJECT_DELETE_SUCCESS,
     PROJECT_DELETE_FAIL,
-} from '../actions/constants/projetConstants'
+} from '../actions/constants/projetconstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
         case PROJET_CREATE_REQUEST:
@@ -63,7 +63,7 @@ export const GetProjectDetailsReducer = (
     state = {
         project: {
             specification: [],
-
+        //    projectTasks:[],
             features: [],
             user: {},
         },
@@ -93,6 +93,8 @@ export const GetProjectDetailsReducer = (
             return state
     }
 }
+
+
 export const projectUpdateReducer = (state = { project: {} }, action) => {
     switch (action.type) {
         case PROJET_UPDATE_REQUEST:

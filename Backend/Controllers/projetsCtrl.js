@@ -21,7 +21,7 @@ const projetsCtrl = {
             console.log('--------------req booody-------------', req)
             const projet = new Projets({
                 user: req.user.id,
-                name: 'Sample name',
+                name: name,
                 devis: devis,
                 plan: plan,
                 features: features,
@@ -139,6 +139,30 @@ const projetsCtrl = {
             }
         } catch (err) {
             console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+
+
+
+    updateSpecProject : async (req, res) => {
+        try {
+            // console.log('--------------req booody -------------', req.body)
+
+            const newSpecification = req.body.specification
+            const index=req.body.index
+            console.log('sended spec ',JSON.stringify(req.body));
+            const projet = await Projets.findById(req.params.id)
+             console.log('prj spec---------------',JSON.stringify(projet)+'id= '+req.params.id);
+            if (projet) {
+                projet.specification[index] = newSpecification[index] || projet.specification[index]
+                console.log('it enter');
+                const updatedProject = await projet.save()
+                console.log('updatedSpecProject----------', updatedProject)
+                res.json({ msg: 'Update spec prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update spec prj error-------------', err)
             return res.status(500).json({ msg: err.message })
         }
     },

@@ -16,7 +16,9 @@ import ResetPassword from './pages/Auth/ResetPassword'
 import Dashboard from './pages/Dashboard/Dashboard'
 import Tracker from './pages/Dashboard/Tracker'
 import Calculator from './pages/Calculateur/Calculator'
+
 import { dispatchToken } from './redux/actions/tokenAction'
+
 import {
     dispatchLogin,
     dispatchGetUser,
@@ -113,7 +115,7 @@ function App() {
                             path="/profile"
                             element={userInfo ? <Profile /> : <Login />}
                         />
-                        <Route path="/tracker" element={<Tracker />} />
+                        <Route path="/tracker/:id" element={<Tracker />} />
                         <Route
                             path="/dashboard/:id"
                             element={userInfo ? <Dashboard /> : <Login />}

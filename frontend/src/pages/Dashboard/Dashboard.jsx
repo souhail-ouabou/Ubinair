@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import Logo from '../../img/Logo.png'
+
 import { FaThLarge } from 'react-icons/fa'
 
 import { ViewMode, Gantt } from 'gantt-task-react'
@@ -17,12 +17,15 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import { getStartEndDateForProject } from './Gantt/helper'
 import { ViewSwitcher } from './Gantt/view-switcher'
 import TodoList from './TodoList/TodoList'
+
+
 import { useSelector, useDispatch } from 'react-redux'
 import {
     Getprojectdetails,
     UpdateProject,
 } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
+
 import { PROJET_UPDATE_RESET } from '../../redux/actions/constants/projetConstants'
 
 const Dashboard = () => {
@@ -126,263 +129,50 @@ const Dashboard = () => {
         console.log('On expander click Id:' + task.id)
     }
 
-    const initialtaskState = {
-        start: new Date('2022-07-20T18:42:02.483+00:00'),
-        end: new Date('2022-07-30T18:42:02.483+00:00'),
-        name: '',
-        id: '',
-        progress: 0,
-        type: 'project',
-    }
 
-    const [taskss, setTaskss] = useState([initialtaskState])
-    const [clientTaskss, setclientTaskss] = useState([
-        {
-            id: '',
-            text: 'teeeeest',
-            isCompleted: false,
-        },
-    ])
+import SideBar from './side/SideBar'
+import Overview from './Overview'
+import Tracker from './Tracker'
 
-    useEffect(() => {
-        if (successUpdate) {
-            dispatch({ type: PROJET_UPDATE_RESET })
-            // dispatch({ type: PROJECT_DETAILS_RESET })
+const Dashboard = () => {
+const [pageIndex,setPageX]=React.useState(1)
+const [OverviewPage,setOverPage]=React.useState('')
+const [trackerPage,setTrackPage]=React.useState('hidden')
 
-            console.log('successUpdate')
-        } else {
-            if (user.client || isAdmin) {
-                dispatch(Getprojectdetails(id))
-            }
-        }
-    }, [dispatch, id, user.client])
-    useEffect(() => {
-        if (projectDetails.devis) {
-            const testarr = projectDetails.specification.map((p) => ({
-                start: new Date(p.startDate),
-                end: new Date(p.endDate),
-                name: p.title,
-                id: p._id,
-                progress: p.progresState,
-                estimatedState: p.estimatedState,
-                type: 'task',
-                project: projectDetails._id,
-            }))
-            console.log('testarr', testarr)
-            setTaskss([
-                {
-                    start: new Date(projectDetails.createdAt),
-                    end: new Date(projectDetails.finishedAt),
-                    name: projectDetails.name,
-                    progress: projectDetails.totalProgresState,
-                    id: projectDetails._id,
-                    type: 'project',
-                },
-                ...testarr,
-            ])
-            setclientTaskss(projectDetails.clientTaskss)
-        }
-    }, [
-        projectDetails.name,
-        clientTaskss,
-        projectDetails.devis,
-        projectDetails.specification,
-        projectDetails.createdAt,
-        projectDetails.finishedAt,
-        projectDetails.totalProgresState,
-        projectDetails._id,
-        projectDetails.clientTaskss,
-    ])
+const showPage=(i)=>{
+
+
+    if(i==1){
+        
+        setOverPage('')
+        setTrackPage('hidden')
+        
+        // setTasks(tasksDesign)
+   }else if(i==2){
+
+    setOverPage('hidden')
+    setTrackPage('')
+     
+        // setTasks(tasksContent)
+   }
+}
 
     return (
         <>
             <div className="w-full min-h-screen flex z-10 ">
-                <aside className="py-6 px-10 w-64 mr-10 mt-14 glass  ">
-                    <img
-                        className="w-16 object-cover m-auto "
-                        src={Logo}
-                        alt="Logo"
-                    />{' '}
-                    <ul className="flex flex-col gap-y-6 pt-7">
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
 
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
-                                <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" />
-                                <FaThLarge />
-                                <span>Project</span>
-                            </div>
-                        </li>
-                    </ul>
-                </aside>
+           
+            <SideBar showPage={(x)=>showPage(x)} />
+             <Overview state={OverviewPage}/>
+          < Tracker state={trackerPage} />
 
-                {loadingProjectDetails || loading ? (
-                    <div className=" text-white m-auto">Loaaading ...</div>
-                ) : projectDetails.specification?.length === 0 ? (
-                    <div className="text-white m-auto"></div>
-                ) : (
-                    <main class="flex-1  pb-8  mt-14  ">
-                        <top className="flex  items-center justify-center gap-7  h-[272px]">
-                            <div className="glass flex flex-row gap-4 h-full">
-                                {projectDetails.specification?.map((p) => (
-                                    <div
-                                        key={p._id}
-                                        className="flex flex-col gap-4 justify-center items-center "
-                                    >
-                                        <>
-                                            <h1 class="text-2xl font-semibold leading-relaxed text-slate-100">
-                                                {p.title}
-                                            </h1>
-                                        </>
-                                        <div
-                                            style={{ width: 200, height: 200 }}
-                                        >
-                                            <CircularProgressbarWithChildren
-                                                value={p.estimatedState}
-                                                text={`${p.progresState}%`}
-                                                styles={buildStyles({
-                                                    pathColor: '#E1341E', //estimated #B8C2CC
-                                                    trailColor: '#FFFFFF', //trans
-                                                    strokeLinecap: 'rounded',
 
-                                                    textSize: '16px',
-                                                    textColor: '#eee',
-
-                                                    // How long animation takes to go from one percentage to another, in seconds
-                                                    pathTransitionDuration: 0.5,
-                                                })}
-                                            >
-                                                {/* Foreground path */}
-                                                <CircularProgressbar
-                                                    value={p.progresState}
-                                                    styles={buildStyles({
-                                                        trailColor:
-                                                            'transparent',
-                                                        strokeLinecap:
-                                                            'rounded',
-                                                        pathColor: '#6363C7',
-                                                    })}
-                                                />
-                                            </CircularProgressbarWithChildren>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="flex flex-col gap-4 justify-center items-center glass  p-2 w-2/6 h-full ">
-                                <div>
-                                    <h1 class="text-2xl text-slate-100 font-semibold leading-relaxed ">
-                                        Total
-                                    </h1>
-                                </div>
-
-                                <ProgressBar
-                                    done={projectDetails.totalProgresState}
-                                />
-                            </div>
-                        </top>
-
-                        {loadingProjectDetails ? (
-                            <div className="col-right text-white">
-                                {' '}
-                                Loaaading ...
-                            </div>
-                        ) : error ? (
-                            <div>errorMyProjects</div>
-                        ) : (
-                            <bottom className="flex items-start justify-start gap-12">
-                                <div style={{ width: 720, height: 500 }}>
-                                    <ViewSwitcher
-                                        onViewModeChange={(viewMode) =>
-                                            setView(viewMode)
-                                        }
-                                        onViewListChange={setIsChecked}
-                                        isChecked={isChecked}
-                                    />
-
-                                    <div className="bg-white shadow-md  p-2 rounded-xl ">
-                                        <Gantt
-                                            // barBackgroundColor="text-red-200"
-                                            todayColor="yellow"
-                                            barProgressColor="#6363C7"
-                                            barCornerRadius="12"
-                                            tasks={taskss}
-                                            viewMode={view}
-                                            {...(isAdmin && {
-                                                onDateChange: handleTaskChange,
-                                            })}
-                                            // onDelete={handleTaskDelete}
-                                            onProgressChange={
-                                                handleProgressChange
-                                            }
-                                            onDoubleClick={handleDblClick}
-                                            onSelect={handleSelect}
-                                            onExpanderClick={
-                                                handleExpanderClick
-                                            }
-                                            listCellWidth={
-                                                isChecked ? '155px' : ''
-                                            }
-                                            columnWidth={columnWidth}
-                                            TooltipContent="false"
-                                            TaskListTable="false"
-                                            TaskListHeader="false"
-                                        />
-                                    </div>
-                                </div>
-
-                                <TodoList
-                                    isAdmin={isAdmin}
-                                    id={id}
-                                    taskss={projectDetails.clientTaskss}
-                                />
-                            </bottom>
-                        )}
-                    </main>
-                )}
             </div>
         </>
     )
 }
 
 export default Dashboard
+
+
+
