@@ -320,7 +320,6 @@ const Profile = () => {
                                         Clients
                                     </li> */}
                                 </ul>
-
                             </div>
                         ) : !user.client ? (
                             <></>
@@ -378,16 +377,15 @@ const Profile = () => {
                                     </button>
                                 </Link>
                                 <>
-                                                                <Link to="/calculator">
-                                    <button
-                                        className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                                    <Link to="/calculator">
+                                        <button
+                                            className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                                    >
-                                      
-                                        <CgAdd />
-                                    </button>
-                                </Link>
+                                        >
+                                            <CgAdd />
+                                        </button>
+                                    </Link>
                                     {myProjects.map((project) => (
                                         <ProjetBlock
                                             key={project._id}

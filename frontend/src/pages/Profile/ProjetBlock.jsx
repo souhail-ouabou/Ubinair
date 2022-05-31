@@ -8,8 +8,11 @@ import Aos from 'aos'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { DeleteProject } from '../../redux/actions/projectActions'
 
-const ProjetBlock = ({ project, toggletab,isAdmin }) => {
+const ProjetBlock = ({ project, toggletab }) => {
     let dispatch = useDispatch()
+
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
 
     const deletehandler = (id) => {
         if (window.confirm('Are You Sure?')) {
@@ -18,7 +21,10 @@ const ProjetBlock = ({ project, toggletab,isAdmin }) => {
     }
     return (
         <>
-            <Link to={`/dashboard/${project._id}`} className="cursor-pointer">
+            <Link
+                to={user.client ? `/dashboard/${project._id}` : `#`}
+                className="cursor-pointer"
+            >
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}
 
                 <div
@@ -57,7 +63,6 @@ const ProjetBlock = ({ project, toggletab,isAdmin }) => {
                                     <strong>Advance State :</strong>{' '}
                                     {project.stateOfAdvance}
                                 </p>
-              
                             </div>
                         </div>
                         <div>
@@ -67,8 +72,11 @@ const ProjetBlock = ({ project, toggletab,isAdmin }) => {
                             <ProgressBar done={project.totalProgresState} />
                             <Link
                                 to="/profile"
-
-                                className={`${isAdmin ? 'bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-0 flex z-10'   : 'hidden'}`}
+                                className={`${
+                                    isAdmin
+                                        ? 'bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute top-0 right-0 flex z-10'
+                                        : 'hidden'
+                                }`}
                                 onClick={() => deletehandler(project._id)}
                             >
                                 <FaTrash className="m-auto text-white justify-center items-center" />
