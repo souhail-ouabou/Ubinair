@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react'
-import Logo from '../../img/Logo.png'
-import { FaThLarge } from 'react-icons/fa'
+
 import { FaRegEdit } from 'react-icons/fa'
 import { BsQuestionLg } from 'react-icons/bs'
 import { ViewMode, Gantt } from 'gantt-task-react'
@@ -60,18 +59,13 @@ const { loading, user ,isAdmin} = getUserReducer
     const [addedTaskDescription,setAddedTaskDescription]=useState('')
     const [addedTaskState,setAddedTaskState]=useState('')
     const [addedTaskDate,setAddedTaskDate]=useState('')
-   
     const [EditedTaskId,setEditedTaskId]=useState('')
     const [EditedTaskTitle,setEditedTaskTitle]=useState('')
     const [EditedTaskDescription,setEditedTaskDescription]=useState('')
     const [EditedTaskState,setEditedTaskState]=useState('')
     const [EditedTaskDate,setEditedTaskDate]=useState('')
-   
-
-    const [tasksProject,setTasks]=useState([])
-    
-   const [Admin,setIsadmin]=useState(false)
-   const [specification, setSpec] = useState([])
+    const [Admin,setIsadmin]=useState(false)
+    const [specification, setSpec] = useState([])
     
   
 
@@ -108,73 +102,50 @@ const { loading, user ,isAdmin} = getUserReducer
              }
              
             });
-            // console.log('newarr',JSON.stringify(newArr))
+         
             let newArr=specification;
             newArr[index].projectTasks=newtask
             console.log('console new task',JSON.stringify(newtask));
             setSpec(newArr);
            
                  setEdit(true)
-          
-
-            // console.log(JSON.stringify(tasksProject));
+      
            
           };
 
-     const percentage=60;
+    const percentage=60;
     const [title,setTitle]=React.useState('')
     const [showForm, setShowForm] = useState(false);
     const [edit, setEdit] = useState(false);
     const [editCirBar, setEditCirBar] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
-     const today=
+    const today=
       new Intl.DateTimeFormat("en-GB", {
         year: "numeric",
         month: "long",
         day: "2-digit"
     }).format(new Date())
+
     const [view, setView] = React.useState(ViewMode.Day)
-    const [design, setDesign] = React.useState(false)
-    const [content, setTContent] = React.useState(false)
-    const [inte, setInte] = React.useState(false)
-    const [designValue, setDesignValue] = React.useState(0)
-    const [ContentValue, setContentValue] = React.useState(0)
-    const [inteValue, setInteValue] = React.useState(0)
-    const [index,setIndex]=React.useState(0)
-    const [updatedTasks,setupdatedTask]=React.useState([])
-    const[estimatedValue,setEstimated]=React.useState(0)
+    const [index,setIndex]=React.useState()
+
     
 
    const handleClickShow=(index)=>{
-        setTContent(false)
-        setInte(false)
-        setDesign(false)
+    console.log('index --------------'+index);
+      
+        if (specification.length !== 0) {
+            specification.map((sp,i) => {
+                if (index === i) {
+                   
+                    setTitle(sp.title)
+                }
+            })
+        }
         setShowForm(false)
         setShowFormUpdate(false)
         setIndex(index)
-    
-        if(index==1){
-            
-            setInte(true)
-            setTitle('Integration')
-
-          
-            
-            // setTasks(tasksDesign)
-       }else if(index==2){
-            setTContent(true)
-            setTitle('Content')
-            // setTasks(tasksContent)
-       }else{
-            setDesign(true)
-           
-            setTitle('Design')
-            // setTasks(tasksInte)
-       }
-
-      
-
-       calculCircle();
+        calculCircle();
         console.log('here is it ',title);
        
       
@@ -186,7 +157,6 @@ const { loading, user ,isAdmin} = getUserReducer
         
                     if(!loadingProjectDetails && edit){
                         console.log('test',JSON.stringify('comming from state ',JSON.stringify(specification)));
-                        // dispatch(UpdateTasksProject(id, tasksProject))
                         dispatch(UpdateSpecProject(id,index, specification))
                         calculCircle()
                         setEdit(false)
@@ -198,12 +168,9 @@ const { loading, user ,isAdmin} = getUserReducer
 
                             useEffect(()=>{
                                 if (!loadingProjectDetails){
-                                
-                                    // console.log('test',JSON.stringify(JSON.stringify(projectDetails)));
-                                    // setTasks(projectDetails.projectTasks)
+                            
                                     setSpec(projectDetails.specification)
                                     setIsadmin(isAdmin)
-                                    // console.log('test',JSON.stringify(JSON.stringify(specifications)))
                                     
                             }
                             },[loadingProjectDetails])
@@ -220,32 +187,30 @@ const { loading, user ,isAdmin} = getUserReducer
 
     
     let calculCircle=()=>{
-        console.log('hello im calculatur ------------------------');
+     
         if(title=='') return;
         let sumProgV=0
         let sumEstiV=0
   
         specification[index].projectTasks.map((item)=>{
-           
-            // console.log('--------------------------test'+( moment(item.date)<Date.now()));
+          
              if(item.state==-1){
                 
               sumProgV+=0;
               
-              console.log('-1   prog'+sumProgV+' sus value'+sumEstiV);
               if(moment(item.date)<Date.now()){ sumEstiV+=100}
+
              }else if(item.state==0){
+
                 sumProgV+=50
-               
-                console.log('0   prog'+sumProgV+' sus value'+sumEstiV);
-                  if(moment(item.date)<Date.now()) {sumEstiV+=100;console.log('sus after con'+sumEstiV)}
+              
+                if(moment(item.date)<Date.now()) {sumEstiV+=100}
+
              }else if(item.state==1){
               
                 sumProgV+=100
-               
-                console.log('1   prog'+sumProgV+' sus value'+sumEstiV);
                 
-                 if(moment(item.date)<Date.now()){ sumEstiV+=100;console.log('sus after con'+sumEstiV)}
+             if(moment(item.date)<Date.now()){sumEstiV+=100}
   
              }
           }
@@ -254,22 +219,10 @@ const { loading, user ,isAdmin} = getUserReducer
           let newProgValue;
           let newEstimValue;
           let length=specification[index].projectTasks.length
-          if(title=='Design'){
-            console.log('befor devi prog val '+sumProgV+ ' esti v ' +sumEstiV);
+      
             length?newProgValue=sumProgV/length:newProgValue=0
             length?newEstimValue=sumEstiV/length:newEstimValue=0
 
-            console.log('after devi prog val '+newProgValue+ ' esti v ' +newEstimValue);
-            
-          }else if(title=='Content'){
-            length?newProgValue=sumProgV/length:newProgValue=0
-            length?newEstimValue=sumEstiV/length:newEstimValue=0
-           
-          }else{
-            length?newProgValue=sumProgV/length:newProgValue=0
-            length?newEstimValue=sumEstiV/length:newEstimValue=0
-            
-          }
 
           setSpec(
             specification.map((s)=>{
@@ -283,20 +236,9 @@ const { loading, user ,isAdmin} = getUserReducer
           )
         )
         setEditCirBar(true)
-        //   setCirValue(sum/tasks.filter(t=>t.type==title).length)
-        
     }
 
-    const handleClickContent=()=>{
-        setTContent(true)
-        setInte(false)
-        setDesign(false)
-    }
-    const handleClickInte=()=>{
-        setTContent(false)
-        setInte(true)
-        setDesign(false)
-    }
+
 
     let columnWidth = 60
     if (view === ViewMode.Month) {
@@ -327,35 +269,25 @@ const { loading, user ,isAdmin} = getUserReducer
         day: "2-digit"
        }).format(new Date(addedTaskDate))
 
-
-       
-        console.log('avantHH lajout',JSON.stringify(specification));
-
        const newtasks=specification;
-       console.log('index',index);
+   
        
         newtasks[index].projectTasks=newtasks[index].projectTasks.concat({id:new ObjectID(),
         title:addedTaskTitle,state:addedTaskState,date:dateFormed,description:addedTaskDescription})
 
-        console.log('the res j', JSON.stringify(newtasks[index].projectTasks));
        setSpec(newtasks)
-
-       console.log('aprés lajout',JSON.stringify(specification));
        setEdit(true)
        setShowForm(!showForm)
-    //    dispatch(UpdateTasksProject(id, newtasks))
-    //    console.log('objects',JSON.stringify(newtasks));
-       
-       
-       
+
    }
+
+
 
    const deleteHandle=(i)=>{
     const newtasks=specification;
     newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
     setSpec(newtasks)
     setEdit(true)
-    // dispatch(UpdateTasksProject(id, newtasks))
    }
 
    const editeHandle=(taskObjet)=>{
@@ -391,50 +323,50 @@ const { loading, user ,isAdmin} = getUserReducer
               return t
               
             })
-    
-      console.log('out boucle ');
+   
 
-      let updatedSpec=specification
-      updatedSpec[index].projectTasks=updatedTasks
+        let updatedSpec=specification
+        updatedSpec[index].projectTasks=updatedTasks
 
-     console.log('console log updatedSpec',JSON.stringify(updatedTasks));
-    setSpec(updatedSpec)
+        setSpec(updatedSpec)
 
-    setEdit(true)
-    setShowFormUpdate(false)
+        setEdit(true)
+        setShowFormUpdate(false)
    }
      
     
     return (
-
-       
-     
     
         <React.Fragment>
-            
           
             <main className={`flex-1 pb-8 glass mt-14 ${props.state}`} >
   
                 <top className="flex gap-4 w-full ">
 
-                    
+              
                 <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20"> 
+               
+                {isNaN(index) &&
+               
+               <div class="text-2xl font-semibold text-center leading-relaxed text-slate-100 pt-20 pr-10">
+                    Welcome to the task tracker , here you can see the progress of your project's tasks
+               </div>
 
-                
-                 <div class="text-3xl font-semibold leading-relaxed text-slate-100">
+                }    
+
+
+                 <div class="text-3xl font-semibold leading-relaxed  text-slate-100">
                      {
                      title
                      }
                  </div>
                  <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 pr-6">
-                    {design||content||inte? today:''}
+                    {!isNaN(index) && today}
                  </div>
                 
                  <div class="flex justify-start mb-36">
                 
-                 
-                       
-                        {design||content||inte?
+                        {!isNaN(index) &&
                          <div class="">
                             <table class="w-[780px]  shadow-box-sh "
                            >
@@ -456,12 +388,10 @@ const { loading, user ,isAdmin} = getUserReducer
                         </tr>
                     </thead>
                     <tbody class="text-xl bg-white text-center" id="Form" >
-                    {specification[index].projectTasks.map((taskObj,i)=>(
+                    {specification[index]?.projectTasks.map((taskObj,i)=>(
                
                         <tr  key={i} class="whitespace-nowrap cursor-pointer"
 
-                         
-                          
                           >
 
                             <td class="px-6 py-4 text-gray-500 text-left"
@@ -506,19 +436,13 @@ const { loading, user ,isAdmin} = getUserReducer
                            </td>
                      
                             <td class="px-6 py-4 text-gray-900 text-center">
-                            {
-                            //  taskObj.date
-
-                            moment(taskObj.date).format("DD MMM YYYY")
-                            
-                            // console.log('date',new Date().toLocaleDateString('en-GB', {
-                            //         day: 'numeric',
-                            //         month: 'short',
-                            //         year: 'numeric',
-                            //     }))
-                            }
                         
-                                {/* <a href="#" class="px-4 py-1 text-sm text-white bg-blue-400 rounded">Edit</a> */}
+
+                            {
+                            moment(taskObj.date).format("DD MMM YYYY")
+                            }
+                            
+                         
                             </td>
 
                             <td class="px-6 py-4 text-gray-900 text-center">
@@ -553,8 +477,6 @@ const { loading, user ,isAdmin} = getUserReducer
                             </button>
                                </div>
                            }
-
-                            
                               
                             </td>
                      
@@ -569,21 +491,12 @@ const { loading, user ,isAdmin} = getUserReducer
                         rounded-full text-2xl mt-2  px-5 py-2.5 text-center bg-gradient-to-r
                          from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
                           focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 
-                          shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">+</button>
+                          shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">
+                               {showForm ? 'x' : '+'}</button>
                           </Link>
                           :null}
                              
-                        {/* <button type="submit" onClick={editbtnHandler} class="text-white
-                        rounded-full text-sm mt-2 ml-2  px-5 py-5 text-center bg-gradient-to-r
-                         from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
-                          focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 
-                          shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8"><i><FiEdit2/></i></button> */}
-
-
-
-
-
-
+                   
                         {showForm?(
                                 <div className='bg-white mt-3 px-6 py-6 rounded-lg' >
                                 <form onSubmit={handleSubmit}>
@@ -655,14 +568,11 @@ const { loading, user ,isAdmin} = getUserReducer
                            ):null}
                                    
                         </div>
-                        :''}
-                              
+                        }
                     
                         </div>
-
-                      
-                     </div>
                        
+                     </div>
                         
         {loadingProjectDetails ? (
                 <div className="text-white m-auto">
@@ -703,11 +613,9 @@ const { loading, user ,isAdmin} = getUserReducer
 
                                     textSize: '16px',
 
-                                    // How long animation takes to go from one percentage to another, in seconds
                                     pathTransitionDuration: 0.5,
                                 })}
                             >
-                                {/* Foreground path */}
                                 <CircularProgressbar
                                     value={p.progresState}
                                     styles={buildStyles({
@@ -726,89 +634,15 @@ const { loading, user ,isAdmin} = getUserReducer
                     </li>
                     ))}
                    
-                    
-                    {design?<>
+
+                 {!isNaN(index) && <>
                     <hr/>
                     <li class="m-auto">
                     <div style={{ width: 150, height: 150 }}>
-                           
+                        
                             <CircularProgressbarWithChildren
-                                value={specification[0].estimatedState}
-                                text={specification[0].progresState.toFixed(0)+"%"}
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-                                    strokeLinecap: 'butt',
-
-                                    textSize: '16px',
-
-                                    // How long animation takes to go from one percentage to another, in seconds
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                {/* Foreground path */}
-                                <CircularProgressbar
-                                    value={specification[0].progresState}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'butt',
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                            </CircularProgressbarWithChildren>
-                        </div>
-                    </li>
-                    </>:<></>
-                    }
-
-                 {content?<>
-                    <hr/>
-                    <li class="m-auto">
-                    <div style={{ width: 150, height: 150 }}>
-                            <CircularProgressbarWithChildren
-                                value={specification[2].estimatedState}
-                                text={specification[2].progresState.toFixed(0)+"%"}
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-                                    strokeLinecap: 'butt',
-
-                                    textSize: '16px',
-
-                                    // How long animation takes to go from one percentage to another, in seconds
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                {/* Foreground path */}
-                                <CircularProgressbar
-                                    value={specification[2].progresState}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'butt',
-
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                            </CircularProgressbarWithChildren>
-                        </div>
-                   
-                    </li>
-                    </>:<></>
-                    }
-
-                 {inte?<>
-                    <hr/>
-                    <li class="m-auto">
-                    <div style={{ width: 150, height: 150 }}>
-                            <CircularProgressbarWithChildren
-                                value={specification[1].estimatedState}
-                                text={specification[1].progresState.toFixed(0)+"%"}
+                                value={specification[index].estimatedState}
+                                text={specification[index].progresState.toFixed(0)+"%"}
                                 styles={buildStyles({
                                     pathColor: '#f00',
                                     trailColor: '#eee',
@@ -821,7 +655,7 @@ const { loading, user ,isAdmin} = getUserReducer
                             >
                                 {/* Foreground path */}
                                 <CircularProgressbar
-                                    value={specification[1].progresState}
+                                    value={specification[index].progresState}
                                     styles={buildStyles({
                                         trailColor: 'transparent',
                                         strokeLinecap: 'round',
@@ -834,7 +668,7 @@ const { loading, user ,isAdmin} = getUserReducer
                             </CircularProgressbarWithChildren>
                         </div>
                     </li>
-                    </>:<></>
+                    </>
                     }
                    </ul>
 
@@ -844,16 +678,12 @@ const { loading, user ,isAdmin} = getUserReducer
                 
                 <bottom className="flex items-center justify-center gap-12">
 
-           
-                            
-                  
-                       
+        
                 </bottom>
 
             </main>
          </React.Fragment>
 
-      
     )
     
 }

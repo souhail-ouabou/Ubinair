@@ -16,7 +16,7 @@ import Devise from './Devise'
     
     <Devise result={props.devis} />   
 
-    <div  className="text-4xl sm:text-5xl pt-5 md:text-6xl text-center pb-6 ">
+    <div  className="text-[2.8em] text-center pb-6 text-[#EEEEEF] font-semibold">
         <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>À quel stade êtes-vous ?​</motion.h1>
     </div>
 
@@ -64,7 +64,7 @@ import Devise from './Devise'
             <div className="">
                 <div className="text-center">
                     <div className="">
-                        <img  src={note} alt="e-commerce" className="object-contain mx-auto ml-2 h-40 w-88"/>
+                        <img  src={note} alt="e-commerce" className="object-contain mx-auto md:ml-2 h-40 w-88"/>
                     </div>
                             <div className="">
                                 <h5  className="text-center  p-6"> Brouillon déjà prêt</h5>

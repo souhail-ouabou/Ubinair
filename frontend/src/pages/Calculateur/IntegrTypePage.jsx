@@ -12,14 +12,14 @@ export default function IntegrTypePage(props) {
     
     <Devise result={props.devis} />   
 
-    <div  className="text-4xl sm:text-5xl pt-5 md:text-6xl text-center pb-6 ">
+    <div  className="text-[2.8em] pb-6 text-center m-auto text-[#EEEEEF] font-semibold">
         <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>…et concernant le design  ?</motion.h1>
     </div>
 
     </div>
 
     
-    <div className="grid  gap-x-6 pt-2 grid-cols-1 sm:grid-cols-2 ">
+    <div className="grid  gap-x-6  gap-y-6 pt-2 grid-cols-1 sm:grid-cols-2 ">
         
         <motion.div  
        initial={{ opacity: 0 }}

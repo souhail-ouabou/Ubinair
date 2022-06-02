@@ -150,12 +150,11 @@ const projetsCtrl = {
             // console.log('--------------req booody -------------', req.body)
 
             const newSpecification = req.body.specification
-            const index=req.body.index
             console.log('sended spec ',JSON.stringify(req.body));
             const projet = await Projets.findById(req.params.id)
              console.log('prj spec---------------',JSON.stringify(projet)+'id= '+req.params.id);
             if (projet) {
-                projet.specification[index] = newSpecification[index] || projet.specification[index]
+                projet.specification = newSpecification || projet.specification
                 console.log('it enter');
                 const updatedProject = await projet.save()
                 console.log('updatedSpecProject----------', updatedProject)

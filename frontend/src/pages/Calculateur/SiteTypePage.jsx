@@ -9,7 +9,7 @@ function SiteTypePage(props) {
         <div className={props.index === 1 ? 'text-white' : 'hidden'}>
 
 
-            <div className="text-4xl sm:text-5xl pt-16 md:text-6xl text-center pb-6 ">
+            <div className="text-[2.5em] pb-4 mt-10 text-center m-auto text-[#EEEEEF] font-semibold md:text-[2.8em]">
                 <motion.h1
                     initial={{ y: 350 }}
                     animate={{ y: 0 }}
@@ -18,7 +18,7 @@ function SiteTypePage(props) {
                     Vous souhaitez un :
                 </motion.h1>
             </div>
-            <div className="grid  gap-x-6  grid-cols-1 sm:grid-cols-2 ">
+            <div className="grid  gap-x-6 gap-y-6 grid-cols-1 sm:grid-cols-2 ">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}

@@ -9,16 +9,16 @@ function BeginPage(props) {
     return (
         <div className={props.index === 0 ? 'text-white' : 'hidden'}>
             <div
-                className="flex flex-col items-center justify-center mb-12 "
+                className="flex flex-col mt-24 mb-6  items-center justify-center md:mb-12"
                 data-aos="fade-up"
                 data-aos-duration="4000"
             >
-                <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold   ">
+                <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold">
                     Votre projet consiste en un :
                 </p>
             </div>
 
-            <div className="grid gap-x-6  grid-cols-1 sm:grid-cols-2  md:grid-cols-3">
+            <div className="grid gap-x-6 gap-y-6 grid-cols-1 sm:grid-cols-2  md:grid-cols-3">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
