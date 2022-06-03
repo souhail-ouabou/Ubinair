@@ -1,14 +1,14 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { FaRegEdit } from 'react-icons/fa'
 import { BsQuestionLg } from 'react-icons/bs'
 import { ViewMode, Gantt } from 'gantt-task-react'
-import {motion}  from 'framer-motion'
+import { motion } from 'framer-motion'
 import 'gantt-task-react/dist/index.css'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
-import {HashLink as Link} from 'react-router-hash-link'
+import { HashLink as Link } from 'react-router-hash-link'
 import { UpdateSpecProject } from '../../redux/actions/projectActions'
-import { ObjectID } from 'bson';
+import { ObjectID } from 'bson'
 import { useSelector, useDispatch } from 'react-redux'
 import moment from 'moment'
 
@@ -27,14 +27,10 @@ import {
 } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
-
-
-
-const Tracker = (props) => {
-
-      const dispatch = useDispatch()
+const Tracker = ({ indexPage }) => {
+    const dispatch = useDispatch()
     const { id } = useParams()
-    
+
     const GetProjectDetailsReducer = useSelector(
         (state) => state.GetProjectDetailsReducer
     )
@@ -45,7 +41,7 @@ const Tracker = (props) => {
     } = GetProjectDetailsReducer
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-const { loading, user ,isAdmin} = getUserReducer
+    const { loading, user, isAdmin } = getUserReducer
 
     useEffect(() => {
         if (user.client) {
@@ -53,91 +49,72 @@ const { loading, user ,isAdmin} = getUserReducer
         }
     }, [user.client])
 
-
-  
-    const [addedTaskTitle,setAddedTaskTitle]=useState('')
-    const [addedTaskDescription,setAddedTaskDescription]=useState('')
-    const [addedTaskState,setAddedTaskState]=useState('')
-    const [addedTaskDate,setAddedTaskDate]=useState('')
-    const [EditedTaskId,setEditedTaskId]=useState('')
-    const [EditedTaskTitle,setEditedTaskTitle]=useState('')
-    const [EditedTaskDescription,setEditedTaskDescription]=useState('')
-    const [EditedTaskState,setEditedTaskState]=useState('')
-    const [EditedTaskDate,setEditedTaskDate]=useState('')
-    const [Admin,setIsadmin]=useState(false)
+    const [addedTaskTitle, setAddedTaskTitle] = useState('')
+    const [addedTaskDescription, setAddedTaskDescription] = useState('')
+    const [addedTaskState, setAddedTaskState] = useState('')
+    const [addedTaskDate, setAddedTaskDate] = useState('')
+    const [EditedTaskId, setEditedTaskId] = useState('')
+    const [EditedTaskTitle, setEditedTaskTitle] = useState('')
+    const [EditedTaskDescription, setEditedTaskDescription] = useState('')
+    const [EditedTaskState, setEditedTaskState] = useState('')
+    const [EditedTaskDate, setEditedTaskDate] = useState('')
+    const [Admin, setIsadmin] = useState(false)
     const [specification, setSpec] = useState([])
-    
-  
 
-   
+    let changeState = (id) => {
+        if (!Admin) return
 
-  
+        console.log(JSON.stringify(specification[index].projectTasks))
 
+        let newState
+        let newtask = specification[index].projectTasks.map((item) => {
+            if (item.id == id) {
+                if (item.state == -1) {
+                    console.log('0')
+                    newState = 0
+                } else if (item.state == 0) {
+                    newState = 1
+                    console.log('1')
+                } else if (item.state == 1) {
+                    newState = -1
+                    console.log('-1')
+                }
 
-    let changeState=(id) => {
-        
-       if(!Admin)return;
-      
-         console.log(JSON.stringify(specification[index].projectTasks));
-           
-            let newState
-            let newtask =specification[index].projectTasks.map((item) => {
-              
-             if(item.id==id){
-                 if(item.state==-1){
-                     console.log('0');
-                    newState=0
-                 }else if(item.state==0){
-                    newState=1
-                    console.log('1');
-                 }else if(item.state==1){
-                    newState=-1;
-                    console.log('-1');
-                 }
-              
-                return { ...item,state:newState };
-            
-             }else{
-                 return item;
-             }
-             
-            });
-         
-            let newArr=specification;
-            newArr[index].projectTasks=newtask
-            console.log('console new task',JSON.stringify(newtask));
-            setSpec(newArr);
-           
-                 setEdit(true)
-      
-           
-          };
+                return { ...item, state: newState }
+            } else {
+                return item
+            }
+        })
 
-    const percentage=60;
-    const [title,setTitle]=React.useState('')
-    const [showForm, setShowForm] = useState(false);
-    const [edit, setEdit] = useState(false);
-    const [editCirBar, setEditCirBar] = useState(false);
-    const [showFormUpdate, setShowFormUpdate] = useState(false);
-    const today=
-      new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
+        let newArr = specification
+        newArr[index].projectTasks = newtask
+        console.log('console new task', JSON.stringify(newtask))
+        setSpec(newArr)
+
+        setEdit(true)
+    }
+
+    const percentage = 60
+    const [title, setTitle] = React.useState('')
+    const [showForm, setShowForm] = useState(false)
+    const [edit, setEdit] = useState(false)
+    const [editCirBar, setEditCirBar] = useState(false)
+    const [showFormUpdate, setShowFormUpdate] = useState(false)
+    const today = new Intl.DateTimeFormat('en-GB', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit',
     }).format(new Date())
 
     const [view, setView] = React.useState(ViewMode.Day)
-    const [index,setIndex]=React.useState()
+    const [index, setIndex] = React.useState()
 
-    
+    const handleClickShow = (index) => {
+        console.log('index --------------' + index)
 
-   const handleClickShow=(index)=>{
-    console.log('index --------------'+index);
-      
         if (specification.length !== 0) {
-            specification.map((sp,i) => {
+            specification.map((sp, i) => {
                 if (index === i) {
-                   
                     setTitle(sp.title)
                 }
             })
@@ -145,100 +122,90 @@ const { loading, user ,isAdmin} = getUserReducer
         setShowForm(false)
         setShowFormUpdate(false)
         setIndex(index)
-        calculCircle();
-        console.log('here is it ',title);
-       
-      
+        calculCircle()
+        console.log('here is it ', title)
     }
 
-         
+    useEffect(() => {
+        if (!loadingProjectDetails && edit) {
+            console.log(
+                'test',
+                JSON.stringify(
+                    'comming from state ',
+                    JSON.stringify(specification)
+                )
+            )
+            dispatch(UpdateSpecProject(id, index, specification))
+            calculCircle()
+            setEdit(false)
+        }
+    }, [loadingProjectDetails, specification, edit])
 
-            useEffect(()=>{
-        
-                    if(!loadingProjectDetails && edit){
-                        console.log('test',JSON.stringify('comming from state ',JSON.stringify(specification)));
-                        dispatch(UpdateSpecProject(id,index, specification))
-                        calculCircle()
-                        setEdit(false)
-                    
-                    }
-                                                        
+    useEffect(() => {
+        if (!loadingProjectDetails) {
+            setSpec(projectDetails.specification)
+            setIsadmin(isAdmin)
+        }
+    }, [loadingProjectDetails])
 
-                    },[loadingProjectDetails,specification,edit])
+    useEffect(() => {
+        if (!loadingProjectDetails && editCirBar) {
+            console.log('test spec', JSON.stringify(specification))
+            dispatch(UpdateSpecProject(id, index, specification))
+            console.log('disapatched')
+            setEditCirBar(false)
+        }
+    }, [specification])
 
-                            useEffect(()=>{
-                                if (!loadingProjectDetails){
-                            
-                                    setSpec(projectDetails.specification)
-                                    setIsadmin(isAdmin)
-                                    
-                            }
-                            },[loadingProjectDetails])
+    let calculCircle = () => {
+        if (title == '') return
+        let sumProgV = 0
+        let sumEstiV = 0
 
-                            useEffect(() => {
-                                if (!loadingProjectDetails && editCirBar) {
-                                    console.log('test spec',JSON.stringify(specification));
-                                    dispatch(UpdateSpecProject(id,index,specification))
-                                    console.log('disapatched');
-                                    setEditCirBar(false)
-                                
-                                }
-                            }, [specification])
+        specification[index].projectTasks.map((item) => {
+            if (item.state == -1) {
+                sumProgV += 0
 
-    
-    let calculCircle=()=>{
-     
-        if(title=='') return;
-        let sumProgV=0
-        let sumEstiV=0
-  
-        specification[index].projectTasks.map((item)=>{
-          
-             if(item.state==-1){
-                
-              sumProgV+=0;
-              
-              if(moment(item.date)<Date.now()){ sumEstiV+=100}
-
-             }else if(item.state==0){
-
-                sumProgV+=50
-              
-                if(moment(item.date)<Date.now()) {sumEstiV+=100}
-
-             }else if(item.state==1){
-              
-                sumProgV+=100
-                
-             if(moment(item.date)<Date.now()){sumEstiV+=100}
-  
-             }
-          }
-          ) 
-
-          let newProgValue;
-          let newEstimValue;
-          let length=specification[index].projectTasks.length
-      
-            length?newProgValue=sumProgV/length:newProgValue=0
-            length?newEstimValue=sumEstiV/length:newEstimValue=0
-
-
-          setSpec(
-            specification.map((s)=>{
-                if(s.title==title){
-                   return{...s,progresState:newProgValue,estimatedState:newEstimValue}
+                if (moment(item.date) < Date.now()) {
+                    sumEstiV += 100
                 }
-               
-                return s;
-    
+            } else if (item.state == 0) {
+                sumProgV += 50
+
+                if (moment(item.date) < Date.now()) {
+                    sumEstiV += 100
+                }
+            } else if (item.state == 1) {
+                sumProgV += 100
+
+                if (moment(item.date) < Date.now()) {
+                    sumEstiV += 100
+                }
             }
-          )
+        })
+
+        let newProgValue
+        let newEstimValue
+        let length = specification[index].projectTasks.length
+
+        length ? (newProgValue = sumProgV / length) : (newProgValue = 0)
+        length ? (newEstimValue = sumEstiV / length) : (newEstimValue = 0)
+
+        setSpec(
+            specification.map((s) => {
+                if (s.title == title) {
+                    return {
+                        ...s,
+                        progresState: newProgValue,
+                        estimatedState: newEstimValue,
+                    }
+                }
+
+                return s
+            })
         )
         setEditCirBar(true)
     }
-
-
 
     let columnWidth = 60
     if (view === ViewMode.Month) {
@@ -247,445 +214,642 @@ const { loading, user ,isAdmin} = getUserReducer
         columnWidth = 250
     }
 
-   const addbtnHandler=()=>{
+    const addbtnHandler = () => {
         setShowFormUpdate(false)
         setShowForm(!showForm)
-        console.log('kan hna'+showForm);
+        console.log('kan hna' + showForm)
     }
 
-    const editbtnHandler=()=>{
+    const editbtnHandler = () => {
         setShowForm(false)
         setShowFormUpdate(true)
-        console.log('kan hna'+showForm);
+        console.log('kan hna' + showForm)
     }
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        let dateFormed = new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+        }).format(new Date(addedTaskDate))
 
+        const newtasks = specification
 
-   const handleSubmit=(e)=>{
-       e.preventDefault();
-       let dateFormed=new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-       }).format(new Date(addedTaskDate))
+        newtasks[index].projectTasks = newtasks[index].projectTasks.concat({
+            id: new ObjectID(),
+            title: addedTaskTitle,
+            state: addedTaskState,
+            date: dateFormed,
+            description: addedTaskDescription,
+        })
 
-       const newtasks=specification;
-   
-       
-        newtasks[index].projectTasks=newtasks[index].projectTasks.concat({id:new ObjectID(),
-        title:addedTaskTitle,state:addedTaskState,date:dateFormed,description:addedTaskDescription})
+        setSpec(newtasks)
+        setEdit(true)
+        setShowForm(!showForm)
+    }
 
-       setSpec(newtasks)
-       setEdit(true)
-       setShowForm(!showForm)
+    const deleteHandle = (i) => {
+        const newtasks = specification
+        newtasks[index].projectTasks = newtasks[index].projectTasks.filter(
+            (t) => t.id !== i
+        )
+        setSpec(newtasks)
+        setEdit(true)
+    }
 
-   }
+    const editeHandle = (taskObjet) => {
+        setEditedTaskId(taskObjet.id)
+        setEditedTaskTitle(taskObjet.title)
+        setEditedTaskDescription(taskObjet.description)
+        setEditedTaskState(taskObjet.state)
+        setEditedTaskDate(moment(taskObjet.date).format('YYYY-MM-DD'))
+        editbtnHandler()
+    }
 
+    const handleUpdate = (e) => {
+        e.preventDefault()
+        let dateFormed = new Intl.DateTimeFormat('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: '2-digit',
+        }).format(new Date(EditedTaskDate))
 
+        let editedtask = {
+            id: EditedTaskId,
+            title: EditedTaskTitle,
+            state: EditedTaskState,
+            date: EditedTaskDate,
+            description: EditedTaskDescription,
+        }
 
-   const deleteHandle=(i)=>{
-    const newtasks=specification;
-    newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
-    setSpec(newtasks)
-    setEdit(true)
-   }
+        //start change
 
-   const editeHandle=(taskObjet)=>{
-     setEditedTaskId(taskObjet.id)
-     setEditedTaskTitle(taskObjet.title)
-     setEditedTaskDescription(taskObjet.description)
-     setEditedTaskState(taskObjet.state)
-     setEditedTaskDate(moment(taskObjet.date).format("YYYY-MM-DD"))
-     editbtnHandler()
-   }
+        let updatedTasks = specification[index].projectTasks.map((t, x) => {
+            if (t.id == EditedTaskId) {
+                console.log('i was there')
+                return {
+                    ...t,
+                    id: EditedTaskId,
+                    title: EditedTaskTitle,
+                    state: EditedTaskState,
+                    date: EditedTaskDate,
+                    description: EditedTaskDescription,
+                }
+            }
+            return t
+        })
 
-   const handleUpdate=(e)=>{
-    e.preventDefault();
-    let dateFormed=new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-       }).format(new Date(EditedTaskDate))
-     
-
-       let editedtask={id:EditedTaskId,title:EditedTaskTitle
-        ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
-       
-      //start change
-      
-      let updatedTasks=specification[index].projectTasks.map((t,x)=>{
-          if(t.id==EditedTaskId){
-                console.log('i was there');
-                 return {...t,id:EditedTaskId,title:EditedTaskTitle
-                    ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
-                 
-               }
-              return t
-              
-            })
-   
-
-        let updatedSpec=specification
-        updatedSpec[index].projectTasks=updatedTasks
+        let updatedSpec = specification
+        updatedSpec[index].projectTasks = updatedTasks
 
         setSpec(updatedSpec)
 
         setEdit(true)
         setShowFormUpdate(false)
-   }
-     
-    
+    }
+
     return (
-    
-        <React.Fragment>
-          
-            <main className={`flex-1 pb-8 glass mt-14 ${props.state}`} >
-  
+        <>
+            <main className={indexPage === 2 ? ' flex-1  pb-8  mt-14 ' : 'hidden'}>
                 <top className="flex gap-4 w-full ">
+                    <div class="flex flex-row flex-wrap justify-between text-white pt-20">
+                        {isNaN(index) && (
+                            <div class="text-2xl font-semibold text-center leading-relaxed text-slate-100 pt-20 pr-10">
+                                Welcome to the task tracker , here you can see
+                                the progress of your project's tasks
+                            </div>
+                        )}
 
-              
-                <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20"> 
-               
-                {isNaN(index) &&
-               
-               <div class="text-2xl font-semibold text-center leading-relaxed text-slate-100 pt-20 pr-10">
-                    Welcome to the task tracker , here you can see the progress of your project's tasks
-               </div>
+                        <div class="text-3xl font-semibold leading-relaxed  text-slate-100">
+                            {title}
+                        </div>
+                        <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 pr-6">
+                            {!isNaN(index) && today}
+                        </div>
 
-                }    
+                        <div class="flex justify-start mb-36">
+                            {!isNaN(index) && (
+                                <div class="">
+                                    <table class="w-[780px]  shadow-box-sh ">
+                                        <thead class="text-xl bg-gray-200 ">
+                                            <tr>
+                                                <th class="px-6 py-2 text-gray-500 text-left w-[250px]">
+                                                    Task List
+                                                </th>
+                                                <th class="px-6 py-2 text-gray-500  w-[200px] ">
+                                                    Status
+                                                </th>
+                                                <th class="px-6 py-2 pr-4 text-gray-500">
+                                                    Date
+                                                </th>
+                                                <th class="px-6 py-2 pr-4 text-gray-500">
+                                                    {Admin
+                                                        ? 'Action'
+                                                        : 'Description'}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody
+                                            class="text-xl bg-white text-center"
+                                            id="Form"
+                                        >
+                                            {specification[
+                                                index
+                                            ]?.projectTasks.map(
+                                                (taskObj, i) => (
+                                                    <tr
+                                                        key={i}
+                                                        class="whitespace-nowrap cursor-pointer"
+                                                    >
+                                                        <td class="px-6 py-4 text-gray-500 text-left">
+                                                            {taskObj.title}
+                                                        </td>
 
-
-                 <div class="text-3xl font-semibold leading-relaxed  text-slate-100">
-                     {
-                     title
-                     }
-                 </div>
-                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 pr-6">
-                    {!isNaN(index) && today}
-                 </div>
-                
-                 <div class="flex justify-start mb-36">
-                
-                        {!isNaN(index) &&
-                         <div class="">
-                            <table class="w-[780px]  shadow-box-sh "
-                           >
-                                <thead class="text-xl bg-gray-200 ">
-                       <tr>
-                            <th class="px-6 py-2 text-gray-500 text-left w-[250px]">
-                                Task List
-                            </th>
-                            <th class="px-6 py-2 text-gray-500  w-[200px] ">
-                                Status
-                            </th>
-                            <th class="px-6 py-2 pr-4 text-gray-500">
-                               Date
-                            </th>
-                            <th class="px-6 py-2 pr-4 text-gray-500">
-                               {Admin?'Action':'Description'}
-                            </th>
-                           
-                        </tr>
-                    </thead>
-                    <tbody class="text-xl bg-white text-center" id="Form" >
-                    {specification[index]?.projectTasks.map((taskObj,i)=>(
-               
-                        <tr  key={i} class="whitespace-nowrap cursor-pointer"
-
-                          >
-
-                            <td class="px-6 py-4 text-gray-500 text-left"
-                            
-                             >
-                                 
-                                 
-                                {taskObj.title}
-                            </td>
-
-                            <td class="px-6 py-4 ">
-                            
-                                <div class=" text-gray-900">
-                                {taskObj.state==1 &&
-                                    <button type="button" class="inline-block px-4 py-2 bg-green-500
+                                                        <td class="px-6 py-4 ">
+                                                            <div class=" text-gray-900">
+                                                                {taskObj.state ==
+                                                                    1 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        class="inline-block px-4 py-2 bg-green-500
                                     text-white font-medium text-sm leading-tight  rounded-full
                                     shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 
                                     focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700
                                     active:shadow-lg transition duration-150 ease-in-out"
-                                    onClick={()=>changeState(taskObj.id)}>Done</button>
-                               }
+                                                                        onClick={() =>
+                                                                            changeState(
+                                                                                taskObj.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Done
+                                                                    </button>
+                                                                )}
 
-                              {taskObj.state==0 &&
-                                   <button type="button" class="inline-block px-4 py-2 bg-yellow-500 
+                                                                {taskObj.state ==
+                                                                    0 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        class="inline-block px-4 py-2 bg-yellow-500 
                                    text-white font-medium text-sm leading-tight  rounded-full 
                                    shadow-md hover:bg-yellow-600 hover:shadow-lg focus:bg-yellow-600
                                     focus:shadow-lg focus:outline-none focus:ring-0 active:bg-yellow-700
                                      active:shadow-lg transition duration-150 ease-in-out"
-                                     onClick={()=>changeState(taskObj.id)}>In progress</button>
-                              }
+                                                                        onClick={() =>
+                                                                            changeState(
+                                                                                taskObj.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        In
+                                                                        progress
+                                                                    </button>
+                                                                )}
 
-                              {taskObj.state==-1 &&
-                                   <button type="button" class="inline-block px-4 py-2 bg-red-600
+                                                                {taskObj.state ==
+                                                                    -1 && (
+                                                                    <button
+                                                                        type="button"
+                                                                        class="inline-block px-4 py-2 bg-red-600
                                     text-white font-medium text-sm leading-tight  rounded-full
                                      shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 
                                      focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800
                                       active:shadow-lg transition duration-150 ease-in-out"
-                                      onClick={()=>changeState(taskObj.id)}>Not yet</button>
-                             }
-                           
-                                </div>
-                           </td>
-                     
-                            <td class="px-6 py-4 text-gray-900 text-center">
-                        
+                                                                        onClick={() =>
+                                                                            changeState(
+                                                                                taskObj.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        Not yet
+                                                                    </button>
+                                                                )}
+                                                            </div>
+                                                        </td>
 
-                            {
-                            moment(taskObj.date).format("DD MMM YYYY")
-                            }
-                            
-                         
-                            </td>
+                                                        <td class="px-6 py-4 text-gray-900 text-center">
+                                                            {moment(
+                                                                taskObj.date
+                                                            ).format(
+                                                                'DD MMM YYYY'
+                                                            )}
+                                                        </td>
 
-                            <td class="px-6 py-4 text-gray-900 text-center">
-                            {Admin?<>
-                           <Link to="#Form">
-                            <button
-                                className="top-3 right-3"
-                                type="button"
-                                onClick={()=>editeHandle(taskObj)}
-                           
-                            >
-                                
-                                <FaRegEdit className="text-green-900" />
-                            </button>
-                            </Link>
-                           
-                            <button
-                                className="top-3 ml-2"
-                                type="button"
-                                onClick={()=>deleteHandle(taskObj.id)}
-                           
-                            >
-                            
-                                <RiDeleteBin6Fill className="text-red-600" />
-                            </button>
-                            </>: 
-                            <div class="bd">
+                                                        <td class="px-6 py-4 text-gray-900 text-center">
+                                                            {Admin ? (
+                                                                <>
+                                                                    <Link to="#Form">
+                                                                        <button
+                                                                            className="top-3 right-3"
+                                                                            type="button"
+                                                                            onClick={() =>
+                                                                                editeHandle(
+                                                                                    taskObj
+                                                                                )
+                                                                            }
+                                                                        >
+                                                                            <FaRegEdit className="text-green-900" />
+                                                                        </button>
+                                                                    </Link>
 
-                            <button class="btn">
-                            <BsQuestionLg className="text-blue-900" />
-                            <span>{taskObj.description}</span>
-                            </button>
-                               </div>
-                           }
-                              
-                            </td>
-                     
-                        </tr>
-
-                        ))}
-                          </tbody>
-                        </table>
-                        {Admin?
-                        <Link to="#Form">
-                        <button type="submit"  onClick={addbtnHandler} class="text-white
+                                                                    <button
+                                                                        className="top-3 ml-2"
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            deleteHandle(
+                                                                                taskObj.id
+                                                                            )
+                                                                        }
+                                                                    >
+                                                                        <RiDeleteBin6Fill className="text-red-600" />
+                                                                    </button>
+                                                                </>
+                                                            ) : (
+                                                                <div class="bd">
+                                                                    <button class="btn">
+                                                                        <BsQuestionLg className="text-blue-900" />
+                                                                        <span>
+                                                                            {
+                                                                                taskObj.description
+                                                                            }
+                                                                        </span>
+                                                                    </button>
+                                                                </div>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            )}
+                                        </tbody>
+                                    </table>
+                                    {Admin ? (
+                                        <Link to="#Form">
+                                            <button
+                                                type="submit"
+                                                onClick={addbtnHandler}
+                                                class="text-white
                         rounded-full text-2xl mt-2  px-5 py-2.5 text-center bg-gradient-to-r
                          from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br
                           focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 
-                          shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">
-                               {showForm ? 'x' : '+'}</button>
-                          </Link>
-                          :null}
-                             
-                   
-                        {showForm?(
-                                <div className='bg-white mt-3 px-6 py-6 rounded-lg' >
-                                <form onSubmit={handleSubmit}>
-                                <div class="mb-4">
-                                    <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">New task</label>
-                                    <input type="text" id="task" value={addedTaskTitle} onChange={(e)=>setAddedTaskTitle(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                    <textarea type="text" id="task" value={addedTaskDescription} onChange={(e)=>setAddedTaskDescription(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add description" required>
-                                    </textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Task state</label>
+                          shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8"
+                                            >
+                                                {showForm ? 'x' : '+'}
+                                            </button>
+                                        </Link>
+                                    ) : null}
 
-                                   
-                                    <select type="text" id="state"  value={addedTaskState} onChange={(e)=>setAddedTaskState(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2 focus:outline-none  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
-                                   
-                                    <option selected>Select the state</option>
-                                            <option value="-1">Not yet</option>
-                                            <option value="0">In progress</option>
-                                            <option value="1">Done</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                    <input type="date" id="date" value={addedTaskDate} onChange={(e)=>setAddedTaskDate(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
-                                </div>
-                            
-                                <button type="submit" class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">Add task</button>
-                                </form>
-                                </div>
-                           ):null}
+                                    {showForm ? (
+                                        <div className="bg-white mt-3 px-6 py-6 rounded-lg">
+                                            <form onSubmit={handleSubmit}>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="task"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        New task
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="task"
+                                                        value={addedTaskTitle}
+                                                        onChange={(e) =>
+                                                            setAddedTaskTitle(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        placeholder="Add new task"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="task"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Description
+                                                    </label>
+                                                    <textarea
+                                                        type="text"
+                                                        id="task"
+                                                        value={
+                                                            addedTaskDescription
+                                                        }
+                                                        onChange={(e) =>
+                                                            setAddedTaskDescription(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        placeholder="Add description"
+                                                        required
+                                                    ></textarea>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="state"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Task state
+                                                    </label>
 
-                           
-                        {showFormUpdate?(
-                                <div className='bg-white mt-3 px-6 py-6 rounded-lg' id="editForm">
-                                <form onSubmit={handleUpdate}>
-                                <div class="mb-4">
-                                    <label for="task"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edit task</label>
-                                    <input type="text" id="task"  value={EditedTaskTitle} onChange={(e)=>setEditedTaskTitle(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                    <textarea type="text" id="task" value={EditedTaskDescription} onChange={(e)=>setEditedTaskDescription(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required>
-                                    </textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Task state</label>
+                                                    <select
+                                                        type="text"
+                                                        id="state"
+                                                        value={addedTaskState}
+                                                        onChange={(e) =>
+                                                            setAddedTaskState(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2 focus:outline-none  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                    >
+                                                        <option selected>
+                                                            Select the state
+                                                        </option>
+                                                        <option value="-1">
+                                                            Not yet
+                                                        </option>
+                                                        <option value="0">
+                                                            In progress
+                                                        </option>
+                                                        <option value="1">
+                                                            Done
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="date"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Date
+                                                    </label>
+                                                    <input
+                                                        type="date"
+                                                        id="date"
+                                                        value={addedTaskDate}
+                                                        onChange={(e) =>
+                                                            setAddedTaskDate(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        required
+                                                    />
+                                                </div>
 
-                                   
-                                    <select type="text" id="state" value={EditedTaskState} onChange={(e)=>setEditedTaskState(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
-                                   
-                                    <option selected>Select the state</option>
-                                            <option value="-1">Not yet</option>
-                                            <option value="0">In progress</option>
-                                            <option value="1">Done</option>
-                                    </select>
+                                                <button
+                                                    type="submit"
+                                                    class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8"
+                                                >
+                                                    Add task
+                                                </button>
+                                            </form>
+                                        </div>
+                                    ) : null}
+
+                                    {showFormUpdate ? (
+                                        <div
+                                            className="bg-white mt-3 px-6 py-6 rounded-lg"
+                                            id="editForm"
+                                        >
+                                            <form onSubmit={handleUpdate}>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="task"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Edit task
+                                                    </label>
+                                                    <input
+                                                        type="text"
+                                                        id="task"
+                                                        value={EditedTaskTitle}
+                                                        onChange={(e) =>
+                                                            setEditedTaskTitle(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        placeholder="Add new task"
+                                                        required
+                                                    />
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="task"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Description
+                                                    </label>
+                                                    <textarea
+                                                        type="text"
+                                                        id="task"
+                                                        value={
+                                                            EditedTaskDescription
+                                                        }
+                                                        onChange={(e) =>
+                                                            setEditedTaskDescription(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        placeholder="Add new task"
+                                                        required
+                                                    ></textarea>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="state"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Task state
+                                                    </label>
+
+                                                    <select
+                                                        type="text"
+                                                        id="state"
+                                                        value={EditedTaskState}
+                                                        onChange={(e) =>
+                                                            setEditedTaskState(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                    >
+                                                        <option selected>
+                                                            Select the state
+                                                        </option>
+                                                        <option value="-1">
+                                                            Not yet
+                                                        </option>
+                                                        <option value="0">
+                                                            In progress
+                                                        </option>
+                                                        <option value="1">
+                                                            Done
+                                                        </option>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-4">
+                                                    <label
+                                                        for="date"
+                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                                                    >
+                                                        Date
+                                                    </label>
+                                                    <input
+                                                        type="date"
+                                                        id="date"
+                                                        value={EditedTaskDate}
+                                                        onChange={(e) =>
+                                                            setEditedTaskDate(
+                                                                e.target.value
+                                                            )
+                                                        }
+                                                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                                                        required
+                                                    />
+                                                </div>
+
+                                                <button
+                                                    type="submit"
+                                                    class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8"
+                                                >
+                                                    Update task
+                                                </button>
+                                            </form>
+                                        </div>
+                                    ) : null}
                                 </div>
-                                <div class="mb-4">
-                                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                    <input type="date" id="date"  value={EditedTaskDate} onChange={(e)=>setEditedTaskDate(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
-                                </div>
-                                 
-                                <button type="submit" class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">Update task</button>
-                            
-                                </form>
-                                </div>
-                           ):null}
-                                   
+                            )}
                         </div>
-                        }
-                    
-                        </div>
-                       
-                     </div>
-                        
-        {loadingProjectDetails ? (
-                <div className="text-white m-auto">
-                    Loaaading ...
-                </div>
-                    ) : (
-                    <div class="flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
-                      
-                    <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
-                    
-                   
-                    {specification.map((p,i) => (
-                        
-
-                    <li key={i}>
-                        <motion.div className="flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4"
-                             whileHover={{
-                                boxShadow:"0px 0px 8px rgb(255,255,255)"
-                            }}
-                               transition={{duration:0.2}}
-                               onClick={()=>handleClickShow(i)}
-                               >
-                              
-                        <div>
-                       
-                            <h1 class="text-xl pt-2 font-semibold leading-relaxed text-slate-100">
-                               {p.title}
-                            </h1>
-                           
-                        </div>
-                        <div class="ml-5" style={{ width: 50, height: 50 }}>
-                            <CircularProgressbarWithChildren
-                                value={p.estimatedState}
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-                                    strokeLinecap: 'butt',
-
-                                    textSize: '16px',
-
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                <CircularProgressbar
-                                    value={p.progresState}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'butt',
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                                  </CircularProgressbarWithChildren>
-                            </div>
-                        </motion.div>
-                        
-                    </li>
-                    ))}
-                   
-
-                 {!isNaN(index) && <>
-                    <hr/>
-                    <li class="m-auto">
-                    <div style={{ width: 150, height: 150 }}>
-                        
-                            <CircularProgressbarWithChildren
-                                value={specification[index].estimatedState}
-                                text={specification[index].progresState.toFixed(0)+"%"}
-                                styles={buildStyles({
-                                    pathColor: '#f00',
-                                    trailColor: '#eee',
-
-                                    textSize: '16px',
-
-                                    // How long animation takes to go from one percentage to another, in seconds
-                                    pathTransitionDuration: 0.5,
-                                })}
-                            >
-                                {/* Foreground path */}
-                                <CircularProgressbar
-                                    value={specification[index].progresState}
-                                    styles={buildStyles({
-                                        trailColor: 'transparent',
-                                        strokeLinecap: 'round',
-                                        pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
-                                        })`,
-                                        backgroundColor: '#3e98c7',
-                                    })}
-                                />
-                            </CircularProgressbarWithChildren>
-                        </div>
-                    </li>
-                    </>
-                    }
-                   </ul>
-
                     </div>
+
+                    {loadingProjectDetails ? (
+                        <div className="text-white m-auto">Loaaading ...</div>
+                    ) : (
+                        <div class="flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
+                            <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
+                                {specification.map((p, i) => (
+                                    <li key={i}>
+                                        <motion.div
+                                            className="flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4"
+                                            whileHover={{
+                                                boxShadow:
+                                                    '0px 0px 8px rgb(255,255,255)',
+                                            }}
+                                            transition={{ duration: 0.2 }}
+                                            onClick={() => handleClickShow(i)}
+                                        >
+                                            <div>
+                                                <h1 class="text-xl pt-2 font-semibold leading-relaxed text-slate-100">
+                                                    {p.title}
+                                                </h1>
+                                            </div>
+                                            <div
+                                                class="ml-5"
+                                                style={{
+                                                    width: 50,
+                                                    height: 50,
+                                                }}
+                                            >
+                                                <CircularProgressbarWithChildren
+                                                    value={p.estimatedState}
+                                                    styles={buildStyles({
+                                                        pathColor: '#f00',
+                                                        trailColor: '#eee',
+                                                        strokeLinecap: 'butt',
+
+                                                        textSize: '16px',
+
+                                                        pathTransitionDuration: 0.5,
+                                                    })}
+                                                >
+                                                    <CircularProgressbar
+                                                        value={p.progresState}
+                                                        styles={buildStyles({
+                                                            trailColor:
+                                                                'transparent',
+                                                            strokeLinecap:
+                                                                'butt',
+                                                            pathColor: `rgba(99, 99, 199, ${
+                                                                percentage / 10
+                                                            })`,
+                                                            backgroundColor:
+                                                                '#3e98c7',
+                                                        })}
+                                                    />
+                                                </CircularProgressbarWithChildren>
+                                            </div>
+                                        </motion.div>
+                                    </li>
+                                ))}
+
+                                {!isNaN(index) && (
+                                    <>
+                                        <hr />
+                                        <li class="m-auto">
+                                            <div
+                                                style={{
+                                                    width: 150,
+                                                    height: 150,
+                                                }}
+                                            >
+                                                <CircularProgressbarWithChildren
+                                                    value={
+                                                        specification[index]
+                                                            .estimatedState
+                                                    }
+                                                    text={
+                                                        specification[
+                                                            index
+                                                        ].progresState.toFixed(
+                                                            0
+                                                        ) + '%'
+                                                    }
+                                                    styles={buildStyles({
+                                                        pathColor: '#f00',
+                                                        trailColor: '#eee',
+
+                                                        textSize: '16px',
+
+                                                        // How long animation takes to go from one percentage to another, in seconds
+                                                        pathTransitionDuration: 0.5,
+                                                    })}
+                                                >
+                                                    {/* Foreground path */}
+                                                    <CircularProgressbar
+                                                        value={
+                                                            specification[index]
+                                                                .progresState
+                                                        }
+                                                        styles={buildStyles({
+                                                            trailColor:
+                                                                'transparent',
+                                                            strokeLinecap:
+                                                                'round',
+                                                            pathColor: `rgba(99, 99, 199, ${
+                                                                percentage / 10
+                                                            })`,
+                                                            backgroundColor:
+                                                                '#3e98c7',
+                                                        })}
+                                                    />
+                                                </CircularProgressbarWithChildren>
+                                            </div>
+                                        </li>
+                                    </>
+                                )}
+                            </ul>
+                        </div>
                     )}
                 </top>
-                
-                <bottom className="flex items-center justify-center gap-12">
-
-        
-                </bottom>
-
             </main>
-         </React.Fragment>
-
+        </>
     )
-    
 }
 
-export default Tracker;
+export default Tracker

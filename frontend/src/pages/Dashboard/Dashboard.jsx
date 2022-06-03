@@ -1,78 +1,56 @@
-import React, { useState, useEffect } from 'react'
-
-import { FaThLarge } from 'react-icons/fa'
-
-import { ViewMode, Gantt } from 'gantt-task-react'
-import 'gantt-task-react/dist/index.css'
-import { Link, useNavigate } from 'react-router-dom'
-import { ToastContainer, toast } from 'react-toastify'
-
-import 'react-toastify/dist/ReactToastify.css'
-// Import react-circular-progressbar module and styles
-import {
-    CircularProgressbar,
-    CircularProgressbarWithChildren,
-    buildStyles,
-} from 'react-circular-progressbar'
-import 'react-circular-progressbar/dist/styles.css'
-import ProgressBar from '../../components/ProgressBar/ProgressBar'
-import { getStartEndDateForProject, initTasks } from './Gantt/helper'
-import { ViewSwitcher } from './Gantt/view-switcher'
-import TodoList from './TodoList/TodoList'
-
-
-import { useSelector, useDispatch } from 'react-redux'
-import {
-    Getprojectdetails,
-    UpdateProject,
-} from '../../redux/actions/projectActions'
-import { useParams } from 'react-router-dom'
-import {
-    PROJECT_DETAILS_RESET,
-    PROJET_UPDATE_RESET,
-} from '../../redux/actions/constants/projetconstants'
+import React, { useState } from 'react'
 
 import SideBar from './side/SideBar'
 import Overview from './Overview'
 import Tracker from './Tracker'
+import SmartBrief from './SmartBrief/ProjetRecap'
 
 const Dashboard = () => {
-const [pageIndex,setPageX]=React.useState(1)
-const [OverviewPage,setOverPage]=React.useState('')
-const [trackerPage,setTrackPage]=React.useState('hidden')
+    // const [OverviewPage, setOverPage] = useState('')
+    // const [trackerPage, setTrackPage] = useState('hidden')
+    const [indexPage, setIndexPage] = useState(1)
 
-const showPage=(i)=>{
+    const showPage = (i) => {
+        // if (i == 1) {
+        //     // setOverPage('')
+        //     // setTrackPage('hidden')
 
+        //     setIndexPage(i)
 
-    if(i==1){
-        
-        setOverPage('')
-        setTrackPage('hidden')
-        
-        // setTasks(tasksDesign)
-   }else if(i==2){
+        //     // setTasks(tasksDesign)
+        // } else if (i == 2) {
+        //     setIndexPage(i)
+        //     // setOverPage('hidden')
+        //     // setTrackPage('')
 
-    setOverPage('hidden')
-    setTrackPage('')
-     
-        // setTasks(tasksContent)
-   }
-}
+        //     // setTasks(tasksContent)
+        // }
+
+        switch (i) {
+            case 1:
+                setIndexPage(i)
+                break
+            case 2:
+                setIndexPage(i)
+                break
+            case 3:
+                setIndexPage(i)
+                break
+            default:
+                break
+        }
+    }
 
     return (
         <>
-            <div className="w-full min-h-screen flex z-10 ">
-           
-            <SideBar showPage={(x)=>showPage(x)} />
-             <Overview state={OverviewPage}/>
-          < Tracker state={trackerPage} />
-
+            <div className="w-full min-h-screen flex flex-row gap-3 z-10 ">
+                <SideBar showPage={(x) => showPage(x)} />
+                <Overview /*state={OverviewPage} */ indexPage={indexPage} />
+                <Tracker /*state={trackerPage}*/ indexPage={indexPage} />
+                <SmartBrief /*state={trackerPage}*/ indexPage={indexPage} />
             </div>
         </>
     )
 }
 
 export default Dashboard
-
-
-
