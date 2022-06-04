@@ -1,15 +1,25 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { MdCameraswitch } from 'react-icons/md'
 import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
 const SmartBrief = ({ indexPage }) => {
+    const [images, setImages] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+        acceptedFiles.forEach(file => {
+            setImages(prevState => [...prevState,file])
+        });
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
-        if(rejectedFiles.length !== 0){
-            alert("rejectedFiles")
+        if (rejectedFiles.length !== 0) {
+            alert('rejectedFiles')
         }
     }, [])
+
+    useEffect(() => {
+      console.log(images);
+    }, [images])
+    
+     
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
@@ -248,7 +258,10 @@ const SmartBrief = ({ indexPage }) => {
                                 {isDragActive
                                     ? 'Drag Active'
                                     : 'Tou can drop ur images here !'}
-                                      <em>(Only *.jpeg and *.png images will be accepted)</em>
+                                <em>
+                                    (Only *.jpeg and *.png images will be
+                                    accepted)
+                                </em>
                             </div>
                         </div>
                     </div>
