@@ -5,9 +5,14 @@ import { useDropzone } from 'react-dropzone'
 const SmartBrief = ({ indexPage }) => {
     const [images, setImages] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
-        acceptedFiles.forEach(file => {
-            setImages(prevState => [...prevState,file])
-        });
+        acceptedFiles.forEach((file) => {
+            //convert file to base64
+            const reader = new FileReader()
+            reader.onload = () => {
+                setImages((prevState) => [...prevState, reader.result])
+            }
+            reader.readAsDataURL(file)
+        })
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
         if (rejectedFiles.length !== 0) {
@@ -16,10 +21,9 @@ const SmartBrief = ({ indexPage }) => {
     }, [])
 
     useEffect(() => {
-      console.log(images);
+        console.log(images)
     }, [images])
-    
-     
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
