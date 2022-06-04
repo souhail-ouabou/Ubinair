@@ -205,7 +205,7 @@ export default function Overview({ indexPage }) {
                         indexPage === 1 ? ' flex-1  pb-8  mt-14 ' : 'hidden'
                     }
                 >
-                    <top className="flex  items-center justify-center gap-7 h-[272px] relative">
+                    <top className="flex  items-center justify-center gap-7 h-[272px] ">
                         <div className="glass flex flex-row gap-4 h-full">
                             {projectDetails.specification?.map((p) => (
                                 <div

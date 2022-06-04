@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import SideBar from './side/SideBar'
 import Overview from './Overview'
 import Tracker from './Tracker'
-import SmartBrief from './SmartBrief/ProjetRecap'
+import SmartBrief from './SmartBrief/SmartBrief'
 
 const Dashboard = () => {
     // const [OverviewPage, setOverPage] = useState('')

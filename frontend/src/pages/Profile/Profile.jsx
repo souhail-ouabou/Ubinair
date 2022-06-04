@@ -35,7 +35,7 @@ const Profile = () => {
     }
     const [data, setData] = useState(initialState)
     const [msg, setMsg] = useState(null)
-    const [avatar, setAvatar] = useState('')
+    const [avatar, setAvatar] = useState([])
     const [change, setChange] = useState(true)
     const token = useSelector((state) => state.token)
 
@@ -121,19 +121,19 @@ const Profile = () => {
     }
 
     const changeAvatar = (e) => {
-        const file = e.target.files[0]
+        const file = e.target.files
 
-        const err = checkImage(file)
-        if (err) {
-            dispatch({
-                type: 'Err',
-                payload: { error: err },
-            })
+        // const err = checkImage(file)
+        // if (err) {
+        //     dispatch({
+        //         type: 'Err',
+        //         payload: { error: err },
+        //     })
 
-            toast.error(err, {
-                position: toast.POSITION.TOP_CENTER,
-            })
-        }
+        //     toast.error(err, {
+        //         position: toast.POSITION.TOP_CENTER,
+        //     })
+        // }
 
         setAvatar(file)
         console.log('avatar : ', avatar)
@@ -194,11 +194,13 @@ const Profile = () => {
                         <div className="avatar ">
                             <img
                                 src={
-                                    avatar
-                                        ? URL.createObjectURL(avatar)
-                                        : user.avatar
+                                    // avatar
+                                    //     ? URL.createObjectURL(avatar)
+                                    //     : 
+                                    user.avatar
                                 }
                                 alt=""
+                               
                             />
                             (
                             <span className="absolute left-0 w-full h-[33%]   -bottom-[15%]  md:h-[40%]  md:-bottom-[100%]  text-center uppercase font-normal text-white  bg-gradient-to-bl from-[#562885de] to-[#936cbe] transition ease-in-out delay-75">
@@ -210,7 +212,7 @@ const Profile = () => {
                                         name="file"
                                         id="file_up"
                                         accept="image/*"
-                                        onChange={changeAvatar}
+                                        onChange={changeAvatar} multiple
                                     />
                                 </div>
                             </span>

@@ -4,6 +4,6 @@ const uploadCtrl = require('../controllers/uploadCtrl')
 const auth = require('../middleware/auth')
 
 // login as normal user   -> refresh_token -> uploadAvatar
-router.post('/upload_avatar', uploadImage, auth, uploadCtrl.uploadAvatar)
+// router.post('/upload_avatar', uploadImage, auth, uploadCtrl.uploadAvatar)
 
 module.exports = router
