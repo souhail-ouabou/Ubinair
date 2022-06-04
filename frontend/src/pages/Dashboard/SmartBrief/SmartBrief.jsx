@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { MdCameraswitch } from 'react-icons/md'
 import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
+import { FaTrash } from 'react-icons/fa'
 const SmartBrief = ({ indexPage }) => {
     const [images, setImages] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
@@ -19,6 +20,11 @@ const SmartBrief = ({ indexPage }) => {
             alert('rejectedFiles')
         }
     }, [])
+    const deleteHandler = (file) => {
+        setImages((prevState) => {
+            return prevState.filter((fw) => fw !== file)
+        })
+    }
 
     useEffect(() => {
         console.log(images)
@@ -223,7 +229,7 @@ const SmartBrief = ({ indexPage }) => {
                             </div>
                         </div>
                     </div>
-                    <div className="glass flex flex-col items-start w-3/5 mt-2 ">
+                    <div className="glass flex flex-col items-start w-3/4 mt-2 ">
                         <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
                             Collaborative Moodboard
                         </p>
@@ -267,6 +273,29 @@ const SmartBrief = ({ indexPage }) => {
                                     accepted)
                                 </em>
                             </div>
+                            {images.length > 0 && (
+                                <div className=" flex flex-wrap">
+                                    {images.map((image, index) => (
+                                        <div className="flex">
+                                            <img
+                                                className="object-cover w-[200px] h-[200px] relative m-[16px] overflow-hidden "
+                                                src={image}
+                                                key={index}
+                                                alt=""
+                                            />
+
+                                            <button
+                                                className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute  flex "
+                                                onClick={() =>
+                                                    deleteHandler(image)
+                                                }
+                                            >
+                                                <FaTrash className="m-auto text-white justify-center items-center" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>
