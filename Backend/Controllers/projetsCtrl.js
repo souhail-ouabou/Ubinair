@@ -41,7 +41,14 @@ const projetsCtrl = {
                 subtype: subtype,
                 type: type,
                 clientBrief: {
-                    visualInspiration: [{id: 0, secure_url :' ', format:' ', sizeInBytes:' '}]
+                    visualInspiration: [
+                        {
+                            id: 0,
+                            secure_url: ' ',
+                            format: ' ',
+                            sizeInBytes: ' ',
+                        },
+                    ],
                 },
             })
             const user = await User.findById(req.user.id)
@@ -196,14 +203,25 @@ const projetsCtrl = {
     addBriefProject: async (req, res) => {
         try {
             let sum = 0
-            const { public_id, format, secure_url, bytes } = req.body[0]
+            const { public_id, format, secure_url, bytes } = req.body
             console.log('--------------req ref 1-------------', req.body)
-            const visualInspirationReq = {
-                id: public_id,
-                secure_url: secure_url,
-                format: format,
-                sizeInBytes: bytes,
-            }
+            const visualInspirationReq = req.body.map((p) => ({
+                id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes
+            }))
+            // const visualInspirationReq = {
+            //     id: public_id,
+            //     secure_url: secure_url,
+            //     format: format,
+            //     sizeInBytes: bytes,
+            // }
+            console.log(
+                '--------------req visualInspirationReq 1-------------',
+                visualInspirationReq
+            )
 
             // console.log('--------------req ref 1-------------', ref)
             // console.log('--------------req public_id 1-------------', public_id)
@@ -221,7 +239,7 @@ const projetsCtrl = {
 
             if (projet) {
                 projet.clientBrief.visualInspiration =
-                    visualInspirationReq || projet.clientBrief.visualInspiration
+                visualInspirationReq || projet.clientBrief.visualInspiration
                 //     //  projet.clientTaskss = taskss || projet.clientTaskss
                 const updatedProject = await projet.save()
                 //    console.log('updatedProject', updatedProject)
