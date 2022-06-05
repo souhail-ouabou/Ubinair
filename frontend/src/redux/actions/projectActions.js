@@ -274,3 +274,40 @@ export const DeleteProject = (id) => async (dispatch, getState) => {
         })
     }
 }
+export const AddMoodBoardPics = ({images}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: PROJECT_DELETE_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        console.log("images mn dispatcher", images)
+        const { data } = axios.post("/api/upload_moodboard",{images},config)
+        
+        dispatch({ type: PROJECT_DELETE_SUCCESS, payload: data })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: PROJECT_DELETE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
+
+
+

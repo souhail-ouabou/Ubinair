@@ -1,33 +1,31 @@
-    // const cloudinary = require('cloudinary')
-    // const fs = require('fs')
+const cloudinary = require('cloudinary')
 
-    // cloudinary.config({
-    //     cloud_name :process.env.CLOUD_NAME,
-    //     api_key :process.env.CLOUD_API_KEY,
-    //     api_secret :process.env.CLOUD_API_SECRET
-    // })
+cloudinary.config({
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.CLOUD_API_KEY,
+    api_secret: process.env.CLOUD_API_SECRET,
+})
 
-    // const uploadCtrl = {
-    //     uploadAvatar: async (req, res) => { 
-    //         try {
-    //             const file = req.files.file;
-    //             cloudinary.v2.uploader.upload(file.tempFilePath, {          
-    //                    folder: 'avatar', width: 150, height: 150, crop: "fill"
-    //         }, async(err, result) => {
-    //             if(err) throw err;
-    //             removeTmp(file.tempFilePath)
-    //             res.json({url: result.secure_url})
-    //         })
+const uploadCtrl = {
+    uploadMoodboard: async (req, res) => {
+        try {
+            const { images } = req.body
+            // console.log('images : ', req.body)
+            let promises = []
+            images.forEach(async (image) => {
+                promises.push(
+                    cloudinary.v2.uploader.upload(image, {
+                        folder: 'Moodboard',
+                        crop: 'fill',
+                    })
+                )
+            })
+            const response = await Promise.all(promises)
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+}
 
-    //      } catch (err) {
-    //         return res.status(500).json({msg: err.message})
-    //     }
-    //     }
-    // }
-    // const removeTmp = (path) => {
-    //     fs.unlink(path, err => {
-    //         if(err) throw err
-    //     })
-    // }
-
-    // module.exports = uploadCtrl
+module.exports = uploadCtrl

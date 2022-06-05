@@ -3,7 +3,12 @@ import { MdCameraswitch } from 'react-icons/md'
 import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
+import { useSelector, useDispatch } from 'react-redux'
+import { AddMoodBoardPics } from '../../../redux/actions/projectActions'
+import axios from 'axios'
+
 const SmartBrief = ({ indexPage }) => {
+    const dispatch = useDispatch()
     const [images, setImages] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         acceptedFiles.forEach((file) => {
@@ -24,6 +29,12 @@ const SmartBrief = ({ indexPage }) => {
         setImages((prevState) => {
             return prevState.filter((fw) => fw !== file)
         })
+    }
+    const updateHandler = () => {
+                dispatch(AddMoodBoardPics({images})) 
+                // axios.post("/api/upload_moodboard",{images})
+                // .then(res => {console.log(res.data)})
+                // .catch(err=>{console.log(err.message)})
     }
 
     useEffect(() => {
@@ -273,6 +284,7 @@ const SmartBrief = ({ indexPage }) => {
                                     accepted)
                                 </em>
                             </div>
+                            <div>
                             {images.length > 0 && (
                                 <div className=" flex flex-wrap">
                                     {images.map((image, index) => (
@@ -296,6 +308,13 @@ const SmartBrief = ({ indexPage }) => {
                                     ))}
                                 </div>
                             )}
+                            </div>
+                            <button
+                                className="bg-blue-600 rounded-tr-md  rounded-bl-xl w-10 h-10    flex "
+                                onClick={() => updateHandler()}
+                            >
+                               Update
+                            </button>
                         </div>
                     </div>
                 </div>
