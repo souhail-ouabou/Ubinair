@@ -274,7 +274,7 @@ export const DeleteProject = (id) => async (dispatch, getState) => {
         })
     }
 }
-export const AddMoodBoardPics = ({images,id}) => async (dispatch, getState) => {
+export const AddMoodBoardPics = ({info,images,id}) => async (dispatch, getState) => {
     try {
         dispatch({ type: PROJECT_DELETE_REQUEST })
         toast.dismiss()
@@ -295,9 +295,9 @@ export const AddMoodBoardPics = ({images,id}) => async (dispatch, getState) => {
 
 
 
-        const  res  = await axios.post(`/projets/addbrief/${id}`, data, config)
+        const  {res}  = await axios.post(`/projets/addbrief/${id}`, {info,data}, config)
         
-        dispatch({ type: PROJECT_DELETE_SUCCESS, payload: data })
+        dispatch({ type: PROJECT_DELETE_SUCCESS, payload: res })
         toast.dismiss()
         toast.success('Succès Delete !', {
             position: toast.POSITION.TOP_CENTER,

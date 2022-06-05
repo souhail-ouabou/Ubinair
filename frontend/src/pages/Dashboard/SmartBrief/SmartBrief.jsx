@@ -10,6 +10,9 @@ import {Route, Link, Routes, useParams} from 'react-router-dom';
 
 
 const SmartBrief = ({ indexPage }) => {
+    const initialState = {
+        webinspiration: ''
+    }
     const params = useParams();
     const {id} = params
     const dispatch = useDispatch()
@@ -29,13 +32,28 @@ const SmartBrief = ({ indexPage }) => {
             alert('rejectedFiles')
         }
     }, [])
+    const [info, setInfo] = useState(initialState)
+    const { webinspiration } = info
+
     const deleteHandler = (file) => {
         setImages((prevState) => {
             return prevState.filter((fw) => fw !== file)
         })
     }
+    
+    
+    const handleChange = (e) => {
+        //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
+        const { name, value } = e.target
+        setInfo({
+            ...info,
+            [name]: value,
+        })
+        console.log('info...:   ', info)
+        
+    }
     const updateHandler = () => {
-                dispatch(AddMoodBoardPics({images,id})) 
+                dispatch(AddMoodBoardPics({info,images,id})) 
                 // axios.post("/api/upload_moodboard",{images})
                 // .then(res => {console.log(res.data)})
                 // .catch(err=>{console.log(err.message)})
@@ -43,8 +61,7 @@ const SmartBrief = ({ indexPage }) => {
 
     useEffect(() => {
         console.log(images)
-        console.log(id);
-    }, [id, images])
+    }, [images])
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
@@ -258,12 +275,13 @@ const SmartBrief = ({ indexPage }) => {
                                 className="rounded-md px-2 py-3   text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2  h-[100px]"
                                 type="text"
                                 // onChange={handleChange}
-                                name="objectives"
+                                name="webinspiration"
                                 // value={phone}
                                 placeholder="Links of inspiring websites that you’d love your website to look like:
                                 beautifulwebsite.com
                                 amazingwebsite.com
                                 incrediblewebsite.com"
+                                onChange={handleChange}
                             ></textarea>
                         </div>
 
@@ -316,7 +334,7 @@ const SmartBrief = ({ indexPage }) => {
                             </div>
                             <button
                                 className="bg-blue-600 rounded-tr-md  rounded-bl-xl w-10 h-10    flex "
-                                onClick={() => updateHandler()}
+                                onClick={updateHandler}
                             >
                                Update
                             </button>

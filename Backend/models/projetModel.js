@@ -149,12 +149,10 @@ const clientBriefSchema = mongoose.Schema({
     //     unique: true,
     // },
     // briefFile: [fileBriefSchema],
-    // websiteInspiration: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
+    websiteInspiration: {
+        type: String,
+        trim: true,
+    },
     visualInspiration: [visualInspirationSchema],
     
 })

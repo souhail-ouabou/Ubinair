@@ -203,44 +203,28 @@ const projetsCtrl = {
     addBriefProject: async (req, res) => {
         try {
             let sum = 0
-            const { public_id, format, secure_url, bytes } = req.body
-            console.log('--------------req ref 1-------------', req.body)
-            const visualInspirationReq = req.body.map((p) => ({
+            const { info, format, secure_url, bytes } = req.body
+            console.log('--------------req body -------------', req.body)
+            const visualInspirationReq = req.body.data.map((p) => ({
                 id: p.public_id,
                 format: p.format,
                 startDate: p.start,
                 secure_url: p.secure_url,
-                sizeInBytes: p.bytes
+                sizeInBytes: p.bytes,
             }))
-            // const visualInspirationReq = {
-            //     id: public_id,
-            //     secure_url: secure_url,
-            //     format: format,
-            //     sizeInBytes: bytes,
-            // }
-            console.log(
-                '--------------req visualInspirationReq 1-------------',
-                visualInspirationReq
-            )
 
-            // console.log('--------------req ref 1-------------', ref)
-            // console.log('--------------req public_id 1-------------', public_id)
-
-            // let specification = req.body.filter((v, k) => k !== 0)
-            // console.log('---------specification ------', specification)
+            // console.log(
+            //     '--------------req visualInspirationReq 1-------------',
+            //     visualInspirationReq
+            // )
 
             const projet = await Projets.findById(req.params.id)
-            console.log('projet projet founded : ', projet)
-            // const sub = projet.specification.map((s) => s.progresState)
-            // for (let i = 0; i < sub.length; i++) {
-            //     sum += sub[i]
-            // }
-            // let total = Math.round(sum / sub.length)
 
             if (projet) {
                 projet.clientBrief.visualInspiration =
-                visualInspirationReq || projet.clientBrief.visualInspiration
-                //     //  projet.clientTaskss = taskss || projet.clientTaskss
+                    visualInspirationReq || projet.clientBrief.visualInspiration
+                projet.clientBrief.websiteInspiration =
+                    info.webinspiration || projet.clientBrief.websiteInspiration
                 const updatedProject = await projet.save()
                 //    console.log('updatedProject', updatedProject)
                 res.json({ msg: 'Update prj Success!' })
