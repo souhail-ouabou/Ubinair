@@ -17,4 +17,5 @@ router.put('/updatespecprj/:id', projetCtrl.updateSpecProject)
 //login as an admin -> refresh_token -> getallprojects
 router.get('/allprojects', auth, authAdmin, projetCtrl.getAllProjects)
 router.delete('/deleteproject/:id', auth, authAdmin,   projetCtrl.deleteProject)
+router.post('/addbrief/:id', auth,    projetCtrl.addBriefProject)
 module.exports = router

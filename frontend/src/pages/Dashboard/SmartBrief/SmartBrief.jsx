@@ -6,8 +6,12 @@ import { FaTrash } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { AddMoodBoardPics } from '../../../redux/actions/projectActions'
 import axios from 'axios'
+import {Route, Link, Routes, useParams} from 'react-router-dom';
+
 
 const SmartBrief = ({ indexPage }) => {
+    const params = useParams();
+    const {id} = params
     const dispatch = useDispatch()
     const [images, setImages] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
@@ -31,7 +35,7 @@ const SmartBrief = ({ indexPage }) => {
         })
     }
     const updateHandler = () => {
-                dispatch(AddMoodBoardPics({images})) 
+                dispatch(AddMoodBoardPics({images,id})) 
                 // axios.post("/api/upload_moodboard",{images})
                 // .then(res => {console.log(res.data)})
                 // .catch(err=>{console.log(err.message)})
@@ -39,7 +43,8 @@ const SmartBrief = ({ indexPage }) => {
 
     useEffect(() => {
         console.log(images)
-    }, [images])
+        console.log(id);
+    }, [id, images])
 
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,

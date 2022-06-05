@@ -21,15 +21,37 @@ const clientTaskssSchema = mongoose.Schema(
         timestamps: true,
     }
 )
+const fileBriefSchema = mongoose.Schema(
+    {
+        filename: { type: String, required: true },
+        secure_url: { type: String, required: true },
+        format: { type: String, required: true },
+        sizeInBytes: { type: String, required: true },
+    },
+    {
+        timestamps: true,
+    }
+)
+const visualInspirationSchema = mongoose.Schema(
+    {
+        id: { type: String, required: true },
+        secure_url: { type: String, required: true },
+        format: { type: String, required: true },
+        sizeInBytes: { type: String, required: true },
+    },
+    {
+        timestamps: true,
+    }
+)
 
 const projectTasksSchema = mongoose.Schema(
     {
         id: { type: String, required: true },
-        title: { type: String, required: true},
-        state: { type: Number, required: true},
+        title: { type: String, required: true },
+        state: { type: Number, required: true },
         // genre: { type: String, required: true},
-        date: { type: Date, required: true},
-        description: { type: String, required: true},
+        date: { type: Date, required: true },
+        description: { type: String, required: true },
     },
     {
         timestamps: true,
@@ -37,7 +59,6 @@ const projectTasksSchema = mongoose.Schema(
 )
 
 const specificationSchema = mongoose.Schema({
-  
     title: { type: String, required: true },
     progresState: {
         type: Number,
@@ -61,7 +82,80 @@ const specificationSchema = mongoose.Schema({
         type: Date,
         default: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
-    projectTasks:[projectTasksSchema],
+    projectTasks: [projectTasksSchema],
+})
+const clientBriefSchema = mongoose.Schema({
+    // brandName: {
+    //     type: String,
+    //     // required: [true, 'Please enter your name!'],
+    //     trim: true,
+    // },
+    // brandTageLine: {
+    //     type: String,
+    //     required: [true, 'Please enter your email!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // ProductService: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // values: {
+    //     type: Date,
+    //     default: Date.now,
+    // },
+    // vision: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // mission: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // objectives: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // toneOfVoice: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // targetAudience: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // competitors: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // moreInfo: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    // briefFile: [fileBriefSchema],
+    // websiteInspiration: {
+    //     type: String,
+    //     required: [true, 'Please enter your phone!'],
+    //     trim: true,
+    //     unique: true,
+    // },
+    visualInspiration: [visualInspirationSchema],
     
 })
 
@@ -126,6 +220,7 @@ const projetSchema = mongoose.Schema({
         minimum: 0,
     },
     clientTaskss: [clientTaskssSchema],
+    clientBrief: clientBriefSchema,
     // projectTasks:[projectTasksSchema],
     finishedAt: {
         type: Date,
