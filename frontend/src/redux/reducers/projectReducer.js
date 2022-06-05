@@ -22,6 +22,10 @@ import {
     PROJECT_DELETE_REQUEST,
     PROJECT_DELETE_SUCCESS,
     PROJECT_DELETE_FAIL,
+    ADD_COL_MOODBOARD_REQUEST,
+    ADD_COL_MOODBOARD_SUCCESS,
+    ADD_COL_MOODBOARD_FAIL,
+    ADD_COL_MOODBOARDE_RESET,
 } from '../actions/constants/projetconstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -63,7 +67,7 @@ export const GetProjectDetailsReducer = (
     state = {
         project: {
             specification: [],
-        //    projectTasks:[],
+            //    projectTasks:[],
             features: [],
             user: {},
         },
@@ -93,7 +97,6 @@ export const GetProjectDetailsReducer = (
             return state
     }
 }
-
 
 export const projectUpdateReducer = (state = { project: {} }, action) => {
     switch (action.type) {
@@ -144,6 +147,27 @@ export const projectDeleteReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case PROJECT_DELETE_FAIL:
             return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+
+export const AddColMoodBoardReducer = (state = { project: {} }, action) => {
+    switch (action.type) {
+        case ADD_COL_MOODBOARD_REQUEST:
+            return {
+                loading: true,
+            }
+        case ADD_COL_MOODBOARD_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+                project: action.payload,
+            }
+        case ADD_COL_MOODBOARD_FAIL:
+            return { loading: false, err: action.payload }
+        case ADD_COL_MOODBOARDE_RESET:
+            return { project: {}, success: false }
         default:
             return state
     }

@@ -17,6 +17,9 @@ import {
     PROJECT_DELETE_REQUEST,
     PROJECT_DELETE_SUCCESS,
     PROJECT_DELETE_FAIL,
+    ADD_COL_MOODBOARD_REQUEST,
+    ADD_COL_MOODBOARD_FAIL,
+    ADD_COL_MOODBOARD_SUCCESS,
 } from './constants/projetconstants'
 import { toast } from 'react-toastify'
 
@@ -274,9 +277,9 @@ export const DeleteProject = (id) => async (dispatch, getState) => {
         })
     }
 }
-export const AddMoodBoardPics = ({info,images,id}) => async (dispatch, getState) => {
+export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) => {
     try {
-        dispatch({ type: PROJECT_DELETE_REQUEST })
+        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
         toast.dismiss()
         toast.loading('Please wait...', {
             position: toast.POSITION.TOP_CENTER,
@@ -291,13 +294,10 @@ export const AddMoodBoardPics = ({info,images,id}) => async (dispatch, getState)
         console.log("images mn dispatcher", images)
         const  {data}  = await axios.post("/api/upload_moodboard",{images},config)
         console.log("after then :",data)
-    
-
-
-
         const  {res}  = await axios.post(`/projets/addbrief/${id}`, {info,data}, config)
         
-        dispatch({ type: PROJECT_DELETE_SUCCESS, payload: res })
+        dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
+        
         toast.dismiss()
         toast.success('Succès Delete !', {
             position: toast.POSITION.TOP_CENTER,
@@ -305,7 +305,7 @@ export const AddMoodBoardPics = ({info,images,id}) => async (dispatch, getState)
         
     } catch (error) {
         dispatch({
-            type: PROJECT_DELETE_FAIL,
+            type: ADD_COL_MOODBOARD_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message

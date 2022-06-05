@@ -4,7 +4,7 @@ import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
-import { AddMoodBoardPics } from '../../../redux/actions/projectActions'
+import { AddColMoodBoard } from '../../../redux/actions/projectActions'
 import axios from 'axios'
 import {Route, Link, Routes, useParams} from 'react-router-dom';
 
@@ -53,7 +53,7 @@ const SmartBrief = ({ indexPage }) => {
         
     }
     const updateHandler = () => {
-                dispatch(AddMoodBoardPics({info,images,id})) 
+                dispatch(AddColMoodBoard({info,images,id})) 
                 // axios.post("/api/upload_moodboard",{images})
                 // .then(res => {console.log(res.data)})
                 // .catch(err=>{console.log(err.message)})
@@ -333,11 +333,14 @@ const SmartBrief = ({ indexPage }) => {
                             )}
                             </div>
                             <button
-                                className="bg-blue-600 rounded-tr-md  rounded-bl-xl w-10 h-10    flex "
-                                onClick={updateHandler}
-                            >
-                               Update
-                            </button>
+                            className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        md:w-auto  w-full 
+                         hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                        onClick={updateHandler}
+                        >
+                            Submit
+                        </button>
                         </div>
                     </div>
                 </div>
