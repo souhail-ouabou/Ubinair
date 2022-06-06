@@ -2,8 +2,19 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
 import { TiDelete } from 'react-icons/ti'
+import { useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import {
+    AddAboutBrand,
+    
+} from '../../../redux/actions/projectActions'
 
 const AboutTheBrand = () => {
+    let basesArray = []
+
+    const dispatch = useDispatch()
+    const params = useParams()
+    const { id } = params
     const [files, setFiles] = useState([])
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         acceptedFiles.forEach((file) => {
@@ -19,20 +30,32 @@ const AboutTheBrand = () => {
         })
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
+       
         if (rejectedFiles.length !== 0) {
             alert('rejectedFiles')
         }
     }, [])
-
+    
+    
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: 'image/jpeg,image/png',
+        accept: {
+            '.pdf': []
+        },
     })
 
     const deleteHandler = (file) => {
         setFiles((prevState) => {
             return prevState.filter((fw) => fw !== file)
         })
+    }
+    const updateHandler = () => {
+        basesArray = files.map((p) => p.base)
+        console.log('basesArray', basesArray)
+        dispatch(AddAboutBrand({ basesArray, id }))
+        // axios.post("/api/upload_moodboard",{images})
+        // .then(res => {console.log(res.data)})
+        // .catch(err=>{console.log(err.message)})
     }
     useEffect(() => {
         console.log('files', files)
@@ -218,13 +241,13 @@ const AboutTheBrand = () => {
                         {isDragActive
                             ? 'Drag Active'
                             : 'Here you can drop ur file!'}
-                        <em>(Only *.pdf and *.docs files will be accepted)</em>
+                        <em>(Only *.pdf files will be accepted)</em>
                     </div>
                 </div>
             </div>
-            <div>
+            <div className=" flex flex-wrap w-full">
                 {files.length > 0 && (
-                    <div className=" flex flex-wrap ml-4">
+                    <>
                         {files.map((v, index) => (
                             <div className="flex items-center justify-start relative  w-full h-[50px] bg-slate-700 rounded-md mt-3">
                                 <strong className="text-white  relative m-[16px]">
@@ -238,18 +261,18 @@ const AboutTheBrand = () => {
                                 </button>
                             </div>
                         ))}
-                    </div>
+                    </>
                 )}
             </div>
             <button
-                    className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
     md:w-auto  w-full 
      hover:shadow-lg transition-all ease-in-out duration-100 font-bold
     "
-                //     onClick={updateHandler}
-                >
-                    Submit
-                </button>
+                onClick={updateHandler}
+            >
+                Submit
+            </button>
         </top>
     )
 }

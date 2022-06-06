@@ -303,13 +303,58 @@ export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) =
             position: toast.POSITION.TOP_CENTER,
         })
         
-    } catch (error) {
+    } catch (err) {
         dispatch({
             type: ADD_COL_MOODBOARD_FAIL,
             payload:
-                error.response && error.response.data.message
-                    ? error.response.data.message
-                    : error.message,
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+export const AddAboutBrand= ({basesArray,id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        console.log("files from dispatcher", basesArray)
+        
+        const  {data}  = await axios.post("/api/upload_aboutbrand",{basesArray},config)
+        console.log("after then :",data)
+        // const  {res}  = await axios.post(`/projets/addbrief/${id}`, {data}, config)
+        
+         dispatch({ type: ADD_COL_MOODBOARD_SUCCESS })
+        
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (err) {
+        dispatch({
+            type: ADD_COL_MOODBOARD_FAIL,
+            payload:
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
         })
     }
 }

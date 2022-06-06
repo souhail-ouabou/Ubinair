@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { MdCameraswitch } from 'react-icons/md'
 import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
-import { useSelector, useDispatch } from 'react-redux'
+import {  useDispatch } from 'react-redux'
 import { AddColMoodBoard } from '../../../redux/actions/projectActions'
-import axios from 'axios'
-import { Route, Link, Routes, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const CollMoodboard = () => {
     const initialState = {
@@ -34,7 +32,10 @@ const CollMoodboard = () => {
     const [info, setInfo] = useState(initialState)
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
-        accept: "image/jpeg,image/png"
+        accept: {
+            'image/jpeg': [],
+            'image/png': [],
+        },
 
     })
 

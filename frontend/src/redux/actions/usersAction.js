@@ -173,7 +173,7 @@ export const updateUserProfile = ({data,avatar,user}) => async (dispatch, getSta
         })
 
         console.log('user mn disoatcher', data)
-        if (avatar) media = await imageUpload(avatar)
+        if (avatar) media = await imageUpload([avatar])
         console.log('media', media)
 
         // data.avatar = media[0].url ? media[0].url : user.avatar
@@ -201,3 +201,4 @@ export const updateUserProfile = ({data,avatar,user}) => async (dispatch, getSta
         })
     }
 }
+
