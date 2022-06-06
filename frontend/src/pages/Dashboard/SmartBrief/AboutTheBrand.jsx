@@ -4,10 +4,8 @@ import { FaTrash } from 'react-icons/fa'
 import { TiDelete } from 'react-icons/ti'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import {
-    AddAboutBrand,
-    
-} from '../../../redux/actions/projectActions'
+import { toast } from 'react-toastify'
+import { AddAboutBrand } from '../../../redux/actions/projectActions'
 
 const AboutTheBrand = () => {
     let basesArray = []
@@ -30,17 +28,33 @@ const AboutTheBrand = () => {
         })
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
-       
+        let errArray
+        let f
+        let errmsg
+        let errtoast
         if (rejectedFiles.length !== 0) {
-            alert('rejectedFiles')
+            for (const item of rejectedFiles) {
+                errArray = item.errors
+                for (const it of errArray) {
+                    // console.log('object', it.message)
+                    errmsg = it.message
+                }
+                f = item.file
+                console.log('file name', f.name)
+                errtoast = f.name + ' ' + errmsg
+
+                    console.log(errtoast)
+                toast.error(errtoast, {
+                    position: toast.POSITION.TOP_CENTER,
+                })
+            }
         }
     }, [])
-    
-    
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({
         onDrop,
         accept: {
-            '.pdf': []
+            '.pdf': [],
         },
     })
 
