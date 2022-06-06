@@ -196,7 +196,7 @@ export default function Overview({ indexPage }) {
     return (
         <>
             {loadingProjectDetails || loading ? (
-                <div className=" text-white ">Loaaading ...</div>
+                <div className=" text-white m-auto ">Loaaading ...</div>
             ) : projectDetails.specification?.length === 0 ? (
                 <div className="text-white "></div>
             ) : (

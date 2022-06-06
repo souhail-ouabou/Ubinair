@@ -165,7 +165,7 @@ export const AddColMoodBoardReducer = (state = { project: {} }, action) => {
                 project: action.payload,
             }
         case ADD_COL_MOODBOARD_FAIL:
-            return { loading: false, err: action.payload }
+            return { loading: false, err: action.payload } 
         case ADD_COL_MOODBOARDE_RESET:
             return { project: {}, success: false }
         default:

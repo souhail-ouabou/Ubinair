@@ -84,6 +84,29 @@ const specificationSchema = mongoose.Schema({
     },
     projectTasks: [projectTasksSchema],
 })
+const fileShema = mongoose.Schema(
+    {
+        filename: { type: String, required: true },
+        secure_url: {
+            type: String,
+            required: true,
+            default: 0,
+            minimum: 0,
+            maximum: 100,
+        },
+        format: {
+            type: String,
+            required: true,
+        },
+        sizeInBytes: {
+            type: String,
+            required: true,
+        },
+    },
+    {
+        timestamps: true,
+    }
+)
 const clientBriefSchema = mongoose.Schema({
     // brandName: {
     //     type: String,
@@ -154,7 +177,6 @@ const clientBriefSchema = mongoose.Schema({
         trim: true,
     },
     visualInspiration: [visualInspirationSchema],
-    
 })
 
 const projetSchema = mongoose.Schema({
