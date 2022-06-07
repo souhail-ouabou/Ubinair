@@ -23,7 +23,7 @@ const clientTaskssSchema = mongoose.Schema(
 )
 const fileBriefSchema = mongoose.Schema(
     {
-        filename: { type: String, required: true },
+        id: { type: String, required: true },
         secure_url: { type: String, required: true },
         format: { type: String, required: true },
         sizeInBytes: { type: String, required: true },
@@ -84,98 +84,76 @@ const specificationSchema = mongoose.Schema({
     },
     projectTasks: [projectTasksSchema],
 })
-const fileShema = mongoose.Schema(
-    {
-        filename: { type: String, required: true },
-        secure_url: {
-            type: String,
-            required: true,
-            default: 0,
-            minimum: 0,
-            maximum: 100,
-        },
-        format: {
-            type: String,
-            required: true,
-        },
-        sizeInBytes: {
-            type: String,
-            required: true,
-        },
-    },
-    {
-        timestamps: true,
-    }
-)
+
+
 const clientBriefSchema = mongoose.Schema({
-    // brandName: {
-    //     type: String,
-    //     // required: [true, 'Please enter your name!'],
-    //     trim: true,
-    // },
-    // brandTageLine: {
-    //     type: String,
-    //     required: [true, 'Please enter your email!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // ProductService: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // values: {
-    //     type: Date,
-    //     default: Date.now,
-    // },
-    // vision: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // mission: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // objectives: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // toneOfVoice: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // targetAudience: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // competitors: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // moreInfo: {
-    //     type: String,
-    //     required: [true, 'Please enter your phone!'],
-    //     trim: true,
-    //     unique: true,
-    // },
-    // briefFile: [fileBriefSchema],
+    brandName: {
+        type: String,
+        // required: [true, 'Please enter your name!'],
+        // trim: true,
+
+    },
+    brandTageLine: {
+        type: String,
+        // required: [true, 'Please enter your email!'],
+        // trim: true,
+        // unique: true,
+    },
+    ProductService: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    values: {
+        type: String,
+    },
+    vision: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    mission: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    objectives: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    toneOfVoice: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    targetAudience: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    competitors: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
+    moreInfo: {
+        type: String,
+        // required: [true, 'Please enter your phone!'],
+        // trim: true,
+        // unique: true,
+    },
     websiteInspiration: {
         type: String,
-        trim: true,
     },
+    briefFiles: [fileBriefSchema],
     visualInspiration: [visualInspirationSchema],
 })
 

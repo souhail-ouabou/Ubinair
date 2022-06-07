@@ -317,7 +317,7 @@ export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) =
         })
     }
 }
-export const AddAboutBrand= ({basesArray,id}) => async (dispatch, getState) => {
+export const AddAboutBrand= ({info,basesArray,id}) => async (dispatch, getState) => {
     try {
         dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
         toast.dismiss()
@@ -331,13 +331,14 @@ export const AddAboutBrand= ({basesArray,id}) => async (dispatch, getState) => {
                 Authorization: token,
             },
         }
-        console.log("files from dispatcher", basesArray)
+        // console.log("files from dispatcher", basesArray)
         
         const  {data}  = await axios.post("/api/upload_aboutbrand",{basesArray},config)
-        console.log("after then :",data)
-        // const  {res}  = await axios.post(`/projets/addbrief/${id}`, {data}, config)
-        
-         dispatch({ type: ADD_COL_MOODBOARD_SUCCESS })
+        // console.log("after then :",data)
+         const  {res}  = await axios.post(`/projets/addaboutbrand/${id}`, {info,data}, config)
+        // console.log("res : ",res)
+        dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
+
         
         toast.dismiss()
         toast.success('Succès Delete !', {

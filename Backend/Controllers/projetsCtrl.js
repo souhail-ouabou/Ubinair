@@ -49,6 +49,14 @@ const projetsCtrl = {
                             sizeInBytes: ' ',
                         },
                     ],
+                    // briefFile : [
+                    //     {
+                    //         id: 0,
+                    //         secure_url: ' ',
+                    //         format: ' ',
+                    //         sizeInBytes: ' ',
+                    //     },
+                    // ]
                 },
             })
             const user = await User.findById(req.user.id)
@@ -107,10 +115,10 @@ const projetsCtrl = {
             let sum = 0
             const { startDate, endDate } = req.body[0]
 
-            console.log('--------------req booody 1-------------', req.body)
+            // console.log('--------------req booody 1-------------', req.body)
 
             let specification = req.body.filter((v, k) => k !== 0)
-            console.log('---------specification ------', specification)
+            // console.log('---------specification ------', specification)
 
             const projet = await Projets.findById(req.params.id)
             const sub = projet.specification.map((s) => s.progresState)
@@ -135,7 +143,7 @@ const projetsCtrl = {
     },
     updateTasksClient: async (req, res) => {
         try {
-            console.log('--------------req booody -------------', req.body)
+            // console.log('--------------req booody -------------', req.body)
 
             const taskss = req.body.taskss
 
@@ -157,15 +165,15 @@ const projetsCtrl = {
             // console.log('--------------req booody -------------', req.body)
 
             const newSpecification = req.body.specification
-            console.log('sended spec ', JSON.stringify(req.body))
+            // console.log('sended spec ', JSON.stringify(req.body))
             const projet = await Projets.findById(req.params.id)
-            console.log(
-                'prj spec---------------',
-                JSON.stringify(projet) + 'id= ' + req.params.id
-            )
+            // console.log(
+            //     'prj spec---------------',
+            //     JSON.stringify(projet) + 'id= ' + req.params.id
+            // )
             if (projet) {
                 projet.specification = newSpecification || projet.specification
-                console.log('it enter')
+                // console.log('it enter')
                 const updatedProject = await projet.save()
                 console.log('updatedSpecProject----------', updatedProject)
                 res.json({ msg: 'Update spec prj Success!' })
@@ -202,9 +210,9 @@ const projetsCtrl = {
     },
     addBriefProject: async (req, res) => {
         try {
-            let sum = 0
-            const { info, format, secure_url, bytes } = req.body
-            console.log('--------------req body -------------', req.body)
+          
+            const { info } = req.body
+            // console.log('--------------req body -------------', req.body)
             const visualInspirationReq = req.body.data.map((p) => ({
                 id: p.public_id,
                 format: p.format,
@@ -213,10 +221,7 @@ const projetsCtrl = {
                 sizeInBytes: p.bytes,
             }))
 
-            // console.log(
-            //     '--------------req visualInspirationReq 1-------------',
-            //     visualInspirationReq
-            // )
+    
 
             const projet = await Projets.findById(req.params.id)
 
@@ -229,6 +234,50 @@ const projetsCtrl = {
                 //    console.log('updatedProject', updatedProject)
                 res.json({ msg: 'Update prj Success!' })
             }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    addBrandProject: async (req, res) => {
+        try {
+            
+            const { info } = req.body
+           console.log('--------------req body -------------', req.body)
+            const briedFilesReq = req.body.data.map((p) => ({
+                id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+            }))
+
+            // // console.log(
+            // //     '--------------req visualInspirationReq 1-------------',
+            // //     visualInspirationReq
+            // // )
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.clientBrief.briefFiles = briedFilesReq || projet.clientBrief.briefFiles
+                projet.clientBrief.brandName = info.brandName || projet.clientBrief.brandName
+                projet.clientBrief.brandTageLine = info.brandTag || projet.clientBrief.brandTageLine
+                projet.clientBrief.ProductService = info.productService || projet.clientBrief.ProductService
+                projet.clientBrief.values = info.values || projet.clientBrief.values
+                projet.clientBrief.vision = info.vision || projet.clientBrief.vision
+                projet.clientBrief.mission = info.mission || projet.clientBrief.mission
+                projet.clientBrief.objectives = info.objectives || projet.clientBrief.objectives
+                projet.clientBrief.toneOfVoice = info.toneOfVoic || projet.clientBrief.toneOfVoice
+                projet.clientBrief.targetAudience = info.targetAudience || projet.clientBrief.targetAudience
+                projet.clientBrief.competitors = info.competitors || projet.clientBrief.competitors
+                projet.clientBrief.moreInfo = info.moreInfo || projet.clientBrief.moreInfo
+                
+                
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+           }
         } catch (err) {
             console.log('-----------Update prj error-------------', err)
             return res.status(500).json({ msg: err.message })

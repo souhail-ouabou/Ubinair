@@ -5,6 +5,7 @@ import { FaTrash } from 'react-icons/fa'
 import {  useDispatch } from 'react-redux'
 import { AddColMoodBoard } from '../../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 const CollMoodboard = () => {
     const initialState = {
@@ -26,7 +27,9 @@ const CollMoodboard = () => {
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
         if (rejectedFiles.length !== 0) {
-            alert('rejectedFiles')
+            toast.error("All files must be images", {
+                position: toast.POSITION.TOP_CENTER,
+            })
         }
     }, [])
     const [info, setInfo] = useState(initialState)

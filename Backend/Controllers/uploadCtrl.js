@@ -29,7 +29,7 @@ const uploadCtrl = {
     uploadAboutBrand: async (req, res) => {
         try {
             const { basesArray } = req.body
-            console.log('req body : ', req.body)
+          //  console.log('req body : ', req.body)
             let promises = []
             basesArray.forEach(async (file) => {
                 promises.push(

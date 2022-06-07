@@ -9,11 +9,24 @@ import { AddAboutBrand } from '../../../redux/actions/projectActions'
 
 const AboutTheBrand = () => {
     let basesArray = []
-
+    const initialState = {
+        brandName: '',
+        brandTag: '',
+        productService: '',
+        values: '',
+        vision: '',
+        mission: '',
+        objectives: '',
+        toneOfVoice: '',
+        targetAudience: '',
+        competitors: '',
+        moreInfo: '',
+    }
     const dispatch = useDispatch()
     const params = useParams()
     const { id } = params
     const [files, setFiles] = useState([])
+    const [info, setInfo] = useState(initialState)
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         acceptedFiles.forEach((file) => {
             //convert file to base64
@@ -63,17 +76,21 @@ const AboutTheBrand = () => {
             return prevState.filter((fw) => fw !== file)
         })
     }
+    const handleChange = (e) => {
+        //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
+        const { name, value } = e.target
+        setInfo({
+            ...info,
+            [name]: value,
+        })
+        console.log('info...:   ', info)
+    }
     const updateHandler = () => {
         basesArray = files.map((p) => p.base)
-        console.log('basesArray', basesArray)
-        dispatch(AddAboutBrand({ basesArray, id }))
-        // axios.post("/api/upload_moodboard",{images})
-        // .then(res => {console.log(res.data)})
-        // .catch(err=>{console.log(err.message)})
+        // console.log('basesArray', basesArray)
+        dispatch(AddAboutBrand({ info,basesArray, id }))
     }
-    useEffect(() => {
-        console.log('files', files)
-    }, [files])
+ 
 
     return (
         <top className="glass flex flex-col items-start w-3/5 ">
@@ -88,8 +105,8 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="phone"
+                         onChange={handleChange}
+                        name="brandName"
                         // value={phone}
                         placeholder="Ex. Nike"
                     />
@@ -101,8 +118,8 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="tageline"
+                         onChange={handleChange}
+                        name="brandTag"
                         // value={phone}
                         placeholder="Ex. Just Do It!"
                     />
@@ -116,8 +133,8 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-sm bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="phone"
+                         onChange={handleChange}
+                        name="productService"
                         // value={phone}
                         placeholder="What do you sell?"
                     />
@@ -129,7 +146,7 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-sm bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
+                         onChange={handleChange}
                         name="values"
                         // value={phone}
                         placeholder="What are your core values?"
@@ -144,7 +161,7 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
+                         onChange={handleChange}
                         name="vision"
                         // value={phone}
                         placeholder="What's your vision?"
@@ -157,7 +174,7 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
+                         onChange={handleChange}
                         name="mission"
                         // value={phone}
                         placeholder="What are the objectives of the  Website ?"
@@ -172,7 +189,7 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
+                         onChange={handleChange}
                         name="objectives"
                         // value={phone}
                         placeholder="What are the objectives of the website?"
@@ -185,8 +202,8 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="toneofvoice"
+                         onChange={handleChange}
+                        name="toneOfVoice"
                         // value={phone}
                         placeholder="What's the tones pf voice of your brand ?"
                     />
@@ -201,8 +218,8 @@ const AboutTheBrand = () => {
                     <textarea
                         className="rounded-md px-2 py-3   text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px] h-[170px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="objectives"
+                        onChange={handleChange}
+                        name="targetAudience"
                         // value={phone}
                         placeholder="Describe your target audience (age,
                     gender, persona, ...)"
@@ -216,8 +233,8 @@ const AboutTheBrand = () => {
                     <textarea
                         className="rounded-md px-2 py-3   text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px] h-[170px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="objectives"
+                        onChange={handleChange}
+                        name="competitors"
                         // value={phone}
                         placeholder="List your main competitors here:
             Competitor 1
@@ -234,8 +251,8 @@ const AboutTheBrand = () => {
                     <textarea
                         className="rounded-md px-2 py-3   text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px] h-[100px]"
                         type="text"
-                        // onChange={handleChange}
-                        name="moreinfo"
+                        onChange={handleChange}
+                        name="moreInfo"
                         // value={phone}
                         placeholder="Add more info that you think is important"
                     ></textarea>
