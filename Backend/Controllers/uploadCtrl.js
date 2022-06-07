@@ -28,21 +28,38 @@ const uploadCtrl = {
     },
     uploadAboutBrand: async (req, res) => {
         try {
-            const { basesArray } = req.body
-          //  console.log('req body : ', req.body)
+            const { files } = req.body
+            //  console.log('req body : ', req.body)
             let promises = []
-            basesArray.forEach(async (file) => {
+            files.forEach(async (file) => {
                 promises.push(
-                    cloudinary.v2.uploader.upload(file, {
+                    cloudinary.v2.uploader.upload(file.base, {
                         folder: 'Ubinair/AboutBrand',
+                        tags: file.file.path,
+                        //context : file.file.path,
+
                         // flags: 'attachment:your_pdf',
                         // fetch_format: 'auto'
                         // resource_type: 'raw',
                         // raw_convert: 'aspose',
                     })
                 )
+
+                // newData.push(promises,file.file.path)
             })
+
             const response = await Promise.all(promises)
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    deleteAboutBrand: async (req, res) => {
+        try {
+            const { public_id } = req.body
+
+            const response = await cloudinary.uploader.destroy(public_id)
+
             res.send(response)
         } catch (err) {
             return res.status(500).json({ msg: err.message })

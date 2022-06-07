@@ -7,5 +7,6 @@ const auth = require('../middleware/auth')
  router.post('/upload_moodboard',  auth, uploadCtrl.uploadMoodboard)
 // login as normal user   -> refresh_token -> uploadAvatar
  router.post('/upload_aboutbrand',  auth, uploadCtrl.uploadAboutBrand)
+ router.post('/delete_aboutbrand',  auth, uploadCtrl.deleteAboutBrand)
 
 module.exports = router

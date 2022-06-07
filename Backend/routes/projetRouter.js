@@ -18,5 +18,6 @@ router.put('/updatespecprj/:id', projetCtrl.updateSpecProject)
 router.get('/allprojects', auth, authAdmin, projetCtrl.getAllProjects)
 router.delete('/deleteproject/:id', auth, authAdmin,   projetCtrl.deleteProject)
 router.post('/addbrief/:id', auth,    projetCtrl.addBriefProject)
-router.post('/addaboutbrand/:id', auth,    projetCtrl.addBrandProject)
+router.post('/addaboutbrand/:id', auth, projetCtrl.addBrandProject)
+router.post('/deletebrieffile/:id', auth, projetCtrl.deleteBriefFileProject)
 module.exports = router

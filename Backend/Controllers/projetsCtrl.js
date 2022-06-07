@@ -48,15 +48,7 @@ const projetsCtrl = {
                             format: ' ',
                             sizeInBytes: ' ',
                         },
-                    ],
-                    // briefFile : [
-                    //     {
-                    //         id: 0,
-                    //         secure_url: ' ',
-                    //         format: ' ',
-                    //         sizeInBytes: ' ',
-                    //     },
-                    // ]
+                    ]
                 },
             })
             const user = await User.findById(req.user.id)
@@ -210,7 +202,6 @@ const projetsCtrl = {
     },
     addBriefProject: async (req, res) => {
         try {
-          
             const { info } = req.body
             // console.log('--------------req body -------------', req.body)
             const visualInspirationReq = req.body.data.map((p) => ({
@@ -220,8 +211,6 @@ const projetsCtrl = {
                 secure_url: p.secure_url,
                 sizeInBytes: p.bytes,
             }))
-
-    
 
             const projet = await Projets.findById(req.params.id)
 
@@ -241,15 +230,15 @@ const projetsCtrl = {
     },
     addBrandProject: async (req, res) => {
         try {
-            
             const { info } = req.body
-           console.log('--------------req body -------------', req.body)
+            console.log('--------------req body -------------', req.body)
             const briedFilesReq = req.body.data.map((p) => ({
                 id: p.public_id,
                 format: p.format,
                 startDate: p.start,
                 secure_url: p.secure_url,
                 sizeInBytes: p.bytes,
+                fileName: p.tags[0],
             }))
 
             // // console.log(
@@ -260,28 +249,60 @@ const projetsCtrl = {
             const projet = await Projets.findById(req.params.id)
 
             if (projet) {
-                projet.clientBrief.briefFiles = briedFilesReq || projet.clientBrief.briefFiles
-                projet.clientBrief.brandName = info.brandName || projet.clientBrief.brandName
-                projet.clientBrief.brandTageLine = info.brandTag || projet.clientBrief.brandTageLine
-                projet.clientBrief.ProductService = info.productService || projet.clientBrief.ProductService
-                projet.clientBrief.values = info.values || projet.clientBrief.values
-                projet.clientBrief.vision = info.vision || projet.clientBrief.vision
-                projet.clientBrief.mission = info.mission || projet.clientBrief.mission
-                projet.clientBrief.objectives = info.objectives || projet.clientBrief.objectives
-                projet.clientBrief.toneOfVoice = info.toneOfVoic || projet.clientBrief.toneOfVoice
-                projet.clientBrief.targetAudience = info.targetAudience || projet.clientBrief.targetAudience
-                projet.clientBrief.competitors = info.competitors || projet.clientBrief.competitors
-                projet.clientBrief.moreInfo = info.moreInfo || projet.clientBrief.moreInfo
-                
-                
+                projet.clientBrief.briefFiles =
+                    projet.clientBrief.briefFiles.concat(briedFilesReq) ||
+                    projet.clientBrief.briefFiles
+                projet.clientBrief.brandName =
+                    info.brandName || projet.clientBrief.brandName
+                projet.clientBrief.brandTageLine =
+                    info.brandTageLine || projet.clientBrief.brandTageLine
+                projet.clientBrief.ProductService =
+                    info.ProductService || projet.clientBrief.ProductService
+                projet.clientBrief.values =
+                    info.values || projet.clientBrief.values
+                projet.clientBrief.vision =
+                    info.vision || projet.clientBrief.vision
+                projet.clientBrief.mission =
+                    info.mission || projet.clientBrief.mission
+                projet.clientBrief.objectives =
+                    info.objectives || projet.clientBrief.objectives
+                projet.clientBrief.toneOfVoice =
+                    info.toneOfVoice || projet.clientBrief.toneOfVoice
+                projet.clientBrief.targetAudience =
+                    info.targetAudience || projet.clientBrief.targetAudience
+                projet.clientBrief.competitors =
+                    info.competitors || projet.clientBrief.competitors
+                projet.clientBrief.moreInfo =
+                    info.moreInfo || projet.clientBrief.moreInfo
+
                 const updatedProject = await projet.save()
                 //    console.log('updatedProject', updatedProject)
                 res.json({ msg: 'Update prj Success!' })
-           }
+            }
         } catch (err) {
             console.log('-----------Update prj error-------------', err)
             return res.status(500).json({ msg: err.message })
         }
+    },
+    deleteBriefFileProject: async (req, res) => {
+        const {public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+
+            
+            const newBriefFiles = project.clientBrief.briefFiles.filter((fw) => fw.public_id  !== public_id)
+            project.clientBrief.briefFiles = newBriefFiles ||  projet.clientBrief.briefFiles
+            
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        }
+
+        // } else {
+        //     // status it's 500 by default cuz of errHandler
+        //     res.status(404)
+        //     throw new Error('Project not found')
+        // }
     },
 }
 module.exports = projetsCtrl

@@ -10,7 +10,7 @@ import { DeleteUser } from '../../redux/actions/usersAction'
 
 const UserBlock = ({ user, toggletab }) => {
     let dispatch = useDispatch()
-    let navigate = useNavigate()
+
 
     const deletehandler = (id) => {
         if (window.confirm('Are You Sure?')) {

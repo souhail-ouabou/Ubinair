@@ -317,7 +317,7 @@ export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) =
         })
     }
 }
-export const AddAboutBrand= ({info,basesArray,id}) => async (dispatch, getState) => {
+export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, getState) => {
     try {
         dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
         toast.dismiss()
@@ -333,8 +333,8 @@ export const AddAboutBrand= ({info,basesArray,id}) => async (dispatch, getState)
         }
         // console.log("files from dispatcher", basesArray)
         
-        const  {data}  = await axios.post("/api/upload_aboutbrand",{basesArray},config)
-        // console.log("after then :",data)
+        const  {data}  = await axios.post("/api/upload_aboutbrand",{files,basesArray},config)
+         console.log("after then :",data)
          const  {res}  = await axios.post(`/projets/addaboutbrand/${id}`, {info,data}, config)
         // console.log("res : ",res)
         dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
@@ -356,6 +356,42 @@ export const AddAboutBrand= ({info,basesArray,id}) => async (dispatch, getState)
         toast.dismiss()
         toast.error(err.response.data.msg, {
             position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+
+export const DeleteBriefFile = ({id,public_id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_aboutbrand",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deletebrieffile/${id}`,{public_id}, config)
+        dispatch({
+            type: ADD_COL_MOODBOARD_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: ADD_COL_MOODBOARD_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
         })
     }
 }

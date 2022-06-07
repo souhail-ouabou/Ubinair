@@ -3,16 +3,18 @@ import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
 import { TiDelete } from 'react-icons/ti'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AddAboutBrand } from '../../../redux/actions/projectActions'
+import { AddAboutBrand, DeleteBriefFile } from '../../../redux/actions/projectActions'
 
-const AboutTheBrand = () => {
-    let basesArray = []
+import  pdfPng  from './file-pdf-solid.png'
+
+const AboutTheBrand = ({ project }) => {
+    
     const initialState = {
         brandName: '',
-        brandTag: '',
-        productService: '',
+        brandTageLine: '',
+        ProductService: '',
         values: '',
         vision: '',
         mission: '',
@@ -56,7 +58,7 @@ const AboutTheBrand = () => {
                 console.log('file name', f.name)
                 errtoast = f.name + ' ' + errmsg
 
-                    console.log(errtoast)
+                console.log(errtoast)
                 toast.error(errtoast, {
                     position: toast.POSITION.TOP_CENTER,
                 })
@@ -71,10 +73,15 @@ const AboutTheBrand = () => {
         },
     })
 
-    const deleteHandler = (file) => {
+    const deleteDroppedHandler = (file) => {
         setFiles((prevState) => {
             return prevState.filter((fw) => fw !== file)
         })
+    }
+    const deleteUploadedHandler = (public_id) => {
+        if (window.confirm('Are You Sure?')) {
+            dispatch(DeleteBriefFile({id,public_id}))
+        }
     }
     const handleChange = (e) => {
         //place of do that -> onChange={(e) => setEmail(e.target.value) for each field (input) we do that
@@ -86,11 +93,13 @@ const AboutTheBrand = () => {
         console.log('info...:   ', info)
     }
     const updateHandler = () => {
-        basesArray = files.map((p) => p.base)
-        // console.log('basesArray', basesArray)
-        dispatch(AddAboutBrand({ info,basesArray, id }))
+        // basesArray = files.map((p) => p.base)
+         console.log('files', files)
+        dispatch(AddAboutBrand({ info, files, id }))
     }
- 
+    useEffect(() => {
+        setInfo(project.clientBrief)
+    }, [project.clientBrief])
 
     return (
         <top className="glass flex flex-col items-start w-3/5 ">
@@ -105,9 +114,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="brandName"
-                        // value={phone}
+                        value={info.brandName}
                         placeholder="Ex. Nike"
                     />
                 </div>
@@ -118,9 +127,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
-                        name="brandTag"
-                        // value={phone}
+                        onChange={handleChange}
+                        name="brandTageLine"
+                        value={info.brandTageLine}
                         placeholder="Ex. Just Do It!"
                     />
                 </div>
@@ -133,9 +142,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-sm bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
-                        name="productService"
-                        // value={phone}
+                        onChange={handleChange}
+                        name="ProductService"
+                        value={info.ProductService}
                         placeholder="What do you sell?"
                     />
                 </div>
@@ -146,9 +155,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-sm bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="values"
-                        // value={phone}
+                        value={info.values}
                         placeholder="What are your core values?"
                     />
                 </div>
@@ -161,9 +170,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="vision"
-                        // value={phone}
+                        value={info.vision}
                         placeholder="What's your vision?"
                     />
                 </div>
@@ -174,9 +183,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="mission"
-                        // value={phone}
+                        value={info.mission}
                         placeholder="What are the objectives of the  Website ?"
                     />
                 </div>
@@ -189,9 +198,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="objectives"
-                        // value={phone}
+                        value={info.objectives}
                         placeholder="What are the objectives of the website?"
                     />
                 </div>
@@ -202,9 +211,9 @@ const AboutTheBrand = () => {
                     <input
                         className="rounded-md text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px]"
                         type="text"
-                         onChange={handleChange}
+                        onChange={handleChange}
                         name="toneOfVoice"
-                        // value={phone}
+                        value={info.toneOfVoice}
                         placeholder="What's the tones pf voice of your brand ?"
                     />
                 </div>
@@ -220,7 +229,7 @@ const AboutTheBrand = () => {
                         type="text"
                         onChange={handleChange}
                         name="targetAudience"
-                        // value={phone}
+                        value={info.targetAudience}
                         placeholder="Describe your target audience (age,
                     gender, persona, ...)"
                     ></textarea>
@@ -235,7 +244,7 @@ const AboutTheBrand = () => {
                         type="text"
                         onChange={handleChange}
                         name="competitors"
-                        // value={phone}
+                        value={info.competitors}
                         placeholder="List your main competitors here:
             Competitor 1
             Competitor 2
@@ -253,7 +262,7 @@ const AboutTheBrand = () => {
                         type="text"
                         onChange={handleChange}
                         name="moreInfo"
-                        // value={phone}
+                        value={info.moreInfo}
                         placeholder="Add more info that you think is important"
                     ></textarea>
                 </div>
@@ -286,7 +295,31 @@ const AboutTheBrand = () => {
                                 </strong>
                                 <button
                                     className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
-                                    onClick={() => deleteHandler(v)}
+                                    onClick={() => deleteDroppedHandler(v)}
+                                >
+                                    <TiDelete className="m-auto text-white justify-center items-center" />
+                                </button>
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+
+            <hr className='my-4 mx-auto w-[50%]'></hr>
+            <div className=" flex flex-wrap w-full gap-4">
+                {info.briefFiles?.length > 0 && (
+                    <>
+                        {info.briefFiles.map((v, index) => (
+                            <div className="flex items-center justify-center relative h-[130px] bg-slate-700 rounded-md mt-3">
+                                <Link to={`${v?.secure_url}`} className="text-white  relative m-[16px]">
+                                    <img className='w-[90px] h-[90px] m-auto' src={pdfPng} alt="pdf"/>
+                                   {v.fileName}
+                                </Link>
+                                
+                                
+                                <button
+                                    className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
+                                    onClick={() => deleteUploadedHandler(v.public_id)}
                                 >
                                     <TiDelete className="m-auto text-white justify-center items-center" />
                                 </button>

@@ -23,10 +23,11 @@ const clientTaskssSchema = mongoose.Schema(
 )
 const fileBriefSchema = mongoose.Schema(
     {
-        id: { type: String, required: true },
-        secure_url: { type: String, required: true },
-        format: { type: String, required: true },
-        sizeInBytes: { type: String, required: true },
+        public_id: { type: String },
+        fileName: { type: String },
+        secure_url: { type: String },
+        format: { type: String },
+        sizeInBytes: { type: String },
     },
     {
         timestamps: true,
