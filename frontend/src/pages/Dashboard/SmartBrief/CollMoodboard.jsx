@@ -6,8 +6,9 @@ import {  useDispatch } from 'react-redux'
 import { AddColMoodBoard } from '../../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { TiDelete } from 'react-icons/ti'
 
-const CollMoodboard = () => {
+const CollMoodboard = ({ project }) => {
     const initialState = {
         webinspiration: '',
     }
@@ -63,11 +64,15 @@ const CollMoodboard = () => {
         // .then(res => {console.log(res.data)})
         // .catch(err=>{console.log(err.message)})
     }
+    const deleteUploadedHandler = (public_id) => {
+        if (window.confirm('Are You Sure?')) {
+            // dispatch(DeleteVisualInspiration({ id, public_id }))
+        }
+    }
 
     useEffect(() => {
-        console.log(images)
-    }, [images])
-
+        setInfo(project.clientBrief)
+    }, [project.clientBrief])
     return (
         <bottom className="glass flex flex-col items-start w-3/4 mt-2 ">
             <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
@@ -134,6 +139,47 @@ const CollMoodboard = () => {
                         </div>
                     )}
                 </div>
+                <hr className="my-4 mx-auto w-[50%]"></hr>
+            <div className=" flex flex-wrap w-full gap-4">
+                {info.visualInspiration?.length > 0 && (
+                    <>
+                        {info.visualInspiration.map((v, index) => (
+                            <div className="flex items-center justify-center relative w-[40%] h-[130px] bg-slate-700 rounded-md mt-3">
+                                <a
+                                    target="_blank"
+                                    href={`${v?.secure_url}`}
+                                    className="text-white  relative m-[16px]"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        className="w-[90px] h-[90px] m-auto"
+                                        src={v.secure_url}
+                                        alt="pdf"
+                                    />
+                                    {v.fileName}
+                                </a>
+
+                                <button
+                                    className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
+                                    onClick={() =>
+                                        deleteUploadedHandler(v.public_id)
+                                    }
+                                >
+                                    <TiDelete className="m-auto text-white justify-center items-center" />
+                                </button>
+                                {/* <button
+                                    className="bg-blue-600 rounded-br-md   rounded-tl-xl w-7 h-7  flex  absolute bottom-0 right-0 "
+                                    
+                                >
+                                    {' '}
+                                    <TiDownload className="m-auto text-white justify-center items-center" />
+                                </button> */}
+                            </div>
+                        ))}
+                    </>
+                )}
+            </div>
+
                 <button
                     className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
     md:w-auto  w-full 

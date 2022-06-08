@@ -31,6 +31,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import EditUser from './pages/EditUser/EditUser'
 
+
 function App() {
     AOS.init()
     const [loading, setLoading] = useState(false)
@@ -128,6 +129,7 @@ function App() {
                             path="/user/:id"
                             element={isAdmin ? <EditUser /> : <NotFound />}
                         />
+                 
                     </Routes>
                 </>
             </section>

@@ -1,16 +1,19 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
-import { TiDelete } from 'react-icons/ti'
+import { TiDelete, TiDownload } from 'react-icons/ti'
 import { useDispatch } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import { AddAboutBrand, DeleteBriefFile } from '../../../redux/actions/projectActions'
+import {
+    AddAboutBrand,
+    DeleteBriefFile,
+} from '../../../redux/actions/projectActions'
+import { saveAs } from 'file-saver'
 
-import  pdfPng  from './file-pdf-solid.png'
+import pdfPng from './file-pdf-solid.png'
 
 const AboutTheBrand = ({ project }) => {
-    
     const initialState = {
         brandName: '',
         brandTageLine: '',
@@ -80,7 +83,7 @@ const AboutTheBrand = ({ project }) => {
     }
     const deleteUploadedHandler = (public_id) => {
         if (window.confirm('Are You Sure?')) {
-            dispatch(DeleteBriefFile({id,public_id}))
+            dispatch(DeleteBriefFile({ id, public_id }))
         }
     }
     const handleChange = (e) => {
@@ -94,8 +97,11 @@ const AboutTheBrand = ({ project }) => {
     }
     const updateHandler = () => {
         // basesArray = files.map((p) => p.base)
-         console.log('files', files)
+        console.log('files', files)
         dispatch(AddAboutBrand({ info, files, id }))
+    }
+    const saveFile = (url) => {
+        saveAs(url, 'example.pdf')
     }
     useEffect(() => {
         setInfo(project.clientBrief)
@@ -305,23 +311,40 @@ const AboutTheBrand = ({ project }) => {
                 )}
             </div>
 
-            <hr className='my-4 mx-auto w-[50%]'></hr>
+            <hr className="my-4 mx-auto w-[50%]"></hr>
             <div className=" flex flex-wrap w-full gap-4">
                 {info.briefFiles?.length > 0 && (
                     <>
                         {info.briefFiles.map((v, index) => (
-                            <div className="flex items-center justify-center relative h-[130px] bg-slate-700 rounded-md mt-3">
-                                <Link to={`${v?.secure_url}`} className="text-white  relative m-[16px]">
-                                    <img className='w-[90px] h-[90px] m-auto' src={pdfPng} alt="pdf"/>
-                                   {v.fileName}
-                                </Link>
-                                
-                                
+                            <div className="flex items-center justify-center relative w-[40%] h-[130px] bg-slate-700 rounded-md mt-3">
+                                <a
+                                    target="_blank"
+                                    href={`${v?.secure_url}`}
+                                    className="text-white  relative m-[16px]"
+                                    rel="noreferrer"
+                                >
+                                    <img
+                                        className="w-[90px] h-[90px] m-auto"
+                                        src={pdfPng}
+                                        alt="pdf"
+                                    />
+                                    {v.fileName}
+                                </a>
+
                                 <button
                                     className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
-                                    onClick={() => deleteUploadedHandler(v.public_id)}
+                                    onClick={() =>
+                                        deleteUploadedHandler(v.public_id)
+                                    }
                                 >
                                     <TiDelete className="m-auto text-white justify-center items-center" />
+                                </button>
+                                <button
+                                    className="bg-blue-600 rounded-br-md   rounded-tl-xl w-7 h-7  flex  absolute bottom-0 right-0 "
+                                    onClick={() => saveFile(v?.secure_url)}
+                                >
+                                    {' '}
+                                    <TiDownload className="m-auto text-white justify-center items-center" />
                                 </button>
                             </div>
                         ))}

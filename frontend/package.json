@@ -13,6 +13,7 @@
     "aos": "^2.3.4",
     "axios": "^0.27.2",
     "bson-objectid": "^2.0.3",
+    "file-saver": "^2.0.5",
     "framer-motion": "^6.3.3",
     "gantt-task-react": "^0.3.8",
     "jspdf": "^2.5.1",
