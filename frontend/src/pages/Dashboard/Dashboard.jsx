@@ -5,7 +5,11 @@ import Overview from './Overview'
 import Tracker from './Tracker'
 import SmartBrief from './SmartBrief/SmartBrief'
 import { useDispatch, useSelector } from 'react-redux'
-import { ADD_ABOUT_BRAND_RESET, PROJET_UPDATE_RESET } from '../../redux/actions/constants/projetconstants'
+import {
+    ADD_ABOUT_BRAND_RESET,
+    DELETE_BRIEF_FILE_RESET,
+    PROJET_UPDATE_RESET,
+} from '../../redux/actions/constants/projetconstants'
 import { Getprojectdetails } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 
@@ -16,9 +20,17 @@ const Dashboard = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
 
+    const AddAboutBrandReducer = useSelector(
+        (state) => state.AddAboutBrandReducer
+    )
+    const { success: successAddAboutBrand, loading: loadingAddAboutBrand } =
+        AddAboutBrandReducer
 
-    const AddAboutBrandReducer = useSelector((state) => state.AddAboutBrandReducer)
-    const { success : successAddAboutBrand, loading : loadingAddAboutBrand } = AddAboutBrandReducer
+    const DeleteBriefFileReducer = useSelector(
+        (state) => state.DeleteBriefFileReducer
+    )
+    const { success: successDeleteBriefFile, loading: loadingDeleteBriefFile } =
+    DeleteBriefFileReducer
 
     const projectUpdateReducer = useSelector(
         (state) => state.projectUpdateReducer
@@ -26,25 +38,28 @@ const Dashboard = () => {
     const { success: successUpdate, loading: loadingProjectUpdate } =
         projectUpdateReducer
 
-        const getUserReducer = useSelector((state) => state.getUserReducer)
-        const { loading, user, isAdmin } = getUserReducer
-
-
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
 
     useEffect(() => {
         if (successUpdate) {
-            dispatch({ type: PROJET_UPDATE_RESET }) }
-        if(successAddAboutBrand) {
-            dispatch({ type: ADD_ABOUT_BRAND_RESET }) 
+            dispatch({ type: PROJET_UPDATE_RESET })
+        }
+        if (successAddAboutBrand) {
+            dispatch({ type: ADD_ABOUT_BRAND_RESET })
 
             // dispatch({ type: PROJECT_DETAILS_RESET })
-            console.log('successUpdate')
-        } else {
+            // console.log('successUpdate')
+        } 
+        if(successDeleteBriefFile){
+            dispatch({ type: DELETE_BRIEF_FILE_RESET })
+        }
+        else {
             if (user.client || isAdmin) {
                 dispatch(Getprojectdetails(id))
             }
         }
-    }, [dispatch, id, isAdmin, successAddAboutBrand, successUpdate, user.client])
+    }, [dispatch, id, isAdmin, successAddAboutBrand, successDeleteBriefFile, successUpdate, user.client])
     const showPage = (i) => {
         // if (i == 1) {
         //     // setOverPage('')

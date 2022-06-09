@@ -35,7 +35,9 @@ const AboutTheBrand = ({ project }) => {
     const [files, setFiles] = useState([])
     const [info, setInfo] = useState(initialState)
 
-    const AddAboutBrandReducer = useSelector((state) => state.AddAboutBrandReducer)
+    const AddAboutBrandReducer = useSelector(
+        (state) => state.AddAboutBrandReducer
+    )
     const { success, loading } = AddAboutBrandReducer
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         acceptedFiles.forEach((file) => {
@@ -115,9 +117,9 @@ const AboutTheBrand = ({ project }) => {
         //     // dispatch({ type: PROJECT_DETAILS_RESET })
         //     console.log('successUpdate')
         // } else {
-           
+
         //         dispatch(Getprojectdetails(id))
-            
+
         // }
     }, [project.clientBrief])
 
@@ -272,37 +274,37 @@ const AboutTheBrand = ({ project }) => {
                     ></textarea>
                 </div>
             </div>
-            <div className="flex  justify-center gap-7">
-                <div className="flex  flex-col justify-start items-start text-gray-900 gap-1  ">
-                    <label className="text-lg font-medium text-white text-left ">
-                        More Info
-                    </label>
-                    <textarea
-                        className="rounded-md px-2 py-3   text-xs bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-[270px] h-[100px]"
-                        type="text"
-                        onChange={handleChange}
-                        name="moreInfo"
-                        value={info.moreInfo}
-                        placeholder="Add more info that you think is important"
-                    ></textarea>
-                </div>
+            <div className="w-full">
+            <div className="flex  flex-col justify-center  items-start text-gray-900 gap-1     ">
+                <label className="text-lg font-medium text-white text-left ">
+                    More Info
+                </label>
+                <textarea
+                    className="rounded-md px-2 py-3   text-base bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-full h-[100px]"
+                    type="text"
+                    onChange={handleChange}
+                    name="moreInfo"
+                    value={info.moreInfo}
+                    placeholder="Add more info that you think is important"
+                ></textarea>
+            </div>
+            </div>
 
-                <div className="flex  flex-col justify-start items-start text-gray-900 gap-1  ">
-                    <label className="text-lg font-medium text-white text-clip inline w-full ">
-                        Existing Files{' '}
-                        <span className="text-sm">(ex. Brand Guideline)</span>
-                    </label>
+            <div className="flex  flex-col justify-start items-start text-gray-900 gap-1 w-full  ">
+                <label className="text-lg font-medium text-white text-clip inline w-full ">
+                    Existing Files{' '}
+                    <span className="text-sm">(ex. Brand Guideline)</span>
+                </label>
 
-                    <div
-                        className="border-2 border-gray-400 border-dotted   px-2 py-3  m-auto bg-slate-200 rounded-md  w-[270px] h-[100px]"
-                        {...getRootProps()}
-                    >
-                        <input {...getInputProps()} />
-                        {isDragActive
-                            ? 'Drag Active'
-                            : 'Here you can drop ur file!'}
-                        <em>(Only *.pdf files will be accepted)</em>
-                    </div>
+                <div
+                    className="border-2 border-gray-400 border-dotted   px-2 py-3  m-auto bg-slate-200 rounded-md  w-full h-[100px]"
+                    {...getRootProps()}
+                >
+                    <input {...getInputProps()} />
+                    {isDragActive
+                        ? 'Drag Active'
+                        : 'Here you can drop ur file!'}
+                    <em>(Only *.pdf files will be accepted)</em>
                 </div>
             </div>
             <div className=" flex flex-wrap w-full">
