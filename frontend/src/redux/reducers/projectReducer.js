@@ -26,6 +26,16 @@ import {
     ADD_COL_MOODBOARD_SUCCESS,
     ADD_COL_MOODBOARD_FAIL,
     ADD_COL_MOODBOARDE_RESET,
+    ADD_ABOUT_BRAND_SUCCESS,
+    ADD_ABOUT_BRAND_FAIL,
+    ADD_ABOUT_BRAND_REQUEST,
+    DELETE_BRIEF_FILE_FAIL,
+    DELETE_BRIEF_FILE_SUCCESS,
+    DELETE_BRIEF_FILE_REQUEST,
+    DELETE_MOODB_IMG_FAIL,
+    DELETE_MOODB_IMG_SUCCESS,
+    DELETE_MOODB_IMG_REQUEST,
+    ADD_ABOUT_BRAND_RESET,
 } from '../actions/constants/projetconstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -165,9 +175,53 @@ export const AddColMoodBoardReducer = (state = { project: {} }, action) => {
                 project: action.payload,
             }
         case ADD_COL_MOODBOARD_FAIL:
-            return { loading: false, err: action.payload } 
+            return { loading: false, err: action.payload }
         case ADD_COL_MOODBOARDE_RESET:
             return { project: {}, success: false }
+        default:
+            return state
+    }
+}
+export const AddAboutBrandReducer = (state = { project: {} }, action) => {
+    switch (action.type) {
+        case ADD_ABOUT_BRAND_REQUEST:
+            return {
+                loading: true,
+            }
+        case ADD_ABOUT_BRAND_SUCCESS:
+            return {
+                loading: false,
+                success: true,
+                project: action.payload,
+            }
+        case ADD_ABOUT_BRAND_FAIL:
+            return { loading: false, err: action.payload }
+        case ADD_ABOUT_BRAND_RESET:
+            return { project: {}, success: false }
+        default:
+            return state
+    }
+}
+export const DeleteMoodBoardImgReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_MOODB_IMG_REQUEST:
+            return { loading: true }
+        case DELETE_MOODB_IMG_SUCCESS:
+            return { loading: false, success: true }
+        case DELETE_MOODB_IMG_FAIL:
+            return { loading: false, error: action.payload }
+        default:
+            return state
+    }
+}
+export const DeleteBriefFileReducer = (state = {}, action) => {
+    switch (action.type) {
+        case DELETE_BRIEF_FILE_REQUEST:
+            return { loading: true }
+        case DELETE_BRIEF_FILE_SUCCESS:
+            return { loading: false, success: true }
+        case DELETE_BRIEF_FILE_FAIL:
+            return { loading: false, error: action.payload }
         default:
             return state
     }

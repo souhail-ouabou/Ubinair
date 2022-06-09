@@ -65,6 +65,18 @@ const uploadCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    deleteImgMoodBoard: async (req, res) => {
+        try {
+            const { public_id } = req.body
+
+            const response = await cloudinary.uploader.destroy(public_id)
+
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+
 }
 
 module.exports = uploadCtrl

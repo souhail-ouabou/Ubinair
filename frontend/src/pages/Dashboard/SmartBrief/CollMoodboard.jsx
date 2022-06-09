@@ -3,7 +3,7 @@ import './SmartBrief.css'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
 import {  useDispatch } from 'react-redux'
-import { AddColMoodBoard } from '../../../redux/actions/projectActions'
+import { AddColMoodBoard, DeleteMoodBoardImg } from '../../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { TiDelete } from 'react-icons/ti'
@@ -66,7 +66,8 @@ const CollMoodboard = ({ project }) => {
     }
     const deleteUploadedHandler = (public_id) => {
         if (window.confirm('Are You Sure?')) {
-            // dispatch(DeleteVisualInspiration({ id, public_id }))
+             dispatch(DeleteMoodBoardImg({ id, public_id }))
+            
         }
     }
 
@@ -152,7 +153,7 @@ const CollMoodboard = ({ project }) => {
                                     rel="noreferrer"
                                 >
                                     <img
-                                        className="w-[90px] h-[90px] m-auto"
+                                        className="w-[110px] h-[110px] m-auto"
                                         src={v.secure_url}
                                         alt="pdf"
                                     />

@@ -40,16 +40,6 @@ const projetsCtrl = {
                 description: description,
                 subtype: subtype,
                 type: type,
-                clientBrief: {
-                    visualInspiration: [
-                        {
-                            id: 0,
-                            secure_url: ' ',
-                            format: ' ',
-                            sizeInBytes: ' ',
-                        },
-                    ]
-                },
             })
             const user = await User.findById(req.user.id)
             if (user) {
@@ -205,7 +195,7 @@ const projetsCtrl = {
             const { info } = req.body
             // console.log('--------------req body -------------', req.body)
             const visualInspirationReq = req.body.data.map((p) => ({
-                id: p.public_id,
+                public_id: p.public_id,
                 format: p.format,
                 startDate: p.start,
                 secure_url: p.secure_url,
@@ -216,7 +206,7 @@ const projetsCtrl = {
 
             if (projet) {
                 projet.clientBrief.visualInspiration =
-                    visualInspirationReq || projet.clientBrief.visualInspiration
+                projet.clientBrief.visualInspiration.concat(visualInspirationReq)  || projet.clientBrief.visualInspiration
                 projet.clientBrief.websiteInspiration =
                     info.webinspiration || projet.clientBrief.websiteInspiration
                 const updatedProject = await projet.save()
@@ -233,7 +223,7 @@ const projetsCtrl = {
             const { info } = req.body
             console.log('--------------req body -------------', req.body)
             const briedFilesReq = req.body.data.map((p) => ({
-                id: p.public_id,
+                public_id: p.public_id,
                 format: p.format,
                 startDate: p.start,
                 secure_url: p.secure_url,
@@ -285,15 +275,37 @@ const projetsCtrl = {
         }
     },
     deleteBriefFileProject: async (req, res) => {
-        const {public_id } = req.body
+        const { public_id } = req.body
         console.log('--------------req body -------------', req.body)
         const project = await Projets.findById(req.params.id)
         if (project) {
+            const newBriefFiles = project.clientBrief.briefFiles.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.clientBrief.briefFiles =
+                newBriefFiles || projet.clientBrief.briefFiles
 
-            
-            const newBriefFiles = project.clientBrief.briefFiles.filter((fw) => fw.public_id  !== public_id)
-            project.clientBrief.briefFiles = newBriefFiles ||  projet.clientBrief.briefFiles
-            
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        }
+
+        // } else {
+        //     // status it's 500 by default cuz of errHandler
+        //     res.status(404)
+        //     throw new Error('Project not found')
+        // }
+    },
+    deleteImgMBProject: async (req, res) => {
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            const newvisualInspirations = project.clientBrief.visualInspiration.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.clientBrief.visualInspiration =
+            newvisualInspirations || projet.clientBrief.visualInspiration
+
             const updatedProject = await project.save()
             res.json({ message: 'File Removed' })
         }

@@ -2,16 +2,18 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { FaTrash } from 'react-icons/fa'
 import { TiDelete, TiDownload } from 'react-icons/ti'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import {
     AddAboutBrand,
     DeleteBriefFile,
+    Getprojectdetails,
 } from '../../../redux/actions/projectActions'
 import { saveAs } from 'file-saver'
 
 import pdfPng from './file-pdf-solid.png'
+import { ADD_ABOUT_BRAND_RESET } from '../../../redux/actions/constants/projetconstants'
 
 const AboutTheBrand = ({ project }) => {
     const initialState = {
@@ -32,6 +34,9 @@ const AboutTheBrand = ({ project }) => {
     const { id } = params
     const [files, setFiles] = useState([])
     const [info, setInfo] = useState(initialState)
+
+    const AddAboutBrandReducer = useSelector((state) => state.AddAboutBrandReducer)
+    const { success, loading } = AddAboutBrandReducer
     const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
         acceptedFiles.forEach((file) => {
             //convert file to base64
@@ -105,6 +110,15 @@ const AboutTheBrand = ({ project }) => {
     }
     useEffect(() => {
         setInfo(project.clientBrief)
+        // if (success) {
+        //     dispatch({ type: ADD_ABOUT_BRAND_RESET })
+        //     // dispatch({ type: PROJECT_DETAILS_RESET })
+        //     console.log('successUpdate')
+        // } else {
+           
+        //         dispatch(Getprojectdetails(id))
+            
+        // }
     }, [project.clientBrief])
 
     return (

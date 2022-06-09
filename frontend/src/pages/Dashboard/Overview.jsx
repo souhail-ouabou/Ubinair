@@ -41,11 +41,6 @@ export default function Overview({ indexPage }) {
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
 
-    const projectUpdateReducer = useSelector(
-        (state) => state.projectUpdateReducer
-    )
-    const { success: successUpdate, loading: loadingProjectUpdate } =
-        projectUpdateReducer
 
     const [view, setView] = useState(ViewMode.Day)
     // const [tasks, setTasks] = useState(initTasks())
@@ -135,6 +130,9 @@ export default function Overview({ indexPage }) {
         type: 'project',
     }
 
+    
+
+
     const [taskss, setTaskss] = useState([initialtaskState])
     const [clientTaskss, setclientTaskss] = useState([
         {
@@ -144,17 +142,7 @@ export default function Overview({ indexPage }) {
         },
     ])
 
-    useEffect(() => {
-        if (successUpdate) {
-            dispatch({ type: PROJET_UPDATE_RESET })
-            // dispatch({ type: PROJECT_DETAILS_RESET })
-            console.log('successUpdate')
-        } else {
-            if (user.client || isAdmin) {
-                dispatch(Getprojectdetails(id))
-            }
-        }
-    }, [dispatch, id, user.client])
+
     useEffect(() => {
         if (projectDetails.devis) {
             const testarr = projectDetails.specification.map((p) => ({

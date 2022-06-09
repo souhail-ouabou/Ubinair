@@ -20,6 +20,15 @@ import {
     ADD_COL_MOODBOARD_REQUEST,
     ADD_COL_MOODBOARD_FAIL,
     ADD_COL_MOODBOARD_SUCCESS,
+    ADD_ABOUT_BRAND_SUCCESS,
+    ADD_ABOUT_BRAND_FAIL,
+    DELETE_MOODB_IMG_REQUEST,
+    DELETE_MOODB_IMG_SUCCESS,
+    DELETE_MOODB_IMG_FAIL,
+    DELETE_BRIEF_FILE_REQUEST,
+    DELETE_BRIEF_FILE_SUCCESS,
+    DELETE_BRIEF_FILE_FAIL,
+    ADD_ABOUT_BRAND_REQUEST,
 } from './constants/projetconstants'
 import { toast } from 'react-toastify'
 
@@ -319,7 +328,7 @@ export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) =
 }
 export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, getState) => {
     try {
-        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
+        dispatch({ type: ADD_ABOUT_BRAND_REQUEST }) 
         toast.dismiss()
         toast.loading('Please wait...', {
             position: toast.POSITION.TOP_CENTER,
@@ -337,7 +346,7 @@ export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, get
          console.log("after then :",data)
          const  {res}  = await axios.post(`/projets/addaboutbrand/${id}`, {info,data}, config)
         // console.log("res : ",res)
-        dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
+        dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
 
         
         toast.dismiss()
@@ -347,7 +356,7 @@ export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, get
         
     } catch (err) {
         dispatch({
-            type: ADD_COL_MOODBOARD_FAIL,
+            type: ADD_ABOUT_BRAND_FAIL,
             payload:
             err.response && err.response.data.message
                     ? err.response.data.message
@@ -360,9 +369,44 @@ export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, get
     }
 }
 
+export const DeleteMoodBoardImg = ({id,public_id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_MOODB_IMG_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_moodbimg",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deleteimgmoodb/${id}`,{public_id}, config)
+        dispatch({
+            type: DELETE_MOODB_IMG_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_MOODB_IMG_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
 export const DeleteBriefFile = ({id,public_id}) => async (dispatch, getState) => {
     try {
-        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
+        dispatch({ type: DELETE_BRIEF_FILE_REQUEST }) 
         toast.dismiss()
         toast.loading('Please wait...', {
             position: toast.POSITION.TOP_CENTER,
@@ -379,7 +423,7 @@ export const DeleteBriefFile = ({id,public_id}) => async (dispatch, getState) =>
         console.log("after then :",data)
         const  {res}  = await axios.post(`/projets/deletebrieffile/${id}`,{public_id}, config)
         dispatch({
-            type: ADD_COL_MOODBOARD_SUCCESS,
+            type: DELETE_BRIEF_FILE_SUCCESS,
         })
         toast.dismiss()
         toast.success('Succès Delete !', {
@@ -387,7 +431,7 @@ export const DeleteBriefFile = ({id,public_id}) => async (dispatch, getState) =>
         })
     } catch (error) {
         dispatch({
-            type: ADD_COL_MOODBOARD_FAIL,
+            type: DELETE_BRIEF_FILE_FAIL,
             payload:
                 error.response && error.response.data.message
                     ? error.response.data.message
