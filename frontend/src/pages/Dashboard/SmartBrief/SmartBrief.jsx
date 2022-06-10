@@ -15,18 +15,18 @@ const SmartBrief = ({ indexPage }) => {
     } = GetProjectDetailsReducer
     return (
         <>
+            <main className={indexPage === 3 ? ' flex-1  pb-8  mt-14 ' : 'hidden'} >
          {loadingProjectDetails  ? (
-                <div className=" text-white m-auto ">Loaaading ...</div>
+                <div className=" text-white m-auto ">Loaaading SB ...</div>
             ) : projectDetails.specification?.length === 0 ? (
                 <div className="text-white "></div>
             ) : (
-            <main className={indexPage === 3 ? ' flex-1  pb-8  mt-14 ' : 'hidden'} >
                 <div>
                     <AboutTheBrand project={projectDetails}/>
                     <CollMoodboard project={projectDetails}/>
                 </div>
-            </main>
               )}
+            </main>
         </>
     )
 }

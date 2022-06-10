@@ -30,12 +30,12 @@ export default function Overview({ indexPage }) {
     const GetProjectDetailsReducer = useSelector(
         (state) => state.GetProjectDetailsReducer
     )
-    const auth = useSelector((state) => state.auth)
     const {
         project: projectDetails,
         loading: loadingProjectDetails,
         error,
     } = GetProjectDetailsReducer
+    const auth = useSelector((state) => state.auth)
     const { userInfo } = auth
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
@@ -183,9 +183,8 @@ export default function Overview({ indexPage }) {
 
     return (
         <>
-            {loadingProjectDetails || loading ? (
-                <div className=" text-white m-auto ">Loaaading ...</div>
-            ) : projectDetails.specification?.length === 0 ? (
+           
+            { projectDetails.specification?.length === 0 ? (
                 <div className="text-white "></div>
             ) : (
                 <main
@@ -249,7 +248,7 @@ export default function Overview({ indexPage }) {
                     {loadingProjectDetails ? (
                         <div className="col-right text-white">
                             {' '}
-                            Loaaading ...
+                            Loaaading Overview...
                         </div>
                     ) : error ? (
                         <div>errorMyProjects</div>

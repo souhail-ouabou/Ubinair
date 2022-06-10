@@ -7,7 +7,9 @@ import SmartBrief from './SmartBrief/SmartBrief'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     ADD_ABOUT_BRAND_RESET,
+    ADD_COL_MOODBOARDE_RESET,
     DELETE_BRIEF_FILE_RESET,
+    DELETE_MOODB_IMG_RESET,
     PROJET_UPDATE_RESET,
 } from '../../redux/actions/constants/projetconstants'
 import { Getprojectdetails } from '../../redux/actions/projectActions'
@@ -26,11 +28,23 @@ const Dashboard = () => {
     const { success: successAddAboutBrand, loading: loadingAddAboutBrand } =
         AddAboutBrandReducer
 
+    const AddColMoodBoardReducer = useSelector(
+        (state) => state.AddColMoodBoardReducer
+    )
+    const { success: successAddColMoodBoard, loading: loadingAddColMoodBoard } =
+        AddColMoodBoardReducer
+
     const DeleteBriefFileReducer = useSelector(
         (state) => state.DeleteBriefFileReducer
     )
     const { success: successDeleteBriefFile, loading: loadingDeleteBriefFile } =
-    DeleteBriefFileReducer
+        DeleteBriefFileReducer
+
+    const DeleteMoodBoardImgReducer = useSelector(
+        (state) => state.DeleteMoodBoardImgReducer
+    )
+    const { success: successDeleteMoodBoardImg, loading: loadingDeleteMoodBoardImg } =
+    DeleteMoodBoardImgReducer
 
     const projectUpdateReducer = useSelector(
         (state) => state.projectUpdateReducer
@@ -47,19 +61,21 @@ const Dashboard = () => {
         }
         if (successAddAboutBrand) {
             dispatch({ type: ADD_ABOUT_BRAND_RESET })
-
-            // dispatch({ type: PROJECT_DETAILS_RESET })
-            // console.log('successUpdate')
-        } 
-        if(successDeleteBriefFile){
+        }
+        if (successDeleteBriefFile) {
             dispatch({ type: DELETE_BRIEF_FILE_RESET })
         }
-        else {
+        if (successAddColMoodBoard) {
+            dispatch({ type: ADD_COL_MOODBOARDE_RESET })
+        } 
+        if (successDeleteMoodBoardImg) {
+            dispatch({ type: DELETE_MOODB_IMG_RESET })
+        } else {
             if (user.client || isAdmin) {
                 dispatch(Getprojectdetails(id))
             }
         }
-    }, [dispatch, id, isAdmin, successAddAboutBrand, successDeleteBriefFile, successUpdate, user.client])
+    }, [dispatch, id, isAdmin, successAddAboutBrand, successAddColMoodBoard, successDeleteBriefFile, successDeleteMoodBoardImg, successUpdate, user.client])
     const showPage = (i) => {
         // if (i == 1) {
         //     // setOverPage('')
@@ -93,6 +109,7 @@ const Dashboard = () => {
 
     return (
         <>
+        
             <div className="w-full min-h-screen flex flex-row gap-3 z-10 ">
                 <SideBar showPage={(x) => showPage(x)} />
                 <Overview /*state={OverviewPage} */ indexPage={indexPage} />

@@ -180,26 +180,6 @@ export const UpdateTaskssClient = (id, taskss) => async (dispatch) => {
         })
     }
 }
-
-// export const UpdateTasksProject = (id, tasksProject) => async (dispatch) => {
-//     try {
-//         dispatch({ type: PROJET_UPDATE_REQUEST })
-
-//         const { data } = await axios.put(`/projets/updatetasksprj/${id}`, {tasksProject,id})
-
-//         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
-//     } catch (error) {
-//         dispatch({
-//             type: PROJET_UPDATE_FAIL,
-//             payload:
-//                 error.response && error.response.data.message
-//                     ? error.response.data.message
-//                     : error.message,
-//         })
-//     }
-// }
-
-
 export const UpdateSpecProject = (id,index,specification) => async (dispatch) => {
     try {
         dispatch({ type: PROJET_UPDATE_REQUEST })
@@ -217,7 +197,6 @@ export const UpdateSpecProject = (id,index,specification) => async (dispatch) =>
         })
     }
 }
-
 export const listAllProjects = () => async (dispatch, getState) => {
     try {
         dispatch({
@@ -308,7 +287,7 @@ export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) =
         dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
         
         toast.dismiss()
-        toast.success('Succès Delete !', {
+        toast.success('Succès Update !', {
             position: toast.POSITION.TOP_CENTER,
         })
         
@@ -350,7 +329,7 @@ export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, get
 
         
         toast.dismiss()
-        toast.success('Succès Delete !', {
+        toast.success('Succès Update !', {
             position: toast.POSITION.TOP_CENTER,
         })
         
@@ -368,7 +347,6 @@ export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, get
         })
     }
 }
-
 export const DeleteMoodBoardImg = ({id,public_id}) => async (dispatch, getState) => {
     try {
         dispatch({ type: DELETE_MOODB_IMG_REQUEST }) 

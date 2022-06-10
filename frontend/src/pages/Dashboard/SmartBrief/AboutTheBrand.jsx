@@ -13,6 +13,7 @@ import {
 import { saveAs } from 'file-saver'
 
 import pdfPng from './file-pdf-solid.png'
+import uploadImg from './upload-icon.png'
 import { ADD_ABOUT_BRAND_RESET } from '../../../redux/actions/constants/projetconstants'
 
 const AboutTheBrand = ({ project }) => {
@@ -81,6 +82,7 @@ const AboutTheBrand = ({ project }) => {
         accept: {
             '.pdf': [],
         },
+        maxSize: 10000000,
     })
 
     const deleteDroppedHandler = (file) => {
@@ -112,18 +114,10 @@ const AboutTheBrand = ({ project }) => {
     }
     useEffect(() => {
         setInfo(project.clientBrief)
-        // if (success) {
-        //     dispatch({ type: ADD_ABOUT_BRAND_RESET })
-        //     // dispatch({ type: PROJECT_DETAILS_RESET })
-        //     console.log('successUpdate')
-        // } else {
-
-        //         dispatch(Getprojectdetails(id))
-
-        // }
     }, [project.clientBrief])
 
     return (
+        
         <top className="glass flex flex-col items-start w-3/5 ">
             <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
                 About the brand
@@ -268,26 +262,26 @@ const AboutTheBrand = ({ project }) => {
                         name="competitors"
                         value={info.competitors}
                         placeholder="List your main competitors here:
-            Competitor 1
-            Competitor 2
-            Competitor 3"
+                Competitor 1
+                Competitor 2
+                Competitor 3"
                     ></textarea>
                 </div>
             </div>
             <div className="w-full">
-            <div className="flex  flex-col justify-center  items-start text-gray-900 gap-1     ">
-                <label className="text-lg font-medium text-white text-left ">
-                    More Info
-                </label>
-                <textarea
-                    className="rounded-md px-2 py-3   text-base bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-full h-[100px]"
-                    type="text"
-                    onChange={handleChange}
-                    name="moreInfo"
-                    value={info.moreInfo}
-                    placeholder="Add more info that you think is important"
-                ></textarea>
-            </div>
+                <div className="flex  flex-col justify-center  items-start text-gray-900 gap-1     ">
+                    <label className="text-lg font-medium text-white text-left ">
+                        More Info
+                    </label>
+                    <textarea
+                        className="rounded-md px-2 py-3   text-base bg-slate-200  focus:border-blue-500 focus:bg-slate-300 focus:outline-none  text-gray-500 flex-2 w-full h-[100px]"
+                        type="text"
+                        onChange={handleChange}
+                        name="moreInfo"
+                        value={info.moreInfo}
+                        placeholder="Add more info that you think is important"
+                    ></textarea>
+                </div>
             </div>
 
             <div className="flex  flex-col justify-start items-start text-gray-900 gap-1 w-full  ">
@@ -295,16 +289,28 @@ const AboutTheBrand = ({ project }) => {
                     Existing Files{' '}
                     <span className="text-sm">(ex. Brand Guideline)</span>
                 </label>
-
                 <div
-                    className="border-2 border-gray-400 border-dotted   px-2 py-3  m-auto bg-slate-200 rounded-md  w-full h-[100px]"
+                    className="flex items-center justify-center border-2 border-purple-700 border-dotted   px-2 py-1  m-auto bg-slate-200 rounded-md  w-full h-[160px]"
                     {...getRootProps()}
                 >
                     <input {...getInputProps()} />
-                    {isDragActive
-                        ? 'Drag Active'
-                        : 'Here you can drop ur file!'}
-                    <em>(Only *.pdf files will be accepted)</em>
+                    {isDragActive ? (
+                        <div>
+                            <p>Drag is Active</p>
+                        </div>
+                    ) : (
+                        <div className="text-center ">
+                            <img
+                                className="w-[100px] m-auto"
+                                src={uploadImg}
+                                alt=""
+                            />
+                            <p>Click or Drag & Drop your files here</p>
+                            <em className="text-slate-800">
+                                (Only *.pdf files will be accepted)
+                            </em>
+                        </div>
+                    )}
                 </div>
             </div>
             <div className=" flex flex-wrap w-full">

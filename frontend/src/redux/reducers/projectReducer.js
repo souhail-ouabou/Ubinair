@@ -37,6 +37,7 @@ import {
     DELETE_MOODB_IMG_REQUEST,
     ADD_ABOUT_BRAND_RESET,
     DELETE_BRIEF_FILE_RESET,
+    DELETE_MOODB_IMG_RESET
 } from '../actions/constants/projetconstants'
 export const ProjetcCreateReducer = (state = {}, action) => {
     switch (action.type) {
@@ -211,6 +212,8 @@ export const DeleteMoodBoardImgReducer = (state = {}, action) => {
             return { loading: false, success: true }
         case DELETE_MOODB_IMG_FAIL:
             return { loading: false, error: action.payload }
+    case DELETE_MOODB_IMG_RESET:
+        return { project: {}, success: false }
         default:
             return state
     }
