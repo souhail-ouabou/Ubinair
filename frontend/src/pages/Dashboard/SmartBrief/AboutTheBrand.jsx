@@ -13,8 +13,8 @@ import {
 } from '../../../redux/actions/projectActions'
 import { saveAs } from 'file-saver'
 
-import pdfPng from './file-pdf-solid.png'
-import uploadImg from './upload-icon.png'
+import pdfPng from '../Assets/file-pdf-solid.png'
+import uploadImg from '../Assets/upload-icon.png'
 import { ADD_ABOUT_BRAND_RESET } from '../../../redux/actions/constants/projetconstants'
 
 const AboutTheBrand = ({ project }) => {
@@ -53,8 +53,8 @@ const AboutTheBrand = ({ project }) => {
             }
             reader.readAsDataURL(file)
         })
-        console.log('acceptedFiles', acceptedFiles)
-        console.log('rejectedFiles', rejectedFiles)
+        // console.log('acceptedFiles', acceptedFiles)
+        // console.log('rejectedFiles', rejectedFiles)
         let errArray
         let f
         let errmsg

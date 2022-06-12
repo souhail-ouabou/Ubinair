@@ -25,4 +25,6 @@ router.post('/addbrief/:id', auth,    projetCtrl.addBriefProject)
 router.post('/addaboutbrand/:id', auth, projetCtrl.addBrandProject)
 router.post('/deletebrieffile/:id', auth, projetCtrl.deleteBriefFileProject)
 router.post('/deleteimgmoodb/:id', auth, projetCtrl.deleteImgMBProject)
+router.post('/deletequotes/:id', auth, projetCtrl.deleteQuotesProject)
+router.post('/addquotes/:id', auth, projetCtrl.addQuotesProject)
 module.exports = router

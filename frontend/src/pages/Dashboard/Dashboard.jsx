@@ -15,6 +15,7 @@ import {
 } from '../../redux/actions/constants/projetconstants'
 import { Getprojectdetails } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
+import QuotesInv from './QuotesInvoices/QuotesInv'
 
 const Dashboard = () => {
     // const [OverviewPage, setOverPage] = useState('')
@@ -93,6 +94,9 @@ const Dashboard = () => {
             case 4:
                 setIndexPage(i)
                 break
+            case 5:
+                    setIndexPage(i)
+                    break
             default:
                 break
         }
@@ -107,6 +111,7 @@ const Dashboard = () => {
                 <Tracker /*state={trackerPage}*/ indexPage={indexPage} />
                 <SmartBrief /*state={trackerPage}*/ indexPage={indexPage} />
                 <Content indexPage={indexPage} />
+                <QuotesInv /*state={trackerPage}*/ indexPage={indexPage} />
             </div>
         </>
     )

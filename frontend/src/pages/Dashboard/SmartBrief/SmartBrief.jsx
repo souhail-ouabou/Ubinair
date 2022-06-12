@@ -14,7 +14,7 @@ const SmartBrief = ({ indexPage }) => {
         loading: loadingProjectDetails,
         error,
     } = GetProjectDetailsReducer
-    return (
+    return ( 
         <>
             <main className={indexPage === 3 ? ' flex-1  pb-8  mt-14 ml-80' : 'hidden'} >
          {loadingProjectDetails  ? (

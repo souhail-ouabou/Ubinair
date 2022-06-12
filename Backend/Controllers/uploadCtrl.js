@@ -54,7 +54,7 @@ const uploadCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
-    deleteAboutBrand: async (req, res) => {
+    deleteFile: async (req, res) => {
         try {
             const { public_id } = req.body
 
@@ -76,7 +76,34 @@ const uploadCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    uploadQuotes: async (req, res) => {
+        try {
+            const { files } = req.body
+              console.log('req body : ', req.body)
+            let promises = []
+            files.forEach(async (file) => {
+                promises.push(
+                    cloudinary.v2.uploader.upload(file.base, {
+                        folder: 'Ubinair/Quotes',
+                        tags: file.file.path,
+                        //context : file.file.path,
 
+                        // flags: 'attachment:your_pdf',
+                        // fetch_format: 'auto'
+                        // resource_type: 'raw',
+                        // raw_convert: 'aspose',
+                    })
+                )
+
+                // newData.push(promises,file.file.path)
+            })
+
+            const response = await Promise.all(promises)
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
 }
 
 module.exports = uploadCtrl
