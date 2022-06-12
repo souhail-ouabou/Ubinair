@@ -30,17 +30,21 @@ export default function SideBar(props) {
             </div>
         </li>
         <li className="m-auto">
-            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group"
+            
+            onClick={()=>props.showPage(3)}>
                 {/* <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" /> */}
                
-                <span>Brief</span>
+                <span> Smart Brief</span>
             </div>
         </li>
         <li className="m-auto">
-            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group">
+            <div className="flex gap-x-4 items-center py-2 text-white hover:text-indigo-600 group"
+            
+            onClick={()=>props.showPage(4)}>
                 {/* <span class="absolute w-1.5 h-8 bg-indigo-600 rounded-r-full left-0 scale-y-0 -translate-x-full group-hover:scale-y-100 group-hover:translate-x-0 transition-transform ease-in-out" /> */}
                 
-                <span>Collab</span>
+                <span>Content</span>
             </div>
         </li>
         <li className="m-auto">

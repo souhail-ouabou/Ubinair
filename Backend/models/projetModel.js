@@ -22,6 +22,17 @@ const clientTaskssSchema = mongoose.Schema(
     }
 )
 
+const contentsSchema = mongoose.Schema(
+    {
+        id: { type: String, required: true },
+        title: { type: String, required: false },
+        description: { type: String, required: false, default: false },
+    },
+    {
+        timestamps: true,
+    }
+)
+
 const projectTasksSchema = mongoose.Schema(
     {
         id: { type: String, required: true },
@@ -36,6 +47,16 @@ const projectTasksSchema = mongoose.Schema(
     }
 )
 
+const projectFontStylesSchema = mongoose.Schema(
+    {
+        title: { type: String, required: true},
+        font: { type: String, required: true},
+        size: { type: String, required: true},
+    },
+    {
+        timestamps: true,
+    }
+)
 const specificationSchema = mongoose.Schema({
   
     title: { type: String, required: true },
@@ -65,6 +86,23 @@ const specificationSchema = mongoose.Schema({
     
 })
 
+
+const projectColorHexSchema = mongoose.Schema(
+    {
+        id: { type: String, required: true },
+        hexCode: { type: String, required: true},
+      
+    },
+   
+)
+
+const projectColorsSchema = mongoose.Schema(
+    {
+        title: { type: String, required: true},
+        hexs:[projectColorHexSchema],
+    },
+  
+)
 const projetSchema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
@@ -118,6 +156,8 @@ const projetSchema = mongoose.Schema({
     },
     features: [featuresSchema],
     specification: [specificationSchema],
+    projectColors:[projectColorsSchema],
+    projectFonts:[projectFontStylesSchema],
     totalProgresState: {
         type: Number,
         required: true,
@@ -126,6 +166,7 @@ const projetSchema = mongoose.Schema({
         minimum: 0,
     },
     clientTaskss: [clientTaskssSchema],
+    contents:[contentsSchema],
     // projectTasks:[projectTasksSchema],
     finishedAt: {
         type: Date,

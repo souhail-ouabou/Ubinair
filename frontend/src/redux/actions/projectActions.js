@@ -206,6 +206,92 @@ export const UpdateSpecProject = (id,index,specification) => async (dispatch) =>
     }
 }
 
+export const UpdateColorsProject = (id,colorsState) => async (dispatch) => {
+    try {
+        dispatch({ type: PROJET_UPDATE_REQUEST })
+        
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { data } = await axios.put(`/projets/updateprjcolors/${id}`, {colorsState,id})
+
+        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+
+        toast.dismiss()
+        toast.success('Colors saved with success !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
+export const UpdateFontsProject = (id,fontStyles) => async (dispatch) => {
+    try {
+        dispatch({ type: PROJET_UPDATE_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { data } = await axios.put(`/projets/updateprjfonts/${id}`, {fontStyles,id})
+
+      
+
+        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+
+        toast.dismiss()
+        toast.success('Font styles saved with success !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
+export const UpdateContentsProject = (id,Contents) => async (dispatch) => {
+    try {
+        dispatch({ type: PROJET_UPDATE_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { data } = await axios.put(`/projets/updateprjcontents/${id}`, {Contents,id})
+
+      
+
+        dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
+
+        toast.dismiss()
+        toast.success('Contents saved with success !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: PROJET_UPDATE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
 export const listAllProjects = () => async (dispatch, getState) => {
     try {
         dispatch({

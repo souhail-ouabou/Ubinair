@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react'
 
 import { FaRegEdit } from 'react-icons/fa'
 import { BsQuestionLg } from 'react-icons/bs'
-import { ViewMode, Gantt } from 'gantt-task-react'
+
 import {motion}  from 'framer-motion'
 import 'gantt-task-react/dist/index.css'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
@@ -10,15 +10,16 @@ import {HashLink as Link} from 'react-router-hash-link'
 import { UpdateSpecProject } from '../../redux/actions/projectActions'
 import { ObjectID } from 'bson';
 import { useSelector, useDispatch } from 'react-redux'
+import { useParams } from 'react-router-dom'
 import moment from 'moment'
 
 import './style.css'
 
 import {
     Getprojectdetails,
-    UpdateProject,
+
 } from '../../redux/actions/projectActions'
-import { useParams } from 'react-router-dom'
+
 // Import react-circular-progressbar module and styles
 import {
     CircularProgressbar,
@@ -32,7 +33,7 @@ import 'react-circular-progressbar/dist/styles.css'
 
 const Tracker = (props) => {
 
-      const dispatch = useDispatch()
+    const dispatch = useDispatch()
     const { id } = useParams()
     
     const GetProjectDetailsReducer = useSelector(
@@ -41,11 +42,10 @@ const Tracker = (props) => {
     const {
         project: projectDetails,
         loading: loadingProjectDetails,
-        error,
     } = GetProjectDetailsReducer
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-const { loading, user ,isAdmin} = getUserReducer
+    const { user,isAdmin} = getUserReducer
 
     useEffect(() => {
         if (user.client) {
@@ -54,26 +54,29 @@ const { loading, user ,isAdmin} = getUserReducer
     }, [user.client])
 
 
-  
-    const [addedTaskTitle,setAddedTaskTitle]=useState('')
-    const [addedTaskDescription,setAddedTaskDescription]=useState('')
-    const [addedTaskState,setAddedTaskState]=useState('')
-    const [addedTaskDate,setAddedTaskDate]=useState('')
-    const [EditedTaskId,setEditedTaskId]=useState('')
-    const [EditedTaskTitle,setEditedTaskTitle]=useState('')
-    const [EditedTaskDescription,setEditedTaskDescription]=useState('')
-    const [EditedTaskState,setEditedTaskState]=useState('')
-    const [EditedTaskDate,setEditedTaskDate]=useState('')
+    const [operatedObj,setOpObj]=useState({id:'',title:'',state:'',date:'',description:''})
     const [Admin,setIsadmin]=useState(false)
     const [specification, setSpec] = useState([])
-    
+    const [title,setTitle]=React.useState('')
+    const [showForm, setShowForm] = useState(false);
+    const [edit, setEdit] = useState(false);
+    const [editCirBar, setEditCirBar] = useState(false);
+    const [showFormUpdate, setShowFormUpdate] = useState(false);
+    const today=
+      new Intl.DateTimeFormat("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "2-digit"
+    }).format(new Date())
+
+    const [index,setIndex]=React.useState()
   
 
    
 
   
 
-
+    // change state of task 
     let changeState=(id) => {
         
        if(!Admin)return;
@@ -113,24 +116,10 @@ const { loading, user ,isAdmin} = getUserReducer
            
           };
 
-    const percentage=60;
-    const [title,setTitle]=React.useState('')
-    const [showForm, setShowForm] = useState(false);
-    const [edit, setEdit] = useState(false);
-    const [editCirBar, setEditCirBar] = useState(false);
-    const [showFormUpdate, setShowFormUpdate] = useState(false);
-    const today=
-      new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-    }).format(new Date())
-
-    const [view, setView] = React.useState(ViewMode.Day)
-    const [index,setIndex]=React.useState()
+   
 
     
-
+   //tabulation
    const handleClickShow=(index)=>{
     console.log('index --------------'+index);
       
@@ -186,153 +175,141 @@ const { loading, user ,isAdmin} = getUserReducer
                             }, [specification])
 
     
-    let calculCircle=()=>{
-     
-        if(title=='') return;
-        let sumProgV=0
-        let sumEstiV=0
-  
-        specification[index].projectTasks.map((item)=>{
-          
-             if(item.state==-1){
-                
-              sumProgV+=0;
-              
-              if(moment(item.date)<Date.now()){ sumEstiV+=100}
-
-             }else if(item.state==0){
-
-                sumProgV+=50
-              
-                if(moment(item.date)<Date.now()) {sumEstiV+=100}
-
-             }else if(item.state==1){
-              
-                sumProgV+=100
-                
-             if(moment(item.date)<Date.now()){sumEstiV+=100}
-  
-             }
-          }
-          ) 
-
-          let newProgValue;
-          let newEstimValue;
-          let length=specification[index].projectTasks.length
-      
-            length?newProgValue=sumProgV/length:newProgValue=0
-            length?newEstimValue=sumEstiV/length:newEstimValue=0
-
-
-          setSpec(
-            specification.map((s)=>{
-                if(s.title==title){
-                   return{...s,progresState:newProgValue,estimatedState:newEstimValue}
-                }
-               
-                return s;
+        //calculate estimated and progress state                   
+        let calculCircle=()=>{
+        
+            if(title=='') return;
+            let sumProgV=0
+            let sumEstiV=0
     
+            specification[index].projectTasks.map((item)=>{
+            
+                if(item.state==-1){
+                    
+                sumProgV+=0;
+                
+                if(moment(item.date)<Date.now()){ sumEstiV+=100}
+
+                }else if(item.state==0){
+
+                    sumProgV+=50
+                
+                    if(moment(item.date)<Date.now()) {sumEstiV+=100}
+
+                }else if(item.state==1){
+                
+                    sumProgV+=100
+                    
+                if(moment(item.date)<Date.now()){sumEstiV+=100}
+    
+                }
             }
-          )
-        )
-        setEditCirBar(true)
-    }
+            ) 
+
+            let newProgValue;
+            let newEstimValue;
+            let length=specification[index].projectTasks.length
+        
+                length?newProgValue=sumProgV/length:newProgValue=0
+                length?newEstimValue=sumEstiV/length:newEstimValue=0
+
+
+            setSpec(
+                specification.map((s)=>{
+                    if(s.title==title){
+                    return{...s,progresState:newProgValue,estimatedState:newEstimValue}
+                    }
+                
+                    return s;
+        
+                }
+            )
+            )
+            setEditCirBar(true)
+        }
 
 
 
-    let columnWidth = 60
-    if (view === ViewMode.Month) {
-        columnWidth = 300
-    } else if (view === ViewMode.Week) {
-        columnWidth = 250
-    }
-
-   const addbtnHandler=()=>{
-        setShowFormUpdate(false)
-        setShowForm(!showForm)
-        console.log('kan hna'+showForm);
-    }
-
-    const editbtnHandler=()=>{
-        setShowForm(false)
-        setShowFormUpdate(true)
-        console.log('kan hna'+showForm);
-    }
-
-
-
-   const handleSubmit=(e)=>{
-       e.preventDefault();
-       let dateFormed=new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-       }).format(new Date(addedTaskDate))
-
-       const newtasks=specification;
-   
-       
-        newtasks[index].projectTasks=newtasks[index].projectTasks.concat({id:new ObjectID(),
-        title:addedTaskTitle,state:addedTaskState,date:dateFormed,description:addedTaskDescription})
-
-       setSpec(newtasks)
-       setEdit(true)
-       setShowForm(!showForm)
-
-   }
-
-
-
-   const deleteHandle=(i)=>{
-    const newtasks=specification;
-    newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
-    setSpec(newtasks)
-    setEdit(true)
-   }
-
-   const editeHandle=(taskObjet)=>{
-     setEditedTaskId(taskObjet.id)
-     setEditedTaskTitle(taskObjet.title)
-     setEditedTaskDescription(taskObjet.description)
-     setEditedTaskState(taskObjet.state)
-     setEditedTaskDate(moment(taskObjet.date).format("YYYY-MM-DD"))
-     editbtnHandler()
-   }
-
-   const handleUpdate=(e)=>{
-    e.preventDefault();
-    let dateFormed=new Intl.DateTimeFormat("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "2-digit"
-       }).format(new Date(EditedTaskDate))
-     
-
-       let editedtask={id:EditedTaskId,title:EditedTaskTitle
-        ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
-       
-      //start change
       
-      let updatedTasks=specification[index].projectTasks.map((t,x)=>{
-          if(t.id==EditedTaskId){
-                console.log('i was there');
-                 return {...t,id:EditedTaskId,title:EditedTaskTitle
-                    ,state:EditedTaskState,date:EditedTaskDate,description:EditedTaskDescription}
-                 
-               }
-              return t
-              
-            })
-   
+        //display forms
+        const addbtnHandler=()=>{
+                setShowFormUpdate(false)
+                setShowForm(!showForm)
+                console.log('kan hna'+showForm);
+            }
 
-        let updatedSpec=specification
-        updatedSpec[index].projectTasks=updatedTasks
+            const editbtnHandler=()=>{
+                setShowForm(false)
+                setShowFormUpdate(true)
+                console.log('kan hna'+showForm);
+            }
 
-        setSpec(updatedSpec)
 
-        setEdit(true)
-        setShowFormUpdate(false)
-   }
+        //Store task
+        const handleSubmit=(e)=>{
+            e.preventDefault();
+            let dateFormed=new Intl.DateTimeFormat("en-GB", {
+                year: "numeric",
+                month: "long",
+                day: "2-digit"
+            }).format(new Date(operatedObj.date))
+
+            const newtasks=specification;
+        
+            
+                newtasks[index].projectTasks=newtasks[index].projectTasks.concat({id:new ObjectID(),
+                title:operatedObj.title,state:operatedObj.state,date:dateFormed,description:operatedObj.description})
+
+            setSpec(newtasks)
+            setEdit(true)
+            setShowForm(!showForm)
+
+        }
+
+
+        //delete task
+        const deleteHandle=(i)=>{
+            const newtasks=specification;
+            newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
+            setSpec(newtasks)
+            setEdit(true)
+        }
+
+        //edit preparation
+        const editeHandle=(taskObjet)=>{
+            setOpObj({...operatedObj,
+                id:taskObjet.id,title:taskObjet.title,description:taskObjet.description,state:taskObjet.state,
+                date:moment(taskObjet.date).format("YYYY-MM-DD")})
+            
+            editbtnHandler()
+        }
+
+       //update
+        const handleUpdate=(e)=>{
+            e.preventDefault();
+            
+            //start change
+            
+            let updatedTasks=specification[index].projectTasks.map((t,x)=>{
+                if(t.id==operatedObj.id){
+                        console.log('i was there');
+                        return {...t,id:operatedObj.id,title:operatedObj.title
+                            ,state:operatedObj.state,date:operatedObj.date,description:operatedObj.description}
+                        
+                    }
+                    return t
+                    
+                    })
+        
+
+                let updatedSpec=specification
+                updatedSpec[index].projectTasks=updatedTasks
+
+                setSpec(updatedSpec)
+
+                setEdit(true)
+                setShowFormUpdate(false)
+        }
      
     
     return (
@@ -485,7 +462,7 @@ const { loading, user ,isAdmin} = getUserReducer
                         ))}
                           </tbody>
                         </table>
-                        {Admin?
+                        {Admin &&(
                         <Link to="#Form">
                         <button type="submit"  onClick={addbtnHandler} class="text-white
                         rounded-full text-2xl mt-2  px-5 py-2.5 text-center bg-gradient-to-r
@@ -494,26 +471,26 @@ const { loading, user ,isAdmin} = getUserReducer
                           shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">
                                {showForm ? 'x' : '+'}</button>
                           </Link>
-                          :null}
+                          )}
                              
                    
-                        {showForm?(
+                        {showForm &&(
                                 <div className='bg-white mt-3 px-6 py-6 rounded-lg' >
                                 <form onSubmit={handleSubmit}>
                                 <div class="mb-4">
                                     <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">New task</label>
-                                    <input type="text" id="task" value={addedTaskTitle} onChange={(e)=>setAddedTaskTitle(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
+                                    <input type="text" id="task" value={operatedObj.title} onChange={(e)=>setOpObj({...operatedObj,title:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
                                 </div>
                                 <div class="mb-4">
                                     <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                    <textarea type="text" id="task" value={addedTaskDescription} onChange={(e)=>setAddedTaskDescription(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add description" required>
+                                    <textarea type="text" id="task" value={operatedObj.description} onChange={(e)=>setOpObj({...operatedObj,description:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add description" required>
                                     </textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Task state</label>
 
                                    
-                                    <select type="text" id="state"  value={addedTaskState} onChange={(e)=>setAddedTaskState(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2 focus:outline-none  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                                    <select type="text" id="state"  value={operatedObj.state} onChange={(e)=>setOpObj({...operatedObj,state:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2 focus:outline-none  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                                    
                                     <option selected>Select the state</option>
                                             <option value="-1">Not yet</option>
@@ -523,32 +500,32 @@ const { loading, user ,isAdmin} = getUserReducer
                                 </div>
                                 <div class="mb-4">
                                     <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                    <input type="date" id="date" value={addedTaskDate} onChange={(e)=>setAddedTaskDate(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
+                                    <input type="date" id="date" value={operatedObj.date} onChange={(e)=>setOpObj({...operatedObj,date:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
                                 </div>
                             
                                 <button type="submit" class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">Add task</button>
                                 </form>
                                 </div>
-                           ):null}
+                           )}
 
                            
-                        {showFormUpdate?(
+                        {showFormUpdate &&(
                                 <div className='bg-white mt-3 px-6 py-6 rounded-lg' id="editForm">
                                 <form onSubmit={handleUpdate}>
                                 <div class="mb-4">
                                     <label for="task"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edit task</label>
-                                    <input type="text" id="task"  value={EditedTaskTitle} onChange={(e)=>setEditedTaskTitle(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
+                                    <input type="text" id="task"  value={operatedObj.title} onChange={(e)=>setOpObj({...operatedObj,title:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
                                 </div>
                                 <div class="mb-4">
                                     <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                    <textarea type="text" id="task" value={EditedTaskDescription} onChange={(e)=>setEditedTaskDescription(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required>
+                                    <textarea type="text" id="task" value={operatedObj.description} onChange={(e)=>setOpObj({...operatedObj,description:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required>
                                     </textarea>
                                 </div>
                                 <div class="mb-4">
                                     <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Task state</label>
 
                                    
-                                    <select type="text" id="state" value={EditedTaskState} onChange={(e)=>setEditedTaskState(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
+                                    <select type="text" id="state" value={operatedObj.state} onChange={(e)=>setOpObj({...operatedObj,state:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
                                    
                                     <option selected>Select the state</option>
                                             <option value="-1">Not yet</option>
@@ -558,14 +535,14 @@ const { loading, user ,isAdmin} = getUserReducer
                                 </div>
                                 <div class="mb-4">
                                     <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                    <input type="date" id="date"  value={EditedTaskDate} onChange={(e)=>setEditedTaskDate(e.target.value)} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
+                                    <input type="date" id="date"  value={operatedObj.date} onChange={(e)=>setOpObj({...operatedObj,date:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
                                 </div>
                                  
                                 <button type="submit" class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">Update task</button>
                             
                                 </form>
                                 </div>
-                           ):null}
+                           )}
                                    
                         </div>
                         }
@@ -622,7 +599,7 @@ const { loading, user ,isAdmin} = getUserReducer
                                         trailColor: 'transparent',
                                         strokeLinecap: 'butt',
                                         pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
+                                            60 / 10
                                         })`,
                                         backgroundColor: '#3e98c7',
                                     })}
@@ -660,7 +637,7 @@ const { loading, user ,isAdmin} = getUserReducer
                                         trailColor: 'transparent',
                                         strokeLinecap: 'round',
                                         pathColor: `rgba(99, 99, 199, ${
-                                            percentage / 10
+                                            60 / 10
                                         })`,
                                         backgroundColor: '#3e98c7',
                                     })}

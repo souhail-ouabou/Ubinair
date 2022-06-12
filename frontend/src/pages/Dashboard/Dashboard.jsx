@@ -35,27 +35,49 @@ import {
 import SideBar from './side/SideBar'
 import Overview from './Overview'
 import Tracker from './Tracker'
+import SmartBrief from './SmartBrief'
+import ContentSharing from './ContentSharing'
 
 const Dashboard = () => {
-const [pageIndex,setPageX]=React.useState(1)
-const [OverviewPage,setOverPage]=React.useState('')
+const [pageIndex,setPageX]=React.useState()
+const [OverviewPage,setOverPage]=React.useState('hidden')
 const [trackerPage,setTrackPage]=React.useState('hidden')
-
+const [briefPage,setBriefPage]=React.useState('hidden')
+const [contentPage,setContentPage]=React.useState('hidden')
 const showPage=(i)=>{
 
 
     if(i==1){
-        
-        setOverPage('')
+
+        setBriefPage('hidden')
         setTrackPage('hidden')
+        setContentPage('hidden')
+        setOverPage('')
+        
         
         // setTasks(tasksDesign)
    }else if(i==2){
 
     setOverPage('hidden')
+    setBriefPage('hidden')
+    setContentPage('hidden')
     setTrackPage('')
      
         // setTasks(tasksContent)
+   
+}else if(i==3){
+
+    setOverPage('hidden')
+    setTrackPage('hidden')
+    setContentPage('hidden')
+    setBriefPage('')
+     
+        // setTasks(tasksContent)
+   }else if(i==4){
+    setOverPage('hidden')
+    setTrackPage('hidden')
+    setBriefPage('hidden')
+    setContentPage('')
    }
 }
 
@@ -66,6 +88,14 @@ const showPage=(i)=>{
             <SideBar showPage={(x)=>showPage(x)} />
              <Overview state={OverviewPage}/>
           < Tracker state={trackerPage} />
+          <SmartBrief state={briefPage} />
+          <ContentSharing state={contentPage} />
+
+
+        
+          
+           
+       
 
             </div>
         </>
