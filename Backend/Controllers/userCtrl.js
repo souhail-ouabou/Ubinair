@@ -291,7 +291,7 @@ const userCtrl = {
     updateUserProfile: async (req, res) => {
         try {
             const { name, avatar, password } = req.body
-            console.log('req body user ززز', req.body)
+            console.log('req body user ', req.body)
             const user = await Users.findById(req.user.id)
             console.log('finded user', user)
 

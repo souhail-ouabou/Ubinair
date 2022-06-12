@@ -21,4 +21,8 @@ router.put('/updateprjcontents/:id', projetCtrl.updateContentProject)
 //login as an admin -> refresh_token -> getallprojects
 router.get('/allprojects', auth, authAdmin, projetCtrl.getAllProjects)
 router.delete('/deleteproject/:id', auth, authAdmin,   projetCtrl.deleteProject)
+router.post('/addbrief/:id', auth,    projetCtrl.addBriefProject)
+router.post('/addaboutbrand/:id', auth, projetCtrl.addBrandProject)
+router.post('/deletebrieffile/:id', auth, projetCtrl.deleteBriefFileProject)
+router.post('/deleteimgmoodb/:id', auth, projetCtrl.deleteImgMBProject)
 module.exports = router

@@ -89,7 +89,9 @@ export default function ContentSharing(props) {
        
 
   return (
-            <div  className={`flex-1 pb-8  mt-16 ${props.state}`}>
+            <div  className={
+                props.indexPage === 4 ? ' flex-1  pb-8  mt-14 ml-80' : 'hidden'
+            }>
 
 
 

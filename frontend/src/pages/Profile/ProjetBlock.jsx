@@ -22,7 +22,7 @@ const ProjetBlock = ({ project, toggletab }) => {
     return (
         <>
             <Link
-                to={user.client ? `/dashboard/${project._id}` : `#`}
+                to={user.client || isAdmin ? `/dashboard/${project._id}` : `#`}
                 className="cursor-pointer"
             >
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}

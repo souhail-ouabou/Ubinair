@@ -17,6 +17,18 @@ import {
     PROJECT_DELETE_REQUEST,
     PROJECT_DELETE_SUCCESS,
     PROJECT_DELETE_FAIL,
+    ADD_COL_MOODBOARD_REQUEST,
+    ADD_COL_MOODBOARD_FAIL,
+    ADD_COL_MOODBOARD_SUCCESS,
+    ADD_ABOUT_BRAND_SUCCESS,
+    ADD_ABOUT_BRAND_FAIL,
+    DELETE_MOODB_IMG_REQUEST,
+    DELETE_MOODB_IMG_SUCCESS,
+    DELETE_MOODB_IMG_FAIL,
+    DELETE_BRIEF_FILE_REQUEST,
+    DELETE_BRIEF_FILE_SUCCESS,
+    DELETE_BRIEF_FILE_FAIL,
+    ADD_ABOUT_BRAND_REQUEST,
 } from './constants/projetconstants'
 import { toast } from 'react-toastify'
 
@@ -168,26 +180,6 @@ export const UpdateTaskssClient = (id, taskss) => async (dispatch) => {
         })
     }
 }
-
-// export const UpdateTasksProject = (id, tasksProject) => async (dispatch) => {
-//     try {
-//         dispatch({ type: PROJET_UPDATE_REQUEST })
-
-//         const { data } = await axios.put(`/projets/updatetasksprj/${id}`, {tasksProject,id})
-
-//         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
-//     } catch (error) {
-//         dispatch({
-//             type: PROJET_UPDATE_FAIL,
-//             payload:
-//                 error.response && error.response.data.message
-//                     ? error.response.data.message
-//                     : error.message,
-//         })
-//     }
-// }
-
-
 export const UpdateSpecProject = (id,index,specification) => async (dispatch) => {
     try {
         dispatch({ type: PROJET_UPDATE_REQUEST })
@@ -360,3 +352,159 @@ export const DeleteProject = (id) => async (dispatch, getState) => {
         })
     }
 }
+export const AddColMoodBoard= ({info,images,id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_COL_MOODBOARD_REQUEST })
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        console.log("images mn dispatcher", images)
+        const  {data}  = await axios.post("/api/upload_moodboard",{images},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/addbrief/${id}`, {info,data}, config)
+        
+        dispatch({ type: ADD_COL_MOODBOARD_SUCCESS, payload: res })
+        
+        toast.dismiss()
+        toast.success('Succès Update !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (err) {
+        dispatch({
+            type: ADD_COL_MOODBOARD_FAIL,
+            payload:
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+export const AddAboutBrand= ({info,files,basesArray,id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_ABOUT_BRAND_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        // console.log("files from dispatcher", basesArray)
+        
+        const  {data}  = await axios.post("/api/upload_aboutbrand",{files,basesArray},config)
+         console.log("after then :",data)
+         const  {res}  = await axios.post(`/projets/addaboutbrand/${id}`, {info,data}, config)
+        // console.log("res : ",res)
+        dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
+
+        
+        toast.dismiss()
+        toast.success('Succès Update !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (err) {
+        dispatch({
+            type: ADD_ABOUT_BRAND_FAIL,
+            payload:
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+export const DeleteMoodBoardImg = ({id,public_id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_MOODB_IMG_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_moodbimg",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deleteimgmoodb/${id}`,{public_id}, config)
+        dispatch({
+            type: DELETE_MOODB_IMG_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_MOODB_IMG_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+export const DeleteBriefFile = ({id,public_id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_BRIEF_FILE_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_aboutbrand",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deletebrieffile/${id}`,{public_id}, config)
+        dispatch({
+            type: DELETE_BRIEF_FILE_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_BRIEF_FILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
+
+
+
+

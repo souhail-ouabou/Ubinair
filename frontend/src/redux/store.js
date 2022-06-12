@@ -15,7 +15,7 @@ import {
     getAllUsersReducer,
     updateUserStatusReducer,
     userDeleteReducer,
-    userUpdateProfileReducer
+    userUpdateProfileReducer,
 } from './reducers/usersReducer'
 import {
     ProjetcCreateReducer,
@@ -24,6 +24,10 @@ import {
     projectUpdateReducer,
     ListAllProjectsReducer,
     projectDeleteReducer,
+    AddColMoodBoardReducer,
+    AddAboutBrandReducer,
+    DeleteMoodBoardImgReducer,
+    DeleteBriefFileReducer
 } from './reducers/projectReducer'
 import token from './reducers/tokenReducer'
 
@@ -42,7 +46,11 @@ const reducer = combineReducers({
     userDeleteReducer,
     ListAllProjects: ListAllProjectsReducer,
     projectDelete: projectDeleteReducer,
-     userUpdateProfileReducer
+    userUpdateProfileReducer,
+    AddColMoodBoardReducer,
+    AddAboutBrandReducer,
+    DeleteMoodBoardImgReducer,
+    DeleteBriefFileReducer
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

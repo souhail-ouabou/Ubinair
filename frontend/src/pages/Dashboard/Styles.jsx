@@ -3,13 +3,12 @@ import {useState,useEffect} from 'react'
 import { ChromePicker } from 'react-color';
 
 import { UpdateColorsProject,UpdateFontsProject } from '../../redux/actions/projectActions'
-
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 
 
-function SmartBrief(props) {
+function Styles() {
 
     const dispatch = useDispatch()
     const { id } = useParams()
@@ -120,10 +119,12 @@ function SmartBrief(props) {
   return (
  
       
-    <div className={props.state}>
+    <div className=' w-[400px] ml-5 '>
 
+        
+         <div>
          {hidden &&
-          <div className="z-10  max-w-max absolute mt-32 ml-[650px]">
+          <div className="z-10  max-w-max absolute mt-32 ">
 
                <strong class="text-xl z-20 absolute  left-2  align-center cursor-pointer alert-del"
                onClick={()=>setHidden(false)}
@@ -136,7 +137,7 @@ function SmartBrief(props) {
           </div>
               }
     
-    <div  className="glass  rounded-lg  h-[400px]  w-1/4 p-0 mt-16 ml-[900px]">
+    <div  className="glass  rounded-lg  h-[440px]  w-[350px] p-0  ">
                    
     <div className='mt-4 pt-2'>
         <span className="text-[2em] font-semibold text-[#EEEEEF]  pl-4 mb-2">Colors</span>
@@ -152,9 +153,9 @@ function SmartBrief(props) {
                 <span className="text-[1em] font-semibold text-[#EEEEEF] pl-5">{col.title}</span>
             </div>
 
-            <div className="grid grid-cols-1 ">
+            <div className="grid grid-cols-1">
         
-                    <div className="grid grid-cols-3 w-[200px]  mt-2 ml-5 mb-6 ">
+                    <div className="grid grid-cols-3 w-[200px]   mt-4 ml-[90px] mb-6 ">
                             
                         
                             {col.hexs.map((item,i)=>{
@@ -188,7 +189,7 @@ function SmartBrief(props) {
 
 
 
-                <div className="glass  rounded-lg  h-[300px]  w-1/4 p-0 mt-6 ml-[900px] font-semibold text-[#EEEEEF] ">
+                <div className="glass  rounded-lg  h-[300px]  w-[350px] p-0 mt-6  font-semibold text-[#EEEEEF] ">
 
                         <div className='mt-4 pt-2'>
                                 <span className="text-[1.8em] pl-4">Typography</span>
@@ -246,10 +247,11 @@ function SmartBrief(props) {
                         </button>
                 </div> 
         </div >
+        </div>
 
            
 </div>
   )
 }
 
-export default SmartBrief;
+export default Styles;

@@ -31,7 +31,7 @@ import 'react-circular-progressbar/dist/styles.css'
 
 
 
-const Tracker = (props) => {
+const Tracker = ({indexPage}) => {
 
     const dispatch = useDispatch()
     const { id } = useParams()
@@ -109,9 +109,10 @@ const Tracker = (props) => {
             let newArr=specification;
             newArr[index].projectTasks=newtask
             console.log('console new task',JSON.stringify(newtask));
+            setEdit(true)
             setSpec(newArr);
            
-                 setEdit(true)
+              
       
            
           };
@@ -144,35 +145,42 @@ const Tracker = (props) => {
 
             useEffect(()=>{
         
-                    if(!loadingProjectDetails && edit){
+                    if(!loadingProjectDetails) {
+
+                    if(edit){
                         console.log('test',JSON.stringify('comming from state ',JSON.stringify(specification)));
-                        dispatch(UpdateSpecProject(id,index, specification))
                         calculCircle()
-                        setEdit(false)
+                        
+                        setTimeout(() => {
+                            dispatch(UpdateSpecProject(id,index, specification))
+                            setEdit(false)
+                        }, 50)
+                      
+                    }
+
+                    if (editCirBar) {
+                        console.log('test spec',JSON.stringify(specification));
+                        setTimeout(() => {
+                        dispatch(UpdateSpecProject(id,index,specification))
+                        console.log('disapatched');
+                        setEditCirBar(false)
+                    }, 80)
                     
                     }
-                                                        
-
+                    }
+                                                    
                     },[loadingProjectDetails,specification,edit])
 
-                            useEffect(()=>{
-                                if (!loadingProjectDetails){
+                useEffect(()=>{
+                        if (!loadingProjectDetails){
+                    
+                            setSpec(projectDetails.specification)
+                            setIsadmin(isAdmin)
                             
-                                    setSpec(projectDetails.specification)
-                                    setIsadmin(isAdmin)
-                                    
-                            }
-                            },[loadingProjectDetails])
+                    }
+                },[loadingProjectDetails])
 
-                            useEffect(() => {
-                                if (!loadingProjectDetails && editCirBar) {
-                                    console.log('test spec',JSON.stringify(specification));
-                                    dispatch(UpdateSpecProject(id,index,specification))
-                                    console.log('disapatched');
-                                    setEditCirBar(false)
-                                
-                                }
-                            }, [specification])
+                           
 
     
         //calculate estimated and progress state                   
@@ -316,12 +324,14 @@ const Tracker = (props) => {
     
         <React.Fragment>
           
-            <main className={`flex-1 pb-8 glass mt-14 ${props.state}`} >
+            <main   className={
+                        indexPage === 2 ? ' flex-1  pb-8  mt-14 ' : 'hidden'
+                    } >
   
                 <top className="flex gap-4 w-full ">
 
               
-                <div class="flex flex-row flex-wrap justify-between w-3/4 text-white pt-20"> 
+                <div class="flex flex-row flex-wrap glass justify-between w-[860px] text-white pt-20 mt-2 ml-80"> 
                
                 {isNaN(index) &&
                
@@ -337,7 +347,7 @@ const Tracker = (props) => {
                      title
                      }
                  </div>
-                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 pr-6">
+                 <div class="text-2xl font-semibold leading-relaxed text-slate-100 pt-2 ">
                     {!isNaN(index) && today}
                  </div>
                 
@@ -345,7 +355,7 @@ const Tracker = (props) => {
                 
                         {!isNaN(index) &&
                          <div class="">
-                            <table class="w-[780px]  shadow-box-sh "
+                            <table class="w-[760px]  shadow-box-sh "
                            >
                                 <thead class="text-xl bg-gray-200 ">
                        <tr>
@@ -556,7 +566,7 @@ const Tracker = (props) => {
                     Loaaading ...
                 </div>
                     ) : (
-                    <div class="flex flex-col gap-4 justify-start items-center max-h-[520px] shadow-box-sh w-1/4  p-6 rounded-xl mt-10">
+                    <div class="flex flex-col gap-4 justify-start items-center min-h-[600px] glass  w-[300px]  p-6 rounded-xl fixed top-28 right-8">
                       
                     <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
                     

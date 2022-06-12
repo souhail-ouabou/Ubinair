@@ -19,15 +19,7 @@ const projetsCtrl = {
                 features,
             } = req.body
 
-           
-
-            // for(let i=0;i<initProjectColors.length;i++){
-            //     for(let j=0;j<initProjectColors[i].hexs.length;j++){
-            //         initProjectColors[i].hexs[j]=uuid.v1()
-            //     }
-            // }
-
-            console.log('--------------req booody-------------', req)
+            // console.log('--------------req booody-------------', req)
             const projet = new Projets({
                 user: req.user.id,
                 name: name,
@@ -127,10 +119,10 @@ const projetsCtrl = {
             let sum = 0
             const { startDate, endDate } = req.body[0]
 
-            console.log('--------------req booody 1-------------', req.body)
+            // console.log('--------------req booody 1-------------', req.body)
 
             let specification = req.body.filter((v, k) => k !== 0)
-            console.log('---------specification ------', specification)
+            // console.log('---------specification ------', specification)
 
             const projet = await Projets.findById(req.params.id)
             const sub = projet.specification.map((s) => s.progresState)
@@ -155,7 +147,7 @@ const projetsCtrl = {
     },
     updateTasksClient: async (req, res) => {
         try {
-            console.log('--------------req booody -------------', req.body)
+            // console.log('--------------req booody -------------', req.body)
 
             const taskss = req.body.taskss
 
@@ -172,20 +164,20 @@ const projetsCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
-
-
-
-    updateSpecProject : async (req, res) => {
+    updateSpecProject: async (req, res) => {
         try {
             // console.log('--------------req booody -------------', req.body)
 
             const newSpecification = req.body.specification
-            console.log('sended spec ',JSON.stringify(req.body));
+            // console.log('sended spec ', JSON.stringify(req.body))
             const projet = await Projets.findById(req.params.id)
-             console.log('prj spec---------------',JSON.stringify(projet)+'id= '+req.params.id);
+            // console.log(
+            //     'prj spec---------------',
+            //     JSON.stringify(projet) + 'id= ' + req.params.id
+            // )
             if (projet) {
                 projet.specification = newSpecification || projet.specification
-                console.log('it enter');
+                // console.log('it enter')
                 const updatedProject = await projet.save()
                 console.log('updatedSpecProject----------', updatedProject)
                 res.json({ msg: 'Update spec prj Success!' })
@@ -281,6 +273,131 @@ const projetsCtrl = {
             throw new Error('Project not found')
         }
     },
-    
+    addBriefProject: async (req, res) => {
+        try {
+            const { info } = req.body
+            // console.log('--------------req body -------------', req.body)
+            const visualInspirationReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+            }))
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.clientBrief.visualInspiration =
+                projet.clientBrief.visualInspiration.concat(visualInspirationReq)  || projet.clientBrief.visualInspiration
+                projet.clientBrief.websiteInspiration =
+                    info.webinspiration || projet.clientBrief.websiteInspiration
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    addBrandProject: async (req, res) => {
+        try {
+            const { info } = req.body
+            console.log('--------------req body -------------', req.body)
+            const briedFilesReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+                fileName: p.tags[0],
+            }))
+
+            // // console.log(
+            // //     '--------------req visualInspirationReq 1-------------',
+            // //     visualInspirationReq
+            // // )
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.clientBrief.briefFiles =
+                    projet.clientBrief.briefFiles.concat(briedFilesReq) ||
+                    projet.clientBrief.briefFiles
+                projet.clientBrief.brandName =
+                    info.brandName || projet.clientBrief.brandName
+                projet.clientBrief.brandTageLine =
+                    info.brandTageLine || projet.clientBrief.brandTageLine
+                projet.clientBrief.ProductService =
+                    info.ProductService || projet.clientBrief.ProductService
+                projet.clientBrief.values =
+                    info.values || projet.clientBrief.values
+                projet.clientBrief.vision =
+                    info.vision || projet.clientBrief.vision
+                projet.clientBrief.mission =
+                    info.mission || projet.clientBrief.mission
+                projet.clientBrief.objectives =
+                    info.objectives || projet.clientBrief.objectives
+                projet.clientBrief.toneOfVoice =
+                    info.toneOfVoice || projet.clientBrief.toneOfVoice
+                projet.clientBrief.targetAudience =
+                    info.targetAudience || projet.clientBrief.targetAudience
+                projet.clientBrief.competitors =
+                    info.competitors || projet.clientBrief.competitors
+                projet.clientBrief.moreInfo =
+                    info.moreInfo || projet.clientBrief.moreInfo
+
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    deleteBriefFileProject: async (req, res) => {
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            const newBriefFiles = project.clientBrief.briefFiles.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.clientBrief.briefFiles =
+                newBriefFiles || projet.clientBrief.briefFiles
+
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        }
+
+        // } else {
+        //     // status it's 500 by default cuz of errHandler
+        //     res.status(404)
+        //     throw new Error('Project not found')
+        // }
+    },
+    deleteImgMBProject: async (req, res) => {
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            const newvisualInspirations = project.clientBrief.visualInspiration.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.clientBrief.visualInspiration =
+            newvisualInspirations || projet.clientBrief.visualInspiration
+
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        }
+
+        // } else {
+        //     // status it's 500 by default cuz of errHandler
+        //     res.status(404)
+        //     throw new Error('Project not found')
+        // }
+    },
 }
 module.exports = projetsCtrl
