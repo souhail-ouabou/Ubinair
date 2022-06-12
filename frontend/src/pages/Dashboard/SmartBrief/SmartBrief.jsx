@@ -13,9 +13,9 @@ const SmartBrief = ({ indexPage }) => {
         loading: loadingProjectDetails,
         error,
     } = GetProjectDetailsReducer
-    return (
+    return ( 
         <>
-            <main className={indexPage === 3 ? ' flex-1  pb-8  mt-14 ' : 'hidden'} >
+            <main className={indexPage === 3 ? 'flex-1  pb-8  mt-14 ' : 'hidden'} >
          {loadingProjectDetails  ? (
                 <div className=" text-white m-auto ">Loaaading SB ...</div>
             ) : projectDetails.specification?.length === 0 ? (

@@ -86,13 +86,11 @@ const specificationSchema = mongoose.Schema({
     projectTasks: [projectTasksSchema],
 })
 
-
 const clientBriefSchema = mongoose.Schema({
     brandName: {
         type: String,
         // required: [true, 'Please enter your name!'],
         // trim: true,
-
     },
     brandTageLine: {
         type: String,
@@ -157,6 +155,10 @@ const clientBriefSchema = mongoose.Schema({
     briefFiles: [fileBriefSchema],
     visualInspiration: [visualInspirationSchema],
 })
+const filesSchema = mongoose.Schema({
+    QuotesFiles: [fileBriefSchema],
+    InvoicesFiles: [fileBriefSchema],
+})
 
 const projetSchema = mongoose.Schema({
     user: {
@@ -220,6 +222,7 @@ const projetSchema = mongoose.Schema({
     },
     clientTaskss: [clientTaskssSchema],
     clientBrief: clientBriefSchema,
+    files: filesSchema,
     // projectTasks:[projectTasksSchema],
     finishedAt: {
         type: Date,

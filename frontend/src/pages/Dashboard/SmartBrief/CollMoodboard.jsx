@@ -9,8 +9,9 @@ import {
 } from '../../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import uploadImg from './upload-icon.png'
-import { TiDelete, TiDownload } from 'react-icons/ti'
+
+import pdfPng from '../Assets/file-pdf-solid.png'
+import uploadImg from '../Assets/upload-icon.png'
 import ImgBlock from './ImgBlock'
 const CollMoodboard = ({ project }) => {
     const initialState = {

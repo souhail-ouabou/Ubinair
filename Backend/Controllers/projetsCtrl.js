@@ -40,6 +40,14 @@ const projetsCtrl = {
                 description: description,
                 subtype: subtype,
                 type: type,
+                clientBrief: {
+                    visualInspiration: [],
+                    briefFiles: [],
+                },
+                files: {
+                    QuotesFiles: [],
+                    InvoicesFiles: [],
+                },
             })
             const user = await User.findById(req.user.id)
             if (user) {
@@ -206,7 +214,9 @@ const projetsCtrl = {
 
             if (projet) {
                 projet.clientBrief.visualInspiration =
-                projet.clientBrief.visualInspiration.concat(visualInspirationReq)  || projet.clientBrief.visualInspiration
+                    projet.clientBrief.visualInspiration.concat(
+                        visualInspirationReq
+                    ) || projet.clientBrief.visualInspiration
                 projet.clientBrief.websiteInspiration =
                     info.webinspiration || projet.clientBrief.websiteInspiration
                 const updatedProject = await projet.save()
@@ -300,11 +310,12 @@ const projetsCtrl = {
         console.log('--------------req body -------------', req.body)
         const project = await Projets.findById(req.params.id)
         if (project) {
-            const newvisualInspirations = project.clientBrief.visualInspiration.filter(
-                (fw) => fw.public_id !== public_id
-            )
+            const newvisualInspirations =
+                project.clientBrief.visualInspiration.filter(
+                    (fw) => fw.public_id !== public_id
+                )
             project.clientBrief.visualInspiration =
-            newvisualInspirations || projet.clientBrief.visualInspiration
+                newvisualInspirations || projet.clientBrief.visualInspiration
 
             const updatedProject = await project.save()
             res.json({ message: 'File Removed' })
@@ -315,6 +326,54 @@ const projetsCtrl = {
         //     res.status(404)
         //     throw new Error('Project not found')
         // }
+    },
+    deleteQuotesProject: async (req, res) => {
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            const newQuotesFiles = project.files.QuotesFiles.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.files.QuotesFiles =
+                newQuotesFiles || project.files.QuotesFiles
+
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        }
+
+        // } else {
+        //     // status it's 500 by default cuz of errHandler
+        //     res.status(404)
+        //     throw new Error('Project not found')
+        // }
+    },
+    addQuotesProject: async (req, res) => {
+        try {
+            const briedFilesReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+                fileName: p.tags[0],
+            }))
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.files.QuotesFiles =
+                    projet.files.QuotesFiles.concat(briedFilesReq) ||
+                    projet.files.QuotesFiles
+
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
     },
 }
 module.exports = projetsCtrl
