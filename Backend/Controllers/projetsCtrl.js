@@ -380,13 +380,11 @@ const projetsCtrl = {
 
             const updatedProject = await project.save()
             res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
         }
-
-        // } else {
-        //     // status it's 500 by default cuz of errHandler
-        //     res.status(404)
-        //     throw new Error('Project not found')
-        // }
     },
     deleteImgMBProject: async (req, res) => {
         const { public_id } = req.body
@@ -402,13 +400,11 @@ const projetsCtrl = {
 
             const updatedProject = await project.save()
             res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
         }
-
-        // } else {
-        //     // status it's 500 by default cuz of errHandler
-        //     res.status(404)
-        //     throw new Error('Project not found')
-        // }
     },
     deleteQuotesProject: async (req, res) => {
         const { public_id } = req.body
@@ -423,13 +419,30 @@ const projetsCtrl = {
 
             const updatedProject = await project.save()
             res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
         }
+    },
+    deleteInvoicesProject: async (req, res) => {
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            const newInvoicesFiles = project.files.InvoicesFiles.filter(
+                (fw) => fw.public_id !== public_id
+            )
+            project.files.InvoicesFiles =
+                newInvoicesFiles || project.files.InvoicesFiles
 
-        // } else {
-        //     // status it's 500 by default cuz of errHandler
-        //     res.status(404)
-        //     throw new Error('Project not found')
-        // }
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
+        }
     },
     addQuotesProject: async (req, res) => {
         try {
@@ -448,6 +461,33 @@ const projetsCtrl = {
                 projet.files.QuotesFiles =
                     projet.files.QuotesFiles.concat(briedFilesReq) ||
                     projet.files.QuotesFiles
+
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    addInvoicesProject: async (req, res) => {
+        try {
+            const briedFilesReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+                fileName: p.tags[0],
+            }))
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.files.InvoicesFiles =
+                    projet.files.InvoicesFiles.concat(briedFilesReq) ||
+                    projet.files.InvoicesFiles
 
                 const updatedProject = await projet.save()
                 //    console.log('updatedProject', updatedProject)

@@ -76,7 +76,7 @@ const QuotesInv = ({ indexPage }) => {
                 ) : (
                     <>
                         <div className="flex flex-row w-full gap-4 items-start ">
-                            <left className="flex flex-col items-start glass w-2/3 min-h-[620px] pb-20">
+                            <left className="flex flex-col items-start glass w-2/3 min-h-[620px] fixed max-w-[780px] pb-20 ">
                                 <div className="flex items-start  justify-between gap-40">
                                     <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
                                         Project Recap
@@ -106,11 +106,11 @@ const QuotesInv = ({ indexPage }) => {
                                         <p className="text-lg font-semibold flex-1 ">
                                             Fonctionnalités :
                                         </p>
-                                        <div className="flex flex-col flex-1 ">
+                                        <div className="flex flex-col flex-1  ">
                                             {projectDetails.features.map(
                                                 (p) => (
-                                                    <p className="text-base font-light ">
-                                                        {p.title}
+                                                    <p className="text-base font-light  ">
+                                                        - {p.title}
                                                     </p>
                                                 )
                                             )}
@@ -127,7 +127,7 @@ const QuotesInv = ({ indexPage }) => {
                                     </div>
                                     <div className="flex flex-row items-center justify-center ">
                                         <p className="text-lg font-semibold flex-1  ">
-                                            Stade  :
+                                            Stade :
                                         </p>
                                         <p className="text-base font-light flex-1 ">
                                             {projectDetails.stateOfAdvance}
@@ -135,9 +135,9 @@ const QuotesInv = ({ indexPage }) => {
                                     </div>
                                 </div>
                             </left>
-                            <right className="flex flex-col gap gap-4 w-1/3">
-                            <Quotes project={projectDetails}/>
-                            <Invoices/>
+                            <right className="flex flex-col gap gap-4 w-1/3 ml-[800px]">
+                                <Quotes project={projectDetails} />
+                                <Invoices project={projectDetails} />
                             </right>
                         </div>
                     </>
