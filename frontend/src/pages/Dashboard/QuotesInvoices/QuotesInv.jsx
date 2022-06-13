@@ -67,7 +67,7 @@ const QuotesInv = ({ indexPage }) => {
     return (
         <>
             <main
-                className={indexPage === 4 ? 'flex-1  pb-8  mt-14 ' : 'hidden'}
+                className={indexPage === 4 ? 'flex-1  pb-8  mt-14  ' : 'hidden'}
             >
                 {loadingProjectDetails ? (
                     <div className=" text-white m-auto ">Loaaading QI ...</div>
@@ -76,7 +76,7 @@ const QuotesInv = ({ indexPage }) => {
                 ) : (
                     <>
                         <div className="flex flex-row w-full gap-4 items-start">
-                            <left className="flex flex-col items-start glass">
+                            <left className="flex flex-col items-start glass w-3/4">
                                 <div className="flex items-start  justify-between gap-48">
                                     <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
                                         Project Recap
@@ -85,7 +85,7 @@ const QuotesInv = ({ indexPage }) => {
                                         32000 €
                                     </p>
                                 </div>
-                                <div className="grid grid-col-2 gap-4 text-slate-200 mt-12 ">
+                                <div className="grid grid-col-2 gap-14 text-slate-200 mt-12 w-full ">
                                     <div className="flex flex-1 flex-row items-center justify-center ">
                                         <p className="text-lg font-semibold flex-1">
                                             Project :
@@ -106,11 +106,11 @@ const QuotesInv = ({ indexPage }) => {
                                         <p className="text-lg font-semibold flex-1 ">
                                             Fonctionnalités :
                                         </p>
-                                        <div className="flex flex-col flex-1 ">
+                                        <div className="flex flex-col flex-1  ">
                                             {projectDetails.features.map(
                                                 (p) => (
-                                                    <p className="text-base font-light ">
-                                                        {p.title}
+                                                    <p className="text-base font-light  ">
+                                                        - {p.title}
                                                     </p>
                                                 )
                                             )}
@@ -127,7 +127,7 @@ const QuotesInv = ({ indexPage }) => {
                                     </div>
                                     <div className="flex flex-row items-center justify-center ">
                                         <p className="text-lg font-semibold flex-1  ">
-                                            Stade  :
+                                            Stade :
                                         </p>
                                         <p className="text-base font-light flex-1 ">
                                             {projectDetails.stateOfAdvance}
@@ -136,8 +136,8 @@ const QuotesInv = ({ indexPage }) => {
                                 </div>
                             </left>
                             <right className="flex flex-col gap gap-4 w-1/3">
-                            <Quotes project={projectDetails}/>
-                            <Invoices/>
+                                <Quotes project={projectDetails} />
+                                <Invoices project={projectDetails} />
                             </right>
                         </div>
                     </>

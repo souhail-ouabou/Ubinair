@@ -2,7 +2,7 @@ import React from 'react'
 import './SmartBrief.css'
 import AboutTheBrand from './AboutTheBrand'
 import CollMoodboard from './CollMoodboard'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
 const SmartBrief = ({ indexPage }) => {
     const GetProjectDetailsReducer = useSelector(

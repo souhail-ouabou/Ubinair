@@ -452,6 +452,41 @@ export const DeleteQuotes = ({id,public_id}) => async (dispatch, getState) => {
         })
     }
 }
+export const DeleteInvoices = ({id,public_id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_BRIEF_FILE_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_file",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deleteinvoices/${id}`,{public_id}, config)
+        dispatch({
+            type: DELETE_BRIEF_FILE_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_BRIEF_FILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
 
 export const AddQuotes= ({files,basesArray,id}) => async (dispatch, getState) => {
     try {
@@ -472,6 +507,48 @@ export const AddQuotes= ({files,basesArray,id}) => async (dispatch, getState) =>
         const  {data}  = await axios.post("/api/upload_quotes",{files,basesArray},config)
          console.log("after then :",data)
          const  {res}  = await axios.post(`/projets/addquotes/${id}`, {data}, config)
+        // console.log("res : ",res)
+        dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
+
+        
+        toast.dismiss()
+        toast.success('Succès Update !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (err) {
+        dispatch({
+            type: ADD_ABOUT_BRAND_FAIL,
+            payload:
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+export const AddInvoices= ({files,basesArray,id}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_ABOUT_BRAND_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        // console.log("files from dispatcher", basesArray)
+        
+        const  {data}  = await axios.post("/api/upload_invoices",{files,basesArray},config)
+         console.log("after then :",data)
+         const  {res}  = await axios.post(`/projets/addinvoices/${id}`, {data}, config)
         // console.log("res : ",res)
         dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
 

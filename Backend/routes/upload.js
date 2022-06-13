@@ -9,5 +9,6 @@ const auth = require('../middleware/auth')
  router.post('/upload_aboutbrand',  auth, uploadCtrl.uploadAboutBrand)
  router.post('/delete_file',  auth, uploadCtrl.deleteFile)
  router.post('/upload_quotes',  auth, uploadCtrl.uploadQuotes)
+ router.post('/upload_invoices',  auth, uploadCtrl.uploadInvoices)
 
 module.exports = router
