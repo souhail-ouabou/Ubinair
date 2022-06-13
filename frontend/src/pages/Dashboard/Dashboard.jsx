@@ -24,60 +24,62 @@ const Dashboard = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
 
-    // const AddAboutBrandReducer = useSelector(
-    //     (state) => state.AddAboutBrandReducer
-    // )
-    // const { success: successAddAboutBrand, loading: loadingAddAboutBrand } =
-    //     AddAboutBrandReducer
+    const AddAboutBrandReducer = useSelector(
+        (state) => state.AddAboutBrandReducer
+    )
+    const { success: successAddAboutBrand, loading: loadingAddAboutBrand } =
+        AddAboutBrandReducer
 
-    // const AddColMoodBoardReducer = useSelector(
-    //     (state) => state.AddColMoodBoardReducer
-    // )
-    // const { success: successAddColMoodBoard, loading: loadingAddColMoodBoard } =
-    //     AddColMoodBoardReducer
+    const AddColMoodBoardReducer = useSelector(
+        (state) => state.AddColMoodBoardReducer
+    )
+    const { success: successAddColMoodBoard, loading: loadingAddColMoodBoard } =
+        AddColMoodBoardReducer
 
-    // const DeleteBriefFileReducer = useSelector(
-    //     (state) => state.DeleteBriefFileReducer
-    // )
-    // const { success: successDeleteBriefFile, loading: loadingDeleteBriefFile } =
-    //     DeleteBriefFileReducer
+    const DeleteBriefFileReducer = useSelector(
+        (state) => state.DeleteBriefFileReducer
+    )
+    const { success: successDeleteBriefFile, loading: loadingDeleteBriefFile } =
+        DeleteBriefFileReducer
 
-    // const DeleteMoodBoardImgReducer = useSelector(
-    //     (state) => state.DeleteMoodBoardImgReducer
-    // )
-    // const { success: successDeleteMoodBoardImg, loading: loadingDeleteMoodBoardImg } =
-    // DeleteMoodBoardImgReducer
+    const DeleteMoodBoardImgReducer = useSelector(
+        (state) => state.DeleteMoodBoardImgReducer
+    )
+    const { success: successDeleteMoodBoardImg, loading: loadingDeleteMoodBoardImg } =
+    DeleteMoodBoardImgReducer
 
-    // const projectUpdateReducer = useSelector(
-    //     (state) => state.projectUpdateReducer
-    // )
-    // const { success: successUpdate, loading: loadingProjectUpdate } =
-    //     projectUpdateReducer
+    const projectUpdateReducer = useSelector(
+        (state) => state.projectUpdateReducer
+    )
+    const { success: successUpdate, loading: loadingProjectUpdate } =
+        projectUpdateReducer
 
-    // const getUserReducer = useSelector((state) => state.getUserReducer)
-    // const { loading, user, isAdmin } = getUserReducer
+    const getUserReducer = useSelector((state) => state.getUserReducer)
+    const { loading, user, isAdmin } = getUserReducer
 
-    // useEffect(() => {
-    //     if (successUpdate) {
-    //         dispatch({ type: PROJET_UPDATE_RESET })
-    //     }
-    //     if (successAddAboutBrand) {
-    //         dispatch({ type: ADD_ABOUT_BRAND_RESET })
-    //     }
-    //     if (successDeleteBriefFile) {
-    //         dispatch({ type: DELETE_BRIEF_FILE_RESET })
-    //     }
-    //     if (successAddColMoodBoard) {
-    //         dispatch({ type: ADD_COL_MOODBOARDE_RESET })
-    //     } 
-    //     if (successDeleteMoodBoardImg) {
-    //         dispatch({ type: DELETE_MOODB_IMG_RESET })
-    //     } else {
-    //         if (user.client || isAdmin) {
-    //             dispatch(Getprojectdetails(id))
-    //         }
-    //     }
-    // }, [dispatch, id, isAdmin, successAddAboutBrand, successAddColMoodBoard, successDeleteBriefFile, successDeleteMoodBoardImg, successUpdate, user?.client])
+    useEffect(() => {
+        if (successUpdate) {
+            dispatch({ type: PROJET_UPDATE_RESET })
+        }
+        if (successAddAboutBrand) {
+            dispatch({ type: ADD_ABOUT_BRAND_RESET })
+        }
+        if (successDeleteBriefFile) {
+            dispatch({ type: DELETE_BRIEF_FILE_RESET })
+        }
+        if (successAddColMoodBoard) {
+            dispatch({ type: ADD_COL_MOODBOARDE_RESET })
+        } 
+        if (successDeleteMoodBoardImg) {
+            dispatch({ type: DELETE_MOODB_IMG_RESET })
+        } else {
+            // if (user.client || isAdmin) {
+            //     dispatch(Getprojectdetails(id))
+            // }
+        }
+    }, [dispatch, id, isAdmin, successAddAboutBrand, successAddColMoodBoard, successDeleteBriefFile,
+    successDeleteMoodBoardImg, successUpdate, user?.client])
+
     const showPage = (i) => {
  
 

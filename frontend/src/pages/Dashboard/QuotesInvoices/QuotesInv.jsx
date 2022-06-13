@@ -76,8 +76,8 @@ const QuotesInv = ({ indexPage }) => {
                 ) : (
                     <>
                         <div className="flex flex-row w-full gap-4 items-start ">
-                            <left className="flex flex-col items-start glass w-2/3">
-                                <div className="flex items-start  justify-between gap-48">
+                            <left className="flex flex-col items-start glass w-2/3 min-h-[620px] pb-20">
+                                <div className="flex items-start  justify-between gap-40">
                                     <p class="text-2xl  font-semibold leading-relaxed text-slate-100">
                                         Project Recap
                                     </p>
@@ -85,8 +85,8 @@ const QuotesInv = ({ indexPage }) => {
                                         32000 €
                                     </p>
                                 </div>
-                                <div className="grid grid-col-2 gap-4 text-slate-200 mt-12 ">
-                                    <div className="flex flex-1 flex-row items-center justify-center ">
+                                <div className="grid grid-col-2 gap-8 text-slate-200 mt-12 w-full ">
+                                    <div className="flex flex-1 flex-row items-center justify-center  ">
                                         <p className="text-lg font-semibold flex-1">
                                             Project :
                                         </p>

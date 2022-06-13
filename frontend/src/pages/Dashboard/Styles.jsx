@@ -124,9 +124,9 @@ function Styles() {
         
          <div>
          {hidden &&
-          <div className="z-10  max-w-max absolute mt-32 ">
+          <div className="z-10 max-w-max absolute left-[940px] mt-16">
 
-               <strong class="text-xl z-20 absolute  left-2  align-center cursor-pointer alert-del"
+               <strong class="text-xl z-20 absolute left-2  align-center cursor-pointer alert-del"
                onClick={()=>setHidden(false)}
                     >&times;
                 </strong>
@@ -137,7 +137,7 @@ function Styles() {
           </div>
               }
     
-    <div  className="glass  rounded-lg  h-[440px]  w-[350px] p-0  ">
+    <div  className="glass  rounded-lg  h-[440px]  w-[350px] p-0 ">
                    
     <div className='mt-4 pt-2'>
         <span className="text-[2em] font-semibold text-[#EEEEEF]  pl-4 mb-2">Colors</span>
@@ -155,7 +155,7 @@ function Styles() {
 
             <div className="grid grid-cols-1">
         
-                    <div className="grid grid-cols-3 w-[200px]   mt-4 ml-[90px] mb-6 ">
+                    <div className="grid grid-cols-3 w-[200px]  mt-4 ml-[90px] mb-6 ">
                             
                         
                             {col.hexs.map((item,i)=>{

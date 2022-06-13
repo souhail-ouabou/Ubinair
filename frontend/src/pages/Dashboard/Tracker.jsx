@@ -62,6 +62,7 @@ const Tracker = ({indexPage}) => {
     const [edit, setEdit] = useState(false);
     const [editCirBar, setEditCirBar] = useState(false);
     const [showFormUpdate, setShowFormUpdate] = useState(false);
+    const [activeTab,setActiveTab]=useState()
     const today=
       new Intl.DateTimeFormat("en-GB", {
         year: "numeric",
@@ -122,8 +123,9 @@ const Tracker = ({indexPage}) => {
     
    //tabulation
    const handleClickShow=(index)=>{
-    console.log('index --------------'+index);
-      
+ 
+     setActiveTab(index)
+     console.log('active tab --------------'+activeTab);
         if (specification.length !== 0) {
             specification.map((sp,i) => {
                 if (index === i) {
@@ -173,7 +175,7 @@ const Tracker = ({indexPage}) => {
 
                 useEffect(()=>{
                         if (!loadingProjectDetails){
-                    
+                              
                             setSpec(projectDetails.specification)
                             setIsadmin(isAdmin)
                             
@@ -575,7 +577,10 @@ const Tracker = ({indexPage}) => {
                         
 
                     <li key={i}>
-                        <motion.div className="flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4"
+                        <motion.div 
+                        className={activeTab==i ?' flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4 shadow-box-sh':
+                        'flex  justify-between gap-x-4  py-3 text-white   group rounded-lg  pl-4 pr-4'}
+                        
                              whileHover={{
                                 boxShadow:"0px 0px 8px rgb(255,255,255)"
                             }}
