@@ -30,4 +30,5 @@ router.post('/addquotes/:id', auth, projetCtrl.addQuotesProject)
 router.post('/addinvoices/:id', auth, projetCtrl.addInvoicesProject)
 router.post('/deleteinvoices/:id', auth, projetCtrl.deleteInvoicesProject)
 router.post('/addmedia/:id', auth, projetCtrl.addMediaProject)
+router.post('/deletemedia/:id', auth, projetCtrl.deleteMediaProject)
 module.exports = router

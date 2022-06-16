@@ -7,7 +7,11 @@ import { useState, useEffect } from 'react'
 import TextEditor from './TextEditor'
 import { ObjectID } from 'bson'
 import 'react-quill/dist/quill.snow.css'
-import { AddMediaPage,UpdateContentsProject } from '../../redux/actions/projectActions'
+import {
+    AddMediaPage,
+    DeleteMedia,
+    UpdateContentsProject,
+} from '../../redux/actions/projectActions'
 
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -16,11 +20,11 @@ import { TiDelete, TiDownload } from 'react-icons/ti'
 import { toast } from 'react-toastify'
 import { useDropzone } from 'react-dropzone'
 import { saveAs } from 'file-saver'
-import pdfPng from './Assets/file-pdf-solid.png'
+import pdfPng from './Assets/file-png-solid.png'
 import uploadImg from './Assets/upload-icon.png'
 import { FaTrash } from 'react-icons/fa'
 
-export default function ContentSharing({indexPage}) {
+export default function ContentSharing({ indexPage }) {
     const dispatch = useDispatch()
     const { id } = useParams()
     const [images, setImages] = useState([])
@@ -43,7 +47,6 @@ export default function ContentSharing({indexPage}) {
             reader.readAsDataURL(image)
         })
 
-        
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
         if (rejectedFiles.length !== 0) {
@@ -80,6 +83,7 @@ export default function ContentSharing({indexPage}) {
 
     const setChosen = (id, i) => {
         setActiveTab(i)
+        setInfo(projectDetails.contents[i].media)
         setChosenId(id)
         console.log('id chosen' + ChosenId)
         Contents.map((C) => {
@@ -98,16 +102,16 @@ export default function ContentSharing({indexPage}) {
     }
     const updateHandler = () => {
         console.log(images)
-         dispatch(AddMediaPage({ images, id,ChosenId }))
-     }
-     const saveFile = (url) => {
-         saveAs(url)
-     }
-     const deleteUploadedHandler = (public_id) => {
-         if (window.confirm('Are You Sure?')) {
-            //  dispatch(DeleteMoodBoardImg({ id, public_id }))
-         }
-     }
+        dispatch(AddMediaPage({ images, id, ChosenId }))
+    }
+    const saveFile = (url) => {
+        saveAs(url)
+    }
+    const deleteUploadedHandler = (public_id) => {
+        if (window.confirm('Are You Sure?')) {
+            dispatch(DeleteMedia({ id, public_id, ChosenId }))
+        }
+    }
     useEffect(() => {
         if (ChosenId !== '') {
             let newContents = Contents.map((C) => {
@@ -125,15 +129,17 @@ export default function ContentSharing({indexPage}) {
         if (!loadingProjectDetails) {
             setContents(projectDetails.contents)
             projectDetails.contents &&
-                setChosenId(projectDetails.contents[initIndex]?._id) //layn3l wach _id hya id
+                setChosenId(projectDetails.contents[initIndex]?._id)
             projectDetails.contents &&
                 setShow(projectDetails.contents[initIndex]?.description)
+            projectDetails.contents &&
+                setInfo(projectDetails.contents[initIndex]?.media)
         }
-        console.log("ChosenId" ,ChosenId);
+        console.log('ChosenId', ChosenId)
     }, [loadingProjectDetails])
 
     const handleSave = (e) => {
-        console.log("the id : ",ChosenId)
+        console.log('the id : ', ChosenId)
         dispatch(UpdateContentsProject(id, Contents))
     }
 
@@ -211,102 +217,111 @@ export default function ContentSharing({indexPage}) {
                     </div>
                 </div>
                 <div className="glass ">
-                <h1 className='text-white text-[1.8em] font-semibold text-left '>Media</h1>
-                <div
-                    className="flex items-center justify-center border-2 border-purple-700 border-dotted w-full h-48 m-auto bg-slate-200 rounded-md"
-                    {...getRootProps()}
-                >
-                    <input {...getInputProps()} />
-                    {isDragActive ? (
-                        <div>
-                            <p>Drag is Active</p>
-                        </div>
-                    ) : (
-                        <div className="text-center ">
-                            <img
-                                className="w-[100px] m-auto"
-                                src={uploadImg}
-                                alt=""
-                            />
-                            <p>Click or Drag & Drop your images here</p>
-                            <em className="text-slate-800">
-                                (Only *.jpeg and *.png images will be accepted)
-                            </em>
-                        </div>
-                    )}
-                </div>
-                <div className='w-[300px] mt-2'>
-                    {images.length > 0 && (
-                        <div className=" flex flex-wrap">
-                            {images.map((image, index) => (
-                                <div className="flex ">
-                                    <img
-                                        className="object-cover w-[100px] h-[100px] relative m-[16px] overflow-hidden "
-                                        src={image.base}
-                                        key={index}
-                                        alt=""
-                                    />
-
-                                    <button
-                                        className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute  flex "
-                                        onClick={() => deleteDroppedHandler(image)}
-                                    >
-                                        <FaTrash className="m-auto text-white justify-center items-center" />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-                    )}
-                </div>
-                <hr className="my-4 mx-auto w-[50%]"></hr>
-                <div className=" flex flex-wrap w-full gap-4">
-                {info?.length > 0 && (
-                    <>
-                        {info.map((v, index) => (
-                            <div className="flex items-center justify-center relative w-[40%] h-[130px] bg-slate-700 rounded-md mt-3">
-                                <a
-                                    target="_blank"
-                                    href={`${v?.secure_url}`}
-                                    className="text-white  relative m-[16px]"
-                                    rel="noreferrer"
-                                >
-                                    <img
-                                        className="w-[90px] h-[90px] m-auto"
-                                        src={pdfPng}
-                                        alt="pdf"
-                                    />
-                                    {v.fileName}
-                                </a>
-
-                                <button
-                                    className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
-                                    onClick={() =>
-                                        deleteUploadedHandler(v.public_id)
-                                    }
-                                >
-                                    <TiDelete className="m-auto text-white justify-center items-center" />
-                                </button>
-                                <button
-                                    className="bg-blue-600 rounded-br-md   rounded-tl-xl w-7 h-7  flex  absolute bottom-0 right-0 "
-                                    onClick={() => saveFile(v?.secure_url)}
-                                >
-                                    {' '}
-                                    <TiDownload className="m-auto text-white justify-center items-center" />
-                                </button>
+                    <h1 className="text-white text-[1.8em] font-semibold text-left ">
+                        Media
+                    </h1>
+                    <div
+                        className="flex items-center justify-center border-2 border-purple-700 border-dotted w-full h-48 m-auto bg-slate-200 rounded-md"
+                        {...getRootProps()}
+                    >
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                            <div>
+                                <p>Drag is Active</p>
                             </div>
-                        ))}
-                    </>
-                )}
-            </div>
-                <button
-                    className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        ) : (
+                            <div className="text-center ">
+                                <img
+                                    className="w-[100px] m-auto"
+                                    src={uploadImg}
+                                    alt=""
+                                />
+                                <p>Click or Drag & Drop your images here</p>
+                                <em className="text-slate-800">
+                                    (Only *.jpeg and *.png images will be
+                                    accepted)
+                                </em>
+                            </div>
+                        )}
+                    </div>
+                    <div className="w-[300px] mt-2">
+                        {images.length > 0 && (
+                            <div className=" flex flex-wrap">
+                                {images.map((image, index) => (
+                                    <div className="flex ">
+                                        <img
+                                            className="object-cover w-[100px] h-[100px] relative m-[16px] overflow-hidden "
+                                            src={image.base}
+                                            key={index}
+                                            alt=""
+                                        />
+
+                                        <button
+                                            className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute  flex "
+                                            onClick={() =>
+                                                deleteDroppedHandler(image)
+                                            }
+                                        >
+                                            <FaTrash className="m-auto text-white justify-center items-center" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <hr className="my-4 mx-auto w-[50%]"></hr>
+                    <div className=" flex flex-wrap w-full gap-4">
+                        {info?.length > 0 && (
+                            <>
+                                {info.map((v, index) => (
+                                    <div className="flex items-center justify-center relative w-[40%] h-[130px] bg-slate-700 rounded-md mt-3">
+                                        <a
+                                            target="_blank"
+                                            href={`${v?.secure_url}`}
+                                            className="text-white  relative m-[16px]"
+                                            rel="noreferrer"
+                                        >
+                                            <img
+                                                className="w-[90px] h-[90px] m-auto"
+                                                src={pdfPng}
+                                                alt="pdf"
+                                            />
+                                            {v.fileName}
+                                        </a>
+
+                                        <button
+                                            className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
+                                            onClick={() =>
+                                                deleteUploadedHandler(
+                                                    v.public_id
+                                                )
+                                            }
+                                        >
+                                            <TiDelete className="m-auto text-white justify-center items-center" />
+                                        </button>
+                                        <button
+                                            className="bg-blue-600 rounded-br-md   rounded-tl-xl w-7 h-7  flex  absolute bottom-0 right-0 "
+                                            onClick={() =>
+                                                saveFile(v?.secure_url)
+                                            }
+                                        >
+                                            {' '}
+                                            <TiDownload className="m-auto text-white justify-center items-center" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </>
+                        )}
+                    </div>
+                    <button
+                        className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
     md:w-auto  w-full 
      hover:shadow-lg transition-all ease-in-out duration-100 font-bold
     "
-                    onClick={updateHandler}
-                >
-                    Submit
-                </button>
+                        onClick={updateHandler}
+                    >
+                        Submit
+                    </button>
                 </div>
             </div>
         </div>

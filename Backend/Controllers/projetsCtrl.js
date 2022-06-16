@@ -558,5 +558,25 @@ const projetsCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    deleteMediaProject: async (req, res) => {
+        const { ChosenId } = req.body
+        console.log('req body : ', ChosenId)
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            project.contents.map((c) => {
+                if (c._id == ChosenId)
+                    c.media = c.media.filter((fw) => fw.public_id !== public_id)
+            })
+
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
+        }
+    },
 }
 module.exports = projetsCtrl

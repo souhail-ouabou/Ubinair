@@ -709,6 +709,38 @@ export const AddMediaPage= ({images,id,ChosenId}) => async (dispatch, getState) 
         })
     }
 }
+export const DeleteMedia = ({id,public_id,ChosenId}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_BRIEF_FILE_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
 
+        const { token } = getState()
 
-
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_file",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deletemedia/${id}`,{public_id,ChosenId}, config)
+        dispatch({
+            type: DELETE_BRIEF_FILE_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_BRIEF_FILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}
