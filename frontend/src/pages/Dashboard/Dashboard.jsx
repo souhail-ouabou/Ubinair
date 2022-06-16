@@ -73,9 +73,9 @@ const Dashboard = () => {
         if (successDeleteMoodBoardImg) {
             dispatch({ type: DELETE_MOODB_IMG_RESET })
         } else {
-            // if (user.client || isAdmin) {
-            //     dispatch(Getprojectdetails(id))
-            // }
+            if (user.client || isAdmin) {
+                dispatch(Getprojectdetails(id))
+            }
         }
     }, [dispatch, id, isAdmin, successAddAboutBrand, successAddColMoodBoard, successDeleteBriefFile,
     successDeleteMoodBoardImg, successUpdate, user?.client])

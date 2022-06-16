@@ -47,9 +47,10 @@ const visualInspirationSchema = mongoose.Schema(
 
 const contentsSchema = mongoose.Schema(
     {
-        id: { type: String, required: true },
-        title: { type: String, required: false },
-        description: { type: String, required: false, default: false },
+        id: { type: String },
+        title: { type: String, default: "Example title" },
+        description: { type: String,  default: "Description" },
+        media : [fileBriefSchema]
     },
     {
         timestamps: true,

@@ -132,6 +132,34 @@ const uploadCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    uploadMedia: async (req, res) => {
+        try {
+            const { images } = req.body
+            //  console.log('req body : ', req.body)
+            let promises = []
+            images.forEach(async (file) => {
+                promises.push(
+                    cloudinary.v2.uploader.upload(file.base, {
+                        folder: 'Ubinair/Invoices',
+                        tags: images.file.path,
+                        //context : file.file.path,
+
+                        // flags: 'attachment:your_pdf',
+                        // fetch_format: 'auto'
+                        // resource_type: 'raw',
+                        // raw_convert: 'aspose',
+                    })
+                )
+
+                // newData.push(promises,file.file.path)
+            })
+
+            const response = await Promise.all(promises)
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
 }
 
 module.exports = uploadCtrl
