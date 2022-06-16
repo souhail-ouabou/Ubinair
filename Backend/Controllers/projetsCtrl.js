@@ -528,5 +528,35 @@ const projetsCtrl = {
             return res.status(500).json({ msg: err.message })
         }
     },
+    addMediaProject: async (req, res) => {
+        try {
+            const { ChosenId } = req.body
+            console.log('req body : ', ChosenId)
+            const imagesReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+                fileName: p.tags[0],
+            }))
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.contents.map((c) => {
+                    if (c._id == ChosenId)
+                        c.media = c.media.concat(imagesReq) || c.media
+                })
+
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
 }
 module.exports = projetsCtrl

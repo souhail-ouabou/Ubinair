@@ -42,7 +42,7 @@ export default function ContentSharing({indexPage}) {
             }
             reader.readAsDataURL(image)
         })
-        // cons
+
         
         console.log('acceptedFiles', acceptedFiles)
         console.log('rejectedFiles', rejectedFiles)
@@ -83,7 +83,7 @@ export default function ContentSharing({indexPage}) {
         setChosenId(id)
         console.log('id chosen' + ChosenId)
         Contents.map((C) => {
-            if (C.id == id) setShow(C.description)
+            if (C._id == id) setShow(C.description)
         })
     }
     const handleAddSection = () => {
@@ -97,7 +97,8 @@ export default function ContentSharing({indexPage}) {
         setForm(false)
     }
     const updateHandler = () => {
-         dispatch(AddMediaPage({ images, id }))
+        console.log(images)
+         dispatch(AddMediaPage({ images, id,ChosenId }))
      }
      const saveFile = (url) => {
          saveAs(url)
@@ -110,7 +111,7 @@ export default function ContentSharing({indexPage}) {
     useEffect(() => {
         if (ChosenId !== '') {
             let newContents = Contents.map((C) => {
-                if (C.id == ChosenId)
+                if (C._id == ChosenId)
                     return { ...C, description: showEditorVal }
                 return C
             })
@@ -155,7 +156,7 @@ export default function ContentSharing({indexPage}) {
                                             : 'px-20'
                                     }
                                     onClick={() => {
-                                        setChosen(C.id, i)
+                                        setChosen(C._id, i)
                                     }}
                                 >
                                     {C.title}

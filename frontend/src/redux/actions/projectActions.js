@@ -667,7 +667,7 @@ export const AddInvoices= ({files,basesArray,id}) => async (dispatch, getState) 
         })
     }
 }
-export const AddMediaPage= ({images,id}) => async (dispatch, getState) => {
+export const AddMediaPage= ({images,id,ChosenId}) => async (dispatch, getState) => {
     try {
         dispatch({ type: ADD_ABOUT_BRAND_REQUEST }) 
         toast.dismiss()
@@ -685,7 +685,7 @@ export const AddMediaPage= ({images,id}) => async (dispatch, getState) => {
         
         const  {data}  = await axios.post("/api/upload_media",{images},config)
          console.log("after then :",data)
-         const  {res}  = await axios.post(`/projets/addmedia/${id}`, {data}, config)
+         const  {res}  = await axios.post(`/projets/addmedia/${id}`, {data,ChosenId}, config)
         // console.log("res : ",res)
         dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
 
