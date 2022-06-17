@@ -269,24 +269,31 @@ export default function ContentSharing({ indexPage }) {
                             </div>
                         )}
                     </div>
+                    <button
+                        className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+    md:w-auto  w-full 
+     hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+    "
+                        onClick={updateHandler}
+                    >
+                        Submit
+                    </button>
                     <hr className="my-4 mx-auto w-[50%]"></hr>
-                    <div className=" flex flex-wrap w-full gap-4">
+                    <div className=" flex flex-col w-full gap-2">
                         {info?.length > 0 && (
                             <>
                                 {info.map((v, index) => (
-                                    <div className="flex items-center justify-center relative w-[40%] h-[130px] bg-slate-700 rounded-md mt-3">
+                                    <div className="flex items-center justify-center relative   bg-slate-700 rounded-md ">
                                         <a
                                             target="_blank"
                                             href={`${v?.secure_url}`}
                                             className="text-white  relative m-[16px]"
                                             rel="noreferrer"
                                         >
-                                            <img
-                                                className="w-[90px] h-[90px] m-auto"
-                                                src={pdfPng}
-                                                alt="pdf"
-                                            />
+                                           <strong className="text-white  relative m-[16px]">
+                                    
                                             {v.fileName}
+                                </strong>
                                         </a>
 
                                         <button
@@ -313,15 +320,7 @@ export default function ContentSharing({ indexPage }) {
                             </>
                         )}
                     </div>
-                    <button
-                        className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
-    md:w-auto  w-full 
-     hover:shadow-lg transition-all ease-in-out duration-100 font-bold
-    "
-                        onClick={updateHandler}
-                    >
-                        Submit
-                    </button>
+             
                 </div>
             </div>
         </div>

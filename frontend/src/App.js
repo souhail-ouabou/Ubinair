@@ -30,13 +30,12 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import EditUser from './pages/EditUser/EditUser'
 
-
 function App() {
     AOS.init()
     const [loading, setLoading] = useState(false)
 
     const getUserReducer = useSelector((state) => state.getUserReducer)
-    const { user, isAdmin, isLogged : isLoggedgetuserReducer } = getUserReducer
+    const { user, isAdmin, isLogged: isLoggedgetuserReducer } = getUserReducer
     const auth = useSelector((state) => state.auth)
     const { userInfo, isLogged } = auth
     const token = useSelector((state) => state.token)
@@ -98,7 +97,10 @@ function App() {
                     <Routes>
                         <Route path="/*" element={<Home />} />
                         <Route path="/login" element={<Login />} />
-                        <Route path="/register"  element= {userInfo ? <Profile /> : <Register />} />
+                        <Route
+                            path="/register"
+                            element={userInfo ? <Profile /> : <Register />}
+                        />
                         <Route
                             path="/user/activate/:activation_token"
                             element={<ActivationEmail />}
@@ -128,7 +130,7 @@ function App() {
                             path="/user/:id"
                             element={isAdmin ? <EditUser /> : <NotFound />}
                         />
-                 
+                        <Route path="/search/:keyword"  element={<Profile/>} />
                     </Routes>
                 </>
             </section>

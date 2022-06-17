@@ -288,7 +288,13 @@ const projetsCtrl = {
 
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Projets.find({}).populate(
+            const keyword = req.query.keyword ? {
+                name : {
+                    $regex : req.query.keyword,
+                    $options : 'i'
+                }
+            } : {}
+            const projects = await Projets.find({...keyword}).populate(
                 'user',
                 '-_id name  avatar role'
             )

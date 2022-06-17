@@ -292,7 +292,7 @@ export const UpdateContentsProject = (id,Contents) => async (dispatch) => {
     }
 }
 
-export const listAllProjects = () => async (dispatch, getState) => {
+export const listAllProjects =  (keyword = '') => async (dispatch, getState) => {
     try {
         dispatch({
             type: ALL_PROJECTS_REQUEST,
@@ -307,7 +307,7 @@ export const listAllProjects = () => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await axios.get(`/projets/allprojects`, config)
+        const { data } = await axios.get(`/projets/allprojects?keyword=${keyword}`, config)
         console.log(data)
         dispatch({
             type: ALL_PROJECTS_SUCCESS,

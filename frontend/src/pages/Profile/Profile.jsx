@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import './profile.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from './ProjetBlock'
 import {
@@ -23,9 +23,10 @@ import { USER_UPDATE_PROFILE_RESET } from '../../redux/actions/constants/userCon
 import { MdCameraswitch } from 'react-icons/md'
 import { CgAdd } from 'react-icons/cg'
 import { dispatchGetUser } from '../../redux/actions/authAction'
+import Search from './Search'
 const Profile = () => {
     const dispatch = useDispatch()
-
+    const keyword = window.location.pathname.split('/')[2] 
     const initialState = {
         id: '',
         name: '',
@@ -33,6 +34,7 @@ const Profile = () => {
         password: '',
         cf_password: '',
     }
+    let navigate = useNavigate()
     const [data, setData] = useState(initialState)
     const [msg, setMsg] = useState(null)
     const [avatar, setAvatar] = useState('')
@@ -99,7 +101,8 @@ const Profile = () => {
         setToggletab(index)
         switch (index) {
             case 1:
-                dispatch(listAllProjects())
+               navigate(`/profile`)
+               dispatch(listAllProjects(keyword))
                 break
             case 2:
                 dispatch(GetAllUsers(token))
@@ -149,6 +152,7 @@ const Profile = () => {
     }
 
     useEffect(() => {
+        console.log(keyword)
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
             dispatch(dispatchGetUser(token))
@@ -157,21 +161,13 @@ const Profile = () => {
             dispatch(listMyProjects())
             // }
             if (isAdmin || SuccessProjectDelete) {
-                dispatch(listAllProjects())
+                dispatch(listAllProjects(keyword))
             }
             if (successDelete) {
                 dispatch(GetAllUsers(token))
             }
         }
-    }, [
-        dispatch,
-        successDelete,
-        token,
-        isAdmin,
-        SuccessProjectDelete,
-        successuserUpdateProfile,
-        user.client,
-    ])
+    }, [dispatch, successDelete, token, isAdmin, SuccessProjectDelete, successuserUpdateProfile, user.client, keyword])
 
     return (
         <>
@@ -287,6 +283,7 @@ const Profile = () => {
                     </div>
                     <div className="col-right overflow-y-scroll  ">
                         {isAdmin ? (
+                            <>
                             <div className="tabs_wrap">
                                 <ul className="flex  md:items-center md:justify-center ">
                                     <li
@@ -321,6 +318,8 @@ const Profile = () => {
                                     </li> */}
                                 </ul>
                             </div>
+                            <Search/>
+                            </>
                         ) : !user.client ? (
                             <></>
                         ) : (
