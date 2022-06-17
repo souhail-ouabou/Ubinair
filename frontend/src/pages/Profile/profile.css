@@ -89,6 +89,17 @@ input {
     padding: 0 10px;
     flex: 1;
 }
+.col-right::-webkit-scrollbar {
+    display: none;
+  }
+.col-right{
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+.col-right {
+    padding: 0 10px;
+    flex: 1;
+}
 .col-right h2 {
     font-size: 1.7rem;
     text-transform: uppercase;

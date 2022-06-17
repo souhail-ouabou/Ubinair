@@ -10,7 +10,6 @@ import { DeleteProject } from '../../redux/actions/projectActions'
 
 const ProjetBlock = ({ project, toggletab }) => {
     let dispatch = useDispatch()
-
     const getUserReducer = useSelector((state) => state.getUserReducer)
     const { loading, user, isAdmin } = getUserReducer
 
@@ -19,6 +18,7 @@ const ProjetBlock = ({ project, toggletab }) => {
             dispatch(DeleteProject(id))
         }
     }
+
     return (
         <>
             <Link
@@ -30,7 +30,8 @@ const ProjetBlock = ({ project, toggletab }) => {
                 <div
                     aos-animate="fade-up"
                     data-aos="fade-up"
-                    data-aos-duration="3000"
+                    data-aos-duration="3000" 
+                    data-aos-anchor
                     className={
                         toggletab === 1
                             ? 'block md:flex-row md:w-full flex-col  '

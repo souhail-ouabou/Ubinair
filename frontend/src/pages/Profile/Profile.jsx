@@ -181,8 +181,8 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden  ">
-                    <div className="glass text-white md:w-[500px]  max-h-[700px] fixed left-8 top-24 ">
+                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden md:max-h-[760px] ">
+                    <div className="glass text-white md:w-[500px] md:h-[760px] ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin
                                 ? 'Admin Profile'
@@ -221,7 +221,7 @@ const Profile = () => {
                             change
                         </em>
                         {msg}
-                        <div className="flex flex-col text-gray-300 ">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="name">Name</label>
                             <input
                                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
@@ -233,7 +233,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-400 ">
+                        <div className="flex flex-col text-gray-400 py-2">
                             <label htmlFor="email">Email</label>
                             <input
                                 className="rounded-lg bg-gray-800 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none cursor-not-allowed"
@@ -247,7 +247,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-300 ">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="password">New Password</label>
                             <input
                                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
@@ -260,7 +260,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-300">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="cf_password">
                                 Confirm New Password
                             </label>
@@ -276,7 +276,7 @@ const Profile = () => {
                         </div>
 
                         <button
-                            className="py-2 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                            className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-center uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
@@ -285,7 +285,7 @@ const Profile = () => {
                             Update
                         </button>
                     </div>
-                    <div className="ml-[500px] w-[950px]">
+                    <div className="col-right overflow-y-scroll  ">
                         {isAdmin ? (
                             <div className="tabs_wrap">
                                 <ul className="flex  md:items-center md:justify-center ">
