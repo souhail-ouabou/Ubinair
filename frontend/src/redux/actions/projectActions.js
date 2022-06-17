@@ -76,7 +76,7 @@ export const CreateProjet = (calculator) => async (dispatch, getState) => {
         })
     }
 }
-export const listMyProjects = () => async (dispatch, getState) => {
+export const listMyProjects =  (keyword = '') => async (dispatch, getState) => {
     try {
         dispatch({
             type: MY_PROJECTS_REQUEST,
@@ -93,7 +93,7 @@ export const listMyProjects = () => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await axios.get(`/projets/myprojects`, config)
+        const { data } = await axios.get(`/projets/myprojects?keyword=${keyword}`, config)
         //   console.log(data);
         dispatch({
             type: MY_PROJECTS_SUCCESS,

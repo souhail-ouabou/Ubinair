@@ -105,7 +105,13 @@ const projetsCtrl = {
     },
     getMyprojects: async (req, res) => {
         try {
-            const projects = await Projets.find({ user: req.user.id })
+            const keyword = req.query.keyword ? {
+                name : {
+                    $regex : req.query.keyword,
+                    $options : 'i'
+                }
+            } : {}
+            const projects = await Projets.find({ user: req.user.id ,...keyword})
             res.json(projects)
         } catch (err) {
             console.log('-----------myprojets error-------------')

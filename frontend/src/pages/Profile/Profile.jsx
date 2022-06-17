@@ -89,12 +89,7 @@ const Profile = () => {
         error: errorProjectDelete,
         success: SuccessProjectDelete,
     } = projectDelete
-    // const auth = useSelector((state) => state.auth)
-    // const {
-    //     loading: loadingProjectDelete,
-    //     error: errorProjectDelete,
-    //     success: SuccessProjectDelete,
-    // } = projectDelete
+
 
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
@@ -152,13 +147,13 @@ const Profile = () => {
     }
 
     useEffect(() => {
-        console.log(keyword)
+       
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
             dispatch(dispatchGetUser(token))
         } else {
             // if (user.client) {
-            dispatch(listMyProjects())
+            dispatch(listMyProjects(keyword))
             // }
             if (isAdmin || SuccessProjectDelete) {
                 dispatch(listAllProjects(keyword))
@@ -294,7 +289,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(1)}
                                     >
-                                        AllProjects
+                                        All Projects
                                     </li>
                                     <li
                                         className={
@@ -318,14 +313,17 @@ const Profile = () => {
                                     </li> */}
                                 </ul>
                             </div>
-                            <Search/>
+                            <Search toggletab={toggletab}/>
                             </>
                         ) : !user.client ? (
                             <></>
                         ) : (
+                            <>
                             <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
                                 My projects
                             </h1>
+                             <Search toggletab={1}/>
+                            </>
                         )}
 
                         {/* dispatched after check admin  */}
@@ -355,7 +353,7 @@ const Profile = () => {
                             <div className=" text-white"> Loaaading ...</div>
                         ) : errorMyProjects || errorAllProjects ? (
                             <div>errorMyProjects</div>
-                        ) : user.client && myProjects.length === 0 ? (
+                        ) : user.client &&  !isAdmin && myProjects.length === 0 ? (
                             <>My projects Emppt </>
                         ) : isAdmin && AllProjects.length === 0 ? (
                             <div className="text-white">All projects Emppt</div>
