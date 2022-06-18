@@ -3,7 +3,7 @@ import { FaSearch } from 'react-icons/fa'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { listAllProjects } from '../../redux/actions/projectActions'
-const Search = ({toggletab}) => {
+const Search = ({ toggletab }) => {
     let navigate = useNavigate()
     let dispatch = useDispatch()
     const [keyword, setkeyword] = useState('')
@@ -11,7 +11,7 @@ const Search = ({toggletab}) => {
         console.log('clickes')
         if (keyword.trim() && e.which == 13) {
             navigate(`/search/${keyword}`)
-           // dispatch(listAllProjects(keyword))
+            // dispatch(listAllProjects(keyword))
         } else {
             navigate(`/profile`)
         }
@@ -44,11 +44,7 @@ const Search = ({toggletab}) => {
                     </button>
                 </div>
             </div> */}
-            <div    className={
-                                            toggletab === 1
-                                                ? ''
-                                                : 'hidden'
-                                        }>
+            <div className={toggletab === 1 ? '' : 'hidden'}>
                 <label
                     for="default-search"
                     class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-gray-300"
@@ -83,7 +79,6 @@ const Search = ({toggletab}) => {
                         onKeyPress={Handlesearch}
                     />
                     <button
-                       
                         class="text-white absolute right-2.5 bottom-2.5 bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 focus:outline-none  font-medium rounded-lg text-sm px-4 py-2  outline-none"
                         onClick={Reset}
                     >
