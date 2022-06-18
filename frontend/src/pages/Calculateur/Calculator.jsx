@@ -32,6 +32,7 @@ const Calculator = () => {
         features: [],
     }
     const [calculator, setCaluclator] = useState(initialState)
+    const [backStyle,setBack]=useState('absolute top-[53rem] left-32')
     const dispatch = useDispatch();
 
     const download = () => {
@@ -122,9 +123,10 @@ const Calculator = () => {
 
     }
     const previousTab = () => {
+        let i=calculator.index - 1;
         setCaluclator({
             ...calculator,
-            index: calculator.index - 1,
+            index: i,
         })
     }
     const toggleTab = (index, type = null) => {
@@ -287,6 +289,22 @@ const Calculator = () => {
             return { ...prev, index }
         })
         console.log('RESUUUUUME', calculator)
+        switch(index){
+            case 2:
+                setBack("absolute top-[53rem]");
+                break;
+            case 3:
+                setBack("absolute top-[64rem] left-32");
+                break;
+            case 4:
+                setBack("absolute top-[98rem] left-32");
+                break;
+            case 5:
+                setBack("absolute top-[36rem] left-32");
+                    break;
+            default:
+                setBack("absolute top-[53rem] left-32")
+        }
     }
     //TogglesPage handleCheckbox
     const handleCheckbox = (event) => {
@@ -305,8 +323,8 @@ const Calculator = () => {
     }
     return (
         <div className="w-[1000px] z-10">
-            <motion.div
-              animate={{ x: -242,y:506 }}
+            <div className={backStyle}
+            //   animate={{ x: -242,y:506 }}
             >
                 {' '}
                 {calculator.index == 0 ? (
@@ -314,7 +332,7 @@ const Calculator = () => {
                 ) : (
                     <Goback previousTab={previousTab} />
                 )}{' '}
-            </motion.div>
+            </div>
           
                 <BeginPage
                     index={calculator.index} //0

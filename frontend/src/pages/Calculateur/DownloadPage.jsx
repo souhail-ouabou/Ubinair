@@ -5,7 +5,7 @@ export default function DownloadPage(props) {
   const [inputValue,setValue]=React.useState('')
   return (
     <div className={props.index===5?"text-white":"hidden"}>
-    <div  className="text-xs sm:text-sm pt-5 md:text-2xl text-center pb-6  ">
+    <div  className="text-xs sm:text-sm pt-5 md:text-2xl text-center pb-6  mt-10">
         <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>Très bien! Nous avons terminé.</motion.h1>
     </div>
     
@@ -19,7 +19,7 @@ export default function DownloadPage(props) {
     <div  className="text-xs sm:text-sm pt-5 md:text-2xl text-center pb-6  ">
         <motion.h1 initial={{y:350}} animate={{y:0}} transition={{delay:1.0,duration:1.0}}>Ajouter le nom de projet avant de télécharger votre facture.</motion.h1>
     </div>
-    <div className="text-center">
+    <div className="text-center mb-20">
  
     <input
                                 className="rounded-lg bg-white mt-2 p-2 w-[400px] text-gray-900 text-center  focus:border-blue-500  focus:outline-none "
@@ -34,8 +34,8 @@ export default function DownloadPage(props) {
                                 
                             />
   </div>
-    <motion.div className="text-center mt-6" 
-    animate={{y:56,x:660}}>
+    <div className="absolute top-[39rem] left-[9.5rem]" 
+    >
                   <button
                   
                         type="button"
@@ -43,9 +43,9 @@ export default function DownloadPage(props) {
                         onClick={props.onDownload}
                         disabled={props.name==''?true:false}
                     >
-                        <span className=""> Télécharger PDF </span>
+                        <span className=""> facture </span>
                     </button>
-   </motion.div>
+   </div>
    
     </div>
   )

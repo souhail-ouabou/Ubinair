@@ -80,6 +80,7 @@ module.exports = {
     variants:{
       extend:{
         backgroundColor:['checked'],
+        display: ["group-hover"],
       },
     },
   plugins: [ ],

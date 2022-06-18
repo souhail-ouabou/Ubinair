@@ -37,24 +37,25 @@ const projetsCtrl = {
                 ],
                 projectColors:[
 
-                {title:"Base (60%) - ex. backgrounds",hexs:[{id:uuid.v1(),hexCode:'#000'},
-                                                            {id:uuid.v1(),hexCode:'#000'},
-                                                            {id:uuid.v1(),hexCode:'#000'}
+                {title:"Base (60%) - ex. backgrounds",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                            {id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                            {id:uuid.v1(),hexCode:'#FFFFFF'}
                                         ]},
     
-                {title:"Contrast (30%) - ex. text",hexs:[{id:uuid.v1(),hexCode:'#000'},
-                                                        {id:uuid.v1(),hexCode:'#000'},
-                                                        {id:uuid.v1(),hexCode:'#000'}
+                {title:"Contrast (30%) - ex. text",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                        {id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                        {id:uuid.v1(),hexCode:'#FFFFFF'}
                 ]},
     
-                {title:"Accents (10%) - ex. buttons",hexs:[{id:uuid.v1(),hexCode:'#000'},
-                                                            {id:uuid.v1(),hexCode:'#000'},
-                                                            {id:uuid.v1(),hexCode:'#000'}
+                {title:"Accents (10%) - ex. buttons",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                            {id:uuid.v1(),hexCode:'#FFFFFF'},
+                                                            {id:uuid.v1(),hexCode:'#FFFFFF'}
                 ]}],
                 projectFonts:[{title:"Title",font:"Arial",size:"18px"},
                               {title:"Subtitle",font:"Helvetica",size:"16px"},
                               {title:"Paragraph",font:"Verdana",size:"12px"},
                  ],
+                 contents:[{id:uuid.v1(),title:'example page',description:''}],
   
                 priceDebut: priceDebut,
                 priceRequired: priceRequired,

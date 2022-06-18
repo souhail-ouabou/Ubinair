@@ -11,12 +11,12 @@ function TogglesPage(props) {
             <div>
                 <Devise result={props.allState.devis} />
 
-                <div className="text-4xl sm:text-5xl mt-4  md:text-6xl text-center pb-10 ">
+                <div className="text-4xl sm:text-5xl mt-4   md:text-6xl text-center pb-10 ">
                     <h1>Quelles fonctionnalités envisagez vous ?</h1>
                 </div>
             </div>
 
-            <div className="grid  gap-x-6  grid-cols-1 sm:pl-20   sm:grid-cols-2 ">
+            <div className="grid  gap-x-6  grid-cols-1 sm:pl-20   sm:grid-cols-2 mb-20 ">
                 {props.allState.features?.map(togglerow => (
                     <Toggle
                         key={togglerow.id}
@@ -28,8 +28,8 @@ function TogglesPage(props) {
                 ))}
             </div>
          
-            <motion.div className="mt-4"
-            animate={{x:250,y:70}}
+            <div className="absolute top-[53rem] left-52"
+            // animate={{x:250,y:70}}
             >
                  
                 <button
@@ -40,7 +40,7 @@ function TogglesPage(props) {
                     <span className="mr-2"> Continue </span>
                     <FaArrowAltCircleRight />
                 </button>
-            </motion.div>
+            </div>
         </div>
     )
 }

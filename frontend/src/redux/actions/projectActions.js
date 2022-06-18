@@ -255,24 +255,26 @@ export const UpdateFontsProject = (id,fontStyles) => async (dispatch) => {
     }
 }
 
-export const UpdateContentsProject = (id,Contents) => async (dispatch) => {
+export const UpdateContentsProject = (id,Contents,success=false) => async (dispatch) => {
     try {
         dispatch({ type: PROJET_UPDATE_REQUEST })
+
+        if(success){
         toast.dismiss()
         toast.loading('Please wait...', {
             position: toast.POSITION.TOP_CENTER,
-        })
+        })}
 
         const { data } = await axios.put(`/projets/updateprjcontents/${id}`, {Contents,id})
 
       
 
         dispatch({ type: PROJET_UPDATE_SUCCESS, payload: data })
-
+        if(success){
         toast.dismiss()
         toast.success('Contents saved with success !', {
             position: toast.POSITION.TOP_CENTER,
-        })
+        })}
     } catch (error) {
         dispatch({
             type: PROJET_UPDATE_FAIL,

@@ -48,16 +48,16 @@ const Tracker = ({indexPage}) => {
     const { user,isAdmin} = getUserReducer
 
     useEffect(() => {
-        if (user.client) {
+        if (user?.client) {
             dispatch(Getprojectdetails(id))
         }
-    }, [user.client])
+    }, [user?.client])
 
 
     const [operatedObj,setOpObj]=useState({id:'',title:'',state:'',date:'',description:''})
     const [Admin,setIsadmin]=useState(false)
     const [specification, setSpec] = useState([])
-    const [title,setTitle]=React.useState('')
+    const [title,setTitle]=useState('')
     const [showForm, setShowForm] = useState(false);
     const [edit, setEdit] = useState(false);
     const [editCirBar, setEditCirBar] = useState(false);
@@ -295,8 +295,8 @@ const Tracker = ({indexPage}) => {
         }
 
        //update
-        const handleUpdate=(e)=>{
-            e.preventDefault();
+        const handleUpdate=()=>{
+           
             
             //start change
             
@@ -361,13 +361,13 @@ const Tracker = ({indexPage}) => {
                            >
                                 <thead class="text-xl bg-gray-200 ">
                        <tr>
-                            <th class="px-6 py-2 text-gray-500 text-left w-[250px]">
+                            <th class="px-4 py-2 text-gray-500 text-left w-[250px]">
                                 Task List
                             </th>
                             <th class="px-6 py-2 text-gray-500  w-[200px] ">
                                 Status
                             </th>
-                            <th class="px-6 py-2 pr-4 text-gray-500">
+                            <th class="px-6 py-2 pr-4 text-gray-500 w-[200px]">
                                Date
                             </th>
                             <th class="px-6 py-2 pr-4 text-gray-500">
@@ -383,12 +383,29 @@ const Tracker = ({indexPage}) => {
 
                           >
 
-                            <td class="px-6 py-4 text-gray-500 text-left"
+                            <td class="px-4 py-4 text-gray-500 text-left "
                             
                              >
-                                 
-                                 
-                                {taskObj.title}
+                                 {(showFormUpdate && operatedObj.id===taskObj.id ) ? (
+                                 <input
+                                        type="text"
+                                        placeholder="add section"
+                                        className="bg-gray-200 rounded-full px-2 w-full"
+                                        value={operatedObj.title}
+                                        onChange={(e)=>setOpObj({...operatedObj,title:e.target.value})}
+                                        onKeyPress={event => {
+                                            if (event.key === 'Enter') {
+                                              handleUpdate()
+                                            }
+                                          }}
+                                        
+                                      />
+                            
+                                  
+                                 ):(
+                                         taskObj.title
+                                 )
+                                }
                             </td>
 
                             <td class="px-6 py-4 ">
@@ -424,19 +441,36 @@ const Tracker = ({indexPage}) => {
                                 </div>
                            </td>
                      
-                            <td class="px-6 py-4 text-gray-900 text-center">
+                            <td class="px-6 py-4  text-gray-900 text-center">
                         
-
-                            {
+                            {(showFormUpdate && operatedObj.id===taskObj.id ) ? (
+                                 <input
+                                        type="date"
+                                        placeholder="add section"
+                                        className="bg-gray-200 rounded-full px-2 w-[160px]"
+                                        value={operatedObj.date}
+                                        onChange={(e)=>setOpObj({...operatedObj,date:e.target.value})}
+                                        onKeyPress={event => {
+                                            if (event.key === 'Enter') {
+                                              handleUpdate()
+                                            }
+                                          }}
+                                        
+                                      />
+                            
+                                  
+                            ):
+                            (
                             moment(taskObj.date).format("DD MMM YYYY")
-                            }
+                            )
+                         }
                             
                          
                             </td>
 
                             <td class="px-6 py-4 text-gray-900 text-center">
                             {Admin?<>
-                           <Link to="#Form">
+                           
                             <button
                                 className="top-3 right-3"
                                 type="button"
@@ -446,7 +480,7 @@ const Tracker = ({indexPage}) => {
                                 
                                 <FaRegEdit className="text-green-900" />
                             </button>
-                            </Link>
+                         
                            
                             <button
                                 className="top-3 ml-2"
@@ -487,7 +521,7 @@ const Tracker = ({indexPage}) => {
                              
                    
                         {showForm &&(
-                                <div className='bg-white mt-3 px-6 py-6 rounded-lg' >
+                                <div className='bg-white mt-3 px-6 py-6 rounded-lg' id="Form">
                                 <form onSubmit={handleSubmit}>
                                 <div class="mb-4">
                                     <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">New task</label>
@@ -520,41 +554,6 @@ const Tracker = ({indexPage}) => {
                                 </div>
                            )}
 
-                           
-                        {showFormUpdate &&(
-                                <div className='bg-white mt-3 px-6 py-6 rounded-lg' id="editForm">
-                                <form onSubmit={handleUpdate}>
-                                <div class="mb-4">
-                                    <label for="task"  class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Edit task</label>
-                                    <input type="text" id="task"  value={operatedObj.title} onChange={(e)=>setOpObj({...operatedObj,title:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required/>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="task" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
-                                    <textarea type="text" id="task" value={operatedObj.description} onChange={(e)=>setOpObj({...operatedObj,description:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  w-full p-2.5 focus:outline-none focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="Add new task" required>
-                                    </textarea>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="state" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Task state</label>
-
-                                   
-                                    <select type="text" id="state" value={operatedObj.state} onChange={(e)=>setOpObj({...operatedObj,state:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  block w-full py-2.5 px-2  focus:ring-purple-500 focus:border-purple-700 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light">
-                                   
-                                    <option selected>Select the state</option>
-                                            <option value="-1">Not yet</option>
-                                            <option value="0">In progress</option>
-                                            <option value="1">Done</option>
-                                    </select>
-                                </div>
-                                <div class="mb-4">
-                                    <label for="date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Date</label>
-                                    <input type="date" id="date"  value={operatedObj.date} onChange={(e)=>setOpObj({...operatedObj,date:e.target.value})} class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:ring-purple-500 focus:border-purple-700 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required/>
-                                </div>
-                                 
-                                <button type="submit" class="text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/8">Update task</button>
-                            
-                                </form>
-                                </div>
-                           )}
                                    
                         </div>
                         }

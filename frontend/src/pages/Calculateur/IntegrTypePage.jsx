@@ -19,7 +19,7 @@ export default function IntegrTypePage(props) {
     </div>
 
     
-    <div className="grid  gap-x-6  gap-y-6 pt-2 grid-cols-1 sm:grid-cols-2 ">
+    <div className="grid  gap-x-6  gap-y-6 pt-2 grid-cols-1 sm:grid-cols-2 mb-12">
         
         <motion.div  
        initial={{ opacity: 0 }}

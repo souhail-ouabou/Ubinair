@@ -182,7 +182,7 @@ const Profile = () => {
                 'Loadding...'
             ) : (
                 <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden  ">
-                    <div className="glass text-white md:w-[500px]  max-h-[700px] fixed left-8 top-24 ">
+                    <div className="glass text-white md:w-[500px]  max-h-[700px] md:fixed left-8 top-24 ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin
                                 ? 'Admin Profile'

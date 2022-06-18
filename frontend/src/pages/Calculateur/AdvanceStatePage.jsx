@@ -22,7 +22,7 @@ import Devise from './Devise'
 
     </div>
 
-    <div className="grid  gap-x-6  pt-2 grid-cols-1 sm:grid-cols-2  md:grid-cols-4">
+    <div className="grid  gap-x-6  pt-2 grid-cols-1 sm:grid-cols-2  md:grid-cols-4 mb-12">
         
         <motion.div  
        initial={{ opacity: 0 }}

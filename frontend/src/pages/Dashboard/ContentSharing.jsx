@@ -8,8 +8,9 @@ import TextEditor from './TextEditor'
 import {ObjectID} from 'bson'
 import 'react-quill/dist/quill.snow.css';
 import { UpdateContentsProject } from '../../redux/actions/projectActions'
-
-
+import Slider from 'react-slick'
+import { RiDeleteBin6Fill } from 'react-icons/ri'
+import { FaRegEdit } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -23,20 +24,24 @@ export default function ContentSharing(props) {
             const {
                 project: projectDetails,
                 loading: loadingProjectDetails,
-                error,
             } = GetProjectDetailsReducer
 
             const initIndex=0;
             const [form,setForm]=useState(false)
             
             const [Contents,setContents]=useState([])
+           
             const [activeTab,setActiveTab]=useState(0)
+            const [editedTab,setEditedTab]=useState()
+            const [addForm,setAddForm]=useState(false)
             const [addedSection,setAdded]=useState('')
+            const [editedSection,setEdited]=useState('')
             const [ChosenId,setChosenId]=useState('')
             const [showEditorVal, setShow] = useState('')
+            const [addblock,setAddblock]=useState(false)
 
+     
 
-        
 
            const setChosen=(id,i)=>{
                   setActiveTab(i)
@@ -49,11 +54,46 @@ export default function ContentSharing(props) {
 
            }
             const  handleAddSection=()=>{
-               
+                if(addedSection.length>13){
+                    window.alert("you can't put more than 15 caracter");
+                    return;
+                }
                 let newContents=Contents.concat({id:new ObjectID(),title:addedSection,description:'Here you can your page content'})
                 setContents(newContents)
-                // dispatch(UpdateContentsProject(id,newContents))
-                setForm(false)
+                dispatch(UpdateContentsProject(id,newContents))
+                setAddForm(false)
+                setAdded('')
+            }
+
+            const Editedinit=(title,id)=>{
+                setEditedTab(id)
+                setEdited(title)
+                setForm(true)
+
+            }
+            const deletedinit=(i)=>{
+                const conf=window.confirm('Are you sure ?')
+                if(conf){
+                let newContents=Contents.filter(t=>t.id!==i)
+                setContents(newContents)
+                dispatch(UpdateContentsProject(id,newContents))
+                }
+            }
+
+            const  handleEditSection=(i)=>{
+                if(editedSection.length>13){
+                    window.alert("you can't put more than 14 caracter");
+                    return;
+                }
+                let newContents=Contents.map((C)=>{
+                    if(C.id==i)return {...C,title:editedSection}
+                    return C;
+                 })
+                 setContents(newContents)
+                 console.log('new contents',JSON.stringify(newContents));
+                 dispatch(UpdateContentsProject(id,newContents))
+                 setForm(false)
+
             }
 
 
@@ -75,49 +115,105 @@ export default function ContentSharing(props) {
                 if (!loadingProjectDetails){
             
                     setContents(projectDetails.contents)
-                    projectDetails.contents && setChosenId(projectDetails.contents[initIndex]?.id)
+                    projectDetails.contents  && setChosenId(projectDetails.contents[initIndex]?.id)
                     projectDetails.contents && setShow(projectDetails.contents[initIndex]?.description)
+                   
                    
                     
             }
             },[loadingProjectDetails])
+
+            useEffect(()=>{
+                if(Contents?.length>=7){
+                            setAddblock(true)
+                     }else{
+                            setAddblock(false)
+                     }
+                
+            },[Contents])
             
             const handleSave=(e)=>{
-                dispatch(UpdateContentsProject(id,Contents))
+                console.log('----------------id');
+                dispatch(UpdateContentsProject(id,Contents,true))
             }
 
+  
        
 
   return (
+      
             <div  className={
                 props.indexPage === 4 ? ' flex-1  pb-8  mt-14 ml-80' : 'hidden'
             }>
 
 
-
+ 
                     <div className="tabs_wrap">
-                        <ul className="flex  md:items-center md:justify-center font-semibold text-[#EEEEEF] ">
+                    <ul className="flex  md:items-center md:justify-center font-semibold text-[#EEEEEF] ">
                                 {!loadingProjectDetails && Contents?.map((C,i)=>{
                                     return(
-                                    <li key={i} className={activeTab==i ?'!bg-purple-600 px-20':'px-20'}
+                                    <li key={i} className={activeTab==i ?'!bg-purple-600 !w-40 h-12  group':'px-20 h-12 !w-40 group'}
                                     onClick={()=>{
-                                    setChosen(C.id,i)}}>
+                                    setChosen(C.id,i)}}
+                                    // onClick={()=>click(C.id,i)}
+                                    >
+                                        {Contents.length>1 &&
+                                         <span className="absolute -top-6 right-0 left-0 hidden group-hover:block "> 
+                                         <button
+                                                className="mr-1"
+                                                type="button"
+                                                onClick={()=>Editedinit(C.title,i)}
+                                                
+                                            >
+                                                
+                                                <FaRegEdit className="text-green-300 hover:text-green-100" />
 
-                                        {C.title}
+                                         </button>
+                                         <button
+                                                className="ml-1"
+                                                type="button"
+                                                onClick={()=>deletedinit(C.id)}
+                                            >
+                                                
+                                                <RiDeleteBin6Fill className="text-red-500 hover:text-red-300" />
+                                                
+                                         </button>
+                                         </span>
+                                   }
+                                    {(form && editedTab===i)?(
+                                        <input
+                                        type="text"
+                                        placeholder="add section"
+                                        className="bg-gray-800 rounded-full text-center absolute top-0 left-1 w-[150px]"
+                                        value={editedSection}
+                                        onChange={(event)=>{setEdited(event.target.value)}}
+                                        onKeyPress={event => {
+                                            if (event.key === 'Enter') {
+                                              handleEditSection(C.id)
+                                            }
+                                          }}
+                                      />
+                                    ):(
+                                       
+                                        C.title
+                                    
+                                    )}
+
+                                        
 
                                     </li>
                                     )
                                 })}
-                                
+                                {!addblock &&(
                                 <li
-                                    className="h-12 text-center"
-                                    onClick={()=>setForm(true)}
+                                    className="h-12 !w-40 text-center"
+                                    onClick={()=>setAddForm(true)}
                                 >
-                                    {form ?(
+                                    {addForm ?(
                                         <input
                                         type="text"
                                         placeholder="add section"
-                                        className="bg-gray-800 rounded-full text-center absolute top-0 left-2 w-[120px]"
+                                        className="bg-gray-800 rounded-full text-center absolute top-0 left-1 w-[150px]"
                                         value={addedSection}
                                         onChange={(event)=>{setAdded(event.target.value)}}
                                         onKeyPress={event => {
@@ -131,7 +227,7 @@ export default function ContentSharing(props) {
                                     
                                     )}
                                 </li>
-                        
+                                )}
                         </ul>
                 </div>
 
