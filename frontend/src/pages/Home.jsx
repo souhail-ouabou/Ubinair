@@ -16,6 +16,8 @@ import OffersCards from '../components/OffersCards'
 import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 const Home = () => {
     return (
         <section
