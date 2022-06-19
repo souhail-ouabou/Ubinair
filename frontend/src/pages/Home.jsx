@@ -16,6 +16,8 @@ import OffersCards from '../components/OffersCards'
 import Callendly from '../components/Callendly'
 import { Link } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 const Home = () => {
     return (
         <section
@@ -77,77 +79,70 @@ const Home = () => {
                     La Méthode Ubinair
                 </p>
             </div>
-            <div className="flex flex-col gap-5 justify-center items-center z-10 relative px-4 pt-4 md:pt-5 text-black">
+            <div className="flex flex-col gap-5 justify-center items-center z-10 relative md:px-4 px-0  pt-4 md:pt-5 text-black">
                 <div
-                    className="glass rounded-xl shadow-2xl "
+                    className="glass rounded-xl shadow-2xl md:px-12 px-4"
                     data-aos="fade-up"
                     data-aos-duration="4500"
                 >
-                    <div className="-p-12">
-                        <h3 className="text-white font-bold text-4xl my-6">
-                            Co-création
-                        </h3>
-                        <div className="md:flex items-center justify-center gap-x-6">
-                            <FaHandsHelping className="w-[9rem] h-full text-white px-6 py-2" />
-                            <div className="md:max-w-[49rem]">
-                                <p className="text-whit text-xl text-white ">
-                                    Ton site internet est la concrétisation de
-                                    ta vision, créons le ensemble. Tu pourras
-                                    être fier d’avoir apporté ta pierre à
-                                    l’édifice en participant de façon proactive
-                                    à sa création. Met la casquette de directeur
-                                    artistique et partage avec nous tes
-                                    préférences visuelles
-                                </p>
-                            </div>
+                    <h3 className="text-white font-bold text-2xl md:text-4xl md:my-6 md:text-left text-center my-2">
+                        Co-création
+                    </h3>
+                    <div className="md:flex md:flex-row flex flex-col items-center justify-center gap-x-6">
+                        <FaPollH className="w-[9rem] h-full text-white px-6 py-2 md:m-0 " />
+                        <div className="md:max-w-[49rem]">
+                            <p className="text-whit md:text-xl md:text-left text-center text-base text-white ">
+                                Ton site internet est la concrétisation de ta
+                                vision, créons le ensemble. Tu pourras être fier
+                                d’avoir apporté ta pierre à l’édifice en
+                                participant de façon proactive à sa création.
+                                Met la casquette de directeur artistique et
+                                partage avec nous tes préférences visuelles
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="glass rounded-xl shadow-2xl"
+                    className="glass rounded-xl shadow-2xl md:px-12 px-4"
                     data-aos="fade-up"
                     data-aos-duration="4500"
                 >
-                    <div className="-p-12">
-                        <h3 className="text-white font-bold text-4xl my-6">
-                            Max de Visibilité
-                        </h3>
-                        <div className="md:flex items-center justify-center gap-x-6">
-                            <FaPollH className="w-[9rem] h-full text-white  px-6 py-2" />
-                            <dive className="md:max-w-[49rem]">
-                                <p className="text-whit text-xl text-white ">
-                                    Maintenant que tu sais à quoi ressemblera
-                                    ton site internet, place à l’intégration. Ne
-                                    t’en fais pas, on s’occupe de toute la
-                                    partie technique, que tu pourras suivre en
-                                    temps réel sur ton espace client. Aucune
-                                    mauvaise surprise, tu sais déjà tout !
-                                </p>
-                            </dive>
+                    <h3 className="text-white font-bold text-2xl md:text-4xl md:my-6 md:text-left text-center my-2">
+                        Max de Visibilité
+                    </h3>
+                    <div className="md:flex md:flex-row flex flex-col items-center justify-center gap-x-6">
+                        <FaHandsHelping className="w-[9rem] h-full text-white px-6 py-2 md:m-0 " />
+                        <div className="md:max-w-[49rem]">
+                            <p className="text-whit md:text-xl md:text-left text-center text-base text-white ">
+                                Maintenant que tu sais à quoi ressemblera ton
+                                site internet, place à l’intégration. Ne t’en
+                                fais pas, on s’occupe de toute la partie
+                                technique, que tu pourras suivre en temps réel
+                                sur ton espace client. Aucune mauvaise surprise,
+                                tu sais déjà tout !
+                            </p>
                         </div>
                     </div>
                 </div>
                 <div
-                    className="glass rounded-xl shadow-2xl"
+                    className="glass rounded-xl shadow-2xl md:px-12 px-4"
                     data-aos="fade-up"
                     data-aos-duration="4500"
                 >
-                    <div className="-p-12">
-                        <h3 className="text-white font-bold text-4xl my-6">
-                            Autonomie
-                        </h3>
-                        <div className="md:flex items-center justify-center gap-x-6">
-                            <FaRegLifeRing className="w-[9rem] h-full text-white  px-6 py-2" />
-                            <dive className="md:max-w-[49rem]">
-                                <p className="text-whit text-xl text-white ">
-                                    Changer une photo ou un texte sur ton site
-                                    internet ce n’est pas compliqué ! Oui, tu as
-                                    bien lu ! Grâce à des outils no-code et une
-                                    bibliothèque de tutoriels personnalisés, tu
-                                    pourras prendre en main ton site internet
-                                    dès sa mise en ligne.
-                                </p>
-                            </dive>
+                    <h3 className="text-white font-bold text-2xl md:text-4xl md:my-6 md:text-left text-center my-2">
+                        Autonomie
+                    </h3>
+                    <div className="md:flex md:flex-row flex flex-col items-center justify-center gap-x-6">
+                        <FaRegLifeRing className="w-[9rem] h-full text-white px-6 py-2 md:m-0 " />
+                        <div className="md:max-w-[49rem]">
+                            <p className="text-whit md:text-xl md:text-left text-center text-base text-white ">
+                                Changer une photo ou un texte sur ton site
+                                internet ce n’est pas compliqué ! Oui, tu as
+                                bien lu ! Grâce à des outils no-code et une
+                                bibliothèque de tutoriels personnalisés, tu
+                                pourras prendre en main ton site internet dès sa
+                                mise en ligne.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -188,7 +183,7 @@ const Home = () => {
             </div>
             <OffersCards />
 
-            {/* <Callendly id="callendly" /> */}
+            <Callendly id="callendly" />
 
             <div
                 className="flex flex-col items-center justify-center mt-7 z-10 "
