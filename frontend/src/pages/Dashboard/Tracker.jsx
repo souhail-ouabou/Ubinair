@@ -55,6 +55,7 @@ const Tracker = ({indexPage}) => {
 
 
     const [operatedObj,setOpObj]=useState({id:'',title:'',state:'',date:'',description:''})
+    const [start,setStart]=useState(true)
     const [Admin,setIsadmin]=useState(false)
     const [specification, setSpec] = useState([])
     const [title,setTitle]=useState('')
@@ -78,16 +79,16 @@ const Tracker = ({indexPage}) => {
   
 
     // change state of task 
-    let changeState=(id) => {
-        
+    let changeState=(idx) => {
+   
        if(!Admin)return;
-      
-         console.log(JSON.stringify(specification[index].projectTasks));
+       console.log('iwa s in change state');
+        //  console.log(JSON.stringify(specification[index].projectTasks));
            
             let newState
             let newtask =specification[index].projectTasks.map((item) => {
               
-             if(item.id==id){
+             if(item.id==idx){
                  if(item.state==-1){
                      console.log('0');
                     newState=0
@@ -110,9 +111,13 @@ const Tracker = ({indexPage}) => {
             let newArr=specification;
             newArr[index].projectTasks=newtask
             console.log('console new task',JSON.stringify(newtask));
-            setEdit(true)
-            setSpec(newArr);
            
+            setSpec(newArr);
+            calculCircle()
+            setEdit(true)
+           
+              
+        
               
       
            
@@ -146,41 +151,24 @@ const Tracker = ({indexPage}) => {
          
 
             useEffect(()=>{
-        
-                    if(!loadingProjectDetails) {
-
-                    if(edit){
-                        console.log('test',JSON.stringify('comming from state ',JSON.stringify(specification)));
-                        calculCircle()
-                        
-                        setTimeout(() => {
-                            dispatch(UpdateSpecProject(id,index, specification))
-                            setEdit(false)
-                        }, 50)
-                      
-                    }
-
-                    if (editCirBar) {
-                        console.log('test spec',JSON.stringify(specification));
-                        setTimeout(() => {
-                        dispatch(UpdateSpecProject(id,index,specification))
-                        console.log('disapatched');
-                        setEditCirBar(false)
-                    }, 80)
-                    
-                    }
-                    }
-                                                    
-                    },[loadingProjectDetails,specification,edit])
+                if(!specification.length==0){
+                setTimeout(()=>{
+                dispatch(UpdateSpecProject(id,index,specification))
+                console.log('calculated');
+                setEdit(false)
+                },200)
+              }
+              },[edit])
 
                 useEffect(()=>{
-                        if (!loadingProjectDetails){
-                              
+                            if(specification.length==0){
+                            console.log('je set mon projet ---------------------');
                             setSpec(projectDetails.specification)
                             setIsadmin(isAdmin)
+                            }
                             
-                    }
-                },[loadingProjectDetails])
+                    
+                })
 
                            
 
@@ -235,7 +223,7 @@ const Tracker = ({indexPage}) => {
                 }
             )
             )
-            setEditCirBar(true)
+            // setEditCirBar(true)
         }
 
 
@@ -271,6 +259,7 @@ const Tracker = ({indexPage}) => {
                 title:operatedObj.title,state:operatedObj.state,date:dateFormed,description:operatedObj.description})
 
             setSpec(newtasks)
+            calculCircle();
             setEdit(true)
             setShowForm(!showForm)
 
@@ -282,6 +271,7 @@ const Tracker = ({indexPage}) => {
             const newtasks=specification;
             newtasks[index].projectTasks=newtasks[index].projectTasks.filter(t=>t.id!==i)
             setSpec(newtasks)
+            calculCircle();
             setEdit(true)
         }
 
@@ -562,7 +552,7 @@ const Tracker = ({indexPage}) => {
                        
                      </div>
                         
-        {loadingProjectDetails ? (
+        {specification.length==0 ? (
                 <div className="text-white m-auto">
                     Loaaading ...
                 </div>

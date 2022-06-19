@@ -58,6 +58,10 @@ export const CreateProjet = (calculator) => async (dispatch, getState) => {
             type: PROJET_CREATE_SUCCESS,
             payload: data,
         })
+        toast.dismiss()
+        toast.success('Procject Created !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
     } catch (error) {
         dispatch({
             type: PROJET_CREATE_FAIL,
@@ -66,9 +70,13 @@ export const CreateProjet = (calculator) => async (dispatch, getState) => {
                     ? error.response.data.message
                     : error.message,
         })
+        toast.dismiss()
+        toast.error(error.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
     }
 }
-export const listMyProjects = () => async (dispatch, getState) => {
+export const listMyProjects =  (keyword = '') => async (dispatch, getState) => {
     try {
         dispatch({
             type: MY_PROJECTS_REQUEST,
@@ -85,7 +93,7 @@ export const listMyProjects = () => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await axios.get(`/projets/myprojects`, config)
+        const { data } = await axios.get(`/projets/myprojects?keyword=${keyword}`, config)
         //   console.log(data);
         dispatch({
             type: MY_PROJECTS_SUCCESS,
@@ -286,7 +294,7 @@ export const UpdateContentsProject = (id,Contents,success=false) => async (dispa
     }
 }
 
-export const listAllProjects = () => async (dispatch, getState) => {
+export const listAllProjects =  (keyword = '') => async (dispatch, getState) => {
     try {
         dispatch({
             type: ALL_PROJECTS_REQUEST,
@@ -301,7 +309,7 @@ export const listAllProjects = () => async (dispatch, getState) => {
             },
         }
 
-        const { data } = await axios.get(`/projets/allprojects`, config)
+        const { data } = await axios.get(`/projets/allprojects?keyword=${keyword}`, config)
         console.log(data)
         dispatch({
             type: ALL_PROJECTS_SUCCESS,
@@ -661,6 +669,80 @@ export const AddInvoices= ({files,basesArray,id}) => async (dispatch, getState) 
         })
     }
 }
+export const AddMediaPage= ({images,id,ChosenId}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: ADD_ABOUT_BRAND_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        const { token } = getState()
 
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        // console.log("files from dispatcher", basesArray)
+        
+        const  {data}  = await axios.post("/api/upload_media",{images},config)
+         console.log("after then :",data)
+         const  {res}  = await axios.post(`/projets/addmedia/${id}`, {data,ChosenId}, config)
+        // console.log("res : ",res)
+        dispatch({ type: ADD_ABOUT_BRAND_SUCCESS, payload: res })
 
+        
+        toast.dismiss()
+        toast.success('Succès Update !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+        
+    } catch (err) {
+        dispatch({
+            type: ADD_ABOUT_BRAND_FAIL,
+            payload:
+            err.response && err.response.data.message
+                    ? err.response.data.message
+                    : err.message,
+        })
+        toast.dismiss()
+        toast.error(err.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    }
+}
+export const DeleteMedia = ({id,public_id,ChosenId}) => async (dispatch, getState) => {
+    try {
+        dispatch({ type: DELETE_BRIEF_FILE_REQUEST }) 
+        toast.dismiss()
+        toast.loading('Please wait...', {
+            position: toast.POSITION.TOP_CENTER,
+        })
 
+        const { token } = getState()
+
+        const config = {
+            headers: {
+                Authorization: token,
+            },
+        }
+        const  {data}  = await axios.post("/api/delete_file",{public_id},config)
+        console.log("after then :",data)
+        const  {res}  = await axios.post(`/projets/deletemedia/${id}`,{public_id,ChosenId}, config)
+        dispatch({
+            type: DELETE_BRIEF_FILE_SUCCESS,
+        })
+        toast.dismiss()
+        toast.success('Succès Delete !', {
+            position: toast.POSITION.TOP_CENTER,
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_BRIEF_FILE_FAIL,
+            payload:
+                error.response && error.response.data.message
+                    ? error.response.data.message
+                    : error.message,
+        })
+    }
+}

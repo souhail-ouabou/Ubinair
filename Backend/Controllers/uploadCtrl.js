@@ -79,7 +79,7 @@ const uploadCtrl = {
     uploadQuotes: async (req, res) => {
         try {
             const { files } = req.body
-           //   console.log('req body : ', req.body)
+            //   console.log('req body : ', req.body)
             let promises = []
             files.forEach(async (file) => {
                 promises.push(
@@ -124,6 +124,26 @@ const uploadCtrl = {
                 )
 
                 // newData.push(promises,file.file.path)
+            })
+
+            const response = await Promise.all(promises)
+            res.send(response)
+        } catch (err) {
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    uploadMedia: async (req, res) => {
+        try {
+            const { images } = req.body
+            //  console.log('req body : ', req.body)
+            let promises = []
+            images.forEach(async (img) => {
+                promises.push(
+                    cloudinary.v2.uploader.upload(img.base, {
+                        folder: 'Ubinair/Media',
+                        tags: img.image.path,
+                    })
+                )
             })
 
             const response = await Promise.all(promises)

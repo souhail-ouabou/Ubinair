@@ -32,7 +32,7 @@ const Calculator = () => {
         features: [],
     }
     const [calculator, setCaluclator] = useState(initialState)
-    const [backStyle,setBack]=useState('absolute top-[53rem] left-32')
+
     const dispatch = useDispatch();
 
     const download = () => {
@@ -128,12 +128,13 @@ const Calculator = () => {
             ...calculator,
             index: i,
         })
+ 
     }
     const toggleTab = (index, type = null) => {
         if (index == 1) {
             switch (type) {
                 case 'Site Web':
-                    console.log('hahwa type', type)
+                    console.log(' type', type)
                     setCaluclator({
                         ...calculator,
                         type: type,
@@ -141,14 +142,14 @@ const Calculator = () => {
 
                     break
                 case 'Application mobile':
-                    console.log('hahwa type', type)
+                    console.log(' type', type)
                     setCaluclator({
                         ...calculator,
                         type: type,
                     })
                     break
                 case 'Application mobile + Site web':
-                    console.log('hahwa type', type)
+                    console.log(' type', type)
                     setCaluclator({
                         ...calculator,
                         type: type,
@@ -289,22 +290,7 @@ const Calculator = () => {
             return { ...prev, index }
         })
         console.log('RESUUUUUME', calculator)
-        switch(index){
-            case 2:
-                setBack("absolute top-[53rem]");
-                break;
-            case 3:
-                setBack("absolute top-[64rem] left-32");
-                break;
-            case 4:
-                setBack("absolute top-[98rem] left-32");
-                break;
-            case 5:
-                setBack("absolute top-[36rem] left-32");
-                    break;
-            default:
-                setBack("absolute top-[53rem] left-32")
-        }
+
     }
     //TogglesPage handleCheckbox
     const handleCheckbox = (event) => {
@@ -323,39 +309,35 @@ const Calculator = () => {
     }
     return (
         <div className="w-[1000px] z-10">
-            <div className={backStyle}
-            //   animate={{ x: -242,y:506 }}
-            >
-                {' '}
-                {calculator.index == 0 ? (
-                    ''
-                ) : (
-                    <Goback previousTab={previousTab} />
-                )}{' '}
-            </div>
+      
           
                 <BeginPage
                     index={calculator.index} //0
-                    onNext={(i, type) => toggleTab(i, type)} //1
+                    onNext={(i, type) => toggleTab(i, type)}
+                    previousTab={previousTab} //1
                 />
                 <SiteTypePage
                     index={calculator.index} //1
-                    onNext={(i, type) => toggleTab(i, type)} //2
+                    onNext={(i, type) => toggleTab(i, type)} 
+                    previousTab={previousTab} //2
                 />
                 <TogglesPage
                     allState={calculator} //2
                     onHandleCheck={handleCheckbox}
-                    onNext={(i) => toggleTab(i)} //3
+                    onNext={(i) => toggleTab(i)}
+                    previousTab={previousTab} //3
                 />
                 <IntegrTypePage
                     index={calculator.index} //3
                     devis={calculator.devis}
-                    onNext={(i, type) => toggleTab(i, type)} //4
+                    onNext={(i, type) => toggleTab(i, type)}
+                    previousTab={previousTab}  //4
                 />
                 <AdvanceStatePage
                     index={calculator.index}
                     devis={calculator.devis}
-                    onNext={(i, type) => toggleTab(i, type)} //5
+                    onNext={(i, type) => toggleTab(i, type)}
+                    previousTab={previousTab}  //5
                 />
                 <DownloadPage
                     index={calculator.index} //5
@@ -366,6 +348,7 @@ const Calculator = () => {
                         name: nameProject,
                     })}
                     onDownload={() => download()}
+                    previousTab={previousTab} 
                 />
            
             <table id="firstTable" hidden>

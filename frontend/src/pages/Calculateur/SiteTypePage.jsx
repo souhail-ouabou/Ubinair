@@ -2,12 +2,19 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import eco from '../../img/eco.png'
 import vitrine from '../../img/vitrine.png'
+import Goback from './Goback'
 
 
 function SiteTypePage(props) {
     return (
         <div className={props.index === 1 ? 'text-white' : 'hidden'}>
 
+           <div className="absolute top-[53rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+            >
+                
+                    <Goback previousTab={props.previousTab} />
+              
+            </div>
 
             <div className="text-[2.5em] pb-4 mt-20 text-center m-auto text-[#EEEEEF] font-semibold md:text-[2.8em]">
                 <motion.h1

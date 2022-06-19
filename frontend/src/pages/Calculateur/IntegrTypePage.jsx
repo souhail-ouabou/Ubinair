@@ -3,11 +3,17 @@ import {motion}  from 'framer-motion'
 import inteCon from '../../img/inteConc.png'
 import inte from '../../img/integ.png'
 import Devise from './Devise'
+import Goback from './Goback'
 
 export default function IntegrTypePage(props) {
   return (
     <div className={props.index===3?"text-white":"hidden"}>
-
+       <div className="absolute top-[64rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+            >
+                
+                    <Goback previousTab={props.previousTab} />
+              
+            </div>
     <div>
     
     <Devise result={props.devis} />   

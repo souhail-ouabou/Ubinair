@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Helmet } from 'react-helmet'
 import './profile.css'
 import { useSelector, useDispatch } from 'react-redux'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import ProjetBlock from './ProjetBlock'
 import {
@@ -23,9 +23,10 @@ import { USER_UPDATE_PROFILE_RESET } from '../../redux/actions/constants/userCon
 import { MdCameraswitch } from 'react-icons/md'
 import { CgAdd } from 'react-icons/cg'
 import { dispatchGetUser } from '../../redux/actions/authAction'
+import Search from './Search'
 const Profile = () => {
     const dispatch = useDispatch()
-
+    const keyword = window.location.pathname.split('/')[2] 
     const initialState = {
         id: '',
         name: '',
@@ -33,6 +34,7 @@ const Profile = () => {
         password: '',
         cf_password: '',
     }
+    let navigate = useNavigate()
     const [data, setData] = useState(initialState)
     const [msg, setMsg] = useState(null)
     const [avatar, setAvatar] = useState('')
@@ -87,19 +89,15 @@ const Profile = () => {
         error: errorProjectDelete,
         success: SuccessProjectDelete,
     } = projectDelete
-    // const auth = useSelector((state) => state.auth)
-    // const {
-    //     loading: loadingProjectDelete,
-    //     error: errorProjectDelete,
-    //     success: SuccessProjectDelete,
-    // } = projectDelete
+
 
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
         setToggletab(index)
         switch (index) {
             case 1:
-                dispatch(listAllProjects())
+               navigate(`/profile`)
+               dispatch(listAllProjects(keyword))
                 break
             case 2:
                 dispatch(GetAllUsers(token))
@@ -149,29 +147,22 @@ const Profile = () => {
     }
 
     useEffect(() => {
+       
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
             dispatch(dispatchGetUser(token))
         } else {
             // if (user.client) {
-            dispatch(listMyProjects())
+            dispatch(listMyProjects(keyword))
             // }
             if (isAdmin || SuccessProjectDelete) {
-                dispatch(listAllProjects())
+                dispatch(listAllProjects(keyword))
             }
             if (successDelete) {
                 dispatch(GetAllUsers(token))
             }
         }
-    }, [
-        dispatch,
-        successDelete,
-        token,
-        isAdmin,
-        SuccessProjectDelete,
-        successuserUpdateProfile,
-        user.client,
-    ])
+    }, [dispatch, successDelete, token, isAdmin, SuccessProjectDelete, successuserUpdateProfile, user.client, keyword])
 
     return (
         <>
@@ -181,8 +172,8 @@ const Profile = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden  ">
-                    <div className="glass text-white md:w-[500px]  max-h-[700px] md:fixed left-8 top-24 ">
+                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden md:max-h-[760px] ">
+                    <div className="glass text-white md:w-[500px] md:h-[760px] ">
                         <h2 className="text-white text-center text-2xl m-[10px 0]">
                             {isAdmin
                                 ? 'Admin Profile'
@@ -221,7 +212,7 @@ const Profile = () => {
                             change
                         </em>
                         {msg}
-                        <div className="flex flex-col text-gray-300 ">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="name">Name</label>
                             <input
                                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
@@ -233,7 +224,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-400 ">
+                        <div className="flex flex-col text-gray-400 py-2">
                             <label htmlFor="email">Email</label>
                             <input
                                 className="rounded-lg bg-gray-800 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none cursor-not-allowed"
@@ -247,7 +238,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-300 ">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="password">New Password</label>
                             <input
                                 className="rounded-lg bg-gray-700 mt-2 p-2 focus:border-blue-500 focus:bg-gray-800 focus:outline-none"
@@ -260,7 +251,7 @@ const Profile = () => {
                             />
                         </div>
 
-                        <div className="flex flex-col text-gray-300">
+                        <div className="flex flex-col text-gray-300 py-2">
                             <label htmlFor="cf_password">
                                 Confirm New Password
                             </label>
@@ -276,7 +267,7 @@ const Profile = () => {
                         </div>
 
                         <button
-                            className="py-2 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                            className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white flex items-center justify-center uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
@@ -285,8 +276,9 @@ const Profile = () => {
                             Update
                         </button>
                     </div>
-                    <div className="ml-[500px] w-[950px]">
+                    <div className="col-right overflow-y-scroll  ">
                         {isAdmin ? (
+                            <>
                             <div className="tabs_wrap">
                                 <ul className="flex  md:items-center md:justify-center ">
                                     <li
@@ -297,7 +289,7 @@ const Profile = () => {
                                         }
                                         onClick={() => Handletoggle(1)}
                                     >
-                                        AllProjects
+                                        All Projects
                                     </li>
                                     <li
                                         className={
@@ -321,12 +313,17 @@ const Profile = () => {
                                     </li> */}
                                 </ul>
                             </div>
+                            <Search toggletab={toggletab}/>
+                            </>
                         ) : !user.client ? (
                             <></>
                         ) : (
+                            <>
                             <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
                                 My projects
                             </h1>
+                             <Search toggletab={1}/>
+                            </>
                         )}
 
                         {/* dispatched after check admin  */}
@@ -356,7 +353,7 @@ const Profile = () => {
                             <div className=" text-white"> Loaaading ...</div>
                         ) : errorMyProjects || errorAllProjects ? (
                             <div>errorMyProjects</div>
-                        ) : user.client && myProjects.length === 0 ? (
+                        ) : user.client &&  !isAdmin && myProjects.length === 0 ? (
                             <>My projects Emppt </>
                         ) : isAdmin && AllProjects.length === 0 ? (
                             <div className="text-white">All projects Emppt</div>

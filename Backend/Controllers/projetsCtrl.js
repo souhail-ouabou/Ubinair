@@ -1,6 +1,6 @@
 const Projets = require('../models/projetModel')
 const User = require('../models/userModel')
-const uuid = require('uuid');
+const uuid = require('uuid')
 
 const projetsCtrl = {
     addProjet: async (req, res) => {
@@ -35,28 +35,40 @@ const projetsCtrl = {
                     },
                     { title: 'Content', progresState: 0, estimatedState: 0 },
                 ],
-                projectColors:[
+                projectColors: [
+                    {
+                        title: 'Base (60%) - ex. backgrounds',
+                        hexs: [
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                        ],
+                    },
 
-                {title:"Base (60%) - ex. backgrounds",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                            {id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                            {id:uuid.v1(),hexCode:'#FFFFFF'}
-                                        ]},
-    
-                {title:"Contrast (30%) - ex. text",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                        {id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                        {id:uuid.v1(),hexCode:'#FFFFFF'}
-                ]},
-    
-                {title:"Accents (10%) - ex. buttons",hexs:[{id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                            {id:uuid.v1(),hexCode:'#FFFFFF'},
-                                                            {id:uuid.v1(),hexCode:'#FFFFFF'}
-                ]}],
-                projectFonts:[{title:"Title",font:"Arial",size:"18px"},
-                              {title:"Subtitle",font:"Helvetica",size:"16px"},
-                              {title:"Paragraph",font:"Verdana",size:"12px"},
-                 ],
-                 contents:[{id:uuid.v1(),title:'example page',description:''}],
-  
+                    {
+                        title: 'Contrast (30%) - ex. text',
+                        hexs: [
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                        ],
+                    },
+
+                    {
+                        title: 'Accents (10%) - ex. buttons',
+                        hexs: [
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                            { id: uuid.v1(), hexCode: '#000' },
+                        ],
+                    },
+                ],
+                projectFonts: [
+                    { title: 'Title', font: 'Arial', size: '18px' },
+                    { title: 'Subtitle', font: 'Helvetica', size: '16px' },
+                    { title: 'Paragraph', font: 'Verdana', size: '12px' },
+                ],
+
                 priceDebut: priceDebut,
                 priceRequired: priceRequired,
                 stateOfAdvance: stateOfAdvance,
@@ -71,6 +83,11 @@ const projetsCtrl = {
                     QuotesFiles: [],
                     InvoicesFiles: [],
                 },
+                contents: [
+                    {
+                        media: [],
+                    },
+                ],
             })
             const user = await User.findById(req.user.id)
             if (user) {
@@ -88,7 +105,13 @@ const projetsCtrl = {
     },
     getMyprojects: async (req, res) => {
         try {
-            const projects = await Projets.find({ user: req.user.id })
+            const keyword = req.query.keyword ? {
+                name : {
+                    $regex : req.query.keyword,
+                    $options : 'i'
+                }
+            } : {}
+            const projects = await Projets.find({ user: req.user.id ,...keyword})
             res.json(projects)
         } catch (err) {
             console.log('-----------myprojets error-------------')
@@ -175,7 +198,7 @@ const projetsCtrl = {
     },
     updateSpecProject: async (req, res) => {
         try {
-            // console.log('--------------req booody -------------', req.body)
+        
 
             const newSpecification = req.body.specification
             // console.log('sended spec ', JSON.stringify(req.body))
@@ -197,14 +220,17 @@ const projetsCtrl = {
         }
     },
 
-    updateColorsProject : async (req, res) => {
+    updateColorsProject: async (req, res) => {
         try {
             // console.log('--------------req booody -------------', req.body)
 
             const newColors = req.body.colorsState
-            console.log('sended Colors ',JSON.stringify(req.body));
+            console.log('sended Colors ', JSON.stringify(req.body))
             const projet = await Projets.findById(req.params.id)
-             console.log('prj Colors---------------',JSON.stringify(projet)+'id= '+req.params.id);
+            console.log(
+                'prj Colors---------------',
+                JSON.stringify(projet) + 'id= ' + req.params.id
+            )
             if (projet) {
                 projet.projectColors = newColors || projet.projectColors
                 const updatedProject = await projet.save()
@@ -222,9 +248,12 @@ const projetsCtrl = {
             // console.log('--------------req booody -------------', req.body)
 
             const newFonts = req.body.fontStyles
-            console.log('sended fonts ',JSON.stringify(req.body));
+            console.log('sended fonts ', JSON.stringify(req.body))
             const projet = await Projets.findById(req.params.id)
-             console.log('prj fonts---------------',JSON.stringify(projet)+'id= '+req.params.id);
+            console.log(
+                'prj fonts---------------',
+                JSON.stringify(projet) + 'id= ' + req.params.id
+            )
             if (projet) {
                 projet.projectFonts = newFonts || projet.projectFonts
                 const updatedProject = await projet.save()
@@ -242,9 +271,12 @@ const projetsCtrl = {
             // console.log('--------------req booody -------------', req.body)
 
             const newContents = req.body.Contents
-            console.log('sended contents ',JSON.stringify(req.body));
+            console.log('sended contents ', JSON.stringify(req.body))
             const projet = await Projets.findById(req.params.id)
-             console.log('prj contents---------------',JSON.stringify(projet)+'id= '+req.params.id);
+            console.log(
+                'prj contents---------------',
+                JSON.stringify(projet) + 'id= ' + req.params.id
+            )
             if (projet) {
                 projet.contents = newContents || projet.contents
                 const updatedProject = await projet.save()
@@ -252,14 +284,23 @@ const projetsCtrl = {
                 res.json({ msg: 'Update contents prj Success!' })
             }
         } catch (err) {
-            console.log('-----------Update contents prj error-------------', err)
+            console.log(
+                '-----------Update contents prj error-------------',
+                err
+            )
             return res.status(500).json({ msg: err.message })
         }
     },
 
     getAllProjects: async (req, res) => {
         try {
-            const projects = await Projets.find({}).populate(
+            const keyword = req.query.keyword ? {
+                name : {
+                    $regex : req.query.keyword,
+                    $options : 'i'
+                }
+            } : {}
+            const projects = await Projets.find({...keyword}).populate(
                 'user',
                 '-_id name  avatar role'
             )
@@ -497,6 +538,56 @@ const projetsCtrl = {
         } catch (err) {
             console.log('-----------Update prj error-------------', err)
             return res.status(500).json({ msg: err.message })
+        }
+    },
+    addMediaProject: async (req, res) => {
+        try {
+            const { ChosenId } = req.body
+            console.log('req body : ', ChosenId)
+            const imagesReq = req.body.data.map((p) => ({
+                public_id: p.public_id,
+                format: p.format,
+                startDate: p.start,
+                secure_url: p.secure_url,
+                sizeInBytes: p.bytes,
+                fileName: p.tags[0],
+            }))
+
+            const projet = await Projets.findById(req.params.id)
+
+            if (projet) {
+                projet.contents.map((c) => {
+                    if (c._id == ChosenId)
+                        c.media = c.media.concat(imagesReq) || c.media
+                })
+
+                const updatedProject = await projet.save()
+                //    console.log('updatedProject', updatedProject)
+                res.json({ msg: 'Update prj Success!' })
+            }
+        } catch (err) {
+            console.log('-----------Update prj error-------------', err)
+            return res.status(500).json({ msg: err.message })
+        }
+    },
+    deleteMediaProject: async (req, res) => {
+        const { ChosenId } = req.body
+        console.log('req body : ', ChosenId)
+        const { public_id } = req.body
+        console.log('--------------req body -------------', req.body)
+        const project = await Projets.findById(req.params.id)
+        if (project) {
+            project.contents.map((c) => {
+                if (c._id == ChosenId)
+                    c.media = c.media.filter((fw) => fw.public_id !== public_id)
+            })
+
+            const updatedProject = await project.save()
+            res.json({ message: 'File Removed' })
+        } else {
+            // status it's 500 by default cuz of errHandler
+            res.status(404)
+            throw new Error('Project not found')
         }
     },
 }

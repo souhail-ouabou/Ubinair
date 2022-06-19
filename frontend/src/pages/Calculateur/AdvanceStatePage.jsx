@@ -5,13 +5,17 @@ import tools from '../../img/tools.png'
 import note from '../../img/note.png'
 import verified from '../../img/verified.png'
 import Devise from './Devise'
-
+import Goback from './Goback'
 
  function AdvanceStatePage(props) {
   return (
      
     <div className={props.index===4?"text-white":"hidden"}>
-    
+          <div className="absolute top-[98rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+            >
+                    <Goback previousTab={props.previousTab} />
+              
+            </div>
     <div>
     
     <Devise result={props.devis} />   

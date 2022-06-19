@@ -24,6 +24,7 @@ const UserBlock = ({ user, toggletab }) => {
                     aos-animate="fade-up"
                     data-aos="fade-up"
                     data-aos-duration="2000"
+                    data-aos-anchor
                     className={toggletab === 2 ? 'block md:flex-row w-full flex-col items-center justify-center ' : 'hidden'}
                 >
                     <motion.div

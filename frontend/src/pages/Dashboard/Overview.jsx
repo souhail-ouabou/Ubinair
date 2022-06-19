@@ -155,7 +155,7 @@ export default function Overview({ indexPage }) {
                 type: 'task',
                 project: projectDetails._id,
             }))
-            console.log('testarr', testarr)
+           // console.log('testarr', testarr)
             setTaskss([
                 {
                     start: new Date(projectDetails.createdAt),

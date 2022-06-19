@@ -7,16 +7,65 @@ import {useState,useEffect} from 'react'
 import TextEditor from './TextEditor'
 import {ObjectID} from 'bson'
 import 'react-quill/dist/quill.snow.css';
-import { UpdateContentsProject } from '../../redux/actions/projectActions'
-import Slider from 'react-slick'
+import {
+    AddMediaPage,
+    DeleteMedia,
+    UpdateContentsProject,
+} from '../../redux/actions/projectActions'
+
 import { RiDeleteBin6Fill } from 'react-icons/ri'
 import { FaRegEdit } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
+import { useCallback } from 'react'
+import { TiDelete, TiDownload } from 'react-icons/ti'
+import { toast } from 'react-toastify'
+import { useDropzone } from 'react-dropzone'
+import { saveAs } from 'file-saver'
+import pdfPng from './Assets/file-png-solid.png'
+import uploadImg from './Assets/upload-icon.png'
+import { FaTrash } from 'react-icons/fa'
 
-export default function ContentSharing(props) {
+export default function ContentSharing({ indexPage }) {
             const dispatch = useDispatch()
             const { id } = useParams()
+            const [images, setImages] = useState([])
+            const deleteDroppedHandler = (file) => {
+                setImages((prevState) => {
+                    return prevState.filter((fw) => fw !== file)
+                })
+            }
+            const [info, setInfo] = useState({})
+
+            const onDrop = useCallback((acceptedFiles, rejectedFiles) => {
+                acceptedFiles.forEach((image) => {
+                    //convert file to base64
+                    const reader = new FileReader()
+                    reader.onload = () => {
+                        setImages((prevState) => [
+                            ...prevState,
+                            { base: reader.result, image: image },
+                        ])
+                    }
+                    reader.readAsDataURL(image)
+                })
+
+                console.log('acceptedFiles', acceptedFiles)
+                console.log('rejectedFiles', rejectedFiles)
+                if (rejectedFiles.length !== 0) {
+                    toast.error('All files must be images', {
+                        position: toast.POSITION.TOP_CENTER,
+                    })
+                }
+            }, [])
+
+            const { getRootProps, getInputProps, isDragActive } = useDropzone({
+                onDrop,
+                accept: {
+                    'image/jpeg': [],
+                    'image/png': [],
+                },
+            })
 
             const GetProjectDetailsReducer = useSelector(
                 (state) => state.GetProjectDetailsReducer
@@ -58,11 +107,31 @@ export default function ContentSharing(props) {
                     window.alert("you can't put more than 15 caracter");
                     return;
                 }
-                let newContents=Contents.concat({id:new ObjectID(),title:addedSection,description:'Here you can your page content'})
+                let newContents=Contents.concat({
+                    id:new ObjectID(),
+                    title:addedSection,
+                    description:'Here you can your page content'
+                })
+
                 setContents(newContents)
                 dispatch(UpdateContentsProject(id,newContents))
                 setAddForm(false)
                 setAdded('')
+            }
+
+            const updateHandler = () => {
+                console.log(images)
+                dispatch(AddMediaPage({ images, id, ChosenId }))
+            }
+
+            const saveFile = (url) => {
+                saveAs(url)
+            }
+
+            const deleteUploadedHandler = (public_id) => {
+                if (window.confirm('Are You Sure?')) {
+                    dispatch(DeleteMedia({ id, public_id, ChosenId }))
+                }
             }
 
             const Editedinit=(title,id)=>{
@@ -143,7 +212,7 @@ export default function ContentSharing(props) {
   return (
       
             <div  className={
-                props.indexPage === 4 ? ' flex-1  pb-8  mt-14 ml-80' : 'hidden'
+                indexPage === 4 ? ' flex-1  pb-8  mt-14 ml-80' : 'hidden'
             }>
 
 
@@ -252,52 +321,112 @@ export default function ContentSharing(props) {
                                         </button>
                                     </div>
                      </div>
-                     <div className="glass font-semibold">
+                     <div className="glass ">
+                    <h1 className="text-white text-[1.8em] font-semibold text-left ">
+                        Media
+                    </h1>
+                    <div
+                        className="flex items-center justify-center border-2 border-purple-700 border-dotted w-full h-48 m-auto bg-slate-200 rounded-md"
+                        {...getRootProps()}
+                    >
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                            <div>
+                                <p>Drag is Active</p>
+                            </div>
+                        ) : (
+                            <div className="text-center ">
+                                <img
+                                    className="w-[100px] m-auto"
+                                    src={uploadImg}
+                                    alt=""
+                                />
+                                <p>Click or Drag & Drop your images here</p>
+                                <em className="text-slate-800">
+                                    (Only *.jpeg and *.png images will be
+                                    accepted)
+                                </em>
+                            </div>
+                        )}
+                    </div>
+                    <div className="w-[300px] mt-2">
+                        {images.length > 0 && (
+                            <div className=" flex flex-wrap">
+                                {images.map((image, index) => (
+                                    <div className="flex ">
+                                        <img
+                                            className="object-cover w-[100px] h-[100px] relative m-[16px] overflow-hidden "
+                                            src={image.base}
+                                            key={index}
+                                            alt=""
+                                        />
 
-                                <div className='my-4 pt-2 '>
-                                        <span className="text-[1.8em]  text-[#EEEEEF]  ">Media</span>
-                                </div>
-                                <div className="">
-                                    <div className="border p-4 bg-gray-300 rounded-lg h-[420px]">
-
-                                       <table className="w-full">
-                                          <tr className='border-t-2 border-white text-[1.1em]'>
-                                              <td className='py-2'>Hero background</td>
-                                              <td className=''>
-                                                  <div className='grid grid-cols-3 gap-x-1 cursor-pointer'>
-                                                                 <span><label htmlFor="fileInputF"><BiSearchAlt /></label></span>
-                                                                 <span><label><BsDownload /></label></span> 
-                                                                 <span><label> <RiDeleteBin6Line /></label></span>  
-
-                                                                 <input type="file" name="file" id="fileInputF" hidden/>
-                                                 </div>                    
-                                              </td>
-                                          </tr>
-
-                                          <tr className='border-y-2 border-white text-[1.1em]'>
-                                              <td className='py-2'>Founder's photo</td>
-                                              <td className=''>
-                                                  <div className='grid grid-cols-3 gap-x-1 cursor-pointer'>
-                                                                 <span><label htmlFor="fileInputS"><BiSearchAlt /></label></span>
-                                                                 <span><label><BsDownload /></label></span> 
-                                                                 <span><label> <RiDeleteBin6Line /></label></span>  
-
-                                                                 <input type="file" name="file" id="fileInputS" hidden/>
-                                                 </div>                    
-                                              </td>
-                                          </tr>
-                                       </table>
-
-                                    </div>
-                                    <div className="text-center mt-3">  
-                                        <button class="bg-purple-700 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded-full"
+                                        <button
+                                            className="bg-red-600 rounded-tr-md  rounded-bl-xl w-10 h-10  absolute  flex "
+                                            onClick={() =>
+                                                deleteDroppedHandler(image)
+                                            }
                                         >
-                                        Upload
+                                            <FaTrash className="m-auto text-white justify-center items-center" />
                                         </button>
                                     </div>
-                                   
-                                </div>
-                     </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <button
+                        className="py-3 px-6 sm:w-[60%] m-auto my-4 text-white  flex items-center justify-between uppercase rounded-full
+                        bg-gradient-to-r from-purple-500 via-purple-600  to-purple-700 hover:bg-gradient-to-br focus:ring-4  focus:outline-none
+                       focus:ring-purple-300  dark:focus:ring-purple-800 shadow-md dark:shadow-purple-800/40  text-sm   text-center  md:w-auto  w-full 
+                         hover:shadow-lg transition-all  ease-in-out duration-100$  font-bold"   
+                        onClick={updateHandler}
+                    >
+                        Submit
+                    </button>
+                    <hr className="my-4 mx-auto w-[50%]"></hr>
+                    <div className=" flex flex-col w-full gap-2">
+                        {info?.length > 0 && (
+                            <>
+                                {info.map((v, index) => (
+                                    <div className="flex items-center justify-center relative   bg-slate-700 rounded-md ">
+                                        <a
+                                            target="_blank"
+                                            href={`${v?.secure_url}`}
+                                            className="text-white  relative m-[16px]"
+                                            rel="noreferrer"
+                                        >
+                                           <strong className="text-white  relative m-[16px]">
+                                    
+                                            {v.fileName}
+                                </strong>
+                                        </a>
+
+                                        <button
+                                            className="bg-red-600 rounded-tr-md  rounded-bl-xl w-7 h-7  flex  absolute top-0 right-0 "
+                                            onClick={() =>
+                                                deleteUploadedHandler(
+                                                    v.public_id
+                                                )
+                                            }
+                                        >
+                                            <TiDelete className="m-auto text-white justify-center items-center" />
+                                        </button>
+                                        <button
+                                            className="bg-blue-600 rounded-br-md   rounded-tl-xl w-7 h-7  flex  absolute bottom-0 right-0 "
+                                            onClick={() =>
+                                                saveFile(v?.secure_url)
+                                            }
+                                        >
+                                            {' '}
+                                            <TiDownload className="m-auto text-white justify-center items-center" />
+                                        </button>
+                                    </div>
+                                ))}
+                            </>
+                        )}
+                    </div>
+             
+                </div>
                  </div>
             </div>
   )

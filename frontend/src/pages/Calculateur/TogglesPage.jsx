@@ -3,11 +3,18 @@ import Toggle from './toggle/Toggle'
 import Devise from './Devise'
 import { motion } from 'framer-motion'
 import { FaArrowAltCircleRight} from 'react-icons/fa'
+import Goback from './Goback'
 
 function TogglesPage(props) {
  // console.log("Clculateur",props.allState);
     return (
         <div className={props.allState.index === 2 ? 'text-white ' : 'hidden'}>
+            <div className={props.allState.subtype==="Site e-commerce"?"absolute top-[53rem] md:top-[44rem] md:left-[4rem]":"absolute top-[45rem] md:top-[44rem] md:left-[4rem]"}
+            >
+                
+                    <Goback previousTab={props.previousTab} />
+              
+            </div>
             <div>
                 <Devise result={props.allState.devis} />
 
@@ -28,7 +35,8 @@ function TogglesPage(props) {
                 ))}
             </div>
          
-            <div className="absolute top-[53rem] left-52"
+            <div 
+            className={props.allState.subtype==="Site e-commerce"?"absolute top-[53rem] left-52 md:top-[44rem] md:right-[4rem]":"absolute top-[45rem] left-52 md:top-[44rem] md:right-[4rem]"}
             // animate={{x:250,y:70}}
             >
                  
