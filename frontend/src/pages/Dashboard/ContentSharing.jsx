@@ -94,6 +94,7 @@ export default function ContentSharing({ indexPage }) {
 
            const setChosen=(id,i)=>{
                   setActiveTab(i)
+                  setInfo(projectDetails.contents[i].media)
                   setChosenId(id)
                   console.log('id chosen'+ChosenId)
                     Contents.map((C)=>{
@@ -181,15 +182,15 @@ export default function ContentSharing({ indexPage }) {
             },[showEditorVal])
 
             useEffect(()=>{
-                if (!loadingProjectDetails){
-            
+                if (!loadingProjectDetails) {
                     setContents(projectDetails.contents)
-                    projectDetails.contents  && setChosenId(projectDetails.contents[initIndex]?.id)
-                    projectDetails.contents && setShow(projectDetails.contents[initIndex]?.description)
-                   
-                   
-                    
-            }
+                    projectDetails.contents &&
+                        setChosenId(projectDetails.contents[initIndex]?._id)
+                    projectDetails.contents &&
+                        setShow(projectDetails.contents[initIndex]?.description)
+                    projectDetails.contents &&
+                        setInfo(projectDetails.contents[initIndex]?.media)
+                }
             },[loadingProjectDetails])
 
             useEffect(()=>{
