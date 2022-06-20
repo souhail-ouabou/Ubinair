@@ -18,6 +18,7 @@ import { Link } from 'react-router-dom'
 import { Link as LinkReactS } from 'react-scroll'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+import { PopupButton } from 'react-calendly'
 const Home = () => {
     return (
         <section
@@ -41,21 +42,22 @@ const Home = () => {
                         >
                             C'est quoi <FaQuestion className="ml-3 " />
                         </button>
-                        <LinkReactS
-                            to="callendly"
-                            spy={true}
-                            offset={-100}
-                            duration={500}
-                        >
-                            <button
-                                className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                        <div
+                            className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                            >
-                                Je Reserver un call <FaPhone className="ml-3" />
-                            </button>
-                        </LinkReactS>
+                        >
+                            <PopupButton
+                                className="text-white  text-sm  text-center m
+                                font-bold
+                               "
+                                url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
+                                rootElement={document.getElementById('root')}
+                                text="Je Reserver un call! "
+                            ></PopupButton >
+                            <FaPhone className='ml-3'/>
+                        </div>
                     </div>
                 </div>
                 <div className="md:py-9 flex-1 flex items-center">
@@ -183,7 +185,7 @@ const Home = () => {
             </div>
             <OffersCards />
 
-            <Callendly id="callendly" />
+            <Callendly />
 
             <div
                 className="flex flex-col items-center justify-center mt-7 z-10 "

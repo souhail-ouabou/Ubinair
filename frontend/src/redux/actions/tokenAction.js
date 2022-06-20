@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { toast } from 'react-toastify'
 import { GET_TOKEN, GET_TOKEN_FAIL, GET_TOKEN_REQUEST } from './constants/userConstants'
 //fetch data from db
 //send the data to the DB so that it knows to signin the user
@@ -14,6 +15,7 @@ export const dispatchToken = () => async (dispatch) => {
             type: GET_TOKEN,
             payload: res.data.access_token,
         })
+        
 
     } catch (error) {
         dispatch({
@@ -23,5 +25,10 @@ export const dispatchToken = () => async (dispatch) => {
                     ? error.response.data.msg
                     : error.msg,
         })
+        toast.dismiss()
+        toast.error(error.response.data.msg, {
+            position: toast.POSITION.TOP_CENTER,
+        })
     }
+    
 }

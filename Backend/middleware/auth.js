@@ -6,6 +6,9 @@ const auth = (req, res, next) => {
         console.log("mn auth ha token dl Authorization:",token)
         if (!token) {
             console.log("invalid auth no token")
+            // localStorage.removeItem('firstLogin')
+            // localStorage.removeItem('userInfo')
+            // window.location.href = '/login'
             return res.status(400).json({ msg: "Invalid Authentication" })
         }
 

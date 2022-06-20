@@ -65,10 +65,10 @@ export default function IntegrTypePage(props) {
            className="glass border-0 rounded-md  pt-6 cursor-pointer 
            bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60 "
            onClick={()=>props.onNext(4,'Intégration')}>
-            <div className="">
-                <div className="">
-                    <div className="">
-                        <img  src={inte} className="object-contain mx-auto h-40 w-88"/>
+            <div >
+                <div >
+                    <div >
+                        <img alt='inte' src={inte} className="object-contain mx-auto h-40 w-88"/>
                     </div>
                             <div className="">
                                 <h5  className="text-center p-6">Intégration</h5>

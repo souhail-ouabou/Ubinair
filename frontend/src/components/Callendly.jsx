@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { InlineWidget } from 'react-calendly'
+import { InlineWidget,PopupWidget } from 'react-calendly'
 const Callendly = () => {
     return (
         <div className="z-10" id="callendly">
@@ -20,7 +20,7 @@ const Callendly = () => {
                 <InlineWidget
                     styles={{
                         height: '700px',
-                        margin: '20px'
+                        
                     }}
                     url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
                 />

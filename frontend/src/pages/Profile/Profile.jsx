@@ -24,9 +24,10 @@ import { MdCameraswitch } from 'react-icons/md'
 import { CgAdd } from 'react-icons/cg'
 import { dispatchGetUser } from '../../redux/actions/authAction'
 import Search from './Search'
+import { PopupButton } from 'react-calendly'
 const Profile = () => {
     const dispatch = useDispatch()
-    const keyword = window.location.pathname.split('/')[2] 
+    const keyword = window.location.pathname.split('/')[2]
     const initialState = {
         id: '',
         name: '',
@@ -90,14 +91,13 @@ const Profile = () => {
         success: SuccessProjectDelete,
     } = projectDelete
 
-
     const [toggletab, setToggletab] = useState(1)
     const Handletoggle = (index) => {
         setToggletab(index)
         switch (index) {
             case 1:
-               navigate(`/profile`)
-               dispatch(listAllProjects(keyword))
+                navigate(`/profile`)
+                dispatch(listAllProjects(keyword))
                 break
             case 2:
                 dispatch(GetAllUsers(token))
@@ -147,7 +147,6 @@ const Profile = () => {
     }
 
     useEffect(() => {
-       
         if (successuserUpdateProfile) {
             dispatch({ type: USER_UPDATE_PROFILE_RESET })
             dispatch(dispatchGetUser(token))
@@ -162,7 +161,16 @@ const Profile = () => {
                 dispatch(GetAllUsers(token))
             }
         }
-    }, [dispatch, successDelete, token, isAdmin, SuccessProjectDelete, successuserUpdateProfile, user.client, keyword])
+    }, [
+        dispatch,
+        successDelete,
+        token,
+        isAdmin,
+        SuccessProjectDelete,
+        successuserUpdateProfile,
+        user.client,
+        keyword,
+    ])
 
     return (
         <>
@@ -279,29 +287,29 @@ const Profile = () => {
                     <div className="col-right overflow-y-scroll  ">
                         {isAdmin ? (
                             <>
-                            <div className="tabs_wrap">
-                                <ul className="flex  md:items-center md:justify-center ">
-                                    <li
-                                        className={
-                                            toggletab === 1
-                                                ? 'active text-white'
-                                                : 'text-white'
-                                        }
-                                        onClick={() => Handletoggle(1)}
-                                    >
-                                        All Projects
-                                    </li>
-                                    <li
-                                        className={
-                                            toggletab === 2
-                                                ? 'active text-white'
-                                                : 'text-white'
-                                        }
-                                        onClick={() => Handletoggle(2)}
-                                    >
-                                        Users
-                                    </li>
-                                    {/* <li
+                                <div className="tabs_wrap">
+                                    <ul className="flex  md:items-center md:justify-center ">
+                                        <li
+                                            className={
+                                                toggletab === 1
+                                                    ? 'active text-white'
+                                                    : 'text-white'
+                                            }
+                                            onClick={() => Handletoggle(1)}
+                                        >
+                                            All Projects
+                                        </li>
+                                        <li
+                                            className={
+                                                toggletab === 2
+                                                    ? 'active text-white'
+                                                    : 'text-white'
+                                            }
+                                            onClick={() => Handletoggle(2)}
+                                        >
+                                            Users
+                                        </li>
+                                        {/* <li
                                         className={
                                             toggletab === 3
                                                 ? 'active text-white'
@@ -311,18 +319,18 @@ const Profile = () => {
                                     >
                                         Clients
                                     </li> */}
-                                </ul>
-                            </div>
-                            <Search toggletab={toggletab}/>
+                                    </ul>
+                                </div>
+                                <Search toggletab={toggletab} />
                             </>
                         ) : !user.client ? (
                             <></>
                         ) : (
                             <>
-                            <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
-                                My projects
-                            </h1>
-                             <Search toggletab={1}/>
+                                <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
+                                    My projects
+                                </h1>
+                                <Search toggletab={1} />
                             </>
                         )}
 
@@ -353,7 +361,9 @@ const Profile = () => {
                             <div className=" text-white"> Loaaading ...</div>
                         ) : errorMyProjects || errorAllProjects ? (
                             <div>errorMyProjects</div>
-                        ) : user.client &&  !isAdmin && myProjects.length === 0 ? (
+                        ) : user.client &&
+                          !isAdmin &&
+                          myProjects.length === 0 ? (
                             <>My projects Emppt </>
                         ) : isAdmin && AllProjects.length === 0 ? (
                             <div className="text-white">All projects Emppt</div>
@@ -361,19 +371,27 @@ const Profile = () => {
                             <div className="flex flex-col items-center justify-center mt-8">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
                                     Here you can see your estimates <br />
-                                    Wait our call to becomes real projects ...
+                                    Wait our call to becomes real projects and give you the access to dasboard ...
                                 </div>
-                                <Link to="/">
-                                    <button
-                                        className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
-                        md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+
+                                <div
+                                    className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                        md:w-auto  w-full 
+                         hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                                    >
-                                        Back to home et Reserver un call{' '}
-                                        <FaPhone className="ml-3" />
-                                    </button>
-                                </Link>
-                                <>
+                                >
+                                    <PopupButton
+                                        className="text-white  text-sm  text-center m
+                                font-bold
+                               "
+                                        url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
+                                        rootElement={document.getElementById(
+                                            'root'
+                                        )}
+                                        text="Je Reserver un call! "
+                                    ></PopupButton>
+                                    <FaPhone className="ml-3" />
+                                </div>
                                     <Link to="/calculator">
                                         <button
                                             className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
@@ -383,6 +401,7 @@ const Profile = () => {
                                             <CgAdd />
                                         </button>
                                     </Link>
+                                <div className='w-full'>
                                     {myProjects.map((project) => (
                                         <ProjetBlock
                                             key={project._id}
@@ -390,7 +409,7 @@ const Profile = () => {
                                             toggletab={toggletab}
                                         />
                                     ))}
-                                </>
+                                </div>
                             </div>
                         ) : (user.client && isAdmin) || isAdmin ? (
                             <>
