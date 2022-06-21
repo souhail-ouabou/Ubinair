@@ -49,7 +49,7 @@ const sendEmail = (to, url, name, txt) => {
 
     smtpTransport.sendMail(mailOptions, (err, infor) => {
         console.log(err)
-        if (err) return err
+        if (err) return false;
         return infor
     })
 }

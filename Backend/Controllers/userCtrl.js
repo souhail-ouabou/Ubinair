@@ -64,11 +64,14 @@ const userCtrl = {
             const activation_token = createActivationToken(newUser)
 
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
-            sendMail(email, url, name, 'Verify your email address')
 
-            res.json({
-                msg: 'Register Success! Please activate your email to start.',
-            })
+            if (!sendMail(email, url, name, 'Verify your email address')) {
+                return res.status(500).json({ msg: "Can't sent the email try later..." })
+            } else {
+                res.json({
+                    msg: 'Register Success! Please activate your email to start.',
+                })
+            }
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -105,6 +108,7 @@ const userCtrl = {
             await newUser.save()
             res.json({ msg: 'Votre compte a été activé avec succès!' })
         } catch (err) {
+            console.log('erooooor sent')
             return res.status(500).json({ msg: err.message })
         }
     },
@@ -123,10 +127,16 @@ const userCtrl = {
             const access_token = createAccessToken({ id: existingUser._id })
             const url = `${CLIENT_URL}/user/reset/${access_token}`
 
-            sendMail(email, url, existingUser.name, 'Reset your password')
-            res.json({
-                msg: 'Re-send the password, please check your email inbox or spam.',
-            }) //seccess
+            
+
+            if (!sendMail(email, url, existingUser.name, 'Reset your password')) {
+                return res.status(500).json({ msg: "Can't sent the email try later..." })
+            } else {
+                res.json({
+                    msg: 'Register Success! Please activate your email to start.',
+                })
+            }
+ 
         } catch (err) {
             return res.status(500).json({ msg: err.message }) //err
         }
@@ -320,7 +330,7 @@ const createActivationToken = (payload) => {
 
 const createAccessToken = (payload) => {
     return jwt.sign(payload, `${process.env.ACCESS_TOKEN_SECRET}`, {
-        expiresIn: '15m',
+        expiresIn: '31d',
     })
 }
 

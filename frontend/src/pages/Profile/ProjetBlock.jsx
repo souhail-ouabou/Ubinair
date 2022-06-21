@@ -29,7 +29,11 @@ const ProjetBlock = ({ project, toggletab }) => {
                         ? `cursor-pointer`
                         : `cursor-not-allowed`
                 }
-                data-tip="You must  be a client to  get access to dashboard"
+                data-tip={
+                    user.client || isAdmin
+                        ? ``
+                        : `You must  be a client to  get access to dashboard`
+                }
             >
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}
 
