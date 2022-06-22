@@ -1,6 +1,7 @@
 import React from 'react'
 import bgImg from '../img/undraw_website_builder_re_ii6e (2).svg'
 import bgImg2 from '../img/Asset.png'
+import imgCalc from '../img/calculator.svg'
 
 import {
     FaPhone,
@@ -34,14 +35,16 @@ const Home = () => {
                         Et si on le créait ensemble avec la méthode Ubinair !
                     </p>
                     <div className="md:flex md:flex-row md:w-full md:ml-0 md:justify-start md:gap-4 flex-col w-60 justify-center items-center ">
-                        <button
+                        <Link
+                            to={'/calculator'}
                             className="py-3 px-6 sm:w-[60%] my-4 text-[#663993] flex items-center justify-between uppercase rounded-full bg-[#EEEEEF]    dark:shadow-purple-800/80   text-sm  text-center mr-2
                         md:w-auto  w-full  font-bold
                          hover:shadow-lg transition-all ease-in-out duration-100
                         "
                         >
-                            C'est quoi <FaQuestion className="ml-3 " />
-                        </button>
+                            Calculer <FaCalculator className="ml-3" />
+                        </Link>
+
                         <div
                             className="py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto  w-full 
@@ -55,8 +58,8 @@ const Home = () => {
                                 url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
                                 rootElement={document.getElementById('root')}
                                 text="Je Reserver un call! "
-                            ></PopupButton >
-                            <FaPhone className='ml-3'/>
+                            ></PopupButton>
+                            <FaPhone className="ml-3" />
                         </div>
                     </div>
                 </div>
@@ -196,19 +199,39 @@ const Home = () => {
                 <p className="text-[2.8em]  text-center m-auto text-[#EEEEEF] font-semibold uppercase  ">
                     Calculer votre Devis !
                 </p>
-                <Link
-                    to={'/calculator'}
-                    className="items-center justify-center m-auto"
-                >
-                    <button
-                        className="py-3 px-6  text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                <div className="grid md:grid-cols-2 w-full max-w-[1240px] z-10 md:ml-28  ">
+                    <div className="md:py-9 flex-1 flex items-center">
+                        <img
+                            className="md:mt-12 w-full lg:w-auto"
+                            src={imgCalc}
+                            alt="/"
+                        />
+                    </div>
+                    <div className="flex flex-col justify-center md:items-start w-full px-2 py-12">
+                        <h1 className="pt-12  md:px-0 text-5xl md:text-7xl font-bold text-[#EEEEEF] tracking-wide md:m-0 ">
+                            Vous pouvez calculer votre devis NOW !
+                        </h1>
+                        <p className="text-2xl text-[#EEEEEF] md:mt-0 mt-3  md:px-0 ">
+                            Et si on le créait ensemble avec la méthode Ubinair
+                            !
+                        </p>
+                        <div className="md:flex md:flex-row md:w-full md:ml-0 md:justify-start md:gap-4 flex-col w-60 justify-center items-center ">
+                            <Link
+                                to={'/calculator'}
+                                className="items-center justify-center mt-2 m-auto"
+                            >
+                                <button
+                                    className="py-3 px-6  text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto    
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                    >
-                        Calculer <FaCalculator className="ml-3" />
-                    </button>
-                </Link>
+                                >
+                                    Calculer <FaCalculator className="ml-3" />
+                                </button>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     )

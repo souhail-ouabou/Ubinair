@@ -371,7 +371,8 @@ const Profile = () => {
                             <div className="flex flex-col items-center justify-center mt-8">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">
                                     Here you can see your estimates <br />
-                                    Wait our call to becomes real projects and give you the access to dasboard ...
+                                    Wait our call to becomes real projects and
+                                    give you the access to dasboard ...
                                 </div>
 
                                 <div
@@ -392,16 +393,19 @@ const Profile = () => {
                                     ></PopupButton>
                                     <FaPhone className="ml-3" />
                                 </div>
-                                    <Link to="/calculator">
-                                        <button
-                                            className="py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                                <Link
+                                    to="/calculator"
+                                    className="fixed bottom-0 right-0 "
+                                >
+                                    <button
+                                        className="py-3 px-3  m-2 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
                         md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                         "
-                                        >
-                                            <CgAdd />
-                                        </button>
-                                    </Link>
-                                <div className='w-full'>
+                                    >
+                                        <CgAdd />
+                                    </button>
+                                </Link>
+                                <div className="w-full">
                                     {myProjects.map((project) => (
                                         <ProjetBlock
                                             key={project._id}
@@ -413,6 +417,18 @@ const Profile = () => {
                             </div>
                         ) : (user.client && isAdmin) || isAdmin ? (
                             <>
+                                <Link
+                                    to="/calculator"
+                                    className="fixed bottom-0 right-0 "
+                                >
+                                    <button
+                                        className="py-3 px-3  m-2 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                                    >
+                                        <CgAdd />
+                                    </button>
+                                </Link>
                                 {AllProjects.map((project) => (
                                     <ProjetBlock
                                         key={project._id}
@@ -424,6 +440,18 @@ const Profile = () => {
                             </>
                         ) : (
                             <>
+                                <Link
+                                    to="/calculator"
+                                    className="fixed bottom-0 right-0 "
+                                >
+                                    <button
+                                        className="py-3 px-3  m-2 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center 
+                        md:w-auto  w-full  hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+                                    >
+                                        <CgAdd />
+                                    </button>
+                                </Link>
                                 {myProjects.map((project) => (
                                     <ProjetBlock
                                         key={project._id}

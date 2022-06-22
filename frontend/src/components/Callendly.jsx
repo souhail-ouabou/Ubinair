@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { InlineWidget,PopupWidget } from 'react-calendly'
+import { InlineWidget, PopupWidget, PopupButton } from 'react-calendly'
+import { FaPhone } from 'react-icons/fa'
+
 const Callendly = () => {
     return (
         <div className="z-10" id="callendly">
@@ -16,22 +18,25 @@ const Callendly = () => {
                     Réserve un Call !
                 </p>
             </div>
-            <div>
-                <InlineWidget
-                    styles={{
-                        height: '700px',
-                        
-                    }}
-                    url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
-                />
-            </div>
 
+            <div
+                className="fixed bottom-0 right-0 py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                        md:w-auto  w-full 
+                         hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                        "
+            >
+                <PopupButton
+                    className="text-white  text-sm  text-center m
+                                font-bold
+                               "
+                    url="https://calendly.com/souhail_ouabou/tu-es-a-un-call-de-ton-site-internet"
+                    rootElement={document.getElementById('root')}
+                    text="Tape to Call! "
+                ></PopupButton>
+                <FaPhone className="ml-3" />
+            </div>
         </div>
     )
 }
 
 export default Callendly
-
-
-
-

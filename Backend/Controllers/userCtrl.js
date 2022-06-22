@@ -66,10 +66,12 @@ const userCtrl = {
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
 
             if (!sendMail(email, url, name, 'Verify your email address')) {
+                console.log(sendMail)
                 return res.status(500).json({ msg: "Can't sent the email try later..." })
             } else {
+                console.log(sendMail)
                 res.json({
-                    msg: 'Register Success! Please activate your email to start.',
+                    msg: 'Register SucPlease activate your email to start.',
                 })
             }
         } catch (err) {
@@ -129,7 +131,7 @@ const userCtrl = {
 
             
 
-            if (!sendMail(email, url, existingUser.name, 'Reset your password')) {
+            if (sendMail(email, url, existingUser.name, 'Reset your password') === false) {
                 return res.status(500).json({ msg: "Can't sent the email try later..." })
             } else {
                 res.json({
