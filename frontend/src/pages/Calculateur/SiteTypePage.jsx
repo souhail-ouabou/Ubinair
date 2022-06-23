@@ -9,7 +9,7 @@ function SiteTypePage(props) {
     return (
         <div className={props.index === 1 ? 'text-white' : 'hidden'}>
 
-           <div className="absolute top-[53rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+           <div className="absolute top-[108%] left-[31%] md:top-[88%] md:left-[4%]"
             >
                 
                     <Goback previousTab={props.previousTab} />

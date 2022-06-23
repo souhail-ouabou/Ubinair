@@ -323,7 +323,7 @@ const Tracker = ({indexPage}) => {
                 <top className="flex gap-4 w-full ">
 
               
-                <div class="flex flex-row flex-wrap glass justify-between w-[860px] text-white pt-20 mt-2 ml-80"> 
+                <div class="flex flex-row flex-wrap glass justify-between w-[58%]  text-white pt-20 mt-2 ml-[21.5%]"> 
                
                 {isNaN(index) &&
                
@@ -347,7 +347,7 @@ const Tracker = ({indexPage}) => {
                 
                         {!isNaN(index) &&
                          <div class="">
-                            <table class="w-[760px]  shadow-box-sh "
+                            <table class="w-full  shadow-box-sh "
                            >
                                 <thead class="text-xl bg-gray-200 ">
                        <tr>
@@ -557,7 +557,7 @@ const Tracker = ({indexPage}) => {
                     Loaaading ...
                 </div>
                     ) : (
-                    <div class="flex flex-col gap-4 justify-start items-center min-h-[600px] glass  w-[300px]  p-6 rounded-xl fixed top-28 right-8">
+                    <div class="flex flex-col gap-4 justify-start items-center min-h-[600px] glass  w-[19%]  p-6 rounded-xl fixed top-28 right-8">
                       
                     <ul className="flex flex-col gap-y-4 pt-7 cursor-pointer">
                     

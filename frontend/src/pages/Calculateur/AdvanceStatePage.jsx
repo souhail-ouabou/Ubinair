@@ -11,7 +11,7 @@ import Goback from './Goback'
   return (
      
     <div className={props.index===4?"text-white":"hidden"}>
-          <div className="absolute top-[98rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+          <div className="absolute top-[98rem] left-[31%] md:top-[88%] md:left-[4%]"
             >
                     <Goback previousTab={props.previousTab} />
               

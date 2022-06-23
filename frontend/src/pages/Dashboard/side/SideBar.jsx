@@ -2,7 +2,7 @@ import React from 'react'
 import Logo from '../../../img/Logo.png'
 export default function SideBar({ showPage }) {
     return (
-        <aside className="py-6 px-10 w-[300px] min-h-[620px] mr-3 mt-14 glass fixed ">
+        <aside className="py-6 px-10 w-[19%] min-h-[620px] mr-3 mt-14 glass fixed ">
             <img className="w-16 object-cover m-auto " src={Logo} alt="Logo" />{' '}
             <ul className="flex flex-col gap-y-6 pt-7 cursor-pointer text-xl font-semibold leading-relaxed text-slate-100">
              

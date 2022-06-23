@@ -9,7 +9,7 @@ function TogglesPage(props) {
  // console.log("Clculateur",props.allState);
     return (
         <div className={props.allState.index === 2 ? 'text-white ' : 'hidden'}>
-            <div className={props.allState.subtype==="Site e-commerce"?"absolute top-[53rem] md:top-[44rem] md:left-[4rem]":"absolute top-[45rem] md:top-[44rem] md:left-[4rem]"}
+            <div className={props.allState.subtype==="Site e-commerce"?"absolute top-[108%] md:top-[88%] md:left-[4%]":"absolute top-[103%] md:top-[88%] md:left-[4%]"}
             >
                 
                     <Goback previousTab={props.previousTab} />
@@ -36,7 +36,7 @@ function TogglesPage(props) {
             </div>
          
             <div 
-            className={props.allState.subtype==="Site e-commerce"?"absolute top-[53rem] left-52 md:top-[44rem] md:right-[4rem]":"absolute top-[45rem] left-52 md:top-[44rem] md:right-[4rem]"}
+            className={props.allState.subtype==="Site e-commerce"?"absolute top-[108%] left-[53%] md:top-[88%] md:right-[4%]":"absolute top-[103%] left-[53%] md:top-[88%] md:right-[4rem]"}
             // animate={{x:250,y:70}}
             >
                  

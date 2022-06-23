@@ -7,7 +7,7 @@ export default function DownloadPage(props) {
   const [inputValue,setValue]=React.useState('')
   return (
     <div className={props.index===5?"text-white":"hidden"}>
-        <div className="absolute top-[35rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+        <div className="absolute top-[84%] left-[31%] md:top-[88%] md:left-[4%]"
             >
                 
                     <Goback previousTab={props.previousTab} />
@@ -42,7 +42,8 @@ export default function DownloadPage(props) {
                                 
                             />
   </div>
-    <div className="absolute top-[38.5rem] left-[8.3rem] md:top-[44rem]  md:left-[87rem]  " 
+    <div className="absolute top-[92%] left-[34%] md:top-[88%]  md:left-[88%]
+     " 
     >
                   <button
                   

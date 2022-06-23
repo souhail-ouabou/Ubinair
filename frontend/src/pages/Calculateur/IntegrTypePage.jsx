@@ -8,7 +8,7 @@ import Goback from './Goback'
 export default function IntegrTypePage(props) {
   return (
     <div className={props.index===3?"text-white":"hidden"}>
-       <div className="absolute top-[64rem] left-[7.5rem] md:top-[44rem] md:left-[4rem]"
+       <div className="absolute top-[64rem] left-[31%] md:top-[88%] md:left-[4%]"
             >
                 
                     <Goback previousTab={props.previousTab} />
