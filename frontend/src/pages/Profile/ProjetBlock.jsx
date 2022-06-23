@@ -7,7 +7,7 @@ import { Link, useParams } from 'react-router-dom'
 import Aos from 'aos'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 import { DeleteProject } from '../../redux/actions/projectActions'
-
+import ReactTooltip from 'react-tooltip'
 const ProjetBlock = ({ project, toggletab }) => {
     let dispatch = useDispatch()
     const getUserReducer = useSelector((state) => state.getUserReducer)
@@ -21,16 +21,26 @@ const ProjetBlock = ({ project, toggletab }) => {
 
     return (
         <>
+            <ReactTooltip place="top" type="error" effect="float" data-multiline="true" />
             <Link
                 to={user.client || isAdmin ? `/dashboard/${project._id}` : `#`}
-                className="cursor-pointer"
+                className={
+                    user.client || isAdmin
+                        ? `cursor-pointer`
+                        : `cursor-not-allowed`
+                }
+                data-tip={
+                    user.client || isAdmin
+                        ? ``
+                        : `You must  be a client to  get access to dashboard`
+                }
             >
                 {/* <h2>{isAdmin ? "Users" : "My Orders"}</h2> */}
 
                 <div
                     aos-animate="fade-up"
                     data-aos="fade-up"
-                    data-aos-duration="3000" 
+                    data-aos-duration="3000"
                     data-aos-anchor
                     className={
                         toggletab === 1

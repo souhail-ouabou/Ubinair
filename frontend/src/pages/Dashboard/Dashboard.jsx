@@ -16,6 +16,7 @@ import {
 import { Getprojectdetails } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 import QuotesInv from './QuotesInvoices/QuotesInv'
+import LiveFeedback from './LiveFeedback/LiveFeedback'
 
 const Dashboard = () => {
     // const [OverviewPage, setOverPage] = useState('')
@@ -45,8 +46,10 @@ const Dashboard = () => {
     const DeleteMoodBoardImgReducer = useSelector(
         (state) => state.DeleteMoodBoardImgReducer
     )
-    const { success: successDeleteMoodBoardImg, loading: loadingDeleteMoodBoardImg } =
-    DeleteMoodBoardImgReducer
+    const {
+        success: successDeleteMoodBoardImg,
+        loading: loadingDeleteMoodBoardImg,
+    } = DeleteMoodBoardImgReducer
 
     const projectUpdateReducer = useSelector(
         (state) => state.projectUpdateReducer
@@ -69,7 +72,7 @@ const Dashboard = () => {
         }
         if (successAddColMoodBoard) {
             dispatch({ type: ADD_COL_MOODBOARDE_RESET })
-        } 
+        }
         if (successDeleteMoodBoardImg) {
             dispatch({ type: DELETE_MOODB_IMG_RESET })
         } else {
@@ -77,12 +80,19 @@ const Dashboard = () => {
                 dispatch(Getprojectdetails(id))
             }
         }
-    }, [dispatch, id, isAdmin, successAddAboutBrand, successAddColMoodBoard, successDeleteBriefFile,
-    successDeleteMoodBoardImg, successUpdate, user?.client])
+    }, [
+        dispatch,
+        id,
+        isAdmin,
+        successAddAboutBrand,
+        successAddColMoodBoard,
+        successDeleteBriefFile,
+        successDeleteMoodBoardImg,
+        successUpdate,
+        user?.client,
+    ])
 
     const showPage = (i) => {
- 
-
         switch (i) {
             case 1:
                 setIndexPage(i)
@@ -97,8 +107,11 @@ const Dashboard = () => {
                 setIndexPage(i)
                 break
             case 5:
-                    setIndexPage(i)
-                    break
+                setIndexPage(i)
+                break
+            case 6:
+                setIndexPage(i)
+                break
             default:
                 break
         }
@@ -106,14 +119,14 @@ const Dashboard = () => {
 
     return (
         <>
-        
             <div className="w-full min-h-screen flex flex-row gap-3 z-10 ">
                 <SideBar showPage={(x) => showPage(x)} />
-                <Overview /*state={OverviewPage} */ indexPage={indexPage} />
-                <Tracker /*state={trackerPage}*/ indexPage={indexPage} />
-                <SmartBrief /*state={trackerPage}*/ indexPage={indexPage} />
+                <Overview indexPage={indexPage} />
+                <Tracker indexPage={indexPage} />
+                <SmartBrief indexPage={indexPage} />
                 <Content indexPage={indexPage} />
-                <QuotesInv /*state={trackerPage}*/ indexPage={indexPage} />
+                <QuotesInv indexPage={indexPage} />
+                <LiveFeedback indexPage={indexPage} />
             </div>
         </>
     )

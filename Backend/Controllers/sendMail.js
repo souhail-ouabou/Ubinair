@@ -48,9 +48,13 @@ const sendEmail = (to, url, name, txt) => {
     }
 
     smtpTransport.sendMail(mailOptions, (err, infor) => {
-        console.log(err)
-        if (err) return err
+       console.log(err)
+       console.log(infor)
+        if (err) return res
+                    .status(500)
+                    .json({ msg: "Can't sent the email try later..." })
         return infor
+        
     })
 }
 

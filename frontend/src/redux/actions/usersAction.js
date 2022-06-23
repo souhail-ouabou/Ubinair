@@ -117,6 +117,10 @@ export const updateUserStatus =
                         ? error.response.data.message
                         : error.message,
             })
+            toast.dismiss()
+            toast.error(error.response.data.msg, {
+                position: toast.POSITION.TOP_CENTER,
+            })
         }
     }
 export const DeleteUser = (id) => async (dispatch, getState) => {

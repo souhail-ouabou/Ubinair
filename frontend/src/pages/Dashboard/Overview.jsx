@@ -93,23 +93,23 @@ export default function Overview({ indexPage }) {
     //     }
     //     return conf
     // }
-    const handleProgressChange = async (task) => {
-        const newTasks = taskss.map((t) => (t.id === task.id ? task : t))
-        setTaskss(newTasks)
-        console.log('On progress change Id:' + task.id)
-        const testarr = newTasks.map((p) => ({
-            _id: p.id,
-            title: p.name,
-            startDate: p.start,
-            endDate: p.end,
-            progresState: p.progress,
-            estimatedState: p.estimatedState,
-        }))
+    // const handleProgressChange = async (task) => {
+    //     const newTasks = taskss.map((t) => (t.id === task.id ? task : t))
+    //     setTaskss(newTasks)
+    //     console.log('On progress change Id:' + task.id)
+    //     const testarr = newTasks.map((p) => ({
+    //         _id: p.id,
+    //         title: p.name,
+    //         startDate: p.start,
+    //         endDate: p.end,
+    //         progresState: p.progress,
+    //         estimatedState: p.estimatedState,
+    //     }))
 
-        dispatch(UpdateProject(testarr))
-    }
+    //     dispatch(UpdateProject(testarr))
+    // }
     const handleDblClick = (task) => {
-        alert('On Double Click event Id:' + task.id)
+        alert('On Double Click Task Name :' + task.name)
     }
     const handleSelect = (task, isSelected) => {
         console.log(
@@ -274,7 +274,7 @@ export default function Overview({ indexPage }) {
                                             onDateChange: handleTaskChange,
                                         })}
                                         // onDelete={handleTaskDelete}
-                                        onProgressChange={handleProgressChange}
+                                       // onProgressChange={handleProgressChange}
                                         onDoubleClick={handleDblClick}
                                         onSelect={handleSelect}
                                         onExpanderClick={handleExpanderClick}

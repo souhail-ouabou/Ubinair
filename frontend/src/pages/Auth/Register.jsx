@@ -21,7 +21,7 @@ const initialState = {
     success: '',
 }
 
-const Login = () => {
+const Register = () => {
     const [creds, setCreds] = useState(initialState)
     const dispatch = useDispatch()
     let navigate = useNavigate()
@@ -153,9 +153,7 @@ const Login = () => {
                             placeholder="Confirm password"
                         />
                     </div>
-                    <div className="flex justify-end   text-gray-400 py-2">
-                        <p className="cursor-pointer"> Forgot Password !</p>
-                    </div>
+                
                     <button
                         className="py-3 px-6  my-4 text-[#663993] flex items-center justify-center uppercase rounded-full bg-[#EEEEEF]   shadow-lg shadow-purple-800/25   text-sm  text-center mr-2
                           w-full  font-bold
@@ -170,4 +168,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register

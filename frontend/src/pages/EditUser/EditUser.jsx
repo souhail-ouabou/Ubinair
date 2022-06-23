@@ -71,8 +71,8 @@ const EditUser = () => {
             {loading ? (
                 'Loadding...'
             ) : (
-                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center  ">
-                    <div className="glass text-white md:w-[500px] ">
+                <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center overflow-hidden md:max-h-[760px] ">
+                    <div className="glass text-white md:w-[500px] md:h-[500px] mt-9 ">
                         <div className="avatar">
                             <img src={user.avatar} alt="" />
                         </div>
@@ -143,7 +143,7 @@ const EditUser = () => {
                         </div>
                     </div>
                     {user.projets && (
-                        <div className="col-right z-10">
+                        <div className="col-right z-10 overflow-y-scroll ">
                             <h1 className="text-center text-white text-xl font-bold tracking-widest uppercase mb-2">
                                 projects of : {user.name}
                             </h1>

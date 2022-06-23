@@ -32,18 +32,21 @@ function BeginPage(props) {
                              bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-60"
                     onClick={() => props.onNext(1, 'Site Web')}
                 >
-                    
                     <div className="">
                         <div className="text-center">
                             <div className="">
-                                <img  src={siteImg} className="object-contain mx-auto h-40 w-88"/>
+                                <img
+                                    alt="siteImg"
+                                    src={siteImg}
+                                    className="object-contain mx-auto h-40 w-88"
+                                />
                             </div>
-                                    <div className="">
-                                        <h5  className="text-center  p-6">Site Web </h5>
-                                    </div>
+                            <div className="">
+                                <h5 className="text-center  p-6">Site Web </h5>
+                            </div>
                         </div>
                     </div>
-                 </motion.div>
+                </motion.div>
 
                 <motion.div
                     initial={{ opacity: 0 }}
@@ -61,15 +64,20 @@ function BeginPage(props) {
                     <div className="">
                         <div className="">
                             <div className="">
-                                <img  src={mobileApp} className="object-contain mx-auto h-40 w-88"/>
+                                <img
+                                    alt="mobileApp"
+                                    src={mobileApp}
+                                    className="object-contain mx-auto h-40 w-88"
+                                />
                             </div>
-                                    <div className="">
-                                        <h5  className="text-center p-6">Application mobile</h5>
-                                    </div>
+                            <div className="">
+                                <h5 className="text-center p-6">
+                                    Application mobile
+                                </h5>
+                            </div>
                         </div>
                     </div>
-
-                  </motion.div>
+                </motion.div>
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
@@ -96,7 +104,7 @@ function BeginPage(props) {
                             </div>
                             <div className="">
                                 <h5 className="text-center p-6">
-                                    Site Web + application mobile
+                                    Site Web + Application mobile
                                 </h5>
                             </div>
                         </div>

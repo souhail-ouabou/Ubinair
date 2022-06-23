@@ -7,20 +7,16 @@ import IntegrTypePage from './IntegrTypePage'
 import AdvanceStatePage from './AdvanceStatePage'
 import DownloadPage from './DownloadPage'
 import ubinairLogo from '../../img/ubinairLogo.png'
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from 'react-redux'
 import { motion } from 'framer-motion'
 
-import {
-
-    CreateProjet,
-
-  } from "../../redux/actions/projectActions";
+import { CreateProjet } from '../../redux/actions/projectActions'
 
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
 const Calculator = () => {
     const initialState = {
-        name:'',
+        name: '',
         index: 0,
         devis: 0,
         type: null,
@@ -33,10 +29,10 @@ const Calculator = () => {
     }
     const [calculator, setCaluclator] = useState(initialState)
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const download = () => {
-        dispatch(CreateProjet(calculator));
+        dispatch(CreateProjet(calculator))
         let doc = new jsPDF('p', 'pt', 'letter')
         let taille = calculator.features.filter(
             (Arrayoftoggle) => Arrayoftoggle.case !== false
@@ -95,7 +91,7 @@ const Calculator = () => {
         doc.setFontSize(15)
 
         doc.text(190, 360 + taille * 26, 'Notre estimation de votre PROJET')
-        doc.text(275, 380 + taille * 26, calculator.devis.toFixed(2) + ' £')
+        doc.text(275, 380 + taille * 26, calculator.devis.toFixed(2) + ' €')
 
         doc.setFontSize(10)
         doc.text(
@@ -117,18 +113,13 @@ const Calculator = () => {
         doc.text(200, 740, 'Communiquez avec nous hamza@ubinair.com')
         doc.text(250, 760, 'Copyright ©2022 - Ubinair')
         doc.save('facture.pdf')
-     
-
-
-
     }
     const previousTab = () => {
-        let i=calculator.index - 1;
+        let i = calculator.index - 1
         setCaluclator({
             ...calculator,
             index: i,
         })
- 
     }
     const toggleTab = (index, type = null) => {
         if (index == 1) {
@@ -290,7 +281,6 @@ const Calculator = () => {
             return { ...prev, index }
         })
         console.log('RESUUUUUME', calculator)
-
     }
     //TogglesPage handleCheckbox
     const handleCheckbox = (event) => {
@@ -309,48 +299,48 @@ const Calculator = () => {
     }
     return (
         <div className="w-[1000px] z-10">
-      
-          
-                <BeginPage
-                    index={calculator.index} //0
-                    onNext={(i, type) => toggleTab(i, type)}
-                    previousTab={previousTab} //1
-                />
-                <SiteTypePage
-                    index={calculator.index} //1
-                    onNext={(i, type) => toggleTab(i, type)} 
-                    previousTab={previousTab} //2
-                />
-                <TogglesPage
-                    allState={calculator} //2
-                    onHandleCheck={handleCheckbox}
-                    onNext={(i) => toggleTab(i)}
-                    previousTab={previousTab} //3
-                />
-                <IntegrTypePage
-                    index={calculator.index} //3
-                    devis={calculator.devis}
-                    onNext={(i, type) => toggleTab(i, type)}
-                    previousTab={previousTab}  //4
-                />
-                <AdvanceStatePage
-                    index={calculator.index}
-                    devis={calculator.devis}
-                    onNext={(i, type) => toggleTab(i, type)}
-                    previousTab={previousTab}  //5
-                />
-                <DownloadPage
-                    index={calculator.index} //5
-                    devis={calculator.devis}
-                    name={calculator.name}
-                    onChangeName={(nameProject)=>setCaluclator({
+            <BeginPage
+                index={calculator.index} //0
+                onNext={(i, type) => toggleTab(i, type)}
+                previousTab={previousTab} //1
+            />
+            <SiteTypePage
+                index={calculator.index} //1
+                onNext={(i, type) => toggleTab(i, type)}
+                previousTab={previousTab} //2
+            />
+            <TogglesPage
+                allState={calculator} //2
+                onHandleCheck={handleCheckbox}
+                onNext={(i) => toggleTab(i)}
+                previousTab={previousTab} //3
+            />
+            <IntegrTypePage
+                index={calculator.index} //3
+                devis={calculator.devis}
+                onNext={(i, type) => toggleTab(i, type)}
+                previousTab={previousTab} //4
+            />
+            <AdvanceStatePage
+                index={calculator.index}
+                devis={calculator.devis}
+                onNext={(i, type) => toggleTab(i, type)}
+                previousTab={previousTab} //5
+            />
+            <DownloadPage
+                index={calculator.index} //5
+                devis={calculator.devis}
+                name={calculator.name}
+                onChangeName={(nameProject) =>
+                    setCaluclator({
                         ...calculator,
                         name: nameProject,
-                    })}
-                    onDownload={() => download()}
-                    previousTab={previousTab} 
-                />
-           
+                    })
+                }
+                onDownload={() => download()}
+                previousTab={previousTab}
+            />
+
             <table id="firstTable" hidden>
                 <caption>first table</caption>
                 <tr>
@@ -359,7 +349,7 @@ const Calculator = () => {
                 </tr>
                 <tr>
                     <td>{calculator.type}</td>
-                    <td>{calculator.priceDebut} £</td>
+                    <td>{calculator.priceDebut} €</td>
                 </tr>
             </table>
 
@@ -371,7 +361,7 @@ const Calculator = () => {
                 </tr>
                 <tr>
                     <td>{calculator.required}</td>
-                    <td>{calculator.priceRequired} £</td>
+                    <td>{calculator.priceRequired} €</td>
                 </tr>
             </table>
 
@@ -382,36 +372,25 @@ const Calculator = () => {
                     <th>Prix</th>
                 </tr>
 
-                {calculator.features.filter(
-                    (Arrayoftoggle) => Arrayoftoggle.case !== false
-                ).map((togglerow) => (
-                    <tr>
-                        <td>{togglerow.title}</td>
-                        <td>{togglerow.price} £</td>
-                    </tr>
-                ))}
+                {calculator.features
+                    .filter((Arrayoftoggle) => Arrayoftoggle.case !== false)
+                    .map((togglerow) => (
+                        <tr>
+                            <td>{togglerow.title}</td>
+                            <td>{togglerow.price} €</td>
+                        </tr>
+                    ))}
                 <tr>
                     <th>Sous Total</th>
                     <th>
                         {calculator.devis -
                             (calculator.priceDebut +
                                 calculator.priceRequired)}{' '}
-                        £
+                        €
                     </th>
                 </tr>
             </table>
-          
-            {/* <div className="">
-                {' '}
-                {calculator.index == 0 ? (
-                    ''
-                ) : (
-                    <Goback previousTab={previousTab} />
-                )}{' '}
-            </div> */}
-            </div>
-       
-        
+        </div>
     )
 }
 
