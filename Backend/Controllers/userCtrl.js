@@ -65,15 +65,11 @@ const userCtrl = {
 
             const url = `${CLIENT_URL}/user/activate/${activation_token}`
 
-            if (!sendMail(email, url, name, 'Verify your email address')) {
-                console.log(sendMail)
-                return res.status(500).json({ msg: "Can't sent the email try later..." })
-            } else {
-                console.log(sendMail)
-                res.json({
-                    msg: 'Register SucPlease activate your email to start.',
-                })
-            }
+            sendMail(email, url, name, 'Verify your email address')
+         
+            return res.json({
+                msg: 'Register SucPlease activate your email to start.',
+            })
         } catch (err) {
             return res.status(500).json({ msg: err.message })
         }
@@ -129,16 +125,22 @@ const userCtrl = {
             const access_token = createAccessToken({ id: existingUser._id })
             const url = `${CLIENT_URL}/user/reset/${access_token}`
 
-            
-
-            if (sendMail(email, url, existingUser.name, 'Reset your password') === false) {
-                return res.status(500).json({ msg: "Can't sent the email try later..." })
+            if (
+                sendMail(
+                    email,
+                    url,
+                    existingUser.name,
+                    'Reset your password'
+                ) === false
+            ) {
+                return res
+                    .status(500)
+                    .json({ msg: "Can't sent the email try later..." })
             } else {
                 res.json({
                     msg: 'Register Success! Please activate your email to start.',
                 })
             }
- 
         } catch (err) {
             return res.status(500).json({ msg: err.message }) //err
         }

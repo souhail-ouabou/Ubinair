@@ -5,6 +5,7 @@ import { FaPhone } from 'react-icons/fa'
 
 const Callendly = () => {
     return (
+        <>
         <div className="z-10" id="callendly">
             <div
                 className="flex flex-col items-center justify-center mt-1 "
@@ -18,11 +19,13 @@ const Callendly = () => {
                     Réserve un Call !
                 </p>
             </div>
+            </div>
 
             <div
                 className="fixed bottom-0 right-0 py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
                         md:w-auto  w-full 
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
+                         z-30
                         "
             >
                 <PopupButton
@@ -35,7 +38,7 @@ const Callendly = () => {
                 ></PopupButton>
                 <FaPhone className="ml-3" />
             </div>
-        </div>
+        </>
     )
 }
 

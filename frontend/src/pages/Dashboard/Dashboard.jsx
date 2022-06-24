@@ -88,7 +88,7 @@ const Dashboard = () => {
         successAddColMoodBoard,
         successDeleteBriefFile,
         successDeleteMoodBoardImg,
-        successUpdate,
+
         user?.client,
     ])
 
