@@ -119,7 +119,19 @@ const Dashboard = () => {
 
     return (
         <>
-            <div className="w-full min-h-screen flex flex-row gap-3 z-10 ">
+            <div className="md:hidden z-10 text-base text-white text-center flex flex-col justify-center items-center gap-12">
+                <div>
+                    <h1>For Now The Dashboard relased just on the Desktop</h1>
+                    <h1 className="text-white text-center text-lg font-medium my-6">
+                        You can open it on Desktop without any problem
+                    </h1>
+                </div>
+                <div className='absolute bottom-0 right-0 left-0' >
+                    <h1>The mobile view will be relased soon </h1>
+                    <p>Thank you !</p>
+                </div>
+            </div>
+            <div className="md:w-full md:min-h-screen md:flex md:flex-row md:gap-3 hidden z-10 ">
                 <SideBar showPage={(x) => showPage(x)} />
                 <Overview indexPage={indexPage} />
                 <Tracker indexPage={indexPage} />
