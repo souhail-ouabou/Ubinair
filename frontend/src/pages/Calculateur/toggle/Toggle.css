@@ -1,0 +1,8 @@
+#toggle-switch::after{
+  content:'';
+  @apply h-5 w-5 rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 absolute left-0  transform scale-110 transition duration-200;
+}
+
+#toggle-switch:checked::after{
+    @apply transform scale-110 translate-x-5 
+}
