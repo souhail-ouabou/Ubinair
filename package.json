@@ -10,7 +10,6 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --force --prefix frontend && npm run build --prefix frontend"
-
   },
   "engines": {
     "node": "14.17.2",
@@ -32,6 +31,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.3.1",
     "nodemailer": "^6.7.5",
+    "nodemon": "^2.0.15",
     "react-calendly": "^4.0.0",
     "react-intersection-observer": "^9.1.0",
     "react-scroll": "^1.8.7",
@@ -39,11 +39,9 @@
     "react-slick": "^0.29.0",
     "redux-devtools-extension": "^2.13.9",
     "slick-carousel": "^1.8.1",
-    "nodemon": "^2.0.15"
-  },
-  "devDependencies": {
+    "uuid": "^8.3.2"
   },
   "optionalDependencies": {
     "fsevents": "*"
- }
+  }
 }
