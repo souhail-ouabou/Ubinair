@@ -22,8 +22,8 @@ const Callendly = () => {
             </div>
 
             <div
-                className="fixed bottom-0 right-0 py-3 px-6 sm:w-[60%] my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
-                        md:w-auto  w-full 
+                className="fixed bottom-0 right-0 py-3 px-6  my-4 text-white flex items-center justify-between uppercase rounded-full bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-md  dark:shadow-purple-800/40  text-sm  text-center mr-2
+                          
                          hover:shadow-lg transition-all ease-in-out duration-100 font-bold
                          z-30
                         "
