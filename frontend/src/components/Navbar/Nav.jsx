@@ -6,7 +6,7 @@ import Logo from '../../img/Logo.png'
 import Avatar from '../../img/avatar.png'
 import { logout } from '../../redux/actions/authAction'
 import './Navbar.css'
-import { FaAngleDown, FaPhone, FaArrowRight } from 'react-icons/fa'
+import { FaAngleDown, FaPhone, FaArrowRight, FaAngleUp } from 'react-icons/fa'
 import { useSelector, useDispatch } from 'react-redux'
 const Nav = () => {
     let navigate = useNavigate()
@@ -19,6 +19,7 @@ const Nav = () => {
 
     const showDropInMobile = () => {
         setShowDrop(!showDrop)
+        console.log('In Clickex', showDrop)
     }
     const hideItems = () => {
         setInHome(false)
@@ -27,6 +28,10 @@ const Nav = () => {
     const showItems = () => {
         setInHome(true)
     }
+    useEffect(() => {
+       
+    }, [showDrop])
+
     const userLink = () => {
         return (
             <li className="drop-nav  md:ml-0 ">
@@ -41,7 +46,7 @@ const Nav = () => {
                             <Link
                                 to="#"
                                 className="flex items-center justify-center gap-2"
-                                onClick={showDropInMobile}
+                              
                             >
                                 <img
                                     className="img-ava"
@@ -50,7 +55,11 @@ const Nav = () => {
                                 />
                                 {user.name}
                                 <i>
-                                    <FaAngleDown />
+                                    {showDrop ? (
+                                        <FaAngleUp />
+                                    ) : (
+                                        <FaAngleDown />
+                                    )}
                                 </i>
                             </Link>
                         </>
@@ -59,8 +68,8 @@ const Nav = () => {
                     <ul
                         className={`dropdown  ${
                             showDrop
-                                ? 'md:hidden dropdown mt-2 top-12 left-1'
-                                : 'dropdown mt-2 top-12 left-1 hidden'
+                                ? 'md:hidden  mt-2 top-12 left-1'
+                                : 'mt-2 top-12 left-1 hidden'
                         }`}
                     >
                         <li className="mt-2 mb-2 cursor-pointer">
