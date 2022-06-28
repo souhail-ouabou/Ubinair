@@ -116,9 +116,19 @@ const Calculator = () => {
     }
     const previousTab = () => {
         let i = calculator.index - 1
+        let priceAfterTog = calculator.devis
+
+        if (i == 3) {
+            if (calculator.required === 'Intégration') {
+                priceAfterTog = calculator.devis - 500
+            } else if (calculator.required === 'Conception et intégration') {
+                priceAfterTog = calculator.devis - 800
+            }
+        }
         setCaluclator({
             ...calculator,
             index: i,
+            devis: priceAfterTog,
         })
     }
     const toggleTab = (index, type = null) => {
