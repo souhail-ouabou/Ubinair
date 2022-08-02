@@ -126,7 +126,7 @@ const Dashboard = () => {
                         You can open it on Desktop without any problem
                     </h1>
                 </div>
-                <div className="absolute bottom-0 right-0 left-0">
+                <div className='absolute bottom-0 right-0 left-0' >
                     <h1>The mobile view will be relased soon </h1>
                     <p>Thank you !</p>
                 </div>

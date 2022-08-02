@@ -28,9 +28,7 @@ const Nav = () => {
     const showItems = () => {
         setInHome(true)
     }
-    useEffect(() => {
-       
-    }, [showDrop])
+    useEffect(() => {}, [showDrop])
 
     const userLink = () => {
         return (
@@ -46,7 +44,6 @@ const Nav = () => {
                             <Link
                                 to="#"
                                 className="flex items-center justify-center gap-2"
-                              
                             >
                                 <img
                                     className="img-ava"
@@ -55,11 +52,7 @@ const Nav = () => {
                                 />
                                 {user.name}
                                 <i>
-                                    {showDrop ? (
-                                        <FaAngleUp />
-                                    ) : (
-                                        <FaAngleDown />
-                                    )}
+                                    {showDrop ? <FaAngleUp /> : <FaAngleDown />}
                                 </i>
                             </Link>
                         </>

@@ -21,6 +21,7 @@ import {
 } from '../../redux/actions/projectActions'
 import { useParams } from 'react-router-dom'
 import { PROJET_UPDATE_RESET } from '../../redux/actions/constants/projetconstants'
+import PropagateLoader from 'react-spinners/PropagateLoader'
 
 export default function Overview({ indexPage }) {
     /*Get project details */
@@ -246,10 +247,9 @@ export default function Overview({ indexPage }) {
                         </div>
                     </top>
                     {loadingProjectDetails ? (
-                        <div className="col-right text-white">
-                            {' '}
-                            Loaaading Overview...
-                        </div>
+                        <div className="flex flex-col items-center justify-center mt-8">
+                        <PropagateLoader color="#ffffff" />
+                    </div>
                     ) : error ? (
                         <div>errorMyProjects</div>
                     ) : (

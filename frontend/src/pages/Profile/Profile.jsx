@@ -24,6 +24,7 @@ import { MdCameraswitch } from 'react-icons/md'
 import { CgAdd } from 'react-icons/cg'
 import { dispatchGetUser } from '../../redux/actions/authAction'
 import Search from './Search'
+import PropagateLoader from 'react-spinners/PropagateLoader'
 import { PopupButton } from 'react-calendly'
 const Profile = () => {
     const dispatch = useDispatch()
@@ -178,7 +179,9 @@ const Profile = () => {
                 <title>Profile</title>
             </Helmet>
             {loading ? (
-                'Loadding...'
+                <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden md:max-h-[760px] ">
+                    <PropagateLoader color="#ff1313" />
+                </div>
             ) : (
                 <div className="md:flex md:flex-row md:w-full md:h-full md:gap-12  md:mt-12 flex-col mt-24  justify-center z-10 overflow-hidden md:max-h-[760px] ">
                     <div className="glass text-white md:w-[500px] md:h-[760px] ">
@@ -336,13 +339,14 @@ const Profile = () => {
 
                         {/* dispatched after check admin  */}
                         {loadingGetAllUsers ? (
-                            <div className=" text-white"> Loaaading ...</div>
+                            <div className="flex flex-col items-center justify-center mt-8">
+                                <PropagateLoader color="#ffffff" />
+                            </div>
                         ) : errgetAllUsers && errgetAllUsers ? (
                             <div>errgetAllUsers</div>
                         ) : users && users.length === 0 ? (
-                            <div className=" text-white">
-                                {' '}
-                                Users Empptyyyyyyyyy
+                            <div className="text-white text-xl flex flex-col items-center justify-center mt-8">
+                                There is No users to show
                             </div>
                         ) : (
                             <>
@@ -358,15 +362,21 @@ const Profile = () => {
                         )}
 
                         {loadingMyProjects || loadingAllProjects ? (
-                            <div className=" text-white"> Loaaading ...</div>
+                            <div className="flex flex-col items-center justify-center mt-8">
+                                <PropagateLoader color="#ffffff" />
+                            </div>
                         ) : errorMyProjects || errorAllProjects ? (
                             <div>errorMyProjects</div>
                         ) : user.client &&
                           !isAdmin &&
                           myProjects.length === 0 ? (
-                            <>My projects Emppt </>
+                            <div className="text-white text-xl flex flex-col items-center justify-center mt-8">
+                                There is No users to show
+                            </div>
                         ) : isAdmin && AllProjects.length === 0 ? (
-                            <div className="text-white">All projects Emppt</div>
+                            <div className="text-white text-xl flex flex-col items-center justify-center mt-8">
+                                There is No projects to show
+                            </div>
                         ) : !user.client && !isAdmin ? (
                             <div className="flex flex-col items-center justify-center mt-8">
                                 <div className="text-center text-white text-xl font-bold tracking-widest uppercase ">

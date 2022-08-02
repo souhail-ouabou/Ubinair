@@ -11,14 +11,19 @@ import {
     getUserDetails,
     updateUserStatus,
 } from '../../redux/actions/usersAction'
-import ACTIONS, { UPDATE_USERSTATUS_RESET } from '../../redux/actions/constants/userConstants'
+import ACTIONS, {
+    UPDATE_USERSTATUS_RESET,
+} from '../../redux/actions/constants/userConstants'
+import PropagateLoader from 'react-spinners/PropagateLoader'
 
 const EditUser = () => {
     const dispatch = useDispatch()
     const { id } = useParams()
     const userDetailsReducer = useSelector((state) => state.userDetailsReducer)
     const { loading, error, user } = userDetailsReducer
-    const updateUserStatusReducer = useSelector((state) => state.updateUserStatus)
+    const updateUserStatusReducer = useSelector(
+        (state) => state.updateUserStatus
+    )
     const {
         loading: loadingUpdate,
         error: errorUpdate,
@@ -33,8 +38,8 @@ const EditUser = () => {
     const { name, email } = data
     useEffect(() => {
         if (successUpdate) {
-             dispatch({ type: UPDATE_USERSTATUS_RESET })
-             dispatch(getUserDetails(id, token))
+            dispatch({ type: UPDATE_USERSTATUS_RESET })
+            dispatch(getUserDetails(id, token))
         } else {
             if (token) {
                 //    dispatch(dispatchLogin()); //WE GOT  logged change to false so we transfer it to true
@@ -55,7 +60,6 @@ const EditUser = () => {
         dispatch(updateUserStatus(id, checkAdmin, client))
     }
 
- 
     const handleCheck = () => {
         setCheckAdmin(!checkAdmin)
     }
@@ -69,7 +73,9 @@ const EditUser = () => {
                 <title>Update user</title>
             </Helmet>
             {loading ? (
-                'Loadding...'
+                <div className="flex flex-col items-center justify-center mt-8">
+                    <PropagateLoader color="#ffffff" />
+                </div>
             ) : (
                 <div className="md:flex md:flex-row md:w-full md:gap-12  md:mt-12 flex-col w-60 ml-16 justify-center overflow-hidden md:max-h-[760px] ">
                     <div className="glass text-white md:w-[500px] md:h-[500px] mt-9 ">
@@ -139,7 +145,6 @@ const EditUser = () => {
                             >
                                 Update
                             </button>
-              
                         </div>
                     </div>
                     {user.projets && (
@@ -149,7 +154,9 @@ const EditUser = () => {
                             </h1>
 
                             {user.projets.length === 0 ? (
-                                <div className="text-white">Emppt</div>
+                                <div className="text-white text-xl flex flex-col items-center justify-center mt-8">
+                                    No Projects to show
+                                </div>
                             ) : (
                                 <>
                                     {user.projets.map((project) => (
