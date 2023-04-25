@@ -38,6 +38,7 @@ MERN stack is a collection of technologies that enables faster application devel
 
 ## Authors
 
+- [@souhail-ouabou](https://github.com/souhail-ouabou)
 - [@MEZIANE-Abdellatif](https://github.com/MEZIANE-Abdellatif)
 
 
