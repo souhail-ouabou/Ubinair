@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  express-api:
+    container_name: express-api
+    build: ./backend
+    ports:
+      - '4000:4000'
+    volumes: 
+      - ./backend:/app:ro
+      - /app/node_modules
+    env_file: 
+      - ./.env
+  frontend:
+    build: ./frontend
+    ports: 
+      - '3000:3000'
+    volumes: 
+      - ./frontend/src:/app/src
+    stdin_open: true
+    tty: true
+    depends_on: 
+      - express-api

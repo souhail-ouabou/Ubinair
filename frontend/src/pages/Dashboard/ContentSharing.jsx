@@ -3,7 +3,7 @@ import React from 'react'
 import { IoMdAdd } from 'react-icons/io'
 import { useState, useEffect } from 'react'
 import TextEditor from './TextEditor'
-import { ObjectID } from 'bson'
+import { ObjectID } from 'bson-objectid'
 import 'react-quill/dist/quill.snow.css'
 import {
     AddMediaPage,

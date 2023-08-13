@@ -8,7 +8,7 @@ import 'gantt-task-react/dist/index.css'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
 import {HashLink as Link} from 'react-router-hash-link'
 import { UpdateSpecProject } from '../../redux/actions/projectActions'
-import { ObjectID } from 'bson';
+import { ObjectID } from 'bson-objectid'
 import { useSelector, useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'

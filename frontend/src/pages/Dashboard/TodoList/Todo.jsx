@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { RiCloseCircleLine } from 'react-icons/ri'
-import { TiEdit } from 'react-icons/ti'
+
 import TodoForm from './TodoForm'
 import { FaRegEdit } from 'react-icons/fa'
 import { RiDeleteBin6Fill } from 'react-icons/ri'
